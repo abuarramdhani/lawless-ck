@@ -504,4 +504,48 @@ if (isset($_POST['kasmasuk'])) {
     } else {
         echo 1;
     }
+}else if (isset($_POST['inputoutlet'])) {
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM companypanel ");
+    //cek ada data?
+    if (mysqli_num_rows($cekdata) > 0) {
+    $kodeoutlet = query("SELECT * FROM companypanel ORDER BY id DESC LIMIT 1")[0];
+    $kodes = substr($kodeoutlet['kodeoutlet'],3);
+    $noUrut = (int) $kodes;
+    $noUrut++;    
+    $newkodetr = sprintf("%03s", $noUrut);
+    }else {
+        $newkodetr = "001";
+    }
+        
+    $kode = "OUT";
+    $kp = $kode.$newkodetr;
+
+    $noutlet = strtolower(htmlspecialchars($_POST["noutlet"]));
+    
+
+    $ceknama = mysqli_query($conn, "SELECT * FROM companypanel WHERE nama ='$noutlet' ");
+    
+    if (mysqli_fetch_assoc($ceknama)) {
+        echo "<script>
+                alert('nama outlet sudah terdaftar');
+                document.location.href = 'outlet';
+            </script>";
+        return false;
+
+    }
+
+    //query insert data
+    $query = "INSERT INTO companypanel 
+                VALUES 
+                ('','$kp','$noutlet','','','','1')
+            ";    
+
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        
+        echo 3;
+    } else {
+        echo 1;
+    }
 }
