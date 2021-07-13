@@ -4,7 +4,7 @@
     <!-- LOGO -->
     <div class="topbar-left">
         <!-- <a href="../index" class="logo"><span>Sk<span>ut</span></span><i class="zmdi zmdi-layers"></i></a> -->
-        <img src="../assets/images/logoskut.png" width="50%">
+        <a href="../menu"><img src="../assets/images/big/lawless-logo1.png" width="25%"></a>
     </div>
 
     <!-- Button mobile view to collapse sidebar menu -->

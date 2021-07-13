@@ -75,7 +75,8 @@ if (!isset($_SESSION['email'])) {
                         <h3 class="panel-title text-center">Purchasing</h3>
                     </div>
                     <div class="panel-body text-center">
-                        <a href=""><img src="assets/images/purchasing.png" style="width: 125px;" class="img-circle"></a>
+                        <a href="purchasing"><img src="assets/images/purchasing.png" style="width: 125px;"
+                                class="img-circle"></a>
                     </div>
                 </div>
             </div><!-- end col -->

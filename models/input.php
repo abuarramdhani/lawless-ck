@@ -371,4 +371,137 @@ if (isset($_POST['kasmasuk'])) {
         echo 1;
     }
     
+}else if (isset($_POST['inputsupplier'])) {
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM supplier ");
+    //cek ada data?
+    if (mysqli_num_rows($cekdata) > 0) {
+    $kodesupplier = query("SELECT * FROM supplier ORDER BY id DESC LIMIT 1")[0];
+    $kodes = substr($kodesupplier['kodesupplier'],1);
+    $noUrut = (int) $kodes;
+    $noUrut++;    
+    $newkodetr = sprintf("%03s", $noUrut);
+    }else {
+        $newkodetr = "001";
+    }
+        
+    $kode = "S";
+    $kp = $kode.$newkodetr;
+
+    $nsupplier = strtolower(htmlspecialchars($_POST["nsupplier"]));
+    $nohp = htmlspecialchars($_POST["nohp"]);
+    $alamat = htmlspecialchars($_POST["alamat"]);
+
+    $ceknama = mysqli_query($conn, "SELECT * FROM supplier WHERE namasupplier ='$nsupplier' ");
+    
+    if (mysqli_fetch_assoc($ceknama)) {
+        echo "<script>
+                alert('nama supplier sudah terdaftar');
+                document.location.href = 'supplier';
+            </script>";
+        return false;
+
+    }
+
+    //query insert data
+    $query = "INSERT INTO supplier 
+                VALUES 
+                ('','$kp','$nsupplier','$nohp','$alamat')
+            ";    
+
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        
+        echo 3;
+    } else {
+        echo 1;
+    }
+}else if (isset($_POST['inputunit'])) {
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM unit ");
+    //cek ada data?
+    if (mysqli_num_rows($cekdata) > 0) {
+    $kodeunit = query("SELECT * FROM unit ORDER BY id DESC LIMIT 1")[0];
+    $kodes = substr($kodeunit['kodeunit'],3);
+    $noUrut = (int) $kodes;
+    $noUrut++;    
+    $newkodetr = sprintf("%03s", $noUrut);
+    }else {
+        $newkodetr = "001";
+    }
+        
+    $kode = "SAT";
+    $kp = $kode.$newkodetr;
+
+    $nunit = strtolower(htmlspecialchars($_POST["nunit"]));
+    
+
+    $ceknama = mysqli_query($conn, "SELECT * FROM unit WHERE namaunit ='$nunit' ");
+    
+    if (mysqli_fetch_assoc($ceknama)) {
+        echo "<script>
+                alert('nama unit sudah terdaftar');
+                document.location.href = 'unit';
+            </script>";
+        return false;
+
+    }
+
+    //query insert data
+    $query = "INSERT INTO unit 
+                VALUES 
+                ('','$kp','$nunit')
+            ";    
+
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        
+        echo 3;
+    } else {
+        echo 1;
+    }
+}else if (isset($_POST['inputbahan'])) {
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM bahan ");
+    //cek ada data?
+    if (mysqli_num_rows($cekdata) > 0) {
+    $kodebahan = query("SELECT * FROM bahan ORDER BY id DESC LIMIT 1")[0];
+    $kodes = substr($kodebahan['kodebahan'],3);
+    $noUrut = (int) $kodes;
+    $noUrut++;    
+    $newkodetr = sprintf("%03s", $noUrut);
+    }else {
+        $newkodetr = "001";
+    }
+        
+    $kode = "BAH";
+    $kp = $kode.$newkodetr;
+
+    $nbahan = strtolower(htmlspecialchars($_POST["nbahan"]));
+    
+
+    $ceknama = mysqli_query($conn, "SELECT * FROM bahan WHERE namabahan ='$nbahan' ");
+    
+    if (mysqli_fetch_assoc($ceknama)) {
+        echo "<script>
+                alert('nama bahan sudah terdaftar');
+                document.location.href = 'bahan';
+            </script>";
+        return false;
+
+    }
+
+    //query insert data
+    $query = "INSERT INTO bahan 
+                VALUES 
+                ('','$kp','$nbahan')
+            ";    
+
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        
+        echo 3;
+    } else {
+        echo 1;
+    }
 }

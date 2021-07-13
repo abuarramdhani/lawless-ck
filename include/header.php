@@ -13,9 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <link rel="shortcut icon" href="../assets/images/logofav.png">
+    <link rel="shortcut icon" href="../assets/images/favicon-32x32.png">
 
-    <title>SKUT</title>
+    <title>Lawless Burger</title>
 
     <!--Morris Chart CSS -->
     <link rel="stylesheet" href="../assets/plugins/morris/morris.css">
