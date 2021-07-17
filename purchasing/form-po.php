@@ -72,39 +72,26 @@ $juhal = "Form PO";
                                                 <th>No</th>
                                                 <th>Kode</th>
                                                 <th>Item</th>
-                                                <<<<<<< HEAD=======<th data-priority="1">Aksi</th>
-                                                    >>>>>>> 9d830d3467604280f82f895c41eeff3f81b6aed0
+                                                <th data-priority="1">Aksi</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <<<<<<< HEAD <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Garrett Winters</td>
-                                                    <td>Accountant</td>
-                                                    <td>Tokyo</td>
 
 
+                                            <?php if ($keyword) : ?>
+                                            <?php foreach ($bahan as $b) : ?>
+                                            <tr>
+                                                <td><?= $i++; ?></td>
+                                                <td><?= $b['kodebahan'] ?></td>
+                                                <td><?= $b['namabahan']; ?></td>
+                                                <td> <button
+                                                        class="btn btn-icon waves-effect waves-light btn-success m-b-5">
+                                                        <i class="fa fa-plus"></i> </button></td>
+                                            </tr>
+                                            <?php endforeach ?>
+                                            <?php endif ?>
 
-                                                </tr>
-                                                =======
-                                                <?php if ($keyword) : ?>
-                                                <?php foreach ($bahan as $b) : ?>
-                                                <tr>
-                                                    <td><?= $i++; ?></td>
-                                                    <td><?= $b['kodebahan'] ?></td>
-                                                    <td><?= $b['namabahan']; ?></td>
-                                                    <td> <button
-                                                            class="btn btn-icon waves-effect waves-light btn-success m-b-5">
-                                                            <i class="fa fa-plus"></i> </button></td>
-                                                </tr>
-                                                <?php endforeach ?>
-                                                <?php endif ?>
-                                                >>>>>>> 9d830d3467604280f82f895c41eeff3f81b6aed0
 
                                         </tbody>
                                     </table>
