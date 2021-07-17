@@ -8,9 +8,9 @@ require '../include/fungsi.php';
 require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
-require '../controller/c_outlet.php';
+require '../controller/c_jabatan.php';
 $bagian = "Data Master";
-$juhal = "Outlet";
+$juhal = "Jabatan";
 ?>
 
 
@@ -39,26 +39,26 @@ $juhal = "Outlet";
                         <div class="col-lg-4">
                             <div class="card-box">
                                 <div class="dropdown pull-right">
-                                    <!-- <h4 class="header-title m-t-0">Kode outlet : <?php echo $kp ; ?></h4> -->
+                                    <!-- <h4 class="header-title m-t-0">Kode jabatan : <?php echo $kp ; ?></h4> -->
                                 </div>
 
-                                <h4 class="header-title m-t-0">Input Outlet <br></h4>
+                                <h4 class="header-title m-t-0">Input Jabatan <br></h4>
                                 <br>
-                                <form class="form-horizontal group-border-dashed" id="formoutlet">
-                                    <input type="hidden" value="inputoutlet" id="inputoutlet" name="inputoutlet">
+                                <form class="form-horizontal group-border-dashed" id="formjabatan">
+                                    <input type="hidden" value="inputjabatan" id="inputjabatan" name="inputjabatan">
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label">Nama Outlet</label>
+                                        <label class="col-sm-4 control-label">Nama Jabatan</label>
                                         <div class="col-sm-8">
-                                            <input autofocus type="text" class="form-control" required name="noutlet"
-                                                id="noutlet" placeholder="Nama Outlet"></input>
+                                            <input autofocus type="text" class="form-control" required name="njabatan"
+                                                id="njabatan" placeholder="Nama Jabatan"></input>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="col-sm-offset-4 col-sm-6 m-t-15">
                                             <button type="submit" class="btn btn-success waves-effect waves-light"
-                                                name="tombol-outlet" id="tombol-outlet">
-                                                Input Outlet
+                                                name="tombol-jabatan" id="tombol-jabatan">
+                                                Input Jabatan
                                             </button>
                                             <!-- <button type="reset" class="btn btn-default waves-effect m-l-5">
                                                     Cancel
@@ -84,33 +84,31 @@ $juhal = "Outlet";
                                         </ul>
                                     </div> -->
 
-                                <h4 class="header-title m-t-0 m-b-30">Daftar Outlet</h4>
+                                <h4 class="header-title m-t-0 m-b-30">Daftar Jabatan</h4>
+
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kode Outlet</th>
-                                            <th>Nama Outlet</th>
-                                            <th>No Telp</th>
+                                            <th>Kode Jabatan</th>
+                                            <th>Nama Jabatan</th>
                                             <th>Action </th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        <?php foreach ($kodeoutlet as $row ) : ?>
+                                        <?php foreach ($kodejabatan as $row ) : ?>
                                         <tr>
                                             <td width="2%" ;><?= $i ?></td>
-                                            <td>
-                                                <?= $row["kodeoutlet"] ?></td>
-                                            <td><?= ucwords($row["nama"]) ?></td>
-                                            <td><?= $row["notelp"] ?></td>
+                                            <td><?= $row["kodejabatan"] ?></td>
+                                            <td><?= ucwords($row["namajabatan"]) ?></td>
                                             <td>
                                                 <a class="on-default edit-row badge badge-success" data-toggle="modal"
                                                     data-target="#edit<?= $row["id"] ?>"><i
                                                         class="fa fa-pencil"></i></a> |
                                                 <input type="hidden" class="delete_id_value" value="<?=$row["id"]?>">
-                                                <a class="on-default remove-row badge badge-danger tombol-deleteoutlet"><i
+                                                <a
+                                                    class="on-default remove-row badge badge-danger tombol-deletejabatan"><i
                                                         class="fa fa-trash-o"></i></a>
                                             </td>
                                             <div id="edit<?= $row["id"] ?>" class="modal fade" tabindex="-1"
@@ -121,26 +119,25 @@ $juhal = "Outlet";
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-hidden="true">×</button>
-                                                            <h2 class="modal-title">Edit outlet
-                                                                <?= $row["kodeoutlet"] ?></h2>
+                                                            <h2 class="modal-title">Edit jabatan
+                                                                <?= $row["kodejabatan"] ?></h2>
                                                         </div>
                                                         <form method="post" action="">
                                                             <div class="modal-body">
                                                                 <div class="row">
-                                                                    <input type="hidden" value="updateoutlet"
-                                                                        id="updateoutlet" name="updateoutlet">
+                                                                    <input type="hidden" value="updatejabatan"
+                                                                        id="updatejabatan" name="updatejabatan">
                                                                     <input type="hidden" value="<?= $row["id"] ?>"
-                                                                        id="idoutlet" name="idoutlet">
+                                                                        id="idjabatan" name="idjabatan">
                                                                     <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div class="form-group">
-                                                                                <label for="namaoutlet"
+                                                                                <label for="namajabatan"
                                                                                     class="control-label">Nama
-
-                                                                                    Outlet</label>
+                                                                                    Jabatan</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    value="<?= $row["nama"] ?>"
-                                                                                    id="namaoutlet" name="namaoutlet">
+                                                                                    value="<?= $row["namajabatan"] ?>"
+                                                                                    id="namajabatan" name="namajabatan">
                                                                             </div>
                                                                         </div>
 
@@ -154,8 +151,8 @@ $juhal = "Outlet";
                                                             <div class="modal-footer">
                                                                 <button type="submit"
                                                                     class="btn btn-success waves-effect"
-                                                                    id="tombol-updateoutlet"
-                                                                    name="tombol-updateoutlet">Save</button>
+                                                                    id="tombol-updatejabatan"
+                                                                    name="tombol-updatejabatan">Save</button>
                                                             </div>
                                                         </form>
 
@@ -208,17 +205,17 @@ $juhal = "Outlet";
 
 <script>
 $(document).ready(function() {
-    $('#tombol-outlet').click(function(e) {
+    $('#tombol-jabatan').click(function(e) {
 
         e.preventDefault();
-        var dataform = $('#formoutlet')[0];
+        var dataform = $('#formjabatan')[0];
         var data = new FormData(dataform);
 
-        var inputoutlet = $('#inputoutlet').val();
-        var noutlet = $('#noutlet').val();
+        var inputjabatan = $('#inputjabatan').val();
+        var njabatan = $('#njabatan').val();
 
-        if (noutlet == "") {
-            swal("Nama outlet belum di isi!", "", "error")
+        if (njabatan == "") {
+            swal("Nama jabatan belum di isi!", "", "error")
         } else {
             $.ajax({
                 url: '../models/input.php',
@@ -304,11 +301,11 @@ $(document).ready(function() {
     //     }
     // })
 
-    $('.tombol-deleteoutlet').click(function(e) {
+    $('.tombol-deletejabatan').click(function(e) {
         e.preventDefault();
         //alert('hapus');
         //var delete = 'delete';
-        var tabel = 'companypanel';
+        var tabel = 'jabatan';
         var iddelete = $(this).closest('tr').find('.delete_id_value').val();
         swal({
             title: "Apakah Anda Yakin?",

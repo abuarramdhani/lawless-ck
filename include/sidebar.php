@@ -28,6 +28,7 @@
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
+            <br>
             <ul>
                 <?php if($bagian=="Purchasing"): ?>
                 <li class="text-muted menu-title"><?= $bagian  ?></li>
@@ -115,7 +116,27 @@
                     <li class="text-muted menu-title">Data Master</li>
                 </a>
                 <?php elseif ($bagian=="Store") : ?>
+                <a href="../purchasing">
+                    <li class="text-muted menu-title">Purchasing</li>
+                </a>
+                <a href="../inventory">
+                    <li class="text-muted menu-title">Inventory</li>
+                </a>
+                <a href="../production">
+                    <li class="text-muted menu-title">Production</li>
+                </a>
+                <li class="text-muted menu-title"><?= $bagian  ?></li>
+                <a href="../Report">
+                    <li class="text-muted menu-title">Report</li>
+                </a>
+                <a href="../user">
+                    <li class="text-muted menu-title">User</li>
+                </a>
+                <a href="../datamaster">
+                    <li class="text-muted menu-title">Data Master</li>
+                </a>
                 <?php elseif ($bagian=="Report") : ?>
+
                 <?php elseif ($bagian=="User") : ?>
                 <a href="../purchasing">
                     <li class="text-muted menu-title">Purchasing</li>
@@ -142,11 +163,11 @@
                         <span>User</span> </a>
                 </li>
                 <li>
-                    <a href="outlet" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
+                    <a href="../datamaster/outlet" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
                         <span>Outlet</span> </a>
                 </li>
                 <li>
-                    <a href="jabatan" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
+                    <a href="../datamaster/jabatan" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
                         <span>Jabatan</span> </a>
                 </li>
                 <a href="../datamaster">

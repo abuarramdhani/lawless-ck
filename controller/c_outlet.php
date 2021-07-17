@@ -8,8 +8,8 @@ if (isset($_POST["updateoutlet"])) {
     $noutlet = strtolower(htmlspecialchars($_POST["namaoutlet"]));
     
     
-    $query = "UPDATE outlet SET
-                namaoutlet = '$noutlet'
+    $query = "UPDATE companypanel SET
+                nama = '$noutlet'
         WHERE id = $idoutlet
     ";
     $masuk_data = mysqli_query($conn, $query);

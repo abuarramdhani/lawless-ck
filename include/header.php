@@ -17,6 +17,9 @@
 
     <title>Lawless Burger</title>
 
+    <!--venobox lightbox-->
+    <link rel="stylesheet" href="../assets/plugins/magnific-popup/dist/magnific-popup.css" />
+
     <!--Morris Chart CSS -->
     <link rel="stylesheet" href="../assets/plugins/morris/morris.css">
 

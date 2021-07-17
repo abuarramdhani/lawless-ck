@@ -8,9 +8,9 @@ require '../include/fungsi.php';
 require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
-require '../controller/c_form-po.php';
-$bagian = "Purchasing";
-$juhal = "Form PO";
+require '../controller/c_store.php';
+$bagian = "Store";
+$juhal = "Store";
 ?>
 
 
@@ -33,61 +33,240 @@ $juhal = "Form PO";
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn waves-effect waves-light btn-primary"><i
-                                                class="fa fa-search"></i></button>
-                                    </span>
-                                    <input type="text" id="example-input1-group2" name="example-input1-group2"
-                                        class="form-control" placeholder="Search">
+                                <div class="col-lg-6">
+                                    <div class="portfolioFilter">
+                                        <a href="#" data-filter="*" class="current waves-effect waves-primary">All</a>
+                                        <a href="#" data-filter=".natural"
+                                            class="waves-effect waves-primary">Beverage</a>
+                                        <a href="#" data-filter=".creative" class="waves-effect waves-primary">Foods</a>
+                                        <a href="#" data-filter=".personal"
+                                            class="waves-effect waves-primary">Snacks</a>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn waves-effect waves-light btn-primary"><i
+                                                    class="fa fa-search"></i></button>
+                                        </span>
+                                        <input type="text" id="example-input1-group2" name="example-input1-group2"
+                                            class="form-control" placeholder="Search">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="card-box table-responsive">
-                                    <!-- <div class="dropdown pull-right">
-                                        <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown"
-                                            aria-expanded="false">
-                                            <i class="zmdi zmdi-more-vert"></i>
-                                        </a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">Action</a></li>
-                                            <li><a href="#">Another action</a></li>
-                                            <li><a href="#">Something else here</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Separated link</a></li>
-                                        </ul>
-                                    </div>
+                        <div class="col-lg-12">
+                            <div class="card-box" style="height:500px; overflow-y: auto; ">
 
-                                    <h4 class="header-title m-t-0 m-b-30">Default Example</h4> -->
 
-                                    <table id="datatable" class="table table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Kode</th>
-                                                <th>Item</th>
+                                <div class="port mb-2">
+                                    <div class="portfolioContainer">
+                                        <div class="col-md-6 col-xl-3 col-lg-4 natural">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/es kopi 4.jpg" class="image-popup"
+                                                    title="Screenshot-3">
+                                                    <img src="assets/images/food/es kopi 4.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Ice Coffee</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">20.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                            </tr>
-                                        </thead>
+                                        <div class="col-md-6 col-xl-3 col-lg-4 natural">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/es kopi 3.jpg" class="image-popup"
+                                                    title="Screenshot-3">
+                                                    <img src="assets/images/food/es kopi 3.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Ice Coffee</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">20.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                        <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
+                                        <div class="col-md-6 col-xl-3 col-lg-4 natural">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/es kopi 5.jpg" class="image-popup"
+                                                    title="Screenshot-3">
+                                                    <img src="assets/images/food/es kopi 5.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Hot Coffee</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                            </tr>
+                                        <div class="col-md-6 col-xl-3 col-lg-4 creative">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/Rice Bowl.jpg" class="image-popup"
+                                                    title="Screenshot-2">
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div><!-- end col -->
+                                                    <img src="assets/images/food/Rice Bowl.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Rice Bowl</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">25.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 creative">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/steak.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="assets/images/food/steak.jpg" class="thumb-img img-fluid"
+                                                        alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Steak</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">55.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/Kue Sus.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="assets/images/food/Kue Sus.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Sous Cake</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="assets/images/food/Donuts.jpg" class="thumb-img img-fluid"
+                                                        alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="assets/images/food/Donuts.jpg" class="thumb-img img-fluid"
+                                                        alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="assets/images/food/Donuts.jpg" class="thumb-img img-fluid"
+                                                        alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="assets/images/food/Donuts.jpg" class="thumb-img img-fluid"
+                                                        alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="assets/images/food/Donuts.jpg" class="thumb-img img-fluid"
+                                                        alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="assets/images/food/Donuts.jpg" class="thumb-img img-fluid"
+                                                        alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="assets/images/food/Donuts.jpg" class="thumb-img img-fluid"
+                                                        alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+                                    </div><!-- end portfoliocontainer-->
+                                </div> <!-- End row -->
+                            </div> <!-- card box -->
                         </div>
-                        <!-- end row -->
                     </div>
                     <div class="col-lg-6">
                         <div class="row">

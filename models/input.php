@@ -548,4 +548,48 @@ if (isset($_POST['kasmasuk'])) {
     } else {
         echo 1;
     }
+}else if (isset($_POST['inputjabatan'])) {
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM jabatan ");
+    //cek ada data?
+    if (mysqli_num_rows($cekdata) > 0) {
+    $kodejabatan = query("SELECT * FROM jabatan ORDER BY id DESC LIMIT 1")[0];
+    $kodes = substr($kodejabatan['kodejabatan'],3);
+    $noUrut = (int) $kodes;
+    $noUrut++;    
+    $newkodetr = sprintf("%03s", $noUrut);
+    }else {
+        $newkodetr = "001";
+    }
+        
+    $kode = "JAB";
+    $kp = $kode.$newkodetr;
+
+    $njabatan = strtolower(htmlspecialchars($_POST["njabatan"]));
+    
+
+    $ceknama = mysqli_query($conn, "SELECT * FROM jabatan WHERE namajabatan ='$njabatan' ");
+    
+    if (mysqli_fetch_assoc($ceknama)) {
+        echo "<script>
+                alert('nama jabatan sudah terdaftar');
+                document.location.href = 'jabatan';
+            </script>";
+        return false;
+
+    }
+
+    //query insert data
+    $query = "INSERT INTO jabatan 
+                VALUES 
+                ('','$kp','$njabatan','1')
+            ";    
+
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        
+        echo 3;
+    } else {
+        echo 1;
+    }
 }
