@@ -17,6 +17,13 @@
 
     <title>Lawless Burger</title>
 
+    <!-- form Uploads -->
+    <link href="../assets/plugins/fileuploads/css/dropify.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- X-editable css -->
+    <link type="text/css" href="../assets/plugins/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css"
+        rel="stylesheet">
+
     <!--venobox lightbox-->
     <link rel="stylesheet" href="../assets/plugins/magnific-popup/dist/magnific-popup.css" />
 

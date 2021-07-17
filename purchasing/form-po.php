@@ -69,6 +69,7 @@ $juhal = "Form PO";
                                                 <th>Kode</th>
                                                 <th>Item</th>
 
+
                                             </tr>
                                         </thead>
 
@@ -77,8 +78,15 @@ $juhal = "Form PO";
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
                                                 <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td>Garrett Winters</td>
+                                                <td>Accountant</td>
+                                                <td>Tokyo</td>
+
+
 
                                             </tr>
 

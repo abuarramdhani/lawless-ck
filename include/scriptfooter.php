@@ -79,6 +79,29 @@ var resizefunc = [];
 <script src="../assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
 <script src="../assets/pages/jquery.sweet-alert.init.js"></script>
 
+<!-- XEditable Plugin -->
+<script src="../assets/plugins/moment/moment.js"></script>
+<script type="text/javascript" src="../assets/plugins/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js">
+</script>
+<script type="text/javascript" src="../assets/pages/jquery.xeditable.js"></script>
+
+<!-- file uploads js -->
+<script src="../assets/plugins/fileuploads/js/dropify.min.js"></script>
+
+<script type="text/javascript">
+$('.dropify').dropify({
+    messages: {
+        'default': 'Drag and drop a file here or click',
+        'replace': 'Drag and drop or click to replace',
+        'remove': 'Remove',
+        'error': 'Ooops, something wrong appended.'
+    },
+    error: {
+        'fileSize': 'The file size is too big (1M max).'
+    }
+});
+</script>
+
 <script type="text/javascript">
 $(window).load(function() {
     var $container = $('.portfolioContainer');
