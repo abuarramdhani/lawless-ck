@@ -1,9 +1,9 @@
 <?php
 
-    $user = query("SELECT * FROM admin WHERE email = '" . $_SESSION['email'] . "'")[0];
-    $email = $user["email"];
-    $username = $user["username"];
-    $userrole = $user["userrole"];
+$user = query("SELECT * FROM admin WHERE email = '" . $_SESSION['email'] . "'")[0];
+$email = $user["email"];
+$username = $user["username"];
+// $userrole = $user["userrole"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,8 +37,7 @@
     <link href="../assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
     <link href="../assets/plugins/switchery/switchery.min.css" rel="stylesheet" />
     <link href="../assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
-    <link href="../assets/plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css"
-        rel="stylesheet">
+    <link href="../assets/plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
     <link href="../assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="../assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 

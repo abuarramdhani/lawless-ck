@@ -7,8 +7,8 @@ if (isset($_POST["updatesupplier"])) {
     $idsupplier = $_POST["idsupplier"];
     $nsupplier = strtolower(htmlspecialchars($_POST["namasupplier"]));
     $nohp = htmlspecialchars($_POST["nohpsupplier"]);
-    $alamat = htmlspecialchars($_POST["alamatsupplier"]);  
-    
+    $alamat = htmlspecialchars($_POST["alamatsupplier"]);
+
     $query = "UPDATE supplier SET
                 namasupplier = '$nsupplier',
                 nohp = '$nohp',
@@ -29,4 +29,4 @@ if (isset($_POST["updatesupplier"])) {
             </script>";
         //echo 1;
     }
-}   
+}
