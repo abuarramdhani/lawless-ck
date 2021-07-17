@@ -19,33 +19,37 @@ $juhal = "Form PO";
     <!-- Begin page -->
     <div id="wrapper">
 
-        <?php require '../include/topbar.php';?>
+        <?php require '../include/topbar.php'; ?>
 
-        <?php require '../include/sidebar.php';?>
+        <?php require '../include/sidebar.php'; ?>
 
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
         <div class="content-page">
             <!-- Start content -->
+
             <div class="content">
-                <div class="container">
+                <div class="container" style="margin-top: 5px;">
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn waves-effect waves-light btn-primary"><i
-                                                class="fa fa-search"></i></button>
-                                    </span>
-                                    <input type="text" id="example-input1-group2" name="example-input1-group2"
-                                        class="form-control" placeholder="Search">
-                                </div>
+                                <form action="" method="POST">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn waves-effect waves-light btn-primary"><i
+                                                    class="fa fa-search"></i></button>
+                                        </span>
+                                        <input type="text" id="example-input1-group2" name="keyword_form-po"
+                                            class="form-control" placeholder="Search">
+                                    </div>
+                                </form>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="card-box table-responsive">
+                                <div class="card-box table-responsive" style=" margin-top: 10px;">
                                     <!-- <div class="dropdown pull-right">
                                         <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown"
                                             aria-expanded="false">
@@ -61,34 +65,46 @@ $juhal = "Form PO";
                                     </div>
 
                                     <h4 class="header-title m-t-0 m-b-30">Default Example</h4> -->
-
+                                    <?php $i = 1 ?>
                                     <table id="datatable" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
                                                 <th>Kode</th>
                                                 <th>Item</th>
-
-
+                                                <<<<<<< HEAD=======<th data-priority="1">Aksi</th>
+                                                    >>>>>>> 9d830d3467604280f82f895c41eeff3f81b6aed0
                                             </tr>
                                         </thead>
-
                                         <tbody>
-                                            <tr>
+                                            <<<<<<< HEAD <tr>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
                                                 <td>Edinburgh</td>
 
-
-                                            </tr>
-                                            <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-
+                                                </tr>
+                                                <tr>
+                                                    <td>Garrett Winters</td>
+                                                    <td>Accountant</td>
+                                                    <td>Tokyo</td>
 
 
-                                            </tr>
+
+                                                </tr>
+                                                =======
+                                                <?php if ($keyword) : ?>
+                                                <?php foreach ($bahan as $b) : ?>
+                                                <tr>
+                                                    <td><?= $i++; ?></td>
+                                                    <td><?= $b['kodebahan'] ?></td>
+                                                    <td><?= $b['namabahan']; ?></td>
+                                                    <td> <button
+                                                            class="btn btn-icon waves-effect waves-light btn-success m-b-5">
+                                                            <i class="fa fa-plus"></i> </button></td>
+                                                </tr>
+                                                <?php endforeach ?>
+                                                <?php endif ?>
+                                                >>>>>>> 9d830d3467604280f82f895c41eeff3f81b6aed0
 
                                         </tbody>
                                     </table>
@@ -121,56 +137,74 @@ $juhal = "Form PO";
                                                             <td>20000</td>
                                                             <td width="5"><input type="number" width="5"></td>
                                                             <td>40000</td>
-                                                            <td>X</td>
+                                                            <td><button
+                                                                    class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
+                                                                    <i class="fa fa-remove"></i> </button></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Rice Bowl</span></th>
                                                             <td>25000</td>
                                                             <td width="5"><input type="number" width="5"></td>
                                                             <td>50000</td>
-                                                            <td>X</td>
+                                                            <td><button
+                                                                    class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
+                                                                    <i class="fa fa-remove"></i> </button></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Ice Coffee</span></th>
                                                             <td>20000</td>
                                                             <td width="5"><input type="number" width="5"></td>
                                                             <td>40000</td>
-                                                            <td>X</td>
+                                                            <td><button
+                                                                    class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
+                                                                    <i class="fa fa-remove"></i> </button></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Rice Bowl</span></th>
                                                             <td>25000</td>
                                                             <td width="5"><input type="number" width="5"></td>
                                                             <td>50000</td>
-                                                            <td>X</td>
+                                                            <td><button
+                                                                    class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
+                                                                    <i class="fa fa-remove"></i> </button></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Ice Coffee</span></th>
                                                             <td>20000</td>
                                                             <td width="5"><input type="number" width="5"></td>
                                                             <td>40000</td>
-                                                            <td>X</td>
+                                                            <td><button
+                                                                    class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
+                                                                    <i class="fa fa-remove"></i> </button></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Rice Bowl</span></th>
                                                             <td>25000</td>
                                                             <td width="5"><input type="number" width="5"></td>
                                                             <td>50000</td>
-                                                            <td>X</td>
+                                                            <td>
+                                                                <button
+                                                                    class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
+                                                                    <i class="fa fa-remove"></i> </button>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <th>Ice Coffee</span></th>
                                                             <td>20000</td>
                                                             <td width="5"><input type="number" width="5"></td>
                                                             <td>40000</td>
-                                                            <td>X</td>
+                                                            <td><button
+                                                                    class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
+                                                                    <i class="fa fa-remove"></i> </button></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Rice Bowl</span></th>
                                                             <td>25000</td>
                                                             <td width="5"><input type="number" width="5"></td>
                                                             <td>50000</td>
-                                                            <td>X</td>
+                                                            <td><button
+                                                                    class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
+                                                                    <i class="fa fa-remove"></i> </button></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -180,73 +214,95 @@ $juhal = "Form PO";
                                 </div>
                             </div>
 
+
                             <div class="card-box" style="height:170px; ">
+                                <form class="form-horizontal" role="form">
 
-                                <div class="form-group row">
-                                    <div class="col-sm-4">
-
-                                        <label class="  col-form-label" for="example-input-normal">Total</label><br>
-                                        <label class="  col-form-label" for="example-input-normal">Discount
-                                        </label><br>
-                                        <label class="  col-form-label" for="example-input-normal">Tax</label>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Total</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static">Rp. 90.000.00</p>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-3">
 
-                                        <label class="  col-form-label" for="example-input-normal">: Rp 90.000
-                                        </label><br>
-                                        <label class="  col-form-label" for="example-input-normal">: ....
-                                        </label><br>
-                                        <label class="  col-form-label" for="example-input-normal">: .... </label>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Supplier</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control">
+                                                <option>Sejahterah buah</option>
+                                                <option>Toko Sayur</option>
+                                                <option>Indah Fresh</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+
+                                        </div>
                                     </div>
-                                    <div class="col-sm-5">
-                                        <button class="btn btn-primary waves-effect waves-light btn-lg">
-                                            <!-- <i class="far fa-money-bill-alt ml-1"></i> --> PAY
-                                        </button><br>
-                                        <label class="  col-form-label" for="example-input-normal">Changes : ....
-                                        </label><br>
+
+                                    <div class="form-group  text-center" style="margin-top: 10px;">
+                                        <button class="btn btn-danger waves-effect waves-light mr-1">
+                                            <span>Batal</span>
+                                        </button>
+                                        <button class="btn btn-purple waves-effect waves-light mr-1">
+                                            <span>Simpan</span>
+                                        </button>
+                                    </div>
+
+                                </form>
+
+                                <!-- <div class="form-group">
+                                    <label class="col-sm-2 control-label">Total</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static">Rp. 90.000.00</p>
                                     </div>
                                 </div>
-                                <div class="form-group row text-center">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Suplier</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="form-group  text-center" style="margin-top: 10px;">
                                     <button class="btn btn-danger waves-effect waves-light mr-1">
                                         <span>Cancel</span>
                                     </button>
                                     <button class="btn btn-purple waves-effect waves-light mr-1"> <span>Save</span>
-                                    </button>
-                                    <button class="btn btn-purple waves-effect waves-light mr-1"> <span>Notes</span>
-                                    </button>
-                                    <button class="btn btn-purple waves-effect waves-light mr-1">
-                                        <span>Discount</span>
-                                    </button>
-                                    <button class="btn btn-purple waves-effect waves-light mr-1">
-                                        <span>Reprint</span>
-                                    </button>
-                                </div>
+                                    </button> -->
+
                             </div>
                         </div>
                     </div>
-                </div> <!-- container -->
+                </div>
+            </div> <!-- container -->
 
 
 
-            </div> <!-- content -->
+        </div> <!-- content -->
 
-            <?php require '../include/footer.php';?>
+        <?php require '../include/footer.php'; ?>
 
-        </div>
+    </div>
 
 
-        <!-- ============================================================== -->
-        <!-- End Right content here -->
-        <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
 
-        <?php require '../include/rightsidebar.php';?>
+    <?php require '../include/rightsidebar.php'; ?>
 
 
 
     </div>
     <!-- END wrapper -->
 
-    <?php require '../include/scriptfooter.php';?>
+    <?php require '../include/scriptfooter.php'; ?>
 
 </body>
 
