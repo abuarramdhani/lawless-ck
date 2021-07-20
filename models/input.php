@@ -488,7 +488,7 @@ if (isset($_POST['kasmasuk'])) {
     //query insert data
     $query = "INSERT INTO bahan 
                 VALUES 
-                ('','$kp','$nbahan')
+                ('','$kp','$nbahan','','')
             ";
 
     $masuk_data = mysqli_query($conn, $query);
