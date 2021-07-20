@@ -584,4 +584,97 @@ if (isset($_POST['kasmasuk'])) {
     } else {
         echo 1;
     }
+}else if (isset($_POST['inputkategoriproduk'])) {
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM kategoriproduk ");
+    //cek ada data?
+    if (mysqli_num_rows($cekdata) > 0) {
+        $kodekategoriproduk = query("SELECT * FROM kategoriproduk ORDER BY id DESC LIMIT 1")[0];
+        $kodes = substr($kodekategoriproduk['kodekategoriproduk'], 3);
+        $noUrut = (int) $kodes;
+        $noUrut++;
+        $newkodetr = sprintf("%03s", $noUrut);
+    } else {
+        $newkodetr = "001";
+    }
+
+    $kode = "KAP";
+    $kp = $kode . $newkodetr;
+
+    $nkategoriproduk = strtolower(htmlspecialchars($_POST["nkategoriproduk"]));
+
+
+    $ceknama = mysqli_query($conn, "SELECT * FROM kategoriproduk WHERE namakategoriproduk ='$nkategoriproduk' ");
+
+    if (mysqli_fetch_assoc($ceknama)) {
+        echo "<script>
+                alert('nama kategoriproduk sudah terdaftar');
+                document.location.href = 'kategoriproduk';
+            </script>";
+        return false;
+    }
+
+    //query insert data
+    $query = "INSERT INTO kategoriproduk 
+                VALUES 
+                ('','$kp','$nkategoriproduk')
+            ";
+
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+
+        echo 3;
+    } else {
+        echo 1;
+    }
+}else if (isset($_POST['inputproduk'])) {
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM produk ");
+    //cek ada data?
+    if (mysqli_num_rows($cekdata) > 0) {
+        $kodeproduk = query("SELECT * FROM produk ORDER BY id DESC LIMIT 1")[0];
+        $kodes = substr($kodeproduk['kodeproduk'], 3);
+        $noUrut = (int) $kodes;
+        $noUrut++;
+        $newkodetr = sprintf("%03s", $noUrut);
+    } else {
+        $newkodetr = "001";
+    }
+
+    $kode = "PRO";
+    $kp = $kode . $newkodetr;
+
+    $nkategoriproduk = htmlspecialchars($_POST["nkategoriproduk"]);
+    $nproduk = strtolower(htmlspecialchars($_POST["nproduk"]));
+    $nharga = htmlspecialchars($_POST["nharga"]);
+    $ngambar = $_POST["ngambar"];
+    if ($ngambar!=""){
+        $gambar = $ngambar;
+    }else{
+        $gambar = "no_image.jpg";
+    }
+
+    $ceknama = mysqli_query($conn, "SELECT * FROM produk WHERE namaproduk ='$nproduk' ");
+
+    if (mysqli_fetch_assoc($ceknama)) {
+        echo "<script>
+                alert('nama produk sudah terdaftar');
+                document.location.href = 'produk';
+            </script>";
+        return false;
+    }
+
+    //query insert data
+    $query = "INSERT INTO produk 
+                VALUES 
+                ('','$kp','$nkategoriproduk','$nproduk','$nharga','$gambar')
+            ";
+
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+
+        echo 3;
+    } else {
+        echo 1;
+    }
 }

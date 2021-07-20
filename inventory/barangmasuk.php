@@ -9,8 +9,8 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 //require '../controller/c_form-po.php';
-$bagian = "Store";
-$juhal = "Store";
+$bagian = "Inventory";
+$juhal = "Bahan Masuk";
 ?>
 
 
@@ -32,16 +32,8 @@ $juhal = "Store";
             <div class="content">
                 <div class="container" style="margin-top: 5px;">
                     <div class="col-lg-6">
-                        <div class="col-lg-6">
-                            <div class="portfolioFilter">
-                                <a href="#" data-filter="*" class="current waves-effect waves-primary">All</a>
-                                <a href="#" data-filter=".natural" class="waves-effect waves-primary">Beverage</a>
-                                <a href="#" data-filter=".creative" class="waves-effect waves-primary">Foods</a>
-                                <a href="#" data-filter=".personal" class="waves-effect waves-primary">Snacks</a>
-                            </div>
-                        </div>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <form>
                                     <div class="input-group">
                                         <span class="input-group-btn">
@@ -55,220 +47,47 @@ $juhal = "Store";
                             </div>
                         </div>
 
-                        <div class="col-lg-12">
-                            <div class="card-box" style="height:550px; overflow-y: auto; ">
-                                <div class="port mb-2">
-                                    <div class="portfolioContainer">
-                                        <div class="col-md-6 col-xl-3 col-lg-4 natural">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-3">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">20.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive" style=" margin-top: 10px;">
+                                    <!-- <div class="dropdown pull-right">
+                                        <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <i class="zmdi zmdi-more-vert"></i>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Separated link</a></li>
+                                        </ul>
+                                    </div>
 
-                                        <div class="col-md-6 col-xl-3 col-lg-4 natural">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-3">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">20.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <h4 class="header-title m-t-0 m-b-30">Default Example</h4> -->
+                                    <?php $i = 1 ?>
+                                    <table id="barang" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Kode</th>
+                                                <th>Item</th>
+                                                <th data-priority="1">Aksi</th>
 
-                                        <div class="col-md-6 col-xl-3 col-lg-4 natural">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-3">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">15.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-xl-3 col-lg-4 creative">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-2">
-
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">25.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-xl-3 col-lg-4 creative">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-2">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">55.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-2">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">15.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-2">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">15.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-2">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">15.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-2">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">15.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-2">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">15.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-2">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">15.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-2">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">15.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
-                                            <div class="gal-detail thumb">
-                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
-                                                    title="Screenshot-2">
-                                                    <img src="../assets/images/products/no_image.jpg"
-                                                        class="thumb-img img-fluid" alt="work-thumbnail">
-                                                </a>
-                                                <div class="text-center">
-                                                    <h4>Name Product</h4>
-                                                    <p class="font-13 text-muted mb-2"><span
-                                                            class="badge badge-primary badge-pill">15.000</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-
-
-
-
-                                    </div><!-- end portfoliocontainer-->
-                                </div> <!-- End row -->
-                            </div> <!-- card box -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><!-- end col -->
                         </div>
+                        <!-- end row -->
                     </div>
                     <div class="col-lg-6">
                         <div class="row">
                             <form class="form-horizontal" role="formpo" method="POST" action="input.php">
-                                <div class="card-box" style="height:400px; overflow-y: auto;">
+                                <div class="card-box" style="height:350px; overflow-y: auto;">
                                     <div class="col-lg-12">
                                         <div class="responsive-table-plugin">
                                             <div class="table-rep-plugin">
@@ -321,12 +140,19 @@ $juhal = "Store";
                                             <!-- <p class="form-control-static" id="total-harga" name="total_keseluruhan"></p> -->
                                         </div>
                                     </div>
-
+                                    <?php $kodesupplierr = query("SELECT * FROM supplier ORDER BY id DESC "); ?>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Outlet</label>
+                                        <label class="col-sm-2 control-label">Supplier</label>
                                         <div class="col-sm-10">
-                                            <input type="text" readonly name="outlet" id="outlet" class="form-control"
-                                                value="outlet">
+                                            <select class="form-control select2" name="supplier">
+                                                <option>Pilih Supplier</option>
+                                                <?php foreach ($kodesupplierr as $row) : ?>
+                                                <option value="<?php $row["kodesupplier"] ?>">
+                                                    <?= ucwords($row["namasupplier"]) ?></option>
+                                                <?php endforeach; ?>
+
+                                            </select>
+
                                         </div>
                                     </div>
 
@@ -335,7 +161,7 @@ $juhal = "Store";
                                             <span>Batal</span>
                                         </button>
                                         <button class="btn btn-purple waves-effect waves-light mr-1" id="simpan">
-                                            <span>Kirim Order</span>
+                                            <span>Simpan</span>
                                         </button>
                                     </div>
 

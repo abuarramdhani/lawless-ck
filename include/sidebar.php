@@ -79,6 +79,14 @@
                     <li class="text-muted menu-title">Purchasing</li>
                 </a>
                 <li class="text-muted menu-title"><?= $bagian  ?></li>
+                <li>
+                    <a href="barangmasuk" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span>Barang Masuk</span> </a>
+                </li>
+                <li>
+                    <a href="index" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span>Data Bahan</span> </a>
+                </li>
                 <a href="../production">
                     <li class="text-muted menu-title">Production</li>
                 </a>
@@ -209,6 +217,14 @@
                 <li>
                     <a href="unit" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
                         <span>Unit</span> </a>
+                </li>
+                <li>
+                    <a href="kategori-produk" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span>Kategori Produk</span> </a>
+                </li>
+                <li>
+                    <a href="produk" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span>Produk</span> </a>
                 </li>
                 <li>
                     <a href="item-bahan" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
