@@ -92,7 +92,8 @@ $juhal = "Item-Bahan";
                                             <th>No</th>
                                             <th>Kode bahan</th>
                                             <th>Nama bahan</th>
-
+                                            <th>Harga Beli</th>
+                                            <th>Harga Jual</th>
                                             <th>Action </th>
                                         </tr>
                                     </thead>
@@ -102,9 +103,10 @@ $juhal = "Item-Bahan";
                                         <?php foreach ($kodebahan as $row ) : ?>
                                         <tr>
                                             <td width="2%" ;><?= $i ?></td>
-                                            <td>
-                                                <?= $row["kodebahan"] ?></td>
+                                            <td><?= $row["kodebahan"] ?></td>
                                             <td><?= ucwords($row["namabahan"]) ?></td>
+                                            <td><?= $row["harga"] ?></td>
+                                            <td><?= $row["hargaj"] ?></td>
                                             <td>
                                                 <a class="on-default edit-row badge badge-success" data-toggle="modal"
                                                     data-target="#edit<?= $row["id"] ?>"><i
@@ -144,6 +146,28 @@ $juhal = "Item-Bahan";
                                                                         </div>
 
 
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label for="hargabeli"
+                                                                                    class="control-label">Harga
+                                                                                    Beli</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    value="<?= $row["harga"] ?>"
+                                                                                    id="hargabeli" name="hargabeli">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label for="hargajual"
+                                                                                    class="control-label">Harga
+                                                                                    Jual</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    value="<?= $row["hargaj"] ?>"
+                                                                                    id="hargajual" name="hargajual">
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 

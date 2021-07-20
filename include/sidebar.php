@@ -126,6 +126,14 @@
                     <li class="text-muted menu-title">Production</li>
                 </a>
                 <li class="text-muted menu-title"><?= $bagian  ?></li>
+                <li>
+                    <a href="index" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span>Store</span> </a>
+                </li>
+                <li>
+                    <a href="storebahan" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span>Store Bahan</span> </a>
+                </li>
                 <a href="../Report">
                     <li class="text-muted menu-title">Report</li>
                 </a>

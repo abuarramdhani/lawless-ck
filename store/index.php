@@ -30,173 +30,367 @@ $juhal = "Store";
             <!-- Start content -->
             <div class="content">
                 <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-6">
-                            <!-- SECTION FILTER ================================================== -->
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="portfolioFilter">
-                                        <a href="#" data-filter="*" class="current waves-effect waves-custom">All</a>
-                                        <a href="#" data-filter=".natural" class="waves-effect waves-custom">Food</a>
-                                        <a href="#" data-filter=".creative"
-                                            class="waves-effect waves-custom">Baverage</a>
-                                        <a href="#" data-filter=".personal" class="waves-effect waves-custom">Saos</a>
-                                        <a href="#" data-filter=".photography"
-                                            class="waves-effect waves-custom">Snack</a>
+                                        <a href="#" data-filter="*" class="current waves-effect waves-primary">All</a>
+                                        <a href="#" data-filter=".natural"
+                                            class="waves-effect waves-primary">Beverage</a>
+                                        <a href="#" data-filter=".creative" class="waves-effect waves-primary">Foods</a>
+                                        <a href="#" data-filter=".personal"
+                                            class="waves-effect waves-primary">Snacks</a>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn waves-effect waves-light btn-primary"><i
+                                                    class="fa fa-search"></i></button>
+                                        </span>
+                                        <input type="text" id="example-input1-group2" name="example-input1-group2"
+                                            class="form-control" placeholder="Search">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card-box" style="height:500px; overflow-y: auto; ">
+                                <div class="port mb-2">
+                                    <div class="portfolioContainer">
+                                        <div class="col-md-6 col-xl-3 col-lg-4 natural">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/products/no_image.jpg" class="image-popup"
+                                                    title="Screenshot-3">
+                                                    <img src="../assets/images/products/no_image.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Ice Coffee</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">20.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 natural">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/es kopi 3.jpg" class="image-popup"
+                                                    title="Screenshot-3">
+                                                    <img src="../assets/images/food/es kopi 3.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Ice Coffee</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">20.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 natural">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/es kopi 5.jpg" class="image-popup"
+                                                    title="Screenshot-3">
+                                                    <img src="../assets/images/food/es kopi 5.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Hot Coffee</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 creative">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/Rice Bowl.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+
+                                                    <img src="../assets/images/food/Rice Bowl.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Rice Bowl</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">25.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 creative">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/steak.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="../assets/images/food/steak.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Steak</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">55.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/Kue Sus.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="../assets/images/food/Kue Sus.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Sous Cake</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="../assets/images/food/Donuts.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="../assets/images/food/Donuts.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="../assets/images/food/Donuts.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="../assets/images/food/Donuts.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="../assets/images/food/Donuts.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="../assets/images/food/Donuts.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-3 col-lg-4 personal">
+                                            <div class="gal-detail thumb">
+                                                <a href="../assets/images/food/Donuts.jpg" class="image-popup"
+                                                    title="Screenshot-2">
+                                                    <img src="../assets/images/food/Donuts.jpg"
+                                                        class="thumb-img img-fluid" alt="work-thumbnail">
+                                                </a>
+                                                <div class="text-center">
+                                                    <h4>Donuts</h4>
+                                                    <p class="font-13 text-muted mb-2"><span
+                                                            class="badge badge-primary badge-pill">15.000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+                                    </div><!-- end portfoliocontainer-->
+                                </div> <!-- End row -->
+                            </div> <!-- card box -->
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="card-box" style="height:350px; overflow-y: auto;">
+                                <div class="col-lg-12">
+                                    <div class="responsive-table-plugin">
+                                        <div class="table-rep-plugin">
+                                            <div class="table-responsive" data-pattern="priority-columns">
+                                                <table id="tech-companies-1" class="table table-striped mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nama Barang</th>
+                                                            <th data-priority="1">Harga</th>
+
+                                                            <th data-priority="3">Jumlah</th>
+                                                            <th data-priority="1">Subtotal</th>
+                                                            <th data-priority="1">Aksi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Ice Coffee</span></th>
+                                                            <td>20000</td>
+                                                            <td width="5"><input type="number" width="5"></td>
+                                                            <td>40000</td>
+                                                            <td>X</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Rice Bowl</span></th>
+                                                            <td>25000</td>
+                                                            <td width="5"><input type="number" width="5"></td>
+                                                            <td>50000</td>
+                                                            <td>X</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Ice Coffee</span></th>
+                                                            <td>20000</td>
+                                                            <td width="5"><input type="number" width="5"></td>
+                                                            <td>40000</td>
+                                                            <td>X</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Rice Bowl</span></th>
+                                                            <td>25000</td>
+                                                            <td width="5"><input type="number" width="5"></td>
+                                                            <td>50000</td>
+                                                            <td>X</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Ice Coffee</span></th>
+                                                            <td>20000</td>
+                                                            <td width="5"><input type="number" width="5"></td>
+                                                            <td>40000</td>
+                                                            <td>X</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Rice Bowl</span></th>
+                                                            <td>25000</td>
+                                                            <td width="5"><input type="number" width="5"></td>
+                                                            <td>50000</td>
+                                                            <td>X</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Ice Coffee</span></th>
+                                                            <td>20000</td>
+                                                            <td width="5"><input type="number" width="5"></td>
+                                                            <td>40000</td>
+                                                            <td>X</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Rice Bowl</span></th>
+                                                            <td>25000</td>
+                                                            <td width="5"><input type="number" width="5"></td>
+                                                            <td>50000</td>
+                                                            <td>X</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row port m-b-20">
-                                <div class="portfolioContainer">
-                                    <div class="col-sm-6 col-lg-4 col-md-4 natural personal">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/1.jpg" class="image-popup"
-                                                title="Screenshot-1">
-                                                <img src="../assets/images/gallery/1.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Nature Image</h4>
+                            <div class="card-box" style="height:170px; ">
 
-                                        </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4">
+
+                                        <label class="  col-form-label" for="example-input-normal">Total</label><br>
+                                        <label class="  col-form-label" for="example-input-normal">Discount
+                                        </label><br>
+                                        <label class="  col-form-label" for="example-input-normal">Tax</label>
                                     </div>
+                                    <div class="col-sm-3">
 
-                                    <div class="col-sm-6 col-lg-4 col-md-4 creative personal photography">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/2.jpg" class="image-popup"
-                                                title="Screenshot-2">
-                                                <img src="../assets/images/gallery/2.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Gallary Image</h4>
-
-                                        </div>
+                                        <label class="  col-form-label" for="example-input-normal">: Rp 90.000
+                                        </label><br>
+                                        <label class="  col-form-label" for="example-input-normal">: ....
+                                        </label><br>
+                                        <label class="  col-form-label" for="example-input-normal">: .... </label>
                                     </div>
-
-                                    <div class="col-sm-6 col-lg-4 col-md-4 natural creative">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/3.jpg" class="image-popup"
-                                                title="Screenshot-3">
-                                                <img src="../assets/images/gallery/3.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Gallary Image</h4>
-
-                                        </div>
+                                    <div class="col-sm-5">
+                                        <button class="btn btn-primary waves-effect waves-light btn-lg">
+                                            <!-- <i class="far fa-money-bill-alt ml-1"></i> --> PAY
+                                        </button><br>
+                                        <label class="  col-form-label" for="example-input-normal">Changes : ....
+                                        </label><br>
                                     </div>
-
-                                    <div class="col-sm-6 col-lg-4 col-md-4 personal photography">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/4.jpg" class="image-popup"
-                                                title="Screenshot-4">
-                                                <img src="../assets/images/gallery/4.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Gallary Image</h4>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 col-lg-4 col-md-4 creative photography">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/5.jpg" class="image-popup"
-                                                title="Screenshot-5">
-                                                <img src="../assets/images/gallery/5.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Gallary Image</h4>
-
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 col-lg-4 col-md-4 natural photography">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/6.jpg" class="image-popup"
-                                                title="Screenshot-6">
-                                                <img src="../assets/images/gallery/6.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Gallary Image</h4>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 col-lg-4 col-md-4 personal photography creative">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/7.jpg" class="image-popup"
-                                                title="Screenshot-7">
-                                                <img src="../assets/images/gallery/7.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Gallary Image</h4>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 col-lg-4 col-md-4 creative photography natural">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/8.jpg" class="image-popup"
-                                                title="Screenshot-8">
-                                                <img src="../assets/images/gallery/8.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Gallary Image</h4>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 col-lg-4 col-md-4 natural personal">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/9.jpg" class="image-popup"
-                                                title="Screenshot-9">
-                                                <img src="../assets/images/gallery/9.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Gallary Image</h4>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 col-lg-4 col-md-4 photography creative">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/10.jpg" class="image-popup"
-                                                title="Screenshot-10">
-                                                <img src="../assets/images/gallery/10.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Gallary Image</h4>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 col-lg-4 col-md-4 creative photography">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/11.jpg" class="image-popup"
-                                                title="Screenshot-11">
-                                                <img src="../assets/images/gallery/11.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Gallary Image</h4>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 col-lg-4 col-md-4 natural creative personal">
-                                        <div class="gal-detail thumb">
-                                            <a href="../assets/images/gallery/12.jpg" class="image-popup"
-                                                title="Screenshot-12">
-                                                <img src="../assets/images/gallery/12.jpg" class="thumb-img"
-                                                    alt="work-thumbnail">
-                                            </a>
-                                            <h4>Gallary Image</h4>
-
-                                        </div>
-                                    </div>
-
-                                </div><!-- end portfoliocontainer-->
-                            </div> <!-- End row -->
+                                </div>
+                                <div class="form-group row text-center">
+                                    <button class="btn btn-danger waves-effect waves-light mr-1">
+                                        <span>Cancel</span>
+                                    </button>
+                                    <button class="btn btn-purple waves-effect waves-light mr-1"> <span>Save</span>
+                                    </button>
+                                    <button class="btn btn-purple waves-effect waves-light mr-1"> <span>Notes</span>
+                                    </button>
+                                    <button class="btn btn-purple waves-effect waves-light mr-1">
+                                        <span>Discount</span>
+                                    </button>
+                                    <button class="btn btn-purple waves-effect waves-light mr-1">
+                                        <span>Reprint</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div> <!-- container -->

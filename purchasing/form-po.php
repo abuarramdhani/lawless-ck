@@ -37,9 +37,11 @@ $juhal = "Form PO";
                                 <form>
                                     <div class="input-group">
                                         <span class="input-group-btn">
-                                            <button type="submit" class="btn waves-effect waves-light btn-primary"><i class="fa fa-search"></i></button>
+                                            <button type="submit" class="btn waves-effect waves-light btn-primary"><i
+                                                    class="fa fa-search"></i></button>
                                         </span>
-                                        <input type="text" id="search" name="keyword_form-po" class="form-control" placeholder="Search" oninput="loadData();">
+                                        <input type="text" id="search" name="keyword_form-po" class="form-control"
+                                            placeholder="Search" oninput="loadData();">
                                     </div>
                                 </form>
                             </div>
@@ -133,20 +135,22 @@ $juhal = "Form PO";
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" name="total_keseluruhan">Total</label>
                                         <div class="col-sm-10">
-                                            <input type="text" readonly name="total_keseluruhan" id="total-harga" class="form-control" value="Rp. 0">
+                                            <input type="text" readonly name="total_keseluruhan" id="total-harga"
+                                                class="form-control" value="Rp. 0">
                                             <!-- <p class="form-control-static" id="total-harga" name="total_keseluruhan"></p> -->
                                         </div>
                                     </div>
-
+                                    <?php $kodesupplierr = query("SELECT * FROM supplier ORDER BY id DESC "); ?>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Supplier</label>
                                         <div class="col-sm-10">
-                                            <select class="form-control" name="supplier">
-                                                <option>tunas buah</option>
-                                                <option>Toko Sayur</option>
-                                                <option>Indah Fresh</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                            <select class="form-control select2" name="supplier">
+                                                <option>Pilih Supplier</option>
+                                                <?php foreach ($kodesupplierr as $row) : ?>
+                                                <option value="<?php $row["kodesupplier"] ?>">
+                                                    <?= ucwords($row["namasupplier"]) ?></option>
+                                                <?php endforeach; ?>
+
                                             </select>
 
                                         </div>
@@ -223,232 +227,243 @@ $juhal = "Form PO";
 </html>
 
 <script>
-    function loadData() {
-        $("#barang>tbody").empty();
-        var search = $("#search").val();
-        $.ajax({
-            url: '../controller/c_form-po.php',
-            data: {
-                'keyword_form-po': search
-            },
-            type: 'POST'
-        }).done(function(response) {
-            var result = JSON.parse(response);
-            var i = 1;
-            result.forEach(res => {
-                html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan + '</td>';
-                html += '<td><button id="add" data-id="' + res.id + '" data-nama="' + res.namabahan + '" data-harga="' + res.harga + '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
-                i++;
-                $("#barang>tbody").append(html);
-            });
+function loadData() {
+    $("#barang>tbody").empty();
+    var search = $("#search").val();
+    $.ajax({
+        url: '../controller/c_form-po.php',
+        data: {
+            'keyword_form-po': search
+        },
+        type: 'POST'
+    }).done(function(response) {
+        var result = JSON.parse(response);
+        var i = 1;
+        result.forEach(res => {
+            html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan + '</td>';
+            html += '<td><button id="add" data-id="' + res.id + '" data-nama="' + res.namabahan +
+                '" data-harga="' + res.harga +
+                '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
+            i++;
+            $("#barang>tbody").append(html);
         });
-    }
+    });
+}
 
-    function totalharga() {
-        var sum = 0;
-        $(".total").each(function() {
-            sum += parseFloat($(this).val());
-        });
-        $("#total-harga").val('Rp. ' + sum);
-    }
-    $(document).ready(function() {
-        $(document).on("click", "#add", function() {
-            var id = $(this).data("id");
-            var nama = $(this).data("nama");
-            var harga = $(this).data("harga");
-            var jumlah = 1;
+function totalharga() {
+    var sum = 0;
+    $(".total").each(function() {
+        sum += parseFloat($(this).val());
+    });
+    $("#total-harga").val('Rp. ' + sum);
+}
+$(document).ready(function() {
+    $(document).on("click", "#add", function() {
+        var id = $(this).data("id");
+        var nama = $(this).data("nama");
+        var harga = $(this).data("harga");
+        var jumlah = 1;
 
-            // html = '<tr><td class="item_nama">' + nama + '</td><td class="harga item">' + harga + '</td><td class="item"><input id="jumlah" type="number" name="jumlah[]" value="' + jumlah + '"></td><td class="total item">' + harga + '</td>';
-            // html += '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
-            // $("#order>tbody").append(html);
-            // totalharga();
-            html = '<tr><td><input readonly type="text" name="namabarang[]"  class="form-control"  value="' + nama + '"></td><td ><input type="text"  readonly  class="form-control harga"  name="harga[]"  value="' + harga + '"></td><td><input id="jumlah" class="form-control" type="number" name="jumlah[]" value="' + jumlah + '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total" id="subtotal_item" value="' + harga + '" ></td>';
-            html += '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
-            $("#order>tbody").append(html);
-            totalharga();
-        });
+        // html = '<tr><td class="item_nama">' + nama + '</td><td class="harga item">' + harga + '</td><td class="item"><input id="jumlah" type="number" name="jumlah[]" value="' + jumlah + '"></td><td class="total item">' + harga + '</td>';
+        // html += '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
+        // $("#order>tbody").append(html);
+        // totalharga();
+        html =
+            '<tr><td><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
+            nama +
+            '"></td><td ><input type="text"  readonly  class="form-control harga"  name="harga[]"  value="' +
+            harga +
+            '"></td><td><input id="jumlah" class="form-control" type="number" name="jumlah[]" value="' +
+            jumlah +
+            '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total" id="subtotal_item" value="' +
+            harga + '" ></td>';
+        html +=
+            '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
+        $("#order>tbody").append(html);
+        totalharga();
+    });
 
-        $(document).on("click", "#remove", function() {
-            $(this).closest("tr").remove();
-            totalharga();
-        });
-        $(document).on("input", "#jumlah", function() {
-            var jumlah = parseInt($(this).val());
-            var harga = parseInt($(this).closest("tr").find(".harga").val());
-            var total = jumlah * harga;
-            // var coba = $(this).closest("tr").find(".total").text(total);
-            // console.log($(this).closest("tr").find(".total").text(total));
-            // $(this).closest("tr").find("input#subtotal_item").val(total);
-            $(this).closest("tr").find("input#subtotal_item").val(total);
-            // $(this).closest("tr").find(".total_val").val(total);
+    $(document).on("click", "#remove", function() {
+        $(this).closest("tr").remove();
+        totalharga();
+    });
+    $(document).on("input", "#jumlah", function() {
+        var jumlah = parseInt($(this).val());
+        var harga = parseInt($(this).closest("tr").find(".harga").val());
+        var total = jumlah * harga;
+        // var coba = $(this).closest("tr").find(".total").text(total);
+        // console.log($(this).closest("tr").find(".total").text(total));
+        // $(this).closest("tr").find("input#subtotal_item").val(total);
+        $(this).closest("tr").find("input#subtotal_item").val(total);
+        // $(this).closest("tr").find(".total_val").val(total);
 
-            totalharga();
-        });
+        totalharga();
+    });
 
-        $('#tombol-kasmasuk').click(function(e) {
+    $('#tombol-kasmasuk').click(function(e) {
 
-            e.preventDefault();
-            var dataform = $('#formkasmasuk')[0];
-            var data = new FormData(dataform);
+        e.preventDefault();
+        var dataform = $('#formkasmasuk')[0];
+        var data = new FormData(dataform);
 
-            var kasmasuk = $('#kasmasuk').val();
-            var kodeakun = $('#kodeakun').val();
-            var tanggal = $('#tanggal').val();
-            var keterangan = $('#keterangan').val();
-            var payto = $('#payto').val();
-            var jumlah = $('#jumlahinput').val();
+        var kasmasuk = $('#kasmasuk').val();
+        var kodeakun = $('#kodeakun').val();
+        var tanggal = $('#tanggal').val();
+        var keterangan = $('#keterangan').val();
+        var payto = $('#payto').val();
+        var jumlah = $('#jumlahinput').val();
 
-            if (kodeakun == "000") {
-                swal("Kode Akun Belum di Pilih!", "", "error")
-            } else if (tanggal == " ") {
-                swal("Tanggal Belum di Isi!", "", "error")
-            } else if (keterangan == "") {
-                swal("Keterangan Belum di Isi!", "", "error")
-            } else if (payto == "") {
-                swal("Payto Belum di Isi!", "", "error")
-            } else if (jumlah == "") {
-                swal("Jumlah Belum di Isi!", "", "error")
-            } else {
-                $.ajax({
-                    url: '../models/input.php',
-                    type: 'post',
-                    data: data,
-                    enctype: 'multipart/form-data',
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    beforeSend: function() {
-                        $('.spinn').show();
-                    },
-                    success: function(hasil) {
-                        // alert(hasil);
-                        console.log(hasil);
-                        //sukses
-                        if (hasil == 1) {
-                            swal("Input Gagal!", "", "error")
-                        } else if (hasil == 2) {
-                            swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
-                        } else if (hasil == 3) {
-                            swal({
-                                title: "Input Berhasil!",
-                                type: "success",
-                                //text: "I will close in 2 seconds.",
-                                timer: 1000,
-                                showConfirmButton: false
-                            })
-                            location.reload();
+        if (kodeakun == "000") {
+            swal("Kode Akun Belum di Pilih!", "", "error")
+        } else if (tanggal == " ") {
+            swal("Tanggal Belum di Isi!", "", "error")
+        } else if (keterangan == "") {
+            swal("Keterangan Belum di Isi!", "", "error")
+        } else if (payto == "") {
+            swal("Payto Belum di Isi!", "", "error")
+        } else if (jumlah == "") {
+            swal("Jumlah Belum di Isi!", "", "error")
+        } else {
+            $.ajax({
+                url: '../models/input.php',
+                type: 'post',
+                data: data,
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                beforeSend: function() {
+                    $('.spinn').show();
+                },
+                success: function(hasil) {
+                    // alert(hasil);
+                    console.log(hasil);
+                    //sukses
+                    if (hasil == 1) {
+                        swal("Input Gagal!", "", "error")
+                    } else if (hasil == 2) {
+                        swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
+                    } else if (hasil == 3) {
+                        swal({
+                            title: "Input Berhasil!",
+                            type: "success",
+                            //text: "I will close in 2 seconds.",
+                            timer: 1000,
+                            showConfirmButton: false
+                        })
+                        location.reload();
 
-                        }
                     }
-                });
-            }
-        })
-
-        $('#tombol-kaskeluar').click(function(e) {
-
-            e.preventDefault();
-            var dataform = $('#formkaskeluar')[0];
-            var data = new FormData(dataform);
-
-            var kaskeluar = $('#kaskeluar').val();
-            var kodeakunout = $('#kodeakunout').val();
-            var tanggalout = $('#tanggalout').val();
-            var keteranganout = $('#keteranganout').val();
-            var paytoout = $('#paytoout').val();
-            var jumlahout = $('#jumlahoutput').val();
-
-            if (kodeakunout == "000") {
-                swal("Kode Akun Belum di Pilih!", "", "error")
-            } else if (tanggalout == " ") {
-                swal("Tanggal Belum di Isi!", "", "error")
-            } else if (keteranganout == "") {
-                swal("Keterangan Belum di Isi!", "", "error")
-            } else if (paytoout == "") {
-                swal("Payto Belum di Isi!", "", "error")
-            } else if (jumlahout == "") {
-                swal("Jumlah Belum di Isi!", "", "error")
-            } else {
-                $.ajax({
-                    url: '../models/input.php',
-                    type: 'post',
-                    data: data,
-                    enctype: 'multipart/form-data',
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    beforeSend: function() {
-                        $('.spinn').show();
-                    },
-                    success: function(hasil) {
-                        // alert(hasil);
-                        console.log(hasil);
-                        //sukses
-                        if (hasil == 1) {
-                            swal("Input Gagal!", "", "error")
-                        } else if (hasil == 2) {
-                            swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
-                        } else if (hasil == 3) {
-                            swal({
-                                title: "Input Berhasil!",
-                                type: "success",
-                                //text: "I will close in 2 seconds.",
-                                timer: 1000,
-                                showConfirmButton: false
-                            })
-                            location.reload();
-
-                        }
-                    }
-                });
-            }
-        })
-
-        $('.tombol-deletekas').click(function(e) {
-            e.preventDefault();
-            //alert('hapus');
-            //var delete = 'delete';
-            var tabel = 'kas';
-            var iddelete = $(this).closest('tr').find('.delete_id_value').val();
-            swal({
-                title: "Apakah Anda Yakin?",
-                text: "Data Anda Akan Terhapus!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Ya, Hapus!",
-                cancelButtonText: "Tidak!",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function(isConfirm) {
-                if (isConfirm) {
-
-
-                    $.ajax({
-                        url: '../models/delete.php',
-                        type: 'post',
-                        data: {
-                            'tabel': tabel,
-                            'delete_id': iddelete
-                        },
-                        success: function(hasil) {
-                            // alert(hasil);
-                            console.log(hasil);
-                            //sukses
-                            if (hasil == 2) {
-
-                            } else if (hasil == 3) {
-                                swal("Deleted!",
-                                    "Hapus Data Berhasil.",
-                                    "success");
-                                location.reload();
-
-                            }
-                        }
-                    });
-                } else {
-                    swal("Cancelled", "", "error");
                 }
             });
-        });
+        }
     })
+
+    $('#tombol-kaskeluar').click(function(e) {
+
+        e.preventDefault();
+        var dataform = $('#formkaskeluar')[0];
+        var data = new FormData(dataform);
+
+        var kaskeluar = $('#kaskeluar').val();
+        var kodeakunout = $('#kodeakunout').val();
+        var tanggalout = $('#tanggalout').val();
+        var keteranganout = $('#keteranganout').val();
+        var paytoout = $('#paytoout').val();
+        var jumlahout = $('#jumlahoutput').val();
+
+        if (kodeakunout == "000") {
+            swal("Kode Akun Belum di Pilih!", "", "error")
+        } else if (tanggalout == " ") {
+            swal("Tanggal Belum di Isi!", "", "error")
+        } else if (keteranganout == "") {
+            swal("Keterangan Belum di Isi!", "", "error")
+        } else if (paytoout == "") {
+            swal("Payto Belum di Isi!", "", "error")
+        } else if (jumlahout == "") {
+            swal("Jumlah Belum di Isi!", "", "error")
+        } else {
+            $.ajax({
+                url: '../models/input.php',
+                type: 'post',
+                data: data,
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                beforeSend: function() {
+                    $('.spinn').show();
+                },
+                success: function(hasil) {
+                    // alert(hasil);
+                    console.log(hasil);
+                    //sukses
+                    if (hasil == 1) {
+                        swal("Input Gagal!", "", "error")
+                    } else if (hasil == 2) {
+                        swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
+                    } else if (hasil == 3) {
+                        swal({
+                            title: "Input Berhasil!",
+                            type: "success",
+                            //text: "I will close in 2 seconds.",
+                            timer: 1000,
+                            showConfirmButton: false
+                        })
+                        location.reload();
+
+                    }
+                }
+            });
+        }
+    })
+
+    $('.tombol-deletekas').click(function(e) {
+        e.preventDefault();
+        //alert('hapus');
+        //var delete = 'delete';
+        var tabel = 'kas';
+        var iddelete = $(this).closest('tr').find('.delete_id_value').val();
+        swal({
+            title: "Apakah Anda Yakin?",
+            text: "Data Anda Akan Terhapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, Hapus!",
+            cancelButtonText: "Tidak!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+
+
+                $.ajax({
+                    url: '../models/delete.php',
+                    type: 'post',
+                    data: {
+                        'tabel': tabel,
+                        'delete_id': iddelete
+                    },
+                    success: function(hasil) {
+                        // alert(hasil);
+                        console.log(hasil);
+                        //sukses
+                        if (hasil == 2) {
+
+                        } else if (hasil == 3) {
+                            swal("Deleted!",
+                                "Hapus Data Berhasil.",
+                                "success");
+                            location.reload();
+
+                        }
+                    }
+                });
+            } else {
+                swal("Cancelled", "", "error");
+            }
+        });
+    });
+})
 </script>

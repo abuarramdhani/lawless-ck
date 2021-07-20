@@ -6,10 +6,13 @@ if (isset($_POST["updatebahan"])) {
     //var_dump($_POST);
     $idbahan = $_POST["idbahan"];
     $nbahan = strtolower(htmlspecialchars($_POST["namabahan"]));
-    
+    $hargabeli = htmlspecialchars($_POST["hargabeli"]);
+    $hargajual = htmlspecialchars($_POST["hargajual"]);
     
     $query = "UPDATE bahan SET
-                namabahan = '$nbahan'
+                namabahan = '$nbahan',
+                harga = '$hargabeli',
+                hargaj = '$hargajual'
         WHERE id = $idbahan
     ";
     $masuk_data = mysqli_query($conn, $query);
