@@ -12,6 +12,19 @@ require '../include/fungsi_indotgl.php';
 require '../controller/c_data-po.php';
 $bagian = "Purchasing";
 $juhal = "Detail PO";
+
+$No_form = $_GET['No_form'];
+$item_po = query("SELECT * FROM item_po 
+    JOIN bahan 
+    ON item_po.kodebahan = bahan.kodebahan 
+    WHERE No_form = '$No_form'");
+
+$detail = query("SELECT *
+    FROM form_po
+    JOIN supplier
+    ON form_po.kodesupplier = supplier.kodesupplier
+    WHERE No_form = '$No_form'")[0];
+
 ?>
 
 
@@ -41,15 +54,23 @@ $juhal = "Detail PO";
                                     <table class="">
                                         <tr>
                                             <td style="font-weight: 600; width:100px">No Form PO</td>
-                                            <td>PO2107170001</td>
+                                            <td><?= $detail['No_form']; ?></td>
                                         </tr>
                                         <tr>
                                             <td style="font-weight: 600; width:100px">Supplier</td>
-                                            <td>Sejahterah Sayur</td>
+                                            <td><?= $detail['namasupplier']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: 600; width:100px">Alamat</td>
+                                            <td><?= $detail['alamatsupplier']; ?></td>
                                         </tr>
                                         <tr>
                                             <td style="font-weight: 600; width:100px">Status</td>
-                                            <td><span class="label label-success">Konfirmasi</span></td>
+                                            <?php if ($detail['status'] == 1) : ?>
+                                                <td><span class="label label-success">KONFIRMASI</span></td>
+                                            <?php else : ?>
+                                                <td><span class="label label-warning">Belum di Konfirmasi</span></td>
+                                            <?php endif; ?>
                                         </tr>
                                     </table>
                                 </div>
@@ -64,29 +85,17 @@ $juhal = "Detail PO";
                                             <th>Subtotal</th>
                                         </tr>
                                     </thead>
-
+                                    <?php $i = 1; ?>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Ice Cofee</td>
-                                            <td>Rp. 20.000</td>
-                                            <td>3</td>
-                                            <td>Rp. 60.000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Ice Cofee</td>
-                                            <td>Rp. 20.000</td>
-                                            <td>3</td>
-                                            <td>Rp. 60.000</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>Total</td>
-                                            <td>Rp. 120.000</td>
-                                        </tr>
+                                        <?php foreach ($item_po as $item) : ?>
+                                            <tr>
+                                                <td><?= $i++;  ?></td>
+                                                <td><?= $item['namabahan']; ?></td>
+                                                <td><?= $item['harga']; ?></td>
+                                                <td><?= $item['qty']  ?></td>
+                                                <td><?= $item['subtotal']; ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
 
                                     </tbody>
                                 </table>
