@@ -9,7 +9,7 @@ if (isset($_POST["keyword_bahan_masuk"])) {
     WHERE  No_form = '$keyword'
     ORDER BY item_po.id DESC ");
 
-    $detail = query("SELECT namasupplier,alamatsupplier,No_form FROM form_po
+    $detail = query("SELECT form_po.kodesupplier,namasupplier,alamatsupplier,No_form FROM form_po
     JOIN supplier ON form_po.kodesupplier = supplier.kodesupplier 
     WHERE  No_form = '$keyword'
     ORDER BY form_po.id DESC ")[0];
