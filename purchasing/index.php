@@ -248,6 +248,7 @@ $juhal = "Data PO";
                                     <tbody>
                                         <?php $i = 1 ?>
                                         <?php foreach ($data_po as $dp) : ?>
+
                                         <tr>
                                             <td><?= $i++; ?></td>
                                             <td><?= $dp['date']; ?></td>
@@ -267,6 +268,23 @@ $juhal = "Data PO";
                                                     class="btn btn-icon waves-effect waves-light btn-primary m-b-5">Details</a>
                                             </td>
                                         </tr>
+
+                                        <tr>
+                                            <td><?= $i++; ?></td>
+                                            <td><?= $dp['date']; ?></td>
+                                            <td><?= $dp['No_form']; ?></td>
+                                            <td><?= $dp['namasupplier'] ?></td>
+                                            <?php if ($dp['status'] == 1) : ?>
+                                            <td><span class="label label-success">Konfirmasi</span></td>
+                                            <?php else : ?>
+                                            <td><span class="label label-warning">Belum di Konfirmasi</span></td>
+                                            <?php endif ?>
+
+                                            <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>"
+                                                    class="btn btn-icon waves-effect waves-light btn-primary m-b-5">Details</a>
+                                            </td>
+                                        </tr>
+
                                         <?php endforeach ?>
 
                                     </tbody>

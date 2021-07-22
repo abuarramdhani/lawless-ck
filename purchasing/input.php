@@ -10,30 +10,33 @@ $namabarang       = $_POST['namabarang'];
 $harga         = $_POST['harga'];
 $jumlah     = $_POST['jumlah'];
 $subtotal    = $_POST['subtotal'];
-$supplier    = $_POST['supplier'];
+$kodesupplier    = $_POST['supplier'];
 $total_keseluruhan    = $_POST['total_keseluruhan'];
+
+// var_dump($supplier);
 
 $total = count($namabarang);
 $dt_input = date('Y-m-d');
 $date = date('ymd');
-$No_form = 'PO' . $date . '001';
 
-//supplier
+// isi noform
+
+$result_noform = mysqli_query($conn, "SELECT id,No_form FROM form_po ORDER BY No_form DESC");
+$ambil_noform = mysqli_fetch_row($result_noform);
+$pecah_po = substr($ambil_noform["1"], 0, 8);
+$pecah_po_b = substr($ambil_noform["1"], 8);
 
 
-$sql = "SELECT * 
-        FROM supplier 
-        WHERE namasupplier = '$supplier'
-        ";
-$result = mysqli_query($conn, $sql);
-
-while ($d = mysqli_fetch_array($result)) {
-    $kodesupplier = $d['kodesupplier'];
-    // echo $kodebahan;
+if ($pecah_po == "PO$date") {
+    $pecah_po_b += 1;
+    $pecah_po_b = sprintf("%03d", $pecah_po_b);
+    $No_form = 'PO' . $date . $pecah_po_b;
+} else {
+    $No_form = 'PO' . $date . '001';
 }
-// var_dump($kodesupplier);
+//akhir isi noform
+// echo $No_form;
 // die;
-
 
 // bahan
 foreach ($namabarang as $row) {
@@ -63,7 +66,6 @@ mysqli_query($conn, "insert into form_po set
             status = '1'
         ");
 
-
 // input ke tabel item po
 for ($i = 0; $i < $total; $i++) {
 
@@ -76,6 +78,8 @@ for ($i = 0; $i < $total; $i++) {
         ");
 }
 
-
 //kembali ke halaman sebelumnya
-header("location: form-po.php");
+
+header("Location: form-po.php?msg=" . urlencode('1'));
+
+// header("location: form-po.php");
