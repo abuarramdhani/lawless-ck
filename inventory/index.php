@@ -11,7 +11,7 @@ require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
 require '../controller/c_data-po.php';
 $bagian = "Inventory";
-$juhal = "Data Barang";
+$juhal = "Data Bahan";
 ?>
 
 

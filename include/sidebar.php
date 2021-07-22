@@ -32,17 +32,24 @@
             <ul>
                 <?php if($bagian=="Purchasing"): ?>
                 <li class="text-muted menu-title"><?= $bagian  ?></li>
-                <!-- <li>
-                    <a href="../menu" class="waves-effect"><i class="zmdi zmdi-format-underlined"></i>
-                        <span> Menu </span> </a>
-                </li> -->
+
                 <li>
+                    <?php if($juhal=="Form PO"): ?>
                     <a href="form-po" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
                         <span> Form PO</span> </a>
+                    <?php else : ?>
+                    <a href="form-po" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span> Form PO</span> </a>
+                    <?php endif; ?>
                 </li>
                 <li>
+                    <?php if($juhal=="Data PO"): ?>
                     <a href="index" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
                         <span> Data PO</span> </a>
+                    <?php else : ?>
+                    <a href="index" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span> Data PO</span> </a>
+                    <?php endif; ?>
                 </li>
 
                 <li class="has_sub">
@@ -79,13 +86,25 @@
                     <li class="text-muted menu-title">Purchasing</li>
                 </a>
                 <li class="text-muted menu-title"><?= $bagian  ?></li>
+
                 <li>
+                    <?php if($juhal=="Bahan Masuk"): ?>
                     <a href="barangmasuk" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
                         <span>Barang Masuk</span> </a>
+                    <?php else : ?>
+                    <a href="barangmasuk" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span>Barang Masuk</span> </a>
+                    <?php endif; ?>
                 </li>
+
                 <li>
+                    <?php if($juhal=="Data Bahan"): ?>
                     <a href="index" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
                         <span>Data Bahan</span> </a>
+                    <?php else : ?>
+                    <a href="index" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span>Data Bahan</span> </a>
+                    <?php endif; ?>
                 </li>
                 <a href="../production">
                     <li class="text-muted menu-title">Production</li>
@@ -141,6 +160,14 @@
                 <li>
                     <a href="storebahan" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
                         <span>Store Bahan</span> </a>
+                </li>
+                <li>
+                    <a href="po-store" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span>PO Store</span> </a>
+                </li>
+                <li>
+                    <a href="po-bahan" class="waves-effect active"><i class="zmdi zmdi-view-dashboard"></i>
+                        <span>PO Bahan</span> </a>
                 </li>
                 <a href="../Report">
                     <li class="text-muted menu-title">Report</li>
