@@ -39,7 +39,7 @@ $juhal = "Store";
 
                                         <a href="#" data-filter="*" class="current waves-effect waves-primary">All</a>
                                         <?php foreach ($k_produk as $kp) : ?>
-                                            <a href="#" data-filter=".<?= $kp['kodekategoriproduk']; ?>" class="waves-effect waves-primary"><?= $kp['namakategoriproduk']; ?></a>
+                                            <a href="#" data-filter=".<?= $kp['kodekategoriproduk']; ?>" class=" text-capitalize waves-effect waves-primary"><?= $kp['namakategoriproduk']; ?></a>
                                         <?php endforeach ?>
                                         <!-- <a href="#" data-filter=".natural" class="waves-effect waves-primary">Beverage</a> -->
                                         <!-- <a href="#" data-filter=".creative" class="waves-effect waves-primary">Foods</a>
@@ -68,8 +68,8 @@ $juhal = "Store";
                                                                 <img src="../assets/images/products/<?= $p['gambar']; ?>" class="thumb-img img-fluid" alt="work-thumbnail">
                                                             </a>
                                                             <div class="text-center">
-                                                                <a href="javascript:;" id="add" data-nama="<?=$p['namaproduk']?>" data-harga="<?=$p['harga']?>">
-                                                                    <h4><?= $p['namaproduk']; ?></h4>
+                                                                <a href="javascript:;" id="add" data-nama="<?= $p['namaproduk'] ?>" data-harga="<?= $p['harga'] ?>">
+                                                                    <h4 class="text-capitalize"><?= $p['namaproduk']; ?></h4>
                                                                 </a>
                                                                 <p class="font-15 text-muted mb-2"><span class="label label-primary"><?= $p['harga']; ?></span></p>
                                                             </div>
@@ -221,7 +221,6 @@ $juhal = "Store";
 </html>
 
 <script>
-
     function totalharga() {
         var sum = 0;
         $(".total").each(function() {
@@ -231,25 +230,25 @@ $juhal = "Store";
     }
 
     $(document).ready(function() {
-        $(document).on("input", "#search", function(){
+        $(document).on("input", "#search", function() {
             var query = $("#search").val();
-            var data = '<?php echo json_encode($produk);?>';
+            var data = '<?php echo json_encode($produk); ?>';
             var product = JSON.parse(data);
             var result;
-            if(query == ''){
+            if (query == '') {
                 result = product;
-            }else{
-                result = product.filter( p => p.namaproduk.toLowerCase() == query);
+            } else {
+                result = product.filter(p => p.namaproduk.toLowerCase() == query);
             }
             $('#list-produk').empty();
             console.log(result);
-            result.forEach(res =>{
-                html = '<div class="col-md-6 col-xl-3 col-lg-4 '+res.kodekategoriproduk+'"><div class="gal-detail thumb">';
-                html += '<a href="../assets/images/products/'+ res.gambar +'" class="image-popup" title="Screenshot-3">';
-                html += '<img src="../assets/images/products/'+res.gambar+'" class="thumb-img img-fluid" alt="work-thumbnail"></a>';
-                html += '<div class="text-center"><a href="javascript:;" id="add" data-nama="'+res.namaproduk+'" data-harga="'+res.harga+'">';
-                html += '<h4>'+res.namaproduk+'</h4></a>';
-                html += '<p class="font-15 text-muted mb-2"><span class="label label-primary">'+res.harga+'</span></p></div></div></div>';
+            result.forEach(res => {
+                html = '<div class="col-md-6 col-xl-3 col-lg-4 ' + res.kodekategoriproduk + '"><div class="gal-detail thumb">';
+                html += '<a href="../assets/images/products/' + res.gambar + '" class="image-popup" title="Screenshot-3">';
+                html += '<img src="../assets/images/products/' + res.gambar + '" class="thumb-img img-fluid" alt="work-thumbnail"></a>';
+                html += '<div class="text-center "><a href="javascript:;" id="add" data-nama="' + res.namaproduk + '" data-harga="' + res.harga + '">';
+                html += '<h4 class="text-capitalize">' + res.namaproduk + '</h4></a>';
+                html += '<p class="font-15 text-muted mb-2"><span class="label label-primary">' + res.harga + '</span></p></div></div></div>';
 
                 $("#list-produk").append(html);
             });

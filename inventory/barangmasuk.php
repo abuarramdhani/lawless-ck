@@ -29,6 +29,12 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
         <!-- ============================================================== -->
         <div class="content-page">
             <!-- Start content -->
+            <!-- terima msg -->
+            <?php if (isset($_SESSION['msg'])) : ?>
+                <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
+                <?php unset($_SESSION['msg']); ?>
+            <?php endif ?>
+            <!-- akhir terima msg -->
 
             <div class="content">
                 <div class="container" style="margin-top: 5px;">
@@ -87,13 +93,13 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                                                             <?php if (isset($item_po)) : ?>
                                                                 <?php foreach ($item_po as $item) : ?>
                                                                     <tr>
-                                                                        <input type="hidden" name="noform" value="<?=$detail['No_form'];?>">
-                                                                        <input type="hidden" name="kodesupplier" value="<?= $detail['kodesupplier'];?>">
+                                                                        <input type="hidden" name="noform" value="<?= $detail['No_form']; ?>">
+                                                                        <input type="hidden" name="kodesupplier" value="<?= $detail['kodesupplier']; ?>">
                                                                         <input type="hidden" name="kodebahan[]" value="<?= $item["kodebahan"]; ?>">
                                                                         <th><input readonly type="text" class="form-control" value="<?= $item['namabahan']; ?>"></th>
                                                                         <td><input type="text" name="harga[]" class="form-control harga" value="<?= $item['harga']; ?>"></td>
                                                                         <td><input type="number" id="qty" name="qty[]" class="form-control qty" value="<?= $item['qty']; ?>"></td>
-                                                                        <td><input readonly  name="subtotal[]" type="text" class="form-control subtotal" value=" <?= $item['subtotal']; ?>"></td>
+                                                                        <td><input readonly name="subtotal[]" type="text" class="form-control subtotal" value=" <?= $item['subtotal']; ?>"></td>
                                                                         <td><button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 delete">
                                                                                 <i class="fa fa-remove"></i> </button></td>
                                                                     </tr>
@@ -116,17 +122,14 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                                         <!-- <p class="form-control-static" id="total-harga" name="total_keseluruhan"></p> -->
                                     </div>
                                 </div>
-
-
                                 <div class="form-group  text-center" style="margin-top: 10px;">
-
                                     <button type="submit" class="btn btn-purple waves-effect waves-light mr-1 m-t-10" id="simpan">
                                         <span>Simpan</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" id="msg" data-msg="<?= $_GET['msg']; ?>">
+
                         </form>
 
                     </div>
@@ -151,56 +154,57 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
     <!-- END wrapper -->
 
     <?php require '../include/scriptfooter.php'; ?>
-<script>
-    $(document).ready(function(){
-        totalharga();
+    <script>
+        $(document).ready(function() {
+            totalharga();
 
-        $(document).on("input", ".harga", function(){
-            var harga = parseInt($(this).val());
-            var jumlah = parseInt($(this).closest("tr").find(".qty").val());
-            var total = jumlah * harga;
-            $(this).closest("tr").find("input.subtotal").val(total);
-            totalharga();
-        });
-        $(document).on("input", ".qty", function(){
-            var jumlah = parseInt($(this).val());
-            var harga = parseInt($(this).closest("tr").find(".harga").val());
-            var total = jumlah * harga;
-            $(this).closest("tr").find("input.subtotal").val(total);
-            totalharga();
-        });
-        $(document).on("click", ".delete", function(){
-            $(this).closest("tr").remove();
-            totalharga();
-        });
-        $(document).on("click", "#simpan", function(){
-            console.log($(this).serialize());
-        });
-    })
-    function totalharga(){
-        var sum = 0;
-        $(".subtotal").each(function(){
-            sum += parseFloat($(this).val());
+            $(document).on("input", ".harga", function() {
+                var harga = parseInt($(this).val());
+                var jumlah = parseInt($(this).closest("tr").find(".qty").val());
+                var total = jumlah * harga;
+                $(this).closest("tr").find("input.subtotal").val(total);
+                totalharga();
+            });
+            $(document).on("input", ".qty", function() {
+                var jumlah = parseInt($(this).val());
+                var harga = parseInt($(this).closest("tr").find(".harga").val());
+                var total = jumlah * harga;
+                $(this).closest("tr").find("input.subtotal").val(total);
+                totalharga();
+            });
+            $(document).on("click", ".delete", function() {
+                $(this).closest("tr").remove();
+                totalharga();
+            });
+            $(document).on("click", "#simpan", function() {
+                console.log($(this).serialize());
+            });
         })
-        $("#total-harga").val('Rp. '+ sum);
-    }
-    function sweetfunction() {
 
-        var msg = document.getElementById('msg');
-        var msg = msg.getAttribute('data-msg'); 
-        if (msg == 1) {
-            swal({
-                title: "Input Berhasil!",
-                type: "success",
-                //text: "I will close in 2 seconds.",
-                timer: 1000,
-                showConfirmButton: false
+        function totalharga() {
+            var sum = 0;
+            $(".subtotal").each(function() {
+                sum += parseFloat($(this).val());
             })
-        } else if (msg == 2) {
-            swal("Kode Akun Belum di Pilih!", "", "error")
+            $("#total-harga").val('Rp. ' + sum);
         }
-    }
-</script>
+
+        function sweetfunction() {
+
+            const msg = $('#msg').data('msg');
+            if (msg == 1) {
+                swal({
+                    title: "Input Berhasil!",
+                    type: "success",
+                    //text: "I will close in 2 seconds.",
+                    timer: 1100,
+                    showConfirmButton: false
+                })
+            } else if (msg == 2) {
+                swal("Kode Akun Belum di Pilih!", "", "error")
+            }
+        }
+    </script>
 </body>
 
 </html>

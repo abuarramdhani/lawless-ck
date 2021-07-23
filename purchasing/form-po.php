@@ -29,7 +29,12 @@ $juhal = "Form PO";
         <!-- ============================================================== -->
         <div class="content-page">
             <!-- Start content -->
-
+            <!-- terima msg -->
+            <?php if (isset($_SESSION['msg'])) : ?>
+                <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
+                <?php unset($_SESSION['msg']); ?>
+            <?php endif ?>
+            <!-- akhir terima msg -->
             <div class="content">
                 <div class="container" style="margin-top: 5px;">
                     <div class="col-lg-6">
@@ -165,7 +170,7 @@ $juhal = "Form PO";
                                         </button>
                                     </div>
 
-                                    <input type="hidden" id="msg" data-msg="<?= $_GET['msg']; ?>">
+
 
                                     <!-- <div class="form-group">
                                     <label class="col-sm-2 control-label">Total</label>
@@ -232,18 +237,16 @@ $juhal = "Form PO";
 
 <script>
     // $("#total-harga").val('Rp. ' + sum)
-
     function sweetfunction() {
 
-        var msg = document.getElementById('msg');
-        var msg = msg.getAttribute('data-msg');
+        const msg = $('#msg').data('msg');
 
         if (msg == 1) {
             swal({
                 title: "Input Berhasil!",
                 type: "success",
                 //text: "I will close in 2 seconds.",
-                timer: 1000,
+                timer: 1100,
                 showConfirmButton: false
             })
         } else if (msg == 2) {
@@ -326,23 +329,7 @@ $juhal = "Form PO";
             totalharga();
         });
 
-        //jika save berhasi
-        // var msg = document.getElementById('msg');
-        // var msg = msg.getAttribute('data-msg');
-        // console.log(msg);
 
-        // if (msg == 1) {
-
-        // }
-        // swal({
-        //     title: "Input Berhasil!",
-        //     type: "success",
-        //     //text: "I will close in 2 seconds.",
-        //     timer: 1000,
-        //     showConfirmButton: false
-        // })
-
-        // akhir save
 
         $('#tombol-kasmasuk').click(function(e) {
 

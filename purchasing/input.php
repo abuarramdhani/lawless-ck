@@ -1,6 +1,7 @@
 <?php
 //membuat koneksi
 //koneksi database
+session_start();
 require '../include/fungsi.php';
 
 
@@ -79,7 +80,7 @@ for ($i = 0; $i < $total; $i++) {
 }
 
 //kembali ke halaman sebelumnya
+$_SESSION["msg"] = "1";
+// header("Location: form-po.php?msg=" . urlencode('1'));
 
-header("Location: form-po.php?msg=" . urlencode('1'));
-
-// header("location: form-po.php");
+header("location: form-po.php");
