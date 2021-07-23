@@ -1362,7 +1362,8 @@ h3.timeline-title {
 .thumb {
   background-color: #ffffff;
   border-radius: 3px;
-  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1); */
+  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 10%);
   margin-top: 20px;
   padding-bottom: 10px;
   padding-left: 10px;
