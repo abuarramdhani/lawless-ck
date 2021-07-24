@@ -10,7 +10,14 @@ if (!isset($_SESSION['email'])) {
     $user = query("SELECT * FROM admin WHERE email = '" . $_SESSION['email'] . "'")[0];
     $email = $user["email"];
     $username = $user["username"];
-    
+    $outlet = $user["outlet"];
+    $jabatan = $user["jabatan"];
+    $userlevel = $user["userlevel"];
+
+    // $menu = query("SELECT * FROM user_access_menu WHERE id = '" . $_SESSION['access_menu_id'] . "'")[0];
+    // $companypanel_id = $menu['companypanel_id'];
+    // $role_id = $menu['role_id'];
+
 }
 
 ?>
@@ -26,7 +33,7 @@ if (!isset($_SESSION['email'])) {
     <link rel="shortcut icon" href="assets/images/big/lawless-logo.jpg">
 
     <!-- App title -->
-    <title>Lawless CK</title>
+    <title><?= $company['nama']; ?></title>
 
     <!-- App CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -51,6 +58,7 @@ if (!isset($_SESSION['email'])) {
 <body>
 
 
+
     <div class="account-pages-menu"></div>
     <div class="clearfix"></div>
 
@@ -68,78 +76,89 @@ if (!isset($_SESSION['email'])) {
                 </div>
             </div>
             <!-- end wrapper page -->
+            <div class="row">
 
-            <div class="col-lg-4">
-                <div class="panel panel-color panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-center">Purchasing</h3>
-                    </div>
-                    <div class="panel-body text-center">
-                        <a href="purchasing"><img src="assets/images/purchasing.png" style="width: 125px;"
-                                class="img-circle"></a>
-                    </div>
-                </div>
-            </div><!-- end col -->
+                <!-- menu id 2 = production dan menu id 3 = outlet -->
+                <?php if ($user['userlevel'] == 0 or $user['outlet'] != 'OUT001') : ?>
+                    <div class="col-lg-4">
+                        <div class="panel panel-color panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-center">Purchasing</h3>
+                            </div>
+                            <div class="panel-body text-center">
+                                <a href="purchasing"><img src="assets/images/purchasing.png" style="width: 125px;" class="img-circle"></a>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
 
-            <div class="col-lg-4">
-                <div class="panel panel-color panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-center">Inventory</h3>
-                    </div>
-                    <div class="panel-body text-center">
-                        <a href=""><img src="assets/images/inventory1.png" style="width: 120px;" class="img-circle"></a>
-                    </div>
-                </div>
-            </div><!-- end col -->
-            <div class="col-lg-4">
-                <div class="panel panel-color panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-center">Production</h3>
-                    </div>
-                    <div class="panel-body text-center">
-                        <a href=""><img src="assets/images/productionkc.png" style="width: 125px;"
-                                class="img-circle"></a>
-                    </div>
-                </div>
-            </div><!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="panel panel-color panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-center">Inventory</h3>
+                            </div>
+                            <div class="panel-body text-center">
+                                <a href=""><img src="assets/images/inventory1.png" style="width: 120px;" class="img-circle"></a>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
 
-            <div class="col-lg-4">
-                <div class="panel panel-color panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-center">Store</h3>
-                    </div>
-                    <div class="panel-body text-center">
-                        <a href=""><img src="assets/images/store.jpg" style="width: 125px;" class="img-circle"></a>
-                    </div>
-                </div>
-            </div><!-- end col -->
-            <div class="col-lg-4">
-                <div class="panel panel-color panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-center">Report</h3>
-                    </div>
-                    <div class="panel-body text-center">
-                        <a href=""><img src="assets/images/report.png" style="width: 125px;" class="img-circle"></a>
-                    </div>
-                </div>
-            </div><!-- end col -->
+                    <div class="col-lg-4">
+                        <div class="panel panel-color panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-center">Store</h3>
+                            </div>
+                            <div class="panel-body text-center">
+                                <a href=""><img src="assets/images/store.jpg" style="width: 125px;" class="img-circle"></a>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                <?php endif ?>
 
-            <div class="row" style="margin: 1% 0;">
+
+
+                <!-- menu id 2 = production -->
+                <?php if ($user['userlevel'] == 0 or $user['outlet'] == 'OUT002') : ?>
+                    <div class="col-lg-4">
+                        <div class="panel panel-color panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-center">Production</h3>
+                            </div>
+                            <div class="panel-body text-center">
+                                <a href=""><img src="assets/images/productionkc.png" style="width: 125px;" class="img-circle"></a>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                <?php endif ?>
+
+
                 <div class="col-lg-4">
                     <div class="panel panel-color panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title text-center">User</h3>
+                            <h3 class="panel-title text-center">Report</h3>
                         </div>
                         <div class="panel-body text-center">
-                            <a href=""><img src="assets/images/user.png" style="width: 125px;" class="img-circle"></a>
+                            <a href=""><img src="assets/images/report.png" style="width: 125px;" class="img-circle"></a>
                         </div>
                     </div>
                 </div><!-- end col -->
 
-
-
+                <!--// menu id 1 = kantor -->
+                <?php if ($user['userlevel'] == 0 or $user['outlet'] == 'OUT001') : ?>
+                    <!--<div class="row" style="margin: 1% 0;">-->
+                    <div class="col-lg-4">
+                        <div class="panel panel-color panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-center">User</h3>
+                            </div>
+                            <div class="panel-body text-center">
+                                <a href="users"><img src="assets/images/user.png" style="width: 125px;" class="img-circle"></a>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                <?php endif ?>
             </div>
             <!-- end row -->
+
 
         </div>
     </section>
@@ -148,7 +167,7 @@ if (!isset($_SESSION['email'])) {
 
 
     <script>
-    var resizefunc = [];
+        var resizefunc = [];
     </script>
 
     <!-- jQuery  -->

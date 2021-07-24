@@ -145,16 +145,16 @@ $juhal = "Store";
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Outlet</label>
                                             <div class="col-sm-10">
-                                                <input type="text" readonly name="outlet" id="outlet" class="form-control" value="outlet">
+                                                <input type="text" readonly name="outlet" id="outlet" class="form-control" value="">
                                             </div>
                                         </div>
 
                                         <div class="form-group  text-center" style="margin-top: 10px;">
-                                            <button class="btn btn-danger waves-effect waves-light mr-1">
+                                            <!-- <button class="btn btn-danger waves-effect waves-light mr-1">
                                                 <span>Batal</span>
-                                            </button>
+                                            </button> -->
                                             <button class="btn btn-purple waves-effect waves-light mr-1" id="simpan">
-                                                <span>Kirim Order</span>
+                                                <span>Order</span>
                                             </button>
                                         </div>
 
