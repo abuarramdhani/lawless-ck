@@ -5,8 +5,8 @@ if (isset($_POST["keyword_bahan_masuk"])) {
     $keyword = $_POST["keyword_bahan_masuk"];
 
     $item_po = query("SELECT * FROM item_po
-    JOIN bahan ON item_po.kodebahan = bahan.kodebahan 
-    WHERE  No_form = '$keyword'
+        JOIN bahan ON item_po.kodebahan = bahan.kodebahan 
+        WHERE  No_form = '$keyword'
     ORDER BY item_po.id DESC ");
 
     $detail = query("SELECT form_po.kodesupplier,namasupplier,alamatsupplier,No_form FROM form_po

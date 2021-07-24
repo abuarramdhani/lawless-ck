@@ -5,6 +5,7 @@ if (isset($_POST['login'])) {
     //var_dump($_POST);
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $kodeoutlet = $_POST['kodeoutlet'];
 
     $ceklogin = mysqli_query($conn, "SELECT * FROM admin WHERE email ='$email' ");
 
@@ -16,9 +17,31 @@ if (isset($_POST['login'])) {
         //cek password
         $row = mysqli_fetch_assoc($ceklogin);
         if (password_verify($password, $row["password"])) {
-            session_start();
-            $_SESSION['email'] = $email;
-            echo 3;
+                        
+            $datauser = query("SELECT * FROM admin WHERE email = '$email' ")[0];            
+            $userlevel = $datauser['userlevel'];            
+            $useroutlet = $datauser['outlet'];
+
+            if($userlevel!=0){
+                if($kodeoutlet!=$useroutlet){
+                    echo 4;
+                }else{
+                    session_start();
+                    $_SESSION['email'] = $email;
+                    $_SESSION['userlevel'] = $datauser['userlevel'];
+                    $dataoutlet = query("SELECT * FROM companypanel WHERE kodeoutlet = '$kodeoutlet' ")[0];
+                    $_SESSION['outlet'] = $dataoutlet['nama'];
+                    echo 3;    
+                }
+                
+            }else{
+                session_start();
+                $_SESSION['email'] = $email;
+                $_SESSION['userlevel'] = $datauser['userlevel'];
+                $dataoutlet = query("SELECT * FROM companypanel WHERE kodeoutlet = '$kodeoutlet' ")[0];
+                $_SESSION['outlet'] = $dataoutlet['nama'];
+                echo 3;
+            }
         } else {
             echo 2;
         }

@@ -70,9 +70,25 @@ require 'include/fungsi.php';
             <!-- <div class="text-center">
                 <a href="index.html" class="logo"><span> <span>Central </span>Kitchen</span></a>
             </div> -->
+            <?php 
+            $companypanel = query("SELECT * FROM companypanel ");
+            ?>
             <div class="panel-body">
                 <form class="form-horizontal m-t-20" id="formmasuk">
                     <input type="hidden" id="login" name="login" value="login">
+
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <select class="form-control select2" name="kodeoutlet" id="kodeoutlet">
+                                <option>Pilih Outlet</option>
+                                <?php foreach ($companypanel as $row) : ?>
+                                <option value="<?= $row["kodeoutlet"] ?>">
+                                    <?= ucwords($row["baseurl"]) ?></option>
+                                <?php endforeach; ?>
+
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <input class="form-control" type="email" required="" type="email" id="email" name="email"
@@ -163,6 +179,7 @@ $(document).ready(function() {
         var login = $('#login').val();
         var email = $('#email').val();
         var password = $('#password').val();
+        var kodeoutlet = $('#kodeoutlet').val();
 
         if (email == "") {
             Swal.fire({
@@ -186,7 +203,7 @@ $(document).ready(function() {
                 contentType: false,
                 cache: false,
                 success: function(hasil) {
-
+                    console.log(hasil);
                     //sukses
                     if (hasil == 1) {
                         Swal.fire({
@@ -213,6 +230,12 @@ $(document).ready(function() {
                             document.location.href = 'menu';
                         });
 
+                    } else if (hasil == 4) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal...',
+                            text: 'Akun anda tidak terdaftar pada Outlet ini'
+                        });
                     }
                 }
             });

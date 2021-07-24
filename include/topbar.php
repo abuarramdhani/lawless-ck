@@ -4,7 +4,7 @@
     <!-- LOGO -->
     <div class="topbar-left">
         <a href="../menu"><img src="../assets/images/big/lawless-logo1.png" width="25%"></a>
-        <a href="../index" class="logo"><span>Central <span>Kitchen</span></span><i class="zmdi zmdi-layers"></i></a>
+        <a href="../index" class="logo"><?= ucwords($_SESSION['outlet']); ?><i class="zmdi zmdi-layers"></i></a>
 
     </div>
 
