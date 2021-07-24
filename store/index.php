@@ -238,7 +238,7 @@ $juhal = "Store";
             if (query == '') {
                 result = product;
             } else {
-                result = product.filter(p => p.namaproduk.toLowerCase() == query);
+                result = product.filter(p => p.namaproduk.toLowerCase().indexOf(query) > -1);
             }
             $('#list-produk').empty();
             console.log(result);
