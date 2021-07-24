@@ -1,5 +1,10 @@
 <?php 
-$kodeusermenu = query("SELECT * FROM user_menu ORDER BY id ASC ");
+if($_SESSION['userlevel']!=0){
+    $kodeusermenu = query("SELECT * FROM user_menu WHERE id<8 ORDER BY id ASC ");
+}else{
+    $kodeusermenu = query("SELECT * FROM user_menu ORDER BY id ASC ");  
+}
+
 ?>
 <!-- ========== Left Sidebar Start ========== -->
 <div class="left side-menu">
