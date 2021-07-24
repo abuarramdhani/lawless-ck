@@ -1,156 +1,163 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 
-class User{
-    
+class User
+{
+
     private $conn;
     private $secret = '#$eCr37';
-    
-    public function __construct($conn){
+
+    public function __construct($conn)
+    {
         $this->conn = $conn;
     }
-    
-    public function index(){
+
+    public function index()
+    {
         $sqlOutlet = "SELECT * FROM companypanel";
         $sqlJabatan = "SELECT * FROM jabatan";
-        
+
         $stmt = $this->conn->prepare($sqlOutlet);
         $stmt->execute();
         $outlet = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         $stmt = $this->conn->prepare($sqlJabatan);
         $stmt->execute();
         $jabatan = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return array(
             'outlets' => $outlet,
             'jabatans' => $jabatan
         );
     }
-    
-    public function create($post){
+
+    public function create($post)
+    {
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
         $username = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
         $outlet = filter_input(INPUT_POST, 'outlet', FILTER_SANITIZE_STRING);
         $jabatan = filter_input(INPUT_POST, 'jabatan', FILTER_SANITIZE_STRING);
-        
-        
+
+
         $sqlCheck = "SELECT * FROM admin WHERE email='$email'";
         $stmt = $this->conn->prepare($sqlCheck);
         $stmt->execute();
 
-        if($stmt->rowCount() > 0){
+        if ($stmt->rowCount() > 0) {
             echo 1;
-        }else{
+        } else {
             // $sql = "INSERT INTO user_access_menu (jabatan_id, companypanel_id) VALUES (:jabatan_id, :companypanel_id)";
             // $sql = "INSERT INTO admin (userlevel, outlet, jabatan) VALUES (:userlevel, :outlet, :jabatan)";
             $sqlUser = "INSERT INTO admin (email, username, userlevel, outlet, jabatan) VALUES (:email, :username, :userlevel, :outlet, :jabatan)";
-            
+
             // $stmt = $this->conn->prepare($sql);
             // $params = array(
             //     ':jabatan' => $jabatan,
             //     ':outlet' => $outlet,
             //     ':userlevel' => 1,
             // );
-            
+
             // if($stmt->execute($params)){
-                // $access_menu_id = $this->conn->lastInsertId();
-        
-	            $stmt = $this->conn->prepare($sqlUser);
-	            $parameter = array(
-	            	":email" => $email,
-	            	":username" => $username,
-	           // 	":access_menu_id" => $access_menu_id,
-	            	":jabatan" => $jabatan,
-                    ":outlet" => $outlet,
-                    ":userlevel" => '1',
-	            );
-            
-	            $save = $stmt->execute($parameter);
-	            if($save){
-	                $this->sendEmail($email);
-	                echo 3;
-	                //berhasil
-	            }else{
-	                echo 2;
-	                //gagal insert data
-	            }
+            // $access_menu_id = $this->conn->lastInsertId();
+
+            $stmt = $this->conn->prepare($sqlUser);
+            $parameter = array(
+                ":email" => $email,
+                ":username" => $username,
+                // 	":access_menu_id" => $access_menu_id,
+                ":jabatan" => $jabatan,
+                ":outlet" => $outlet,
+                ":userlevel" => '1',
+            );
+
+            $save = $stmt->execute($parameter);
+            if ($save) {
+                $this->sendEmail($email);
+                echo 3;
+                //berhasil
+            } else {
+                echo 2;
+                //gagal insert data
+            }
             // }else{
             //     echo 2;
             //     //gagal insert data
             // }
             //email sudah terdaftar
         }
-        
     }
-    
-    public function getUsers(){
+
+    public function getUsers()
+    {
         // $sql = "SELECT a.id, a.email, a.username, a.access_menu_id, menu.jabatan_id, menu.companypanel_id, j.namajabatan, c.nama FROM admin a INNER JOIN user_access_menu menu ON access_menu_id = menu.id INNER JOIN jabatan j ON j.id = menu.jabatan_id INNER JOIN companypanel c ON c.id = menu.companypanel_id ORDER BY a.username ASC";
         $sql = "SELECT id, email, username, outlet, jabatan FROM admin ORDER BY username ASC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $result;
     }
-    
-    public function createPassword($post){
+
+    public function createPassword($post)
+    {
         $email = filter_input(INPUT_POST, '_email', FILTER_SANITIZE_STRING);
         $token = filter_input(INPUT_POST, '_token', FILTER_SANITIZE_STRING);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-        
+
         $password = password_hash($password, PASSWORD_DEFAULT);
         $sql = "UPDATE admin SET password=:password WHERE email=:email";
-        
+
         $stmt = $this->conn->prepare($sql);
 
-	    $parameter = array(
-	    	":password" => $password,
-	    	":email" => $email
-	    );
-	    
-	    $update = $stmt->execute($parameter);
-	    if($update){
-	        header("location: index");
-	    }
+        $parameter = array(
+            ":password" => $password,
+            ":email" => $email
+        );
+
+        $update = $stmt->execute($parameter);
+        if ($update) {
+            header("location: index");
+        }
     }
-    
-    public function update($post){
+
+    public function update($post)
+    {
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_STRING);
         $username = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
         $menu_id = filter_input(INPUT_POST, 'menu_id', FILTER_SANITIZE_STRING);
         $outlet = filter_input(INPUT_POST, 'outlet', FILTER_SANITIZE_STRING);
         $jabatan = filter_input(INPUT_POST, 'jabatan', FILTER_SANITIZE_STRING);
-        
+
         $sqlMenu = "UPDATE user_access_menu SET jabatan_id='$jabatan', companypanel_id='$outlet' WHERE id='$menu_id'";
         $stmt = $this->conn->prepare($sqlMenu);
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             $sql = "UPDATE admin SET username='$username' WHERE id='$id'";
             $stmt = $this->conn->prepare($sql);
-            if($stmt->execute()){
+            if ($stmt->execute()) {
                 echo true;
-            }else{
+            } else {
                 echo false;
             }
-        }else{
+        } else {
             echo false;
         }
-        
-        
     }
-    
-    public function delete($id){
+
+    public function delete($id)
+    {
         $sql = "DELETE FROM admin WHERE id='$id'";
-        $stmt= $this->conn->prepare($sql);
-        if($stmt->execute()){
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt->execute()) {
             echo true;
-        }else{
+        } else {
             echo false;
         }
     }
-    
-    private function sendEmail($email){
-        $token = MD5($email.$this->secret);
+
+    private function sendEmail($email)
+    {
+        $token = MD5($email . $this->secret);
         $mail = new PHPMailer(true);
         $mail->isSMTP();
         $mail->SMTPSecure = 'ssl';
@@ -617,7 +624,7 @@ class User{
                                             <div align="center" class="button-container"
                                                 style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
                                                 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.example.com" style="height:32.25pt;width:121.5pt;v-text-anchor:middle;" arcsize="21%" strokeweight="0.75pt" strokecolor="#2B2D49" fillcolor="#2b2d49"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-size:16px"><![endif]--><a
-                                                    href="https://lawlessburgerbarasia.net/confirm?email='.$email. '&token=' . $token. '"
+                                                    href="https://lawlessburgerbarasia.net/confirm?email=' . $email . '&token=' . $token . '"
                                                     style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #2b2d49; border-radius: 9px; -webkit-border-radius: 9px; -moz-border-radius: 9px; width: auto; width: auto; border-top: 1px solid #2B2D49; border-right: 1px solid #2B2D49; border-bottom: 1px solid #2B2D49; border-left: 1px solid #2B2D49; padding-top: 5px; padding-bottom: 5px; font-family: \'Lato\', Tahoma, Verdana, Segoe, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;"
                                                     target="_blank"><span
                                                         style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;letter-spacing:2px;"><span
@@ -1314,9 +1321,7 @@ class User{
 
 </html>';
         // $mail->Body = "Silakan klik tautan berikut untuk mengaktifkan akun anda https://lawlessburgerbarasia.net/confirm?email=". $email ."&token=" . $token;
-        
+
         $mail->send();
     }
-    
 }
-?>
