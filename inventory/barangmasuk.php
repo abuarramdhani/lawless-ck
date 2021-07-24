@@ -13,11 +13,10 @@ $bagian = "Inventory";
 $juhal = "Bahan Masuk";
 
 $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = supplier.kodesupplier");
-
 ?>
 
 
-<body class="fixed-left">
+<body class="fixed-left" onload="sweetfunction()">
 
     <!-- Begin page -->
     <div id="wrapper">
@@ -30,6 +29,12 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
         <!-- ============================================================== -->
         <div class="content-page">
             <!-- Start content -->
+            <!-- terima msg -->
+            <?php if (isset($_SESSION['msg'])) : ?>
+                <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
+                <?php unset($_SESSION['msg']); ?>
+            <?php endif ?>
+            <!-- akhir terima msg -->
 
             <div class="content">
                 <div class="container" style="margin-top: 5px;">
@@ -88,11 +93,14 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                                                             <?php if (isset($item_po)) : ?>
                                                                 <?php foreach ($item_po as $item) : ?>
                                                                     <tr>
+                                                                        <input type="hidden" name="noform" value="<?= $detail['No_form']; ?>">
+                                                                        <input type="hidden" name="kodesupplier" value="<?= $detail['kodesupplier']; ?>">
+                                                                        <input type="hidden" name="kodebahan[]" value="<?= $item["kodebahan"]; ?>">
                                                                         <th><input readonly type="text" class="form-control" value="<?= $item['namabahan']; ?>"></th>
-                                                                        <td><input type="text" class="form-control" value="<?= $item['harga']; ?>"></td>
-                                                                        <td><input type="number" class="form-control" value="<?= $item['qty']; ?>"></td>
-                                                                        <td><input readonly type="text" class="form-control" value=" <?= $item['subtotal']; ?>"></td>
-                                                                        <td><button class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
+                                                                        <td><input type="text" name="harga[]" class="form-control harga" value="<?= $item['harga']; ?>"></td>
+                                                                        <td><input type="number" id="qty" name="qty[]" class="form-control qty" value="<?= $item['qty']; ?>"></td>
+                                                                        <td><input readonly name="subtotal[]" type="text" class="form-control subtotal" value=" <?= $item['subtotal']; ?>"></td>
+                                                                        <td><button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 delete">
                                                                                 <i class="fa fa-remove"></i> </button></td>
                                                                     </tr>
                                                                 <?php endforeach ?>
@@ -110,15 +118,12 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label" name="total_keseluruhan">Total</label>
                                     <div class="col-sm-11">
-                                        <input type="text" readonly name="total_keseluruhan" id="total-harga" class="form-control" value="Rp. 0">
+                                        <input type="text" readonly name="total_keseluruhan" id="total-harga" class="form-control">
                                         <!-- <p class="form-control-static" id="total-harga" name="total_keseluruhan"></p> -->
                                     </div>
                                 </div>
-
-
                                 <div class="form-group  text-center" style="margin-top: 10px;">
-
-                                    <button class="btn btn-purple waves-effect waves-light mr-1 m-t-10" id="simpan">
+                                    <button type="submit" class="btn btn-purple waves-effect waves-light mr-1 m-t-10" id="simpan">
                                         <span>Simpan</span>
                                     </button>
                                 </div>
@@ -149,7 +154,57 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
     <!-- END wrapper -->
 
     <?php require '../include/scriptfooter.php'; ?>
+    <script>
+        $(document).ready(function() {
+            totalharga();
 
+            $(document).on("input", ".harga", function() {
+                var harga = parseInt($(this).val());
+                var jumlah = parseInt($(this).closest("tr").find(".qty").val());
+                var total = jumlah * harga;
+                $(this).closest("tr").find("input.subtotal").val(total);
+                totalharga();
+            });
+            $(document).on("input", ".qty", function() {
+                var jumlah = parseInt($(this).val());
+                var harga = parseInt($(this).closest("tr").find(".harga").val());
+                var total = jumlah * harga;
+                $(this).closest("tr").find("input.subtotal").val(total);
+                totalharga();
+            });
+            $(document).on("click", ".delete", function() {
+                $(this).closest("tr").remove();
+                totalharga();
+            });
+            $(document).on("click", "#simpan", function() {
+                console.log($(this).serialize());
+            });
+        })
+
+        function totalharga() {
+            var sum = 0;
+            $(".subtotal").each(function() {
+                sum += parseFloat($(this).val());
+            })
+            $("#total-harga").val('Rp. ' + sum);
+        }
+
+        function sweetfunction() {
+
+            const msg = $('#msg').data('msg');
+            if (msg == 1) {
+                swal({
+                    title: "Input Berhasil!",
+                    type: "success",
+                    //text: "I will close in 2 seconds.",
+                    timer: 1100,
+                    showConfirmButton: false
+                })
+            } else if (msg == 2) {
+                swal("Kode Akun Belum di Pilih!", "", "error")
+            }
+        }
+    </script>
 </body>
 
 </html>
