@@ -31,8 +31,20 @@
                         <?php //foreach ($user as $row): ?>
                         <ul class="list-inline m-b-0">
                             <li>
-                                <h5 class="page-title"><a href=""><?= strtoupper($username); ?> </a> </h5>
-                                <!-- <h5 class="page-title"><a href="profil"><?=$ul;?> </a> </h5> -->
+                                <?php
+                                    $email = $_SESSION['email'];                                                
+                                    $dataadmin = query("SELECT * FROM admin WHERE email = '$email'")[0];
+                                    if($dataadmin['jabatan']!="JAB000"){
+                                        $kj = $dataadmin['jabatan'];
+                                        $jabatan = query("SELECT * FROM jabatan WHERE kodejabatan = '$kj'")[0];
+                                        $nj = ucwords($jabatan['namajabatan']);
+                                    }else{;
+                                        $nj = "Super User";
+                                    }
+                                ?>
+                                <h5 class="page-title"><a href="../user/profile"><?= strtoupper($username)." - ".$nj; ?>
+                                    </a> </h5>
+
                             </li>
                         </ul>
                         <?php ///endforeach;?>
@@ -43,7 +55,7 @@
                     <div class="page-title">
                         <ul class="list-inline m-b-0">
                             <li>
-                                <a href=""><i class="fa fa-user"></i></a>
+                                <a href="../user/profile"><i class="fa fa-user"></i></a>
                             </li>
                         </ul>
                     </div>

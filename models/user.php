@@ -91,7 +91,12 @@ class User
     public function getUsers()
     {
         // $sql = "SELECT a.id, a.email, a.username, a.access_menu_id, menu.jabatan_id, menu.companypanel_id, j.namajabatan, c.nama FROM admin a INNER JOIN user_access_menu menu ON access_menu_id = menu.id INNER JOIN jabatan j ON j.id = menu.jabatan_id INNER JOIN companypanel c ON c.id = menu.companypanel_id ORDER BY a.username ASC";
-        $sql = "SELECT id, email, username, outlet, jabatan FROM admin ORDER BY username ASC";
+        if($_SESSION['userlevel']!=0){
+            $sql = "SELECT id, email, username, outlet, jabatan FROM admin WHERE userlevel!=0 ORDER BY username ASC";
+        }else{
+            $sql = "SELECT id, email, username, outlet, jabatan FROM admin ORDER BY username ASC";
+        }
+        
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

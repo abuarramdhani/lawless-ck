@@ -174,11 +174,40 @@ $data = $userObj->index();
 
                                             <td><?= ucwords($user['username']) ?></td>
 
-                                            <td><?= ucwords($user['email']) ?></td>
+                                            <td><?= $user['email'] ?></td>
 
-                                            <td><?= ucwords($user['outlet']) ?></td>
+                                            <td>
+                                                <?php                                                
+                                                $kodeoutlet = $user['outlet'];
+                                                if($kodeoutlet!="OUT000"){
+                                                    $ka = "SELECT * FROM companypanel WHERE kodeoutlet ='$kodeoutlet'"; //perintah untuk menjumlahkan
+                                                    $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
+                                                    $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
+                                                    echo $tampilkode = ucwords($tampil['nama']);
+                                                }else{;
+                                                    echo "Super Outlet";
+                                                }
+                                                
+                                                
+                                                ?>
+                                            </td>
 
-                                            <td><?= ucwords($user['jabatan']) ?></td>
+                                            <td>
+
+                                                <?php                                                
+                                                $kodejabatan = $user['jabatan'];
+                                                if($kodejabatan!="JAB000"){
+                                                    $ka = "SELECT * FROM jabatan WHERE kodejabatan ='$kodejabatan'"; //perintah untuk menjumlahkan
+                                                    $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
+                                                    $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
+                                                    echo $tampilkode = ucwords($tampil['namajabatan']);
+                                                }else{;
+                                                    echo "Super User";
+                                                }
+                                                
+                                                
+                                                ?>
+                                            </td>
 
                                             <td class="actions">
 

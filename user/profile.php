@@ -9,8 +9,8 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 require '../controller/c_jabatan.php';
-$bagian = "Data Master";
-$juhal = "Jabatan";
+$bagian = "User";
+$juhal = "Profile";
 ?>
 
 
