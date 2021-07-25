@@ -26,7 +26,8 @@ if($_SESSION['userlevel']!=0){
                                 $class = "waves-effect";                                
                             }
                             ?>
-                    <a href="javascript:void(0);" class="<?= $class ?>"><i class="zmdi zmdi-invert-colors"></i> <span>
+                    <a href="javascript:void(0);" class="<?= $class ?>"><i class="zmdi zmdi-<?= $row["icon"] ?>"></i>
+                        <span>
                             <?= ucwords($row["menu"]) ?> </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
 

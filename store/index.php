@@ -10,7 +10,7 @@ require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 require '../controller/c_store.php';
 $bagian = "Store";
-$juhal = "Store";
+$juhal = "Store Produk";
 ?>
 
 
@@ -39,7 +39,8 @@ $juhal = "Store";
 
                                         <a href="#" data-filter="*" class="current waves-effect waves-primary">All</a>
                                         <?php foreach ($k_produk as $kp) : ?>
-                                            <a href="#" data-filter=".<?= $kp['kodekategoriproduk']; ?>" class=" text-capitalize waves-effect waves-primary"><?= $kp['namakategoriproduk']; ?></a>
+                                        <a href="#" data-filter=".<?= $kp['kodekategoriproduk']; ?>"
+                                            class=" text-capitalize waves-effect waves-primary"><?= $kp['namakategoriproduk']; ?></a>
                                         <?php endforeach ?>
                                         <!-- <a href="#" data-filter=".natural" class="waves-effect waves-primary">Beverage</a> -->
                                         <!-- <a href="#" data-filter=".creative" class="waves-effect waves-primary">Foods</a>
@@ -51,9 +52,12 @@ $juhal = "Store";
                                     <form>
                                         <div class="input-group">
                                             <span class="input-group-btn">
-                                                <button type="submit" class="btn waves-effect waves-light btn-primary"><i class="fa fa-search"></i></button>
+                                                <button type="submit"
+                                                    class="btn waves-effect waves-light btn-primary"><i
+                                                        class="fa fa-search"></i></button>
                                             </span>
-                                            <input type="text" id="search" name="keyword" class="form-control" placeholder="Search">
+                                            <input type="text" id="search" name="keyword" class="form-control"
+                                                placeholder="Search">
                                         </div>
                                     </form>
                                 </div>
@@ -62,19 +66,27 @@ $juhal = "Store";
                                         <div class="port mb-2">
                                             <div class="portfolioContainer" id="list-produk">
                                                 <?php foreach ($produk as $p) : ?>
-                                                    <div class="col-md-6 col-xl-3 col-lg-4 <?= $p['kodekategoriproduk']; ?>">
-                                                        <div class="gal-detail thumb">
-                                                            <a href="../assets/images/products/<?= $p['gambar']; ?>" class="image-popup" title="Screenshot-3">
-                                                                <img src="../assets/images/products/<?= $p['gambar']; ?>" class="thumb-img img-fluid" alt="work-thumbnail">
+                                                <div
+                                                    class="col-md-6 col-xl-3 col-lg-4 <?= $p['kodekategoriproduk']; ?>">
+                                                    <div class="gal-detail thumb">
+                                                        <a href="../assets/images/products/<?= $p['gambar']; ?>"
+                                                            class="image-popup" title="Screenshot-3">
+                                                            <img src="../assets/images/products/<?= $p['gambar']; ?>"
+                                                                class="thumb-img img-fluid" alt="work-thumbnail">
+                                                        </a>
+                                                        <div class="text-center">
+                                                            <a href="javascript:;" id="add"
+                                                                data-nama="<?= $p['namaproduk'] ?>"
+                                                                data-harga="<?= $p['harga'] ?>">
+                                                                <h4 class="text-capitalize"><?= $p['namaproduk']; ?>
+                                                                </h4>
                                                             </a>
-                                                            <div class="text-center">
-                                                                <a href="javascript:;" id="add" data-nama="<?= $p['namaproduk'] ?>" data-harga="<?= $p['harga'] ?>">
-                                                                    <h4 class="text-capitalize"><?= $p['namaproduk']; ?></h4>
-                                                                </a>
-                                                                <p class="font-15 text-muted mb-2"><span class="label label-primary"><?= $p['harga']; ?></span></p>
-                                                            </div>
+                                                            <p class="font-15 text-muted mb-2"><span
+                                                                    class="label label-primary"><?= $p['harga']; ?></span>
+                                                            </p>
                                                         </div>
                                                     </div>
+                                                </div>
                                                 <?php endforeach ?>
 
                                             </div><!-- end portfoliocontainer-->
@@ -137,7 +149,8 @@ $juhal = "Store";
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" name="total_keseluruhan">Total</label>
                                             <div class="col-sm-10">
-                                                <input type="text" readonly name="total_keseluruhan" id="total-harga" class="form-control" value="Rp. 0">
+                                                <input type="text" readonly name="total_keseluruhan" id="total-harga"
+                                                    class="form-control" value="Rp. 0">
                                                 <!-- <p class="form-control-static" id="total-harga" name="total_keseluruhan"></p> -->
                                             </div>
                                         </div>
@@ -145,7 +158,8 @@ $juhal = "Store";
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Outlet</label>
                                             <div class="col-sm-10">
-                                                <input type="text" readonly name="outlet" id="outlet" class="form-control" value="">
+                                                <input type="text" readonly name="outlet" id="outlet"
+                                                    class="form-control" value="">
                                             </div>
                                         </div>
 
@@ -221,240 +235,245 @@ $juhal = "Store";
 </html>
 
 <script>
-    function totalharga() {
-        var sum = 0;
-        $(".total").each(function() {
-            sum += parseFloat($(this).val());
-        });
-        $("#total-harga").val('Rp. ' + sum);
-    }
+function totalharga() {
+    var sum = 0;
+    $(".total").each(function() {
+        sum += parseFloat($(this).val());
+    });
+    $("#total-harga").val('Rp. ' + sum);
+}
 
-    $(document).ready(function() {
-        $(document).on("input", "#search", function() {
-            var query = $("#search").val();
-            var data = '<?php echo json_encode($produk); ?>';
-            var product = JSON.parse(data);
-            var result;
-            if (query == '') {
-                result = product;
-            } else {
-                result = product.filter(p => p.namaproduk.toLowerCase().indexOf(query) > -1);
-            }
-            $('#list-produk').empty();
-            console.log(result);
-            result.forEach(res => {
-                html = '<div class="col-md-6 col-xl-3 col-lg-4 ' + res.kodekategoriproduk + '"><div class="gal-detail thumb">';
-                html += '<a href="../assets/images/products/' + res.gambar + '" class="image-popup" title="Screenshot-3">';
-                html += '<img src="../assets/images/products/' + res.gambar + '" class="thumb-img img-fluid" alt="work-thumbnail"></a>';
-                html += '<div class="text-center "><a href="javascript:;" id="add" data-nama="' + res.namaproduk + '" data-harga="' + res.harga + '">';
-                html += '<h4 class="text-capitalize">' + res.namaproduk + '</h4></a>';
-                html += '<p class="font-15 text-muted mb-2"><span class="label label-primary">' + res.harga + '</span></p></div></div></div>';
+$(document).ready(function() {
+    $(document).on("input", "#search", function() {
+        var query = $("#search").val();
+        var data = '<?php echo json_encode($produk); ?>';
+        var product = JSON.parse(data);
+        var result;
+        if (query == '') {
+            result = product;
+        } else {
+            result = product.filter(p => p.namaproduk.toLowerCase().indexOf(query) > -1);
+        }
+        $('#list-produk').empty();
+        console.log(result);
+        result.forEach(res => {
+            html = '<div class="col-md-6 col-xl-3 col-lg-4 ' + res.kodekategoriproduk +
+                '"><div class="gal-detail thumb">';
+            html += '<a href="../assets/images/products/' + res.gambar +
+                '" class="image-popup" title="Screenshot-3">';
+            html += '<img src="../assets/images/products/' + res.gambar +
+                '" class="thumb-img img-fluid" alt="work-thumbnail"></a>';
+            html += '<div class="text-center "><a href="javascript:;" id="add" data-nama="' +
+                res.namaproduk + '" data-harga="' + res.harga + '">';
+            html += '<h4 class="text-capitalize">' + res.namaproduk + '</h4></a>';
+            html += '<p class="font-15 text-muted mb-2"><span class="label label-primary">' +
+                res.harga + '</span></p></div></div></div>';
 
-                $("#list-produk").append(html);
-            });
-
-        });
-        $(document).on("click", "#add", function() {
-            var nama = $(this).data("nama");
-            var harga = $(this).data("harga");
-            var jumlah = 1;
-
-            html =
-                '<tr><td><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
-                nama +
-                '"></td><td ><input type="text"  readonly  class="form-control harga"  name="harga[]"  value="' +
-                harga +
-                '"></td><td><input id="jumlah" class="form-control" type="number" name="jumlah[]" value="' +
-                jumlah +
-                '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total" id="subtotal_item" value="' +
-                harga + '" ></td>';
-            html +=
-                '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
-            $("#order>tbody").append(html);
-            totalharga();
+            $("#list-produk").append(html);
         });
 
-        $(document).on("click", "#remove", function() {
-            $(this).closest("tr").remove();
-            totalharga();
-        });
-        $(document).on("input", "#jumlah", function() {
-            var jumlah = parseInt($(this).val());
-            var harga = parseInt($(this).closest("tr").find(".harga").val());
-            var total = jumlah * harga;
-            // var coba = $(this).closest("tr").find(".total").text(total);
-            // console.log($(this).closest("tr").find(".total").text(total));
-            // $(this).closest("tr").find("input#subtotal_item").val(total);
-            $(this).closest("tr").find("input#subtotal_item").val(total);
-            // $(this).closest("tr").find(".total_val").val(total);
+    });
+    $(document).on("click", "#add", function() {
+        var nama = $(this).data("nama");
+        var harga = $(this).data("harga");
+        var jumlah = 1;
 
-            totalharga();
-        });
+        html =
+            '<tr><td><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
+            nama +
+            '"></td><td ><input type="text"  readonly  class="form-control harga"  name="harga[]"  value="' +
+            harga +
+            '"></td><td><input id="jumlah" class="form-control" type="number" name="jumlah[]" value="' +
+            jumlah +
+            '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total" id="subtotal_item" value="' +
+            harga + '" ></td>';
+        html +=
+            '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
+        $("#order>tbody").append(html);
+        totalharga();
+    });
 
-        $('#tombol-kasmasuk').click(function(e) {
+    $(document).on("click", "#remove", function() {
+        $(this).closest("tr").remove();
+        totalharga();
+    });
+    $(document).on("input", "#jumlah", function() {
+        var jumlah = parseInt($(this).val());
+        var harga = parseInt($(this).closest("tr").find(".harga").val());
+        var total = jumlah * harga;
+        // var coba = $(this).closest("tr").find(".total").text(total);
+        // console.log($(this).closest("tr").find(".total").text(total));
+        // $(this).closest("tr").find("input#subtotal_item").val(total);
+        $(this).closest("tr").find("input#subtotal_item").val(total);
+        // $(this).closest("tr").find(".total_val").val(total);
 
-            e.preventDefault();
-            var dataform = $('#formkasmasuk')[0];
-            var data = new FormData(dataform);
+        totalharga();
+    });
 
-            var kasmasuk = $('#kasmasuk').val();
-            var kodeakun = $('#kodeakun').val();
-            var tanggal = $('#tanggal').val();
-            var keterangan = $('#keterangan').val();
-            var payto = $('#payto').val();
-            var jumlah = $('#jumlahinput').val();
+    $('#tombol-kasmasuk').click(function(e) {
 
-            if (kodeakun == "000") {
-                swal("Kode Akun Belum di Pilih!", "", "error")
-            } else if (tanggal == " ") {
-                swal("Tanggal Belum di Isi!", "", "error")
-            } else if (keterangan == "") {
-                swal("Keterangan Belum di Isi!", "", "error")
-            } else if (payto == "") {
-                swal("Payto Belum di Isi!", "", "error")
-            } else if (jumlah == "") {
-                swal("Jumlah Belum di Isi!", "", "error")
-            } else {
-                $.ajax({
-                    url: '../models/input.php',
-                    type: 'post',
-                    data: data,
-                    enctype: 'multipart/form-data',
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    beforeSend: function() {
-                        $('.spinn').show();
-                    },
-                    success: function(hasil) {
-                        // alert(hasil);
-                        console.log(hasil);
-                        //sukses
-                        if (hasil == 1) {
-                            swal("Input Gagal!", "", "error")
-                        } else if (hasil == 2) {
-                            swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
-                        } else if (hasil == 3) {
-                            swal({
-                                title: "Input Berhasil!",
-                                type: "success",
-                                //text: "I will close in 2 seconds.",
-                                timer: 1000,
-                                showConfirmButton: false
-                            })
-                            location.reload();
+        e.preventDefault();
+        var dataform = $('#formkasmasuk')[0];
+        var data = new FormData(dataform);
 
-                        }
+        var kasmasuk = $('#kasmasuk').val();
+        var kodeakun = $('#kodeakun').val();
+        var tanggal = $('#tanggal').val();
+        var keterangan = $('#keterangan').val();
+        var payto = $('#payto').val();
+        var jumlah = $('#jumlahinput').val();
+
+        if (kodeakun == "000") {
+            swal("Kode Akun Belum di Pilih!", "", "error")
+        } else if (tanggal == " ") {
+            swal("Tanggal Belum di Isi!", "", "error")
+        } else if (keterangan == "") {
+            swal("Keterangan Belum di Isi!", "", "error")
+        } else if (payto == "") {
+            swal("Payto Belum di Isi!", "", "error")
+        } else if (jumlah == "") {
+            swal("Jumlah Belum di Isi!", "", "error")
+        } else {
+            $.ajax({
+                url: '../models/input.php',
+                type: 'post',
+                data: data,
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                beforeSend: function() {
+                    $('.spinn').show();
+                },
+                success: function(hasil) {
+                    // alert(hasil);
+                    console.log(hasil);
+                    //sukses
+                    if (hasil == 1) {
+                        swal("Input Gagal!", "", "error")
+                    } else if (hasil == 2) {
+                        swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
+                    } else if (hasil == 3) {
+                        swal({
+                            title: "Input Berhasil!",
+                            type: "success",
+                            //text: "I will close in 2 seconds.",
+                            timer: 1000,
+                            showConfirmButton: false
+                        })
+                        location.reload();
+
                     }
-                });
-            }
-        })
-
-        $('#tombol-kaskeluar').click(function(e) {
-
-            e.preventDefault();
-            var dataform = $('#formkaskeluar')[0];
-            var data = new FormData(dataform);
-
-            var kaskeluar = $('#kaskeluar').val();
-            var kodeakunout = $('#kodeakunout').val();
-            var tanggalout = $('#tanggalout').val();
-            var keteranganout = $('#keteranganout').val();
-            var paytoout = $('#paytoout').val();
-            var jumlahout = $('#jumlahoutput').val();
-
-            if (kodeakunout == "000") {
-                swal("Kode Akun Belum di Pilih!", "", "error")
-            } else if (tanggalout == " ") {
-                swal("Tanggal Belum di Isi!", "", "error")
-            } else if (keteranganout == "") {
-                swal("Keterangan Belum di Isi!", "", "error")
-            } else if (paytoout == "") {
-                swal("Payto Belum di Isi!", "", "error")
-            } else if (jumlahout == "") {
-                swal("Jumlah Belum di Isi!", "", "error")
-            } else {
-                $.ajax({
-                    url: '../models/input.php',
-                    type: 'post',
-                    data: data,
-                    enctype: 'multipart/form-data',
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    beforeSend: function() {
-                        $('.spinn').show();
-                    },
-                    success: function(hasil) {
-                        // alert(hasil);
-                        console.log(hasil);
-                        //sukses
-                        if (hasil == 1) {
-                            swal("Input Gagal!", "", "error")
-                        } else if (hasil == 2) {
-                            swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
-                        } else if (hasil == 3) {
-                            swal({
-                                title: "Input Berhasil!",
-                                type: "success",
-                                //text: "I will close in 2 seconds.",
-                                timer: 1000,
-                                showConfirmButton: false
-                            })
-                            location.reload();
-
-                        }
-                    }
-                });
-            }
-        })
-
-        $('.tombol-deletekas').click(function(e) {
-            e.preventDefault();
-            //alert('hapus');
-            //var delete = 'delete';
-            var tabel = 'kas';
-            var iddelete = $(this).closest('tr').find('.delete_id_value').val();
-            swal({
-                title: "Apakah Anda Yakin?",
-                text: "Data Anda Akan Terhapus!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Ya, Hapus!",
-                cancelButtonText: "Tidak!",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function(isConfirm) {
-                if (isConfirm) {
-
-
-                    $.ajax({
-                        url: '../models/delete.php',
-                        type: 'post',
-                        data: {
-                            'tabel': tabel,
-                            'delete_id': iddelete
-                        },
-                        success: function(hasil) {
-                            // alert(hasil);
-                            console.log(hasil);
-                            //sukses
-                            if (hasil == 2) {
-
-                            } else if (hasil == 3) {
-                                swal("Deleted!",
-                                    "Hapus Data Berhasil.",
-                                    "success");
-                                location.reload();
-
-                            }
-                        }
-                    });
-                } else {
-                    swal("Cancelled", "", "error");
                 }
             });
-        });
+        }
     })
+
+    $('#tombol-kaskeluar').click(function(e) {
+
+        e.preventDefault();
+        var dataform = $('#formkaskeluar')[0];
+        var data = new FormData(dataform);
+
+        var kaskeluar = $('#kaskeluar').val();
+        var kodeakunout = $('#kodeakunout').val();
+        var tanggalout = $('#tanggalout').val();
+        var keteranganout = $('#keteranganout').val();
+        var paytoout = $('#paytoout').val();
+        var jumlahout = $('#jumlahoutput').val();
+
+        if (kodeakunout == "000") {
+            swal("Kode Akun Belum di Pilih!", "", "error")
+        } else if (tanggalout == " ") {
+            swal("Tanggal Belum di Isi!", "", "error")
+        } else if (keteranganout == "") {
+            swal("Keterangan Belum di Isi!", "", "error")
+        } else if (paytoout == "") {
+            swal("Payto Belum di Isi!", "", "error")
+        } else if (jumlahout == "") {
+            swal("Jumlah Belum di Isi!", "", "error")
+        } else {
+            $.ajax({
+                url: '../models/input.php',
+                type: 'post',
+                data: data,
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                beforeSend: function() {
+                    $('.spinn').show();
+                },
+                success: function(hasil) {
+                    // alert(hasil);
+                    console.log(hasil);
+                    //sukses
+                    if (hasil == 1) {
+                        swal("Input Gagal!", "", "error")
+                    } else if (hasil == 2) {
+                        swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
+                    } else if (hasil == 3) {
+                        swal({
+                            title: "Input Berhasil!",
+                            type: "success",
+                            //text: "I will close in 2 seconds.",
+                            timer: 1000,
+                            showConfirmButton: false
+                        })
+                        location.reload();
+
+                    }
+                }
+            });
+        }
+    })
+
+    $('.tombol-deletekas').click(function(e) {
+        e.preventDefault();
+        //alert('hapus');
+        //var delete = 'delete';
+        var tabel = 'kas';
+        var iddelete = $(this).closest('tr').find('.delete_id_value').val();
+        swal({
+            title: "Apakah Anda Yakin?",
+            text: "Data Anda Akan Terhapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, Hapus!",
+            cancelButtonText: "Tidak!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+
+
+                $.ajax({
+                    url: '../models/delete.php',
+                    type: 'post',
+                    data: {
+                        'tabel': tabel,
+                        'delete_id': iddelete
+                    },
+                    success: function(hasil) {
+                        // alert(hasil);
+                        console.log(hasil);
+                        //sukses
+                        if (hasil == 2) {
+
+                        } else if (hasil == 3) {
+                            swal("Deleted!",
+                                "Hapus Data Berhasil.",
+                                "success");
+                            location.reload();
+
+                        }
+                    }
+                });
+            } else {
+                swal("Cancelled", "", "error");
+            }
+        });
+    });
+})
 </script>
