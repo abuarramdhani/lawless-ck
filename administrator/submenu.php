@@ -8,9 +8,9 @@ require '../include/fungsi.php';
 require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
-require '../controller/c_menu.php';
+require '../controller/c_submenu.php';
 $bagian = "Administrator";
-$juhal = "Menu";
+$juhal = "Sub Menu";
 ?>
 
 
@@ -37,15 +37,29 @@ $juhal = "Menu";
 
                     <div class="row">
                         <div class="col-lg-4">
+
                             <div class="card-box">
                                 <div class="dropdown pull-right">
-                                    <!-- <h4 class="header-title m-t-0">Kode Unit : <?php echo $kp; ?></h4> -->
+
                                 </div>
 
                                 <h4 class="header-title m-t-0">Input Menu Sidebar<br></h4>
                                 <br>
                                 <form class="form-horizontal group-border-dashed" id="formmenu">
-                                    <input type="hidden" value="inputmenu" id="inputmenu" name="inputmenu">
+                                    <input type="hidden" name="inputsubmenu">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Menu Parent</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control select2" id="nparent" name="mparent">
+                                                <option>Pilih Kategori</option>
+                                                <?php foreach ($menu as $row) : ?>
+                                                    <option value="<?= $row["id"] ?>">
+                                                        <?= ucwords($row["menu"]) ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Nama Menu</label>
                                         <div class="col-sm-8">
@@ -82,20 +96,23 @@ $juhal = "Menu";
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Menu</th>
-                                            <th>Url</th>
+                                            <th>Menu Parent</th>
+                                            <th>Nama Sub Menu</th>
+                                            <th>url</th>
+                                            <th>icon</th>
                                             <th>Action </th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         <?php $i = 1; ?>
-
-                                        <?php foreach ($kodemenu as $row) : ?>
+                                        <?php foreach ($submenu as $sm) : ?>
                                             <tr>
                                                 <td width="2%" ;><?= $i ?></td>
-                                                <td><?= $row["menu"] ?></td>
-                                                <td><?= $row["url"] ?></td>
+                                                <td><?= $sm["menu"] ?></td>
+                                                <td><?= $sm["title"] ?></td>
+                                                <td><?= $sm["url"] ?></td>
+                                                <td><?= $sm["icon"] ?></td>
                                                 <td>
                                                     <a class="on-default edit-row badge badge-success tombol-edit" data-id="<?= $row['id']; ?>" data-menu="<?= $row['menu']; ?>" data-url="<?= $row['url']; ?>" id=""><i class="fa fa-pencil"></i></a>
                                                     <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
@@ -191,18 +208,18 @@ $juhal = "Menu";
             var dataform = $('#formmenu')[0];
             var data = new FormData(dataform);
             // console.log(data);
-
+            var nparent = $('#nparent').val();
             var nmenu = $('#nmenu').val();
             var nurl = $('#nurl').val();
 
-            // console.log(nmenu);
-            // console.log(nurl);
 
-            //alert(ngambar)
             if (umenu == "") {
                 swal("Nama menu belum di isi!", "", "error")
+            } else if (nparent == "Pilih Kategori") {
+                swal("Menu Parent belum di pilih!", "", "error")
             } else if (uurl == "") {
                 swal("URL belum di isi!", "", "error")
+
             } else {
                 $.ajax({
                     url: '../models/input.php',
@@ -355,50 +372,6 @@ $juhal = "Menu";
                 }
             });
 
-            //alert('hapus');
-            //var delete = 'delete';
-            // var tabel = 'menu';
-            // var iddelete = $(this).closest('tr').find('.delete_id_value').val();
-            // swal({
-            //     title: "Apakah Anda Yakin?",
-            //     text: "Data Anda Akan Terhapus!",
-            //     type: "warning",
-            //     showCancelButton: true,
-            //     confirmButtonColor: "#DD6B55",
-            //     confirmButtonText: "Ya, Hapus!",
-            //     cancelButtonText: "Tidak!",
-            //     closeOnConfirm: false,
-            //     closeOnCancel: false
-            // }, function(isConfirm) {
-            //     if (isConfirm) {
-
-
-            //         $.ajax({
-            //             url: '../models/delete.php',
-            //             type: 'post',
-            //             data: {
-            //                 'tabel': tabel,
-            //                 'delete_id': iddelete
-            //             },
-            //             success: function(hasil) {
-            //                 // alert(hasil);
-            //                 console.log(hasil);
-            //                 //sukses
-            //                 if (hasil == 2) {
-
-            //                 } else if (hasil == 3) {
-            //                     swal("Deleted!",
-            //                         "Hapus Data Berhasil.",
-            //                         "success");
-            //                     location.reload();
-
-            //                 }
-            //             }
-            //         });
-            //     } else {
-            //         swal("Cancelled", "", "error");
-            //     }
-            // });
         });
 
     })
