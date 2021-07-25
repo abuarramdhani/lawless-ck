@@ -149,10 +149,9 @@ $juhal = "Store Produk";
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Outlet</label>
                                             <div class="col-sm-10">
-                                                <<<<<<< Updated upstream <input type="text" readonly name="outlet" id="outlet" class="form-control" value="">
-                                                    =======
-                                                    <input type="text" readonly name="outlet" id="outlet" class="form-control" value="<?= $_SESSION['outlet']; ?>">
-                                                    >>>>>>> Stashed changes
+
+                                                <input type="text" readonly name="outlet" id="outlet" class="form-control" value="<?= $_SESSION['outlet']; ?>">
+
                                             </div>
                                         </div>
 
