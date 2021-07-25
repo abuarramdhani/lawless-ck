@@ -250,75 +250,58 @@ $juhal = "Store Produk";
 
                 $("#list-produk").append(html);
             });
+        });
 
-            $(document).ready(function() {
-                $(document).on("input", "#search", function() {
-                    var query = $("#search").val();
-                    var data = '<?php echo json_encode($produk); ?>';
-                    var product = JSON.parse(data);
-                    var result;
-                    if (query == '') {
-                        result = product;
-                    } else {
-                        result = product.filter(p => p.namaproduk.toLowerCase().indexOf(query) > -1);
-                    }
-                    $('#list-produk').empty();
-                    console.log(result);
-                    result.forEach(res => {
-                        html = '<div class="col-md-6 col-xl-3 col-lg-4 ' + res.kodekategoriproduk +
-                            '"><div class="gal-detail thumb">';
-                        html += '<a href="../assets/images/products/' + res.gambar +
-                            '" class="image-popup" title="Screenshot-3">';
-                        html += '<img src="../assets/images/products/' + res.gambar +
-                            '" class="thumb-img img-fluid" alt="work-thumbnail"></a>';
-                        html += '<div class="text-center "><a href="javascript:;" id="add" data-nama="' +
-                            res.namaproduk + '" data-harga="' + res.harga + '">';
-                        html += '<h4 class="text-capitalize">' + res.namaproduk + '</h4></a>';
-                        html += '<p class="font-15 text-muted mb-2"><span class="label label-primary">' +
-                            res.harga + '</span></p></div></div></div>';
+        $(document).ready(function() {
+            $(document).on("input", "#search", function() {
+                var query = $("#search").val();
+                var data = '<?php echo json_encode($produk); ?>';
+                var product = JSON.parse(data);
+                var result;
+                if (query == '') {
+                    result = product;
+                } else {
+                    result = product.filter(p => p.namaproduk.toLowerCase().indexOf(query) > -1);
+                }
+                $('#list-produk').empty();
+                console.log(result);
+                result.forEach(res => {
+                    html = '<div class="col-md-6 col-xl-3 col-lg-4 ' + res.kodekategoriproduk +
+                        '"><div class="gal-detail thumb">';
+                    html += '<a href="../assets/images/products/' + res.gambar +
+                        '" class="image-popup" title="Screenshot-3">';
+                    html += '<img src="../assets/images/products/' + res.gambar +
+                        '" class="thumb-img img-fluid" alt="work-thumbnail"></a>';
+                    html += '<div class="text-center "><a href="javascript:;" id="add" data-nama="' +
+                        res.namaproduk + '" data-harga="' + res.harga + '">';
+                    html += '<h4 class="text-capitalize">' + res.namaproduk + '</h4></a>';
+                    html += '<p class="font-15 text-muted mb-2"><span class="label label-primary">' +
+                        res.harga + '</span></p></div></div></div>';
 
-                        $("#list-produk").append(html);
-                    });
-
-                });
-                $(document).on("click", "#add", function() {
-                    var nama = $(this).data("nama");
-                    var harga = $(this).data("harga");
-                    var jumlah = 1;
-
-                    html =
-                        '<tr><td><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
-                        nama +
-                        '"></td><td ><input type="text"  readonly  class="form-control harga"  name="harga[]"  value="' +
-                        harga +
-                        '"></td><td><input id="jumlah" class="form-control" type="number" name="jumlah[]" value="' +
-                        jumlah +
-                        '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total" id="subtotal_item" value="' +
-                        harga + '" ></td>';
-                    html +=
-                        '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
-                    $("#order>tbody").append(html);
-                    totalharga();
+                    $("#list-produk").append(html);
                 });
 
-                $(document).on("click", "#remove", function() {
-                    $(this).closest("tr").remove();
-                    totalharga();
-                });
-                $(document).on("input", "#jumlah", function() {
-                    var jumlah = parseInt($(this).val());
-                    var harga = parseInt($(this).closest("tr").find(".harga").val());
-                    var total = jumlah * harga;
-                    // var coba = $(this).closest("tr").find(".total").text(total);
-                    // console.log($(this).closest("tr").find(".total").text(total));
-                    // $(this).closest("tr").find("input#subtotal_item").val(total);
-                    $(this).closest("tr").find("input#subtotal_item").val(total);
-                    // $(this).closest("tr").find(".total_val").val(total);
+            });
+            $(document).on("click", "#add", function() {
 
-                    totalharga();
-                });
+                var nama = $(this).data("nama");
+                var harga = $(this).data("harga");
+                var jumlah = 1;
 
-            })
+                html =
+                    '<tr><td><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
+                    nama +
+                    '"></td><td ><input type="text"  readonly  class="form-control harga"  name="harga[]"  value="' +
+                    harga +
+                    '"></td><td><input id="jumlah" class="form-control" type="number" name="jumlah[]" value="' +
+                    jumlah +
+                    '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total" id="subtotal_item" value="' +
+                    harga + '" ></td>';
+                html +=
+                    '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
+                $("#order>tbody").append(html);
+                totalharga();
+            });
 
             $(document).on("click", "#remove", function() {
                 $(this).closest("tr").remove();
@@ -336,6 +319,24 @@ $juhal = "Store Produk";
 
                 totalharga();
             });
+
+        })
+
+        $(document).on("click", "#remove", function() {
+            $(this).closest("tr").remove();
+            totalharga();
+        });
+        $(document).on("input", "#jumlah", function() {
+            var jumlah = parseInt($(this).val());
+            var harga = parseInt($(this).closest("tr").find(".harga").val());
+            var total = jumlah * harga;
+            // var coba = $(this).closest("tr").find(".total").text(total);
+            // console.log($(this).closest("tr").find(".total").text(total));
+            // $(this).closest("tr").find("input#subtotal_item").val(total);
+            $(this).closest("tr").find("input#subtotal_item").val(total);
+            // $(this).closest("tr").find(".total_val").val(total);
+
+            totalharga();
         });
     });
 </script>
