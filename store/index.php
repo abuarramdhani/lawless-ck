@@ -13,8 +13,7 @@ $bagian = "Store";
 $juhal = "Store Produk";
 ?>
 
-
-<body class="fixed-left">
+<body class="fixed-left" onload="sweetfunction()">
 
     <!-- Begin page -->
     <div id="wrapper">
@@ -28,6 +27,12 @@ $juhal = "Store Produk";
         <!-- ============================================================== -->
         <div class="content-page">
             <!-- Start content -->
+            <!-- terima msg -->
+            <?php if (isset($_SESSION['msg'])) : ?>
+                <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
+                <?php unset($_SESSION['msg']); ?>
+            <?php endif ?>
+            <!-- akhir terima msg -->
 
             <div class="content">
                 <div class="container" style="margin-top: 5px;">
@@ -94,13 +99,11 @@ $juhal = "Store Produk";
                                     </div> <!-- card box -->
                                 </div>
                             </div>
-
-
-
                         </div>
                         <div class="col-lg-6">
                             <div class="row">
-                                <form class="form-horizontal" role="formpo" method="POST" action="input.php">
+                                <form class="form-horizontal" role="formpo" method="POST" action="../models/input.php">
+                                    <input type="hidden" name="inputformstore">
                                     <div class="card-box" style="height:400px; overflow-y: auto;">
                                         <div class="col-lg-12">
                                             <div class="responsive-table-plugin">
@@ -111,7 +114,6 @@ $juhal = "Store Produk";
                                                                 <tr>
                                                                     <th>Nama Produk</th>
                                                                     <th data-priority="1">Harga</th>
-
                                                                     <th data-priority="3">Jumlah</th>
                                                                     <th data-priority="1">Subtotal</th>
                                                                     <th data-priority="1">Aksi</th>
@@ -158,48 +160,20 @@ $juhal = "Store Produk";
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Outlet</label>
                                             <div class="col-sm-10">
+<<<<<<< Updated upstream
                                                 <input type="text" readonly name="outlet" id="outlet"
                                                     class="form-control" value="">
+=======
+                                                <input type="text" readonly name="outlet" id="outlet" class="form-control" value="<?= $_SESSION['outlet']; ?>">
+>>>>>>> Stashed changes
                                             </div>
                                         </div>
 
                                         <div class="form-group  text-center" style="margin-top: 10px;">
-                                            <!-- <button class="btn btn-danger waves-effect waves-light mr-1">
-                                                <span>Batal</span>
-                                            </button> -->
                                             <button class="btn btn-purple waves-effect waves-light mr-1" id="simpan">
                                                 <span>Order</span>
                                             </button>
                                         </div>
-
-
-
-                                        <!-- <div class="form-group">
-                                    <label class="col-sm-2 control-label">Total</label>
-                                    <div class="col-sm-10">
-                                        <p class="form-control-static">Rp. 90.000.00</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Suplier</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="form-group  text-center" style="margin-top: 10px;">
-                                    <button class="btn btn-danger waves-effect waves-light mr-1">
-                                        <span>Cancel</span>
-                                    </button>
-                                    <button class="btn btn-purple waves-effect waves-light mr-1"> <span>Save</span>
-                                    </button> -->
-
                                     </div>
                                 </form>
                             </div>
@@ -235,6 +209,7 @@ $juhal = "Store Produk";
 </html>
 
 <script>
+<<<<<<< Updated upstream
 function totalharga() {
     var sum = 0;
     $(".total").each(function() {
@@ -242,6 +217,63 @@ function totalharga() {
     });
     $("#total-harga").val('Rp. ' + sum);
 }
+=======
+    function sweetfunction() {
+
+        const msg = $('#msg').data('msg');
+
+        if (msg == 1) {
+            swal({
+                title: "Input Berhasil!",
+                type: "success",
+                //text: "I will close in 2 seconds.",
+                timer: 1500,
+                showConfirmButton: false
+
+            })
+            // // sleep(1000);
+            // setTimeout(function() {
+            //     window.location.replace("../purchasing/");
+            // }, 1300);
+
+        } else if (msg == 2) {
+            swal("Kode Akun Belum di Pilih!", "", "error")
+        }
+
+    }
+
+    function totalharga() {
+        var sum = 0;
+        $(".total").each(function() {
+            sum += parseFloat($(this).val());
+        });
+        $("#total-harga").val('Rp. ' + sum);
+    }
+
+    $(document).ready(function() {
+        $(document).on("input", "#search", function() {
+            var query = $("#search").val();
+            var data = '<?php echo json_encode($produk); ?>';
+            var product = JSON.parse(data);
+            var result;
+            if (query == '') {
+                result = product;
+            } else {
+                result = product.filter(p => p.namaproduk.toLowerCase().indexOf(query) > -1);
+            }
+            $('#list-produk').empty();
+            console.log(result);
+            result.forEach(res => {
+                html = '<div class="col-md-6 col-xl-3 col-lg-4 ' + res.kodekategoriproduk + '"><div class="gal-detail thumb">';
+                html += '<a href="../assets/images/products/' + res.gambar + '" class="image-popup" title="Screenshot-3">';
+                html += '<img src="../assets/images/products/' + res.gambar + '" class="thumb-img img-fluid" alt="work-thumbnail"></a>';
+                html += '<div class="text-center "><a href="javascript:;" id="add" data-nama="' + res.namaproduk + '" data-harga="' + res.harga + '">';
+                html += '<h4 class="text-capitalize">' + res.namaproduk + '</h4></a>';
+                html += '<p class="font-15 text-muted mb-2"><span class="label label-primary">' + res.harga + '</span></p></div></div></div>';
+
+                $("#list-produk").append(html);
+            });
+>>>>>>> Stashed changes
 
 $(document).ready(function() {
     $(document).on("input", "#search", function() {
@@ -272,6 +304,7 @@ $(document).ready(function() {
             $("#list-produk").append(html);
         });
 
+<<<<<<< Updated upstream
     });
     $(document).on("click", "#add", function() {
         var nama = $(this).data("nama");
@@ -476,4 +509,23 @@ $(document).ready(function() {
         });
     });
 })
+=======
+        $(document).on("click", "#remove", function() {
+            $(this).closest("tr").remove();
+            totalharga();
+        });
+        $(document).on("input", "#jumlah", function() {
+            var jumlah = parseInt($(this).val());
+            var harga = parseInt($(this).closest("tr").find(".harga").val());
+            var total = jumlah * harga;
+            // var coba = $(this).closest("tr").find(".total").text(total);
+            // console.log($(this).closest("tr").find(".total").text(total));
+            // $(this).closest("tr").find("input#subtotal_item").val(total);
+            $(this).closest("tr").find("input#subtotal_item").val(total);
+            // $(this).closest("tr").find(".total_val").val(total);
+
+            totalharga();
+        });
+    })
+>>>>>>> Stashed changes
 </script>

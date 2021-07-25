@@ -647,35 +647,65 @@ if (isset($_POST['kasmasuk'])) {
     $nkategoriproduk = htmlspecialchars($_POST["nkategoriproduk"]);
     $nproduk = strtolower(htmlspecialchars($_POST["nproduk"]));
     $nharga = htmlspecialchars($_POST["nharga"]);
-    $ngambar = $_POST["ngambar"];
-    if ($ngambar != "") {
-        $gambar = $ngambar;
+    $ngambar = $_FILES["ngambar"];
+    // var_dump($ngambar);
+
+    $ekstensi_diperbolehkan    = array('png', 'jpg', 'jpeg');
+
+    if ($ngambar['name'] != "") {
+        $gambar = $ngambar['name'];
     } else {
         $gambar = "no_image.jpg";
     }
+    $x = explode('.', $gambar);
+    $ekstensi = strtolower(end($x));
+
+
+    $gambar = uniqid();
+    $gambar .= '.';
+    $gambar .=   $ekstensi;
+
+
+
+
+
+
+    $ukuran    = $ngambar['size'];
+    $file_tmp = $ngambar['tmp_name'];
+
+    // var_dump($gambar);
+    // var_dump($x);
+    // var_dump($ekstensi);
+    // // var_dump($ukuran);
+    // // var_dump($file_tmp);
+    // die;
+
 
     $ceknama = mysqli_query($conn, "SELECT * FROM produk WHERE namaproduk ='$nproduk' ");
 
     if (mysqli_fetch_assoc($ceknama)) {
-        echo "<script>
-                alert('nama produk sudah terdaftar');
-                document.location.href = 'produk';
-            </script>";
+        echo 6;
         return false;
     }
 
     //query insert data
-    $query = "INSERT INTO produk 
-                VALUES 
-                ('','$kp','$nkategoriproduk','$nproduk','$nharga','$gambar')
-            ";
 
-    $masuk_data = mysqli_query($conn, $query);
-    if ($masuk_data) {
 
-        echo 3;
+    if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
+        if ($ukuran < 2044070) {
+            move_uploaded_file($file_tmp, '../assets/images/products/' . $gambar);
+            $query = "INSERT INTO produk VALUES ('','$kp','$nkategoriproduk','$nproduk','$nharga','$gambar')";
+            $masuk_data = mysqli_query($conn, $query);
+            if ($masuk_data) {
+                echo 3;
+            } else {
+                echo 1;
+            }
+        } else {
+            echo 4;
+        }
     } else {
-        echo 1;
+        echo 5;
     }
 } else if (isset($_POST['inputformpo'])) {
 
@@ -825,4 +855,101 @@ if (isset($_POST['kasmasuk'])) {
             }
         }
     }
+} else if (isset($_POST['inputformstore'])) {
+    $namabarang       = $_POST['namabarang'];
+    $harga         = $_POST['harga'];
+    $jumlah     = $_POST['jumlah'];
+    $subtotal    = $_POST['subtotal'];
+    $total_keseluruhan    = $_POST['total_keseluruhan'];
+    $namaoutlet = $_SESSION['outlet'];
+
+
+    // var_dump($namabarang);
+    // var_dump($harga);
+    // var_dump($jumlah);
+    // var_dump($subtotal);
+    // die;
+    $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
+    // $outlet['kodeoutlet'];
+
+
+    $total = count($namabarang);
+    $dt_input = date('Y-m-d');
+    $date = date('ymd');
+
+    // isi noform
+
+    // $result_noform = mysqli_query($conn, "SELECT id,No_form FROM form_po ORDER BY No_form DESC");
+    // $ambil_noform = mysqli_fetch_row($result_noform);
+
+    $ambil_noform = query("SELECT id,No_form FROM form_store ORDER BY No_form DESC");
+    $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
+    $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
+
+
+    // var_dump($ambil_noform);
+    // var_dump($pecah_po);
+    // var_dump($pecah_po_b);
+    // die;
+
+
+    if ($pecah_po == "FST$date") {
+        $pecah_po_b += 1;
+        $pecah_po_b = sprintf("%03d", $pecah_po_b);
+        $No_form = 'FST' . $date . $pecah_po_b;
+    } else {
+        $No_form = 'FST' . $date . '001';
+    }
+    //akhir isi noform
+    // echo $No_form;
+    // die;
+
+    // bahan
+    foreach ($namabarang as $row) {
+
+        $sql = "SELECT * 
+        FROM bahan 
+        WHERE namabahan = '$row'
+        ";
+        $result = mysqli_query($conn, $sql);
+
+        while ($d = mysqli_fetch_array($result)) {
+            $kodebahan[] = $d['kodebahan'];
+            // echo $kodebahan;
+        }
+    }
+
+    // var_dump($kodebahan);
+    // die;
+    // input ke tabel form po
+
+
+    mysqli_query($conn, "insert into form_store set
+            No_form    = '$No_form',
+            kodeoutlet      = '$kodeoutlet',
+            date ='$dt_input',
+            status = '1'
+        ");
+
+    // input ke tabel item po
+    // for ($i = 0; $i < $total; $i++) {
+
+    //     mysqli_query($conn, "insert into item_po set
+    //         No_form    = '$No_form',
+    //         kodebahan      = '$kodebahan[$i]',
+    //         qty = '$jumlah[$i]',
+    //         harga ='$harga[$i]',
+    //         subtotal = '$subtotal[$i]'
+    //     ");
+    // }
+
+    $result = mysqli_affected_rows($conn);
+
+
+
+    //kembali ke halaman sebelumnya
+    $_SESSION["msg"] = "$result";
+    // header("Location: form-po.php?msg=" . urlencode('1'));
+
+    header("location: ../store/");
 }
