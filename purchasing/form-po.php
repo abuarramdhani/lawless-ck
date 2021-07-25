@@ -91,7 +91,8 @@ $juhal = "Form PO";
                     </div>
                     <div class="col-lg-6">
                         <div class="row">
-                            <form class="form-horizontal" role="formpo" method="POST" action="input.php">
+                            <form class="form-horizontal" role="formpo" method="POST" action="../models/input.php">
+                                <input type="hidden" name="inputformpo">
                                 <div class="card-box" style="height:350px; overflow-y: auto;">
                                     <div class="col-lg-12">
                                         <div class="responsive-table-plugin">
@@ -165,7 +166,7 @@ $juhal = "Form PO";
                                         <button class="btn btn-danger waves-effect waves-light mr-1">
                                             <span>Batal</span>
                                         </button>
-                                        <button class="btn btn-purple waves-effect waves-light mr-1" id="">
+                                        <button type="submit" class="btn btn-purple waves-effect waves-light mr-1" id="">
                                             <span>Simpan</span>
                                         </button>
                                     </div>
@@ -246,9 +247,15 @@ $juhal = "Form PO";
                 title: "Input Berhasil!",
                 type: "success",
                 //text: "I will close in 2 seconds.",
-                timer: 1100,
+                timer: 1500,
                 showConfirmButton: false
+
             })
+            // sleep(1000);
+            setTimeout(function() {
+                window.location.replace("../purchasing/");
+            }, 1300);
+
         } else if (msg == 2) {
             swal("Kode Akun Belum di Pilih!", "", "error")
         }

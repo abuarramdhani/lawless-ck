@@ -13,8 +13,11 @@ $jumlah     = $_POST['jumlah'];
 $subtotal    = $_POST['subtotal'];
 $kodesupplier    = $_POST['supplier'];
 $total_keseluruhan    = $_POST['total_keseluruhan'];
+$namaoutlet = $_SESSION['outlet'];
 
-// var_dump($supplier);
+$kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
+// $outlet['kodeoutlet'];
+
 
 $total = count($namabarang);
 $dt_input = date('Y-m-d');
@@ -28,12 +31,12 @@ $pecah_po = substr($ambil_noform["1"], 0, 8);
 $pecah_po_b = substr($ambil_noform["1"], 8);
 
 
-if ($pecah_po == "PO$date") {
+if ($pecah_po == "FPO$date") {
     $pecah_po_b += 1;
     $pecah_po_b = sprintf("%03d", $pecah_po_b);
-    $No_form = 'PO' . $date . $pecah_po_b;
+    $No_form = 'FPO' . $date . $pecah_po_b;
 } else {
-    $No_form = 'PO' . $date . '001';
+    $No_form = 'FPO' . $date . '001';
 }
 //akhir isi noform
 // echo $No_form;
@@ -61,7 +64,7 @@ foreach ($namabarang as $row) {
 
 mysqli_query($conn, "insert into form_po set
             No_form    = '$No_form',
-            kodeoutlet      = 'OUT005',
+            kodeoutlet      = '$kodeoutlet',
             kodesupplier = '$kodesupplier',
             date ='$dt_input',
             status = '1'

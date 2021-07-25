@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require '../include/fungsi.php';
 date_default_timezone_set('Asia/Jakarta');
 $date = new DateTime();
@@ -374,7 +374,7 @@ if (isset($_POST['kasmasuk'])) {
     //cek ada data?
     if (mysqli_num_rows($cekdata) > 0) {
         $kodesupplier = query("SELECT * FROM supplier ORDER BY id DESC LIMIT 1")[0];
-        $kodes = substr($kodesupplier['kodesupplier'], 1);
+        $kodes = substr($kodesupplier['kodesupplier'], 3);
         $noUrut = (int) $kodes;
         $noUrut++;
         $newkodetr = sprintf("%03s", $noUrut);
@@ -382,7 +382,7 @@ if (isset($_POST['kasmasuk'])) {
         $newkodetr = "001";
     }
 
-    $kode = "S";
+    $kode = "SUP";
     $kp = $kode . $newkodetr;
 
     $nsupplier = strtolower(htmlspecialchars($_POST["nsupplier"]));
@@ -584,7 +584,7 @@ if (isset($_POST['kasmasuk'])) {
     } else {
         echo 1;
     }
-}else if (isset($_POST['inputkategoriproduk'])) {
+} else if (isset($_POST['inputkategoriproduk'])) {
 
     $cekdata = mysqli_query($conn, "SELECT * FROM kategoriproduk ");
     //cek ada data?
@@ -627,7 +627,7 @@ if (isset($_POST['kasmasuk'])) {
     } else {
         echo 1;
     }
-}else if (isset($_POST['inputproduk'])) {
+} else if (isset($_POST['inputproduk'])) {
 
     $cekdata = mysqli_query($conn, "SELECT * FROM produk ");
     //cek ada data?
@@ -648,9 +648,9 @@ if (isset($_POST['kasmasuk'])) {
     $nproduk = strtolower(htmlspecialchars($_POST["nproduk"]));
     $nharga = htmlspecialchars($_POST["nharga"]);
     $ngambar = $_POST["ngambar"];
-    if ($ngambar!=""){
+    if ($ngambar != "") {
         $gambar = $ngambar;
-    }else{
+    } else {
         $gambar = "no_image.jpg";
     }
 
@@ -677,4 +677,98 @@ if (isset($_POST['kasmasuk'])) {
     } else {
         echo 1;
     }
+} else if (isset($_POST['inputformpo'])) {
+
+    $namabarang       = $_POST['namabarang'];
+    $harga         = $_POST['harga'];
+    $jumlah     = $_POST['jumlah'];
+    $subtotal    = $_POST['subtotal'];
+    $kodesupplier    = $_POST['supplier'];
+    $total_keseluruhan    = $_POST['total_keseluruhan'];
+    $namaoutlet = $_SESSION['outlet'];
+
+    $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
+    // $outlet['kodeoutlet'];
+
+
+    $total = count($namabarang);
+    $dt_input = date('Y-m-d');
+    $date = date('ymd');
+
+    // isi noform
+
+    // $result_noform = mysqli_query($conn, "SELECT id,No_form FROM form_po ORDER BY No_form DESC");
+    // $ambil_noform = mysqli_fetch_row($result_noform);
+
+    $ambil_noform = query("SELECT id,No_form FROM form_po ORDER BY No_form DESC");
+    $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
+    $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
+
+
+    // var_dump($ambil_noform);
+    // var_dump($pecah_po);
+    // var_dump($pecah_po_b);
+    // die;
+
+
+    if ($pecah_po == "FPO$date") {
+        $pecah_po_b += 1;
+        $pecah_po_b = sprintf("%03d", $pecah_po_b);
+        $No_form = 'FPO' . $date . $pecah_po_b;
+    } else {
+        $No_form = 'FPO' . $date . '001';
+    }
+    //akhir isi noform
+    // echo $No_form;
+    // die;
+
+    // bahan
+    foreach ($namabarang as $row) {
+
+        $sql = "SELECT * 
+        FROM bahan 
+        WHERE namabahan = '$row'
+        ";
+        $result = mysqli_query($conn, $sql);
+
+        while ($d = mysqli_fetch_array($result)) {
+            $kodebahan[] = $d['kodebahan'];
+            // echo $kodebahan;
+        }
+    }
+
+    // var_dump($kodebahan);
+    // die;
+    // input ke tabel form po
+
+
+    mysqli_query($conn, "insert into form_po set
+            No_form    = '$No_form',
+            kodeoutlet      = '$kodeoutlet',
+            kodesupplier = '$kodesupplier',
+            date ='$dt_input',
+            status = '1'
+        ");
+
+    // input ke tabel item po
+    for ($i = 0; $i < $total; $i++) {
+
+        mysqli_query($conn, "insert into item_po set
+            No_form    = '$No_form',
+            kodebahan      = '$kodebahan[$i]',
+            qty = '$jumlah[$i]',
+            harga ='$harga[$i]',
+            subtotal = '$subtotal[$i]'
+        ");
+    }
+
+    $result = mysqli_affected_rows($conn);
+
+
+
+    //kembali ke halaman sebelumnya
+    $_SESSION["msg"] = "$result";
+    // header("Location: form-po.php?msg=" . urlencode('1'));
+
+    header("location: ../purchasing/form-po.php");
 }
