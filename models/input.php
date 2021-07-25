@@ -771,4 +771,58 @@ if (isset($_POST['kasmasuk'])) {
     // header("Location: form-po.php?msg=" . urlencode('1'));
 
     header("location: ../purchasing/form-po.php");
+} else if (isset($_POST['inputmenu'])) {
+
+    $menu = $_POST['nmenu'];
+    $url = $_POST['nurl'];
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM user_menu WHERE menu = '$menu'");
+
+    if (mysqli_num_rows($cekdata) > 0) {
+        echo 1;
+    } else {
+        $cekurl = mysqli_query($conn, "SELECT * FROM user_menu WHERE url = '$url'");
+        if (mysqli_num_rows($cekurl) > 0) {
+            echo 2;
+        } else {
+            $query = "INSERT INTO user_menu 
+                        VALUES 
+                        ('','$menu','$url')
+                     ";
+            $masuk_data = mysqli_query($conn, $query);
+            if ($masuk_data) {
+                echo 4;
+            } else {
+                echo 3;
+            }
+        }
+    }
+} else if (isset($_POST['inputsubmenu'])) {
+
+    $mparent = $_POST['mparent'];
+    $menu = $_POST['nmenu'];
+    $url = $_POST['nurl'];
+
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM user_sub_menu WHERE title = '$menu'");
+
+    if (mysqli_num_rows($cekdata) > 0) {
+        echo 1;
+    } else {
+        $cekurl = mysqli_query($conn, "SELECT * FROM user_sub_menu WHERE url = '$url'");
+        if (mysqli_num_rows($cekurl) > 0) {
+            echo 2;
+        } else {
+            $query = "INSERT INTO user_sub_menu 
+                        VALUES 
+                        ('','$mparent','$menu','$url','','','')
+                     ";
+            $masuk_data = mysqli_query($conn, $query);
+            if ($masuk_data) {
+                echo 4;
+            } else {
+                echo 3;
+            }
+        }
+    }
 }
