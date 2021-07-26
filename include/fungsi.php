@@ -1,8 +1,8 @@
 <?php
 if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
-$url = "https://";
+    $url = "https://";
 else
-$url = "http://";
+    $url = "http://";
 // Append the host(domain name, ip) to the URL.   
 $url .= $_SERVER['HTTP_HOST'];
 
@@ -26,6 +26,16 @@ $conn = mysqli_connect('localhost', 'root', '', 'lawlessburgerbar_lb');
 // mysqli_close($conn);
 
 $company = query("SELECT * FROM companypanel WHERE baseurl = '$basehost' ")[0];
+$outlet = $_SESSION['kodeoutlet'];
+
+// kirim email
+$mailer = query("SELECT * FROM mailer WHERE kodeoutlet = '$outlet'")[0];
+$mailhost1 = $mailer['mailhost1'];
+$username1 = $mailer['username1'];
+$password1 = $mailer['password1'];
+$setfrom1 = $mailer['setfrom1'];
+$email = 'admin@lawless-ck.net';
+// akhir kirim email
 
 function query($query)
 {
@@ -49,5 +59,5 @@ function queryy($queryy)
     return $rowss;
 }
 
-$year = date('Y');  
+$year = date('Y');
 $month = date('m');

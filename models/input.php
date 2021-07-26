@@ -965,7 +965,7 @@ if (isset($_POST['kasmasuk'])) {
 
 
     // var_dump($kodeoutlet);
-    var_dump($namabarang);
+    // var_dump($namabarang);
     // var_dump($harga);
     // var_dump($jumlah);
     // var_dump($subtotal);
@@ -1060,9 +1060,14 @@ if (isset($_POST['kasmasuk'])) {
     }
 
     $result = mysqli_affected_rows($conn);
+
+    if ($result) {
+        $subject = "Request Bahan";
+        include '../mail/storebahan.php';
+        include '../models/sendmail.php';
+    }
     // var_dump($result);
     // die;
-
 
     //kembali ke halaman sebelumnya
     $_SESSION["msg"] = "$result";

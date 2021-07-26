@@ -69,16 +69,13 @@ $data = $userObj->index();
 
                                     <div class="form-group">
 
-                                        <input type="text" name="name" parsley-trigger="change" placeholder="Nama"
-                                            class="form-control" id="name" data-parsley-id="6" required>
+                                        <input type="text" name="name" parsley-trigger="change" placeholder="Nama" class="form-control" id="name" data-parsley-id="6" required>
 
                                     </div>
 
                                     <div class="form-group">
 
-                                        <input type="email" name="email" parsley-trigger="change" required=""
-                                            placeholder="Email" class="form-control" id="emailAddress"
-                                            data-parsley-id="6" required>
+                                        <input type="email" name="email" parsley-trigger="change" required="" placeholder="Email" class="form-control" id="emailAddress" data-parsley-id="6" required>
 
                                     </div>
 
@@ -90,8 +87,8 @@ $data = $userObj->index();
 
                                             <?php foreach ($data['outlets'] as $outlet) : ?>
 
-                                            <option value="<?= $outlet['kodeoutlet'] ?>"><?= ucwords($outlet['nama']) ?>
-                                            </option>
+                                                <option value="<?= $outlet['kodeoutlet'] ?>"><?= ucwords($outlet['nama']) ?>
+                                                </option>
 
                                             <?php endforeach; ?>
 
@@ -107,9 +104,9 @@ $data = $userObj->index();
 
                                             <?php foreach ($data['jabatans'] as $jabatan) : ?>
 
-                                            <option value="<?= $jabatan['kodejabatan'] ?>">
-                                                <?= ucwords($jabatan['namajabatan']) ?>
-                                            </option>
+                                                <option value="<?= $jabatan['kodejabatan'] ?>">
+                                                    <?= ucwords($jabatan['namajabatan']) ?>
+                                                </option>
 
                                             <?php endforeach; ?>
 
@@ -121,8 +118,7 @@ $data = $userObj->index();
 
                                     <div class="form-group text-right m-b-0">
 
-                                        <button type="submit"
-                                            class="btn btn-success waves-effect waves-light">Simpan</button>
+                                        <button type="submit" class="btn btn-success waves-effect waves-light">Simpan</button>
 
                                     </div>
 
@@ -168,65 +164,56 @@ $data = $userObj->index();
 
                                         <?php foreach ($users as $user) : ?>
 
-                                        <tr>
+                                            <tr>
 
-                                            <th><?= $i++ ?></th>
+                                                <th><?= $i++ ?></th>
 
-                                            <td><?= ucwords($user['username']) ?></td>
+                                                <td><?= ucwords($user['username']) ?></td>
 
-                                            <td><?= $user['email'] ?></td>
+                                                <td><?= $user['email'] ?></td>
 
-                                            <td>
-                                                <?php                                                
-                                                $kodeoutlet = $user['outlet'];
-                                                if($kodeoutlet!="OUT000"){
-                                                    $ka = "SELECT * FROM companypanel WHERE kodeoutlet ='$kodeoutlet'"; //perintah untuk menjumlahkan
-                                                    $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
-                                                    $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
-                                                    echo $tampilkode = ucwords($tampil['nama']);
-                                                }else{;
-                                                    echo "Super Outlet";
-                                                }
-                                                
-                                                
-                                                ?>
-                                            </td>
+                                                <td>
+                                                    <?php
+                                                    $kodeoutlet = $user['outlet'];
+                                                    if ($kodeoutlet != "OUT000") {
+                                                        $ka = "SELECT * FROM companypanel WHERE kodeoutlet ='$kodeoutlet'"; //perintah untuk menjumlahkan
+                                                        $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
+                                                        $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
+                                                        echo $tampilkode = ucwords($tampil['nama']);
+                                                    } else {;
+                                                        echo "Super Outlet";
+                                                    }
 
-                                            <td>
 
-                                                <?php                                                
-                                                $kodejabatan = $user['jabatan'];
-                                                if($kodejabatan!="JAB000"){
-                                                    $ka = "SELECT * FROM jabatan WHERE kodejabatan ='$kodejabatan'"; //perintah untuk menjumlahkan
-                                                    $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
-                                                    $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
-                                                    echo $tampilkode = ucwords($tampil['namajabatan']);
-                                                }else{;
-                                                    echo "Super User";
-                                                }
-                                                
-                                                
-                                                ?>
-                                            </td>
+                                                    ?>
+                                                </td>
 
-                                            <td class="actions">
+                                                <td>
 
-                                                <a id="edit" data-id="<?= $user['id'] ?>"
-                                                    data-menu="<?= $user['access_menu_id'] ?>"
-                                                    data-nama="<?= $user['username'] ?>"
-                                                    data-email="<?= $user['email'] ?>"
-                                                    data-outlet="<?= $user['companypanel_id'] ?>"
-                                                    data-jabatan="<?= $user['jabatan_id'] ?>"
-                                                    class="on-default edit-row badge badge-warning"><i
-                                                        class="fa fa-pencil"></i></a> |
+                                                    <?php
+                                                    $kodejabatan = $user['jabatan'];
+                                                    if ($kodejabatan != "JAB000") {
+                                                        $ka = "SELECT * FROM jabatan WHERE kodejabatan ='$kodejabatan'"; //perintah untuk menjumlahkan
+                                                        $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
+                                                        $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
+                                                        echo $tampilkode = ucwords($tampil['namajabatan']);
+                                                    } else {;
+                                                        echo "Super User";
+                                                    }
 
-                                                <a id="delete" data-id="<?= $user['id'] ?>"
-                                                    class="on-default remove-row badge badge-danger"><i
-                                                        class="fa fa-trash-o"></i></a>
 
-                                            </td>
+                                                    ?>
+                                                </td>
 
-                                        </tr>
+                                                <td class="actions">
+
+                                                    <a id="edit" data-id="<?= $user['id'] ?>" data-menu="<?= $user['access_menu_id'] ?>" data-nama="<?= $user['username'] ?>" data-email="<?= $user['email'] ?>" data-outlet="<?= $user['companypanel_id'] ?>" data-jabatan="<?= $user['jabatan_id'] ?>" class="on-default edit-row badge badge-warning"><i class="fa fa-pencil"></i></a> |
+
+                                                    <a id="delete" data-id="<?= $user['id'] ?>" class="on-default remove-row badge badge-danger"><i class="fa fa-trash-o"></i></a>
+
+                                                </td>
+
+                                            </tr>
 
                                         <?php endforeach; ?>
 
@@ -250,8 +237,7 @@ $data = $userObj->index();
 
     </div>
 
-    <div id="edit-user" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
+    <div id="edit-user" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
         <div class="modal-dialog">
 
@@ -271,15 +257,13 @@ $data = $userObj->index();
 
                         <div class="form-group">
 
-                            <input type="text" name="name" parsley-trigger="change" placeholder="Nama"
-                                class="form-control" id="name-edit" data-parsley-id="6" required>
+                            <input type="text" name="name" parsley-trigger="change" placeholder="Nama" class="form-control" id="name-edit" data-parsley-id="6" required>
 
                         </div>
 
                         <div class="form-group">
 
-                            <input type="email" name="email" parsley-trigger="change" required="" placeholder="Email"
-                                class="form-control" id="email-edit" data-parsley-id="6" readonly>
+                            <input type="email" name="email" parsley-trigger="change" required="" placeholder="Email" class="form-control" id="email-edit" data-parsley-id="6" readonly>
 
                         </div>
 
@@ -289,8 +273,8 @@ $data = $userObj->index();
 
                                 <?php foreach ($data['outlets'] as $outlet) : ?>
 
-                                <option value="<?= $outlet['id'] ?>">
-                                    <?= $outlet['kodeoutlet'] . ' - ' . ucwords($outlet['nama']) ?></option>
+                                    <option value="<?= $outlet['id'] ?>">
+                                        <?= $outlet['kodeoutlet'] . ' - ' . ucwords($outlet['nama']) ?></option>
 
                                 <?php endforeach; ?>
 
@@ -304,8 +288,8 @@ $data = $userObj->index();
 
                                 <?php foreach ($data['jabatans'] as $jabatan) : ?>
 
-                                <option value="<?= $jabatan['id'] ?>">
-                                    <?= $jabatan['kodejabatan'] . ' - ' . ucwords($jabatan['namajabatan']) ?></option>
+                                    <option value="<?= $jabatan['id'] ?>">
+                                        <?= $jabatan['kodejabatan'] . ' - ' . ucwords($jabatan['namajabatan']) ?></option>
 
                                 <?php endforeach; ?>
 
@@ -340,214 +324,214 @@ $data = $userObj->index();
     <?php require_once '../include/scriptfooter.php'; ?>
 
     <script>
-    $(document).ready(function() {
+        $(document).ready(function() {
 
-        $('#datatable').dataTable();
+            $('#datatable').dataTable();
 
-        $('#outlet').select2({
+            $('#outlet').select2({
 
-            placeholder: "Pilih Outlet",
+                placeholder: "Pilih Outlet",
 
-            allowClear: true
-
-        });
-
-        $('#jabatan').select2({
-
-            placeholder: "Pilih Jabatan",
-
-            allowClear: true
-
-        });
-
-        $("#add-user").on("submit", function(e) {
-
-            $.ajax({
-
-                url: 'add.php',
-
-                data: $(this).serialize(),
-
-                type: 'POST',
-
-            }).done(function(result) {
-
-                if (result == 1) {
-
-                    swal("Email sudah terdaftar!", "", "error")
-
-                } else if (result == 2) {
-
-                    swal("Gagal menambahkan user!", "", "error")
-
-                } else if (result == 3) {
-
-                    swal({
-
-                        title: "Berhasil menambahkan user!",
-
-                        type: "success",
-
-                        timer: 1000,
-
-                        showConfirmButton: false
-
-                    });
-
-                    location.reload();
-
-                }
+                allowClear: true
 
             });
 
-            e.preventDefault();
+            $('#jabatan').select2({
 
-        });
+                placeholder: "Pilih Jabatan",
 
-        $(document).on("click", "#edit", function() {
-
-            var id = $(this).data("id");
-
-            var menu = $(this).data("menu");
-
-            var nama = $(this).data("nama");
-
-            var email = $(this).data("email");
-
-            var outlet = $(this).data("outlet");
-
-            var jabatan = $(this).data("jabatan");
-
-            $("#edit-user").modal("show");
-
-            $("#name-edit").val(nama);
-
-            $("#email-edit").val(email);
-
-            $("#outlet-edit").val(outlet);
-
-            $("#id").val(id);
-
-            $("#menu").val(menu);
-
-            $("#outlet-edit").trigger("change");
-
-            $("#jabatan-edit").val(jabatan);
-
-            $("#jabatan-edit").trigger("change");
-
-        });
-
-        $(document).on("click", "#delete", function(e) {
-
-            var id = $(this).data("id");
-
-            swal({
-
-                title: "Are you sure?",
-
-                text: "Data yang telah dihapus tidak dapat dikembalikan!",
-
-                type: "warning",
-
-                showCancelButton: true,
-
-                confirmButtonClass: 'btn-danger waves-effect waves-light',
-
-                confirmButtonText: 'Hapus'
-
-            }, function(hapus) {
-
-                if (hapus) {
-
-                    $.ajax({
-
-                        url: 'add.php',
-
-                        data: {
-                            'id': id,
-                            'delete': true
-                        },
-
-                        type: 'POST'
-
-                    }).done(function(result) {
-
-                        if (!result) {
-
-                            swal("Gagal menghapus data!", "", "error")
-
-                        } else {
-
-                            swal({
-
-                                title: "Berhasil menghapus data!",
-
-                                type: "success",
-
-                                timer: 1000,
-
-                                showConfirmButton: false
-
-                            });
-
-                            location.reload();
-
-                        }
-
-                    });
-
-                    e.preventDefault();
-
-                }
+                allowClear: true
 
             });
 
-        });
+            $("#add-user").on("submit", function(e) {
 
-        $("#editForm").on("submit", function(e) {
+                $.ajax({
 
-            $.ajax({
+                    url: 'add.php',
 
-                url: 'add.php',
+                    data: $(this).serialize(),
 
-                data: $(this).serialize(),
+                    type: 'POST',
 
-                type: 'POST',
+                }).done(function(result) {
 
-            }).done(function(result) {
+                    if (result == 1) {
 
-                if (!result) {
+                        swal("Email sudah terdaftar!", "", "error")
 
-                    swal("Gagal mengubah data!", "", "error")
+                    } else if (result == 2) {
 
-                } else {
+                        swal("Gagal menambahkan user!", "", "error")
 
-                    swal({
+                    } else if (result == 3) {
 
-                        title: "Berhasil mengubah data!",
+                        swal({
 
-                        type: "success",
+                            title: "Berhasil menambahkan user!",
 
-                        timer: 1000,
+                            type: "success",
 
-                        showConfirmButton: false
+                            timer: 1000,
 
-                    });
+                            showConfirmButton: false
 
-                    location.reload();
+                        });
 
-                }
+                        location.reload();
+
+                    }
+
+                });
+
+                e.preventDefault();
 
             });
 
-            e.preventDefault();
+            $(document).on("click", "#edit", function() {
+
+                var id = $(this).data("id");
+
+                var menu = $(this).data("menu");
+
+                var nama = $(this).data("nama");
+
+                var email = $(this).data("email");
+
+                var outlet = $(this).data("outlet");
+
+                var jabatan = $(this).data("jabatan");
+
+                $("#edit-user").modal("show");
+
+                $("#name-edit").val(nama);
+
+                $("#email-edit").val(email);
+
+                $("#outlet-edit").val(outlet);
+
+                $("#id").val(id);
+
+                $("#menu").val(menu);
+
+                $("#outlet-edit").trigger("change");
+
+                $("#jabatan-edit").val(jabatan);
+
+                $("#jabatan-edit").trigger("change");
+
+            });
+
+            $(document).on("click", "#delete", function(e) {
+
+                var id = $(this).data("id");
+
+                swal({
+
+                    title: "Are you sure?",
+
+                    text: "Data yang telah dihapus tidak dapat dikembalikan!",
+
+                    type: "warning",
+
+                    showCancelButton: true,
+
+                    confirmButtonClass: 'btn-danger waves-effect waves-light',
+
+                    confirmButtonText: 'Hapus'
+
+                }, function(hapus) {
+
+                    if (hapus) {
+
+                        $.ajax({
+
+                            url: 'add.php',
+
+                            data: {
+                                'id': id,
+                                'delete': true
+                            },
+
+                            type: 'POST'
+
+                        }).done(function(result) {
+
+                            if (!result) {
+
+                                swal("Gagal menghapus data!", "", "error")
+
+                            } else {
+
+                                swal({
+
+                                    title: "Berhasil menghapus data!",
+
+                                    type: "success",
+
+                                    timer: 1000,
+
+                                    showConfirmButton: false
+
+                                });
+
+                                location.reload();
+
+                            }
+
+                        });
+
+                        e.preventDefault();
+
+                    }
+
+                });
+
+            });
+
+            $("#editForm").on("submit", function(e) {
+
+                $.ajax({
+
+                    url: 'add.php',
+
+                    data: $(this).serialize(),
+
+                    type: 'POST',
+
+                }).done(function(result) {
+
+                    if (!result) {
+
+                        swal("Gagal mengubah data!", "", "error")
+
+                    } else {
+
+                        swal({
+
+                            title: "Berhasil mengubah data!",
+
+                            type: "success",
+
+                            timer: 1000,
+
+                            showConfirmButton: false
+
+                        });
+
+                        location.reload();
+
+                    }
+
+                });
+
+                e.preventDefault();
+
+            });
+
+
 
         });
-
-
-
-    });
     </script>
 
 </body>

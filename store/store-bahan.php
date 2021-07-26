@@ -345,10 +345,10 @@ ORDER BY sb.id DESC");
                 showConfirmButton: false
 
             })
-            // sleep(1000);
-            setTimeout(function() {
-                window.location.replace("../purchasing/");
-            }, 1300);
+            // // sleep(1000);
+            // setTimeout(function() {
+            //     window.location.replace("../purchasing/");
+            // }, 1300);
 
         } else if (msg == 2) {
             swal("Kode Akun Belum di Pilih!", "", "error")

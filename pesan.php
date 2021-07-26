@@ -289,10 +289,19 @@ $pesan = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http:
                                                 <tr style="vertical-align: top;" valign="top">
                                                     <td align="center" style="word-break: break-word; vertical-align: top; padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; text-align: center; font-size: 0px;" valign="top">
                                                         <div class="menu-links">
-                                                            <a href="LAWLESS" style="padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;display:inline;color:#2b2d49;font-family:\'Lato\', Tahoma, Verdana, Segoe, sans-serif;font-size:14px;text-decoration:none;letter-spacing:3px;">LAWLESS
-                                                                ' . strtoupper("$namaoutlet") . '</a>
+                                                            <!--[if mso]>
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center">
+<tr>
+<td style="padding-top:5px;padding-right:5px;padding-bottom:5px;padding-left:5px">
+<![endif]--><a href="WWW.EXAMPLE.COM" style="padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;display:inline;color:#2b2d49;font-family:\'Lato\', Tahoma, Verdana, Segoe, sans-serif;font-size:14px;text-decoration:none;letter-spacing:3px;">LAWLESS</a>
+                                                            <!--[if mso]></td><td><![endif]--><span class="sep" style="font-size:14px;font-family:\'Lato\', Tahoma, Verdana, Segoe, sans-serif;color:#2b2d49;">|</span>
+                                                            <!--[if mso]></td><![endif]-->
+                                                            <!--[if mso]></td><td style="padding-top:5px;padding-right:5px;padding-bottom:5px;padding-left:5px"><![endif]--><a href="WWW.EXAMPLE.COM" style="padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;display:inline;color:#2b2d49;font-family:\'Lato\', Tahoma, Verdana, Segoe, sans-serif;font-size:14px;text-decoration:none;letter-spacing:3px;">BURGER</a>
+                                                            <!--[if mso]></td><td><![endif]--><span class="sep" style="font-size:14px;font-family:\'Lato\', Tahoma, Verdana, Segoe, sans-serif;color:#2b2d49;">|</span>
+                                                            <!--[if mso]></td><![endif]-->
+                                                            <!--[if mso]></td><td style="padding-top:5px;padding-right:5px;padding-bottom:5px;padding-left:5px"><![endif]--><a href="WWW.EXAMPLE.COM" style="padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;display:inline;color:#2b2d49;font-family:\'Lato\', Tahoma, Verdana, Segoe, sans-serif;font-size:14px;text-decoration:none;letter-spacing:3px;">BAR</a>
+                                                            <!--[if mso]></td></tr></table><![endif]-->
                                                         </div>
-
                                                     </td>
                                                 </tr>
                                             </table>
@@ -320,8 +329,8 @@ $pesan = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http:
                                             <div style="color:#2b2d49;font-family:\'Lato\', Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
                                                 <div class="txtTinyMce-wrapper" style="line-height: 1.2; font-family: \'Lato\', Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; color: #2b2d49; mso-line-height-alt: 14px;">
                                                     <p style="margin: 0; font-size: 30px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 36px; margin-top: 0; margin-bottom: 0;">
-                                                        <span style="font-size: 30px; caret-color: #152a6d;"><strong>BAHAN
-                                                                ORDER</strong></span>
+                                                        <span style="font-size: 30px; caret-color: #152a6d;"><strong>REGISTRASI
+                                                                USER</strong></span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -347,12 +356,9 @@ $pesan = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http:
                                             <!--<![endif]-->
                                             <div style="color:#2b2d49;font-family:\'Lato\', Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:0px;padding-right:30px;padding-bottom:0px;padding-left:30px;">
                                                 <div class="txtTinyMce-wrapper" style="line-height: 1.2; font-size: 12px; font-family: \'Lato\', Tahoma, Verdana, Segoe, sans-serif; color: #2b2d49; mso-line-height-alt: 14px;">
-                                                    <p style="margin: 0; font-size: 16px; line-height: 1.2; word-break: break-word; text-align: left; mso-line-height-alt: 19px; margin-top: 0; margin-bottom: 0;">
-                                                        <span style="font-size: 16px; color: #2b2d49;">NO FORM : ' . $No_form . '</span>
-                                                    </p>
-                                                    <br>
-                                                    <p style="margin: 0; font-size: 16px; line-height: 1.2; word-break: break-word; text-align: left; mso-line-height-alt: 19px; margin-top: 0; margin-bottom: 0;">
-                                                        <span style="font-size: 16px; color: #2b2d49;">OUTLET : ' . strtoupper("$namaoutlet") . '</span>
+                                                    <p style="margin: 0; font-size: 16px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 19px; margin-top: 0; margin-bottom: 0;">
+                                                        <span style="font-size: 16px; color: #2b2d49;">Silahkan Klik
+                                                            tombol dibawah ini untuk mengisikan password anda!</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -375,7 +381,8 @@ $pesan = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http:
 
 
                                             <div align="center" class="button-container" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
-                                                <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.example.com" style="height:32.25pt;width:121.5pt;v-text-anchor:middle;" arcsize="21%" strokeweight="0.75pt" strokecolor="#2B2D49" fillcolor="#2b2d49"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-size:16px"><![endif]--><a href="https://lawless-ck.net" style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #2b2d49; border-radius: 9px; -webkit-border-radius: 9px; -moz-border-radius: 9px; width: auto; width: auto; border-top: 1px solid #2B2D49; border-right: 1px solid #2B2D49; border-bottom: 1px solid #2B2D49; border-left: 1px solid #2B2D49; padding-top: 5px; padding-bottom: 5px; font-family: \'Lato\', Tahoma, Verdana, Segoe, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;" target="_blank"><span style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;letter-spacing:2px;"><span style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><strong>LOGIN</strong></span></span></a>
+                                                <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.example.com" style="height:32.25pt;width:121.5pt;v-text-anchor:middle;" arcsize="21%" strokeweight="0.75pt" strokecolor="#2B2D49" fillcolor="#2b2d49"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-size:16px"><![endif]--><a href="https://lawlessburgerbarasia.net/confirm?email= &token=" style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #2b2d49; border-radius: 9px; -webkit-border-radius: 9px; -moz-border-radius: 9px; width: auto; width: auto; border-top: 1px solid #2B2D49; border-right: 1px solid #2B2D49; border-bottom: 1px solid #2B2D49; border-left: 1px solid #2B2D49; padding-top: 5px; padding-bottom: 5px; font-family: \'Lato\', Tahoma, Verdana, Segoe, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;" target="_blank"><span style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;letter-spacing:2px;"><span style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><strong>LINK
+                                                                PASSWORD</strong></span></span></a>
                                                 <!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->
                                             </div>
                                             <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top" width="100%">
@@ -472,7 +479,7 @@ $pesan = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http:
                                             </table>
                                             <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 15px; padding-left: 15px; padding-top: 0px; padding-bottom: 0px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
                                             <div style="color:#2b2d49;font-family:\'Lato\', Tahoma, Verdana, Segoe, sans-serif;line-height:1.5;padding-top:0px;padding-right:15px;padding-bottom:0px;padding-left:15px;">
-                                                <div class="txtTinyMce-wrapper" style="line-height: 1.5; font-size: 12px; font-family:\'Lato\', Tahoma, Verdana, Segoe, sans-serif; color: #2b2d49; mso-line-height-alt: 18px;">
+                                                <div class="txtTinyMce-wrapper" style="line-height: 1.5; font-size: 12px; font-family: \'Lato\', Tahoma, Verdana, Segoe, sans-serif; color: #2b2d49; mso-line-height-alt: 18px;">
                                                     <p style="margin: 0; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: center; mso-line-height-alt: 24px; margin-top: 0; margin-bottom: 0;">
                                                         <span style="font-size: 16px;">Classic cheeseburger and tritone
                                                             inversion!.</span>
@@ -499,16 +506,16 @@ $pesan = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http:
                                                 </tbody>
                                             </table>
                                             <!-- <div align="center" class="button-container"
-												style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
-												<a
-													href="https://www.example.com"
-													style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #2b2d49; background-color: transparent; border-radius: 9px; -webkit-border-radius: 9px; -moz-border-radius: 9px; width: auto; width: auto; border-top: 2px solid #152A6D; border-right: 2px solid #152A6D; border-bottom: 2px solid #152A6D; border-left: 2px solid #152A6D; padding-top: 5px; padding-bottom: 5px; font-family: \'Lato\', Tahoma, Verdana, Segoe, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;"
-													target="_blank"><span
-														style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;letter-spacing:2px;"><span
-															style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><strong>ORDER
-																NOW</strong></span></span></a>
-												
-											</div> -->
+                                        style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
+                                        <a
+                                            href="https://www.example.com"
+                                            style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #2b2d49; background-color: transparent; border-radius: 9px; -webkit-border-radius: 9px; -moz-border-radius: 9px; width: auto; width: auto; border-top: 2px solid #152A6D; border-right: 2px solid #152A6D; border-bottom: 2px solid #152A6D; border-left: 2px solid #152A6D; padding-top: 5px; padding-bottom: 5px; font-family: \'Lato\', Tahoma, Verdana, Segoe, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;"
+                                            target="_blank"><span
+                                                style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;letter-spacing:2px;"><span
+                                                    style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><strong>ORDER
+                                                        NOW</strong></span></span></a>
+                                        
+                                    </div> -->
                                             <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top" width="100%">
                                                 <tbody>
                                                     <tr style="vertical-align: top;" valign="top">
@@ -779,8 +786,8 @@ $pesan = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http:
                                                     <p style="margin: 0; text-align: center; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin-top: 0; margin-bottom: 0;">
                                                         admin@lawlessburgerbarasia.net</p>
                                                     <!-- <p
-														style="margin: 0; text-align: center; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin-top: 0; margin-bottom: 0;">
-														(+1) 123 456 789</p> -->
+                                                style="margin: 0; text-align: center; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin-top: 0; margin-bottom: 0;">
+                                                (+1) 123 456 789</p> -->
                                                 </div>
                                             </div>
                                             <!--[if mso]></td></tr></table><![endif]-->
