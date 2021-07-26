@@ -30,45 +30,39 @@ $juhal = "Laporan Purchasing";
             <!-- Start content -->
             <div class="content">
                 <div class="container">
-
                     <div class="row">
-                        <div class="col-lg-7">
+                        <div class="col-lg-6">
                             <div class="card-box">
-
-                                <div class="dropdown pull-right">
-
-                                    <!--  <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button> -->
-                                </div>
-                                <div class="dropdown pull-centre">
-                                    <button class="btn btn-primary waves-effect waves-light" data-toggle="modal"
-                                        data-target="#input-close-modal">
-                                    </button>
-                                    <button class="btn btn-info waves-effect waves-light" data-toggle="modal"
-                                        data-target="#output-close-modal">
-                                    </button>
-
-                                    <!-- <button class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#output-close-modal">
-                                        Saldo Kas : Rp. 0</button> -->
-
-                                    <button class="btn btn-success waves-effect waves-light" data-toggle="modal"
-                                        data-target="#output-close-modal">
-                                    </button>
-                                </div>
-
+                                <form method="post" action="">
+                                    <?php require '../include/tglharian.php'; ?>
+                                </form>
                             </div>
                         </div><!-- end col -->
-
-                        <div class="col-lg-5">
+                        <div class="col-lg-6">
                             <div class="card-box">
-
                                 <form method="post" action="">
-                                    <?php require '../include/tgltahun.php'; ?>
+                                    <?php require '../include/tglrange.php'; ?>
                                 </form>
-
                             </div>
                         </div><!-- end col -->
                     </div>
                     <!-- end row -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card-box">
+                                <form method="post" action="">
+                                    <?php require '../include/tgltahun.php'; ?>
+                                </form>
+                            </div>
+                        </div><!-- end col -->
+                        <div class="col-lg-6">
+                            <div class="card-box">
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
 
                     <div class="row">
                         <div class="col-sm-12">
