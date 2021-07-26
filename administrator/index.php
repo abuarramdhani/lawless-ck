@@ -49,22 +49,19 @@ $juhal = "Menu";
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Nama Menu</label>
                                         <div class="col-sm-8">
-                                            <input autofocus type="text" class="form-control" required name="nmenu"
-                                                id="nmenu" placeholder="Masukkan Nama menu"></input>
+                                            <input autofocus type="text" class="form-control" required name="nmenu" id="nmenu" placeholder="Masukkan Nama menu"></input>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">URL</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" required name="nurl" id="nurl"
-                                                placeholder="Masukkan URL"></input>
+                                            <input type="text" class="form-control" required name="nurl" id="nurl" placeholder="Masukkan URL"></input>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="col-sm-offset-4 col-sm-6 m-t-15">
-                                            <button type="submit" class="btn btn-success waves-effect waves-light"
-                                                name="tombol-menu" id="tombol-menu">
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" name="tombol-menu" id="tombol-menu">
                                                 Input menu
                                             </button>
                                             <!-- <button type="reset" class="btn btn-default waves-effect m-l-5">
@@ -88,7 +85,6 @@ $juhal = "Menu";
                                             <th>Menu</th>
                                             <th>Url</th>
                                             <th>Icon</th>
-                                            <th>Gambar</th>
                                             <th>Action </th>
                                         </tr>
                                     </thead>
@@ -97,23 +93,18 @@ $juhal = "Menu";
                                         <?php $i = 1; ?>
 
                                         <?php foreach ($kodemenu as $row) : ?>
-                                        <tr>
-                                            <td width="2%" ;><?= $i ?></td>
-                                            <td><?= $row["menu"] ?></td>
-                                            <td><?= $row["url"] ?></td>
-                                            <td><?= $row["icon"] ?></td>
-                                            <td><?= $row["gambar"] ?></td>
-                                            <td>
-                                                <a class="on-default edit-row badge badge-success tombol-edit"
-                                                    data-id="<?= $row['id']; ?>" data-menu="<?= $row['menu']; ?>"
-                                                    data-url="<?= $row['url']; ?>" id=""><i
-                                                        class="fa fa-pencil"></i></a>
-                                                <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-                                                <a class="on-default remove-row badge badge-danger tombol-hapus "
-                                                    data-id="<?= $row['id'] ?>"><i class="fa fa-trash-o"></i></a>
-                                            </td>
-                                        </tr>
-                                        <?php $i++; ?>
+                                            <tr>
+                                                <td width="2%" ;><?= $i ?></td>
+                                                <td><?= $row["menu"] ?></td>
+                                                <td><?= $row["url"] ?></td>
+                                                <td><?= $row["icon"] ?></td>
+                                                <td>
+                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-id="<?= $row['id']; ?>" data-menu="<?= $row['menu']; ?>" data-url="<?= $row['url']; ?>" id=""><i class="fa fa-pencil"></i></a>
+                                                    <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
+                                                    <a class="on-default remove-row badge badge-danger tombol-hapus " data-id="<?= $row['id'] ?>"><i class="fa fa-trash-o"></i></a>
+                                                </td>
+                                            </tr>
+                                            <?php $i++; ?>
                                         <?php endforeach; ?>
 
                                     </tbody>
@@ -145,8 +136,7 @@ $juhal = "Menu";
     <!-- END wrapper -->
 
     <!-- modaledit -->
-    <div id="modaledit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-        style="display: none;">
+    <div id="modaledit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -194,224 +184,224 @@ $juhal = "Menu";
 </html>
 
 <script>
-// function myFunction() {
-//     document.getElementById("formmenu").enctype = "multipart/form-data";
-// }
-$(document).ready(function() {
-    $('#tombol-menu').click(function(e) {
-        e.preventDefault();
-        var dataform = $('#formmenu')[0];
-        var data = new FormData(dataform);
-        // console.log(data);
+    // function myFunction() {
+    //     document.getElementById("formmenu").enctype = "multipart/form-data";
+    // }
+    $(document).ready(function() {
+        $('#tombol-menu').click(function(e) {
+            e.preventDefault();
+            var dataform = $('#formmenu')[0];
+            var data = new FormData(dataform);
+            // console.log(data);
 
-        var nmenu = $('#nmenu').val();
-        var nurl = $('#nurl').val();
+            var nmenu = $('#nmenu').val();
+            var nurl = $('#nurl').val();
 
-        // console.log(nmenu);
-        // console.log(nurl);
+            // console.log(nmenu);
+            // console.log(nurl);
 
-        //alert(ngambar)
-        if (umenu == "") {
-            swal("Nama menu belum di isi!", "", "error")
-        } else if (uurl == "") {
-            swal("URL belum di isi!", "", "error")
-        } else {
-            $.ajax({
-                url: '../models/input.php',
-                type: 'post',
-                data: data,
-                enctype: 'multipart/form-data',
-                processData: false,
-                contentType: false,
-                cache: false,
-                beforeSend: function() {
-                    $('.spinn').show();
-                },
-                success: function(hasil) {
-                    // alert(hasil);
-                    console.log(hasil);
-                    //sukses
-                    if (hasil == 1) {
-                        swal("Nama menu sudah ada!", "", "error")
-                    } else if (hasil == 2) {
-                        swal("Url Sudah ada ", "", "error")
-                    } else if (hasil == 3) {
-                        swal("Input Erorr, Coba Lagi ", "", "error")
-                    } else if (hasil == 4) {
-                        swal({
-                            title: "Update Berhasil!",
-                            type: "success",
-                            //text: "I will close in 2 seconds.",
-                            timer: 2000,
-                            showConfirmButton: false
-                        })
-                        location.reload();
-
-                    }
-                }
-            });
-        }
-    })
-
-    $('.tombol-edit').on('click', function() {
-
-        const id = $(this).data('id');
-        const menu = $(this).data('menu');
-        const url = $(this).data('url');
-
-        $('.id').val(id);
-        $('.menu').val(menu);
-        $('.url').val(url);
-        $('#modaledit').modal('show');
-    });
-
-    $('#tombol-update').click(function(e) {
-
-        // alert('ok');
-        e.preventDefault();
-        var dataform = $('#formupdate')[0];
-        var data = new FormData(dataform);
-        // console.log(data);
-
-        var umenu = $('#umenu').val();
-        var uurl = $('#uurl').val();
-
-        // console.log(umenu);
-        // console.log(uurl);
-
-        if (umenu == "") {
-            swal("Nama menu belum di isi!", "", "error")
-        } else if (uurl == "") {
-            swal("URL belum di isi!", "", "error")
-        } else {
-            $.ajax({
-                url: '../models/edit.php',
-                type: 'post',
-                data: data,
-                enctype: 'multipart/form-data',
-                processData: false,
-                contentType: false,
-                cache: false,
-                beforeSend: function() {
-                    $('.spinn').show();
-                },
-                success: function(hasil) {
-                    // alert(hasil);
-                    console.log(hasil);
-                    //sukses
-                    if (hasil == 1) {
-                        swal("Tidak Berhasil ditambahkan!", "", "error")
-                    } else if (hasil == 2) {
-                        swal({
-                            title: "Update Berhasil!",
-                            type: "success",
-                            //text: "I will close in 2 seconds.",
-                            timer: 2000,
-                            showConfirmButton: false
-                        })
-                        location.reload();
-
-                    }
-                }
-            });
-        }
-
-
-
-
-    })
-
-    $('.tombol-hapus').click(function(e) {
-
-        console.log('ok');
-        const tabel = 'user_menu';
-        const id = $(this).data('id');
-
-        e.preventDefault();
-        const href = $(this).attr('href');
-        swal({
-            title: 'Anda Yakin ingin menghapus?',
-            text: "Data Akan Dihapus",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Iya',
-            cancelButtonText: `Tidak`
-        }, function(isConfirm) {
-            if (isConfirm) {
+            //alert(ngambar)
+            if (umenu == "") {
+                swal("Nama menu belum di isi!", "", "error")
+            } else if (uurl == "") {
+                swal("URL belum di isi!", "", "error")
+            } else {
                 $.ajax({
-                    url: '../models/delete.php',
+                    url: '../models/input.php',
                     type: 'post',
-                    data: {
-                        'tabel': tabel,
-                        'delete_id': id
+                    data: data,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    beforeSend: function() {
+                        $('.spinn').show();
                     },
                     success: function(hasil) {
                         // alert(hasil);
                         console.log(hasil);
                         //sukses
-                        if (hasil == 2) {
-
+                        if (hasil == 1) {
+                            swal("Nama menu sudah ada!", "", "error")
+                        } else if (hasil == 2) {
+                            swal("Url Sudah ada ", "", "error")
                         } else if (hasil == 3) {
-                            swal("Deleted!",
-                                "Hapus Data Berhasil.",
-                                "success");
+                            swal("Input Erorr, Coba Lagi ", "", "error")
+                        } else if (hasil == 4) {
+                            swal({
+                                title: "Update Berhasil!",
+                                type: "success",
+                                //text: "I will close in 2 seconds.",
+                                timer: 2000,
+                                showConfirmButton: false
+                            })
                             location.reload();
 
                         }
                     }
                 });
-            } else {
-                swal("Cancelled", "", "error");
             }
+        })
+
+        $('.tombol-edit').on('click', function() {
+
+            const id = $(this).data('id');
+            const menu = $(this).data('menu');
+            const url = $(this).data('url');
+
+            $('.id').val(id);
+            $('.menu').val(menu);
+            $('.url').val(url);
+            $('#modaledit').modal('show');
         });
 
-        //alert('hapus');
-        //var delete = 'delete';
-        // var tabel = 'menu';
-        // var iddelete = $(this).closest('tr').find('.delete_id_value').val();
-        // swal({
-        //     title: "Apakah Anda Yakin?",
-        //     text: "Data Anda Akan Terhapus!",
-        //     type: "warning",
-        //     showCancelButton: true,
-        //     confirmButtonColor: "#DD6B55",
-        //     confirmButtonText: "Ya, Hapus!",
-        //     cancelButtonText: "Tidak!",
-        //     closeOnConfirm: false,
-        //     closeOnCancel: false
-        // }, function(isConfirm) {
-        //     if (isConfirm) {
+        $('#tombol-update').click(function(e) {
+
+            // alert('ok');
+            e.preventDefault();
+            var dataform = $('#formupdate')[0];
+            var data = new FormData(dataform);
+            // console.log(data);
+
+            var umenu = $('#umenu').val();
+            var uurl = $('#uurl').val();
+
+            // console.log(umenu);
+            // console.log(uurl);
+
+            if (umenu == "") {
+                swal("Nama menu belum di isi!", "", "error")
+            } else if (uurl == "") {
+                swal("URL belum di isi!", "", "error")
+            } else {
+                $.ajax({
+                    url: '../models/edit.php',
+                    type: 'post',
+                    data: data,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    beforeSend: function() {
+                        $('.spinn').show();
+                    },
+                    success: function(hasil) {
+                        // alert(hasil);
+                        console.log(hasil);
+                        //sukses
+                        if (hasil == 1) {
+                            swal("Tidak Berhasil ditambahkan!", "", "error")
+                        } else if (hasil == 2) {
+                            swal({
+                                title: "Update Berhasil!",
+                                type: "success",
+                                //text: "I will close in 2 seconds.",
+                                timer: 2000,
+                                showConfirmButton: false
+                            })
+                            location.reload();
+
+                        }
+                    }
+                });
+            }
 
 
-        //         $.ajax({
-        //             url: '../models/delete.php',
-        //             type: 'post',
-        //             data: {
-        //                 'tabel': tabel,
-        //                 'delete_id': iddelete
-        //             },
-        //             success: function(hasil) {
-        //                 // alert(hasil);
-        //                 console.log(hasil);
-        //                 //sukses
-        //                 if (hasil == 2) {
 
-        //                 } else if (hasil == 3) {
-        //                     swal("Deleted!",
-        //                         "Hapus Data Berhasil.",
-        //                         "success");
-        //                     location.reload();
 
-        //                 }
-        //             }
-        //         });
-        //     } else {
-        //         swal("Cancelled", "", "error");
-        //     }
-        // });
-    });
+        })
 
-})
+        $('.tombol-hapus').click(function(e) {
+
+            console.log('ok');
+            const tabel = 'user_menu';
+            const id = $(this).data('id');
+
+            e.preventDefault();
+            const href = $(this).attr('href');
+            swal({
+                title: 'Anda Yakin ingin menghapus?',
+                text: "Data Akan Dihapus",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya',
+                cancelButtonText: `Tidak`
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: '../models/delete.php',
+                        type: 'post',
+                        data: {
+                            'tabel': tabel,
+                            'delete_id': id
+                        },
+                        success: function(hasil) {
+                            // alert(hasil);
+                            console.log(hasil);
+                            //sukses
+                            if (hasil == 2) {
+
+                            } else if (hasil == 3) {
+                                swal("Deleted!",
+                                    "Hapus Data Berhasil.",
+                                    "success");
+                                location.reload();
+
+                            }
+                        }
+                    });
+                } else {
+                    swal("Cancelled", "", "error");
+                }
+            });
+
+            //alert('hapus');
+            //var delete = 'delete';
+            // var tabel = 'menu';
+            // var iddelete = $(this).closest('tr').find('.delete_id_value').val();
+            // swal({
+            //     title: "Apakah Anda Yakin?",
+            //     text: "Data Anda Akan Terhapus!",
+            //     type: "warning",
+            //     showCancelButton: true,
+            //     confirmButtonColor: "#DD6B55",
+            //     confirmButtonText: "Ya, Hapus!",
+            //     cancelButtonText: "Tidak!",
+            //     closeOnConfirm: false,
+            //     closeOnCancel: false
+            // }, function(isConfirm) {
+            //     if (isConfirm) {
+
+
+            //         $.ajax({
+            //             url: '../models/delete.php',
+            //             type: 'post',
+            //             data: {
+            //                 'tabel': tabel,
+            //                 'delete_id': iddelete
+            //             },
+            //             success: function(hasil) {
+            //                 // alert(hasil);
+            //                 console.log(hasil);
+            //                 //sukses
+            //                 if (hasil == 2) {
+
+            //                 } else if (hasil == 3) {
+            //                     swal("Deleted!",
+            //                         "Hapus Data Berhasil.",
+            //                         "success");
+            //                     location.reload();
+
+            //                 }
+            //             }
+            //         });
+            //     } else {
+            //         swal("Cancelled", "", "error");
+            //     }
+            // });
+        });
+
+    })
 </script>

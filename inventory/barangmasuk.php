@@ -54,7 +54,8 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                     </div>
                     <div class="row">
                         <div class="col-lg-12 " style="margin-top: 10px;">
-                            <form class="form-horizontal" role="formpo" method="POST" action="input.php">
+                            <form class="form-horizontal" role="formpo" method="POST" action="../models/input.php">
+                                <input type="hidden" name="inputformin">
                                 <div class="card-box" style="height:450px; overflow-y: auto;">
                                     <div class="col-lg-12">
                                         <div class="responsive-table-plugin">
@@ -200,8 +201,8 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                     timer: 1100,
                     showConfirmButton: false
                 })
-            } else if (msg == 2) {
-                swal("Kode Akun Belum di Pilih!", "", "error")
+            } else if (msg < 1) {
+                swal("Input Gagal!", "", "error")
             }
         }
     </script>

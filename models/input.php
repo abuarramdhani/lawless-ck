@@ -796,8 +796,6 @@ if (isset($_POST['kasmasuk'])) {
 
     $result = mysqli_affected_rows($conn);
 
-
-
     //kembali ke halaman sebelumnya
     $_SESSION["msg"] = "$result";
     // header("Location: form-po.php?msg=" . urlencode('1'));
@@ -1161,4 +1159,84 @@ if (isset($_POST['kasmasuk'])) {
     // header("Location: form-po.php?msg=" . urlencode('1'));
 
     header("location: ../production/produk-masuk.php");
+} elseif (isset($_POST['inputformin'])) {
+
+    $nopo = $_POST['noform'];
+    $kodebahan = $_POST['kodebahan'];
+    $harga = $_POST['harga'];
+    $qty = $_POST['qty'];
+    $subtotal = $_POST['subtotal'];
+    $kodesupplier = $_POST['kodesupplier'];
+
+    // $total = count($namabarang);
+    $dt_input = date('Y-m-d');
+    $date = date('ymd');
+    // $noin = str_replace("PO", "IN", $nopo);
+    $namaoutlet = $_SESSION['outlet'];
+
+    $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
+
+    // var_dump($nopo);
+    // var_dump($kodebahan);
+    // var_dump($harga);
+    // var_dump($subtotal);
+    // var_dump($kodesupplier);
+    // var_dump($tanggal);
+    // var_dump($noin);
+    // die;
+
+    //ambil noform 
+    $ambil_noform = query("SELECT id,No_form FROM form_in ORDER BY No_form DESC");
+    $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
+    $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
+
+
+    if ($pecah_po == "FIN$date") {
+        $pecah_po_b += 1;
+        $pecah_po_b = sprintf("%03d", $pecah_po_b);
+        $No_form = 'FIN' . $date . $pecah_po_b;
+    } else {
+        $No_form = 'FIN' . $date . '001';
+    }
+    // akhir ambil no form
+
+    //   ambil stok
+    foreach ($kodebahan as $row) {
+
+        $sql = "SELECT stok 
+        FROM bahan 
+        WHERE kodebahan = '$row'
+    ";
+        $result = mysqli_query($conn, $sql);
+
+        while ($d = mysqli_fetch_array($result)) {
+            $stok[] = $d['stok'];
+            // echo $kodebahan;
+        }
+    }
+
+    for ($i = 0; $i < count($qty); $i++) {
+        $t_stok[] = $qty[$i] + $stok[$i];
+    }
+    // akhir stok
+
+    mysqli_query($conn, "insert into form_in set
+            No_form    = '$No_form',
+            Form_po = '$nopo',
+            kodeoutlet = '$kodeoutlet',
+            kodesupplier = '$kodesupplier',
+            date ='$dt_input',
+            status = '1'
+        ");
+
+
+    for ($i = 0; $i < count($kodebahan); $i++) {
+        mysqli_query($conn, "UPDATE bahan SET harga='$harga[$i]', stok= '$t_stok[$i]' WHERE kodebahan='$kodebahan[$i]'");
+        mysqli_query($conn, "INSERT INTO item_in (NO_form, kodebahan, qty, harga, subtotal) VALUE ('$No_form', '$kodebahan[$i]', '$qty[$i]', '$harga[$i]', '$subtotal[$i]')");
+    }
+    $result = mysqli_affected_rows($conn);
+
+    //kembali ke halaman sebelumnya
+    $_SESSION["msg"] = "$result";
+    header("Location: ../inventory/barangmasuk.php");
 }
