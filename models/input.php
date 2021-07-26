@@ -1070,4 +1070,94 @@ if (isset($_POST['kasmasuk'])) {
     // header("Location: form-po.php?msg=" . urlencode('1'));
 
     header("location: ../store/store-bahan");
+} elseif (isset($_POST['inputprodukmasuk'])) {
+    $namaproduk       = $_POST['namaproduk'];
+    $harga         = $_POST['harga'];
+    $jumlah     = $_POST['jumlah'];
+    $subtotal    = $_POST['subtotal'];
+    // $kodesupplier    = $_POST['supplier'];
+    $total_keseluruhan    = $_POST['total_keseluruhan'];
+    $namaoutlet = $_SESSION['outlet'];
+
+    $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
+    // $outlet['kodeoutlet'];
+    // var_dump($kodeoutlet);
+
+
+    $total = count($namaproduk);
+    $dt_input = date('Y-m-d');
+    $date = date('ymd');
+
+    // isi noform
+
+    // $result_noform = mysqli_query($conn, "SELECT id,No_form FROM form_po ORDER BY No_form DESC");
+    // $ambil_noform = mysqli_fetch_row($result_noform);
+
+    $ambil_noform = query("SELECT id,No_form FROM form_produkmasuk ORDER BY No_form DESC");
+    $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
+    $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
+
+
+    // var_dump($ambil_noform);
+    // var_dump($pecah_po);
+    // var_dump($pecah_po_b);
+    // die;
+
+
+    if ($pecah_po == "FPM$date") {
+        $pecah_po_b += 1;
+        $pecah_po_b = sprintf("%03d", $pecah_po_b);
+        $No_form = 'FPM' . $date . $pecah_po_b;
+    } else {
+        $No_form = 'FPM' . $date . '001';
+    }
+    //akhir isi noform
+    // echo $No_form;
+    // die;
+
+    // bahan
+    foreach ($namaproduk as $row) {
+
+        $sql = "SELECT * 
+        FROM produk 
+        WHERE namaproduk = '$row'
+        ";
+        $result = mysqli_query($conn, $sql);
+
+        while ($d = mysqli_fetch_array($result)) {
+            $kodeproduk[] = $d['kodeproduk'];
+            // echo $kodebahan;
+        }
+    }
+
+    // var_dump($kodebahan);
+    // die;
+    // input ke tabel form po
+
+
+    mysqli_query($conn, "insert into form_produkmasuk set
+            No_form    = '$No_form',
+            date ='$dt_input',
+            status = '1'
+        ");
+
+    // input ke tabel item po
+    for ($i = 0; $i < $total; $i++) {
+        mysqli_query($conn, "insert into item_produkmasuk set
+            No_form    = '$No_form',
+            kodeproduk      = '$kodeproduk[$i]',
+            qty = '$jumlah[$i]',
+            harga ='$harga[$i]',
+            subtotal = '$subtotal[$i]'
+        ");
+    }
+
+    $result = mysqli_affected_rows($conn);
+
+
+    //kembali ke halaman sebelumnya
+    $_SESSION["msg"] = "$result";
+    // header("Location: form-po.php?msg=" . urlencode('1'));
+
+    header("location: ../production/produk-masuk.php");
 }

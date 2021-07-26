@@ -12,6 +12,12 @@ require '../include/fungsi_indotgl.php';
 $bagian = "Store";
 $juhal = "Store Bahan";
 
+$data_bahan = query("SELECT *
+FROM form_storebahan as sb
+JOIN companypanel as cp
+ON sb.kodeoutlet = cp.kodeoutlet
+ORDER BY sb.id DESC");
+
 ?>
 
 
@@ -29,13 +35,13 @@ $juhal = "Store Bahan";
         <!-- Start right Content here -->
         <!-- ============================================================== -->
         <div class="content-page">
+            <!-- terima msg -->
+            <?php if (isset($_SESSION['msg'])) : ?>
+                <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
+                <?php unset($_SESSION['msg']); ?>
+            <?php endif ?>
+            <!-- akhir terima msg -->
             <?php if ($_SESSION['kodeoutlet'] == "OUT002" or $_SESSION['kodeoutlet'] == "OUT001") : ?>
-                <!-- terima msg -->
-                <?php if (isset($_SESSION['msg'])) : ?>
-                    <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
-                    <?php unset($_SESSION['msg']); ?>
-                <?php endif ?>
-                <!-- akhir terima msg -->
 
                 <!-- Start content -->
                 <div class="content">
@@ -49,7 +55,7 @@ $juhal = "Store Bahan";
                                  <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button>
                             </div> -->
                                     <div class="dropdown pull-centre">
-                                        <h4 class="header-title m-t-0 m-b-30">Data Order Produk</h4>
+                                        <h4 class="header-title m-t-0 m-b-30">Data Order Bahan</h4>
                                     </div>
 
                                 </div>
@@ -77,8 +83,8 @@ $juhal = "Store Bahan";
                                             <tr>
                                                 <th>No</th>
                                                 <th>Tanggal</th>
-                                                <th>No. Form PO</th>
-                                                <th>Supplier</th>
+                                                <th>No. Form order bahan</th>
+                                                <th>Outlet</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -86,20 +92,19 @@ $juhal = "Store Bahan";
 
                                         <tbody>
                                             <?php $i = 1 ?>
-                                            <?php foreach ($data_po as $dp) : ?>
-
+                                            <?php foreach ($data_bahan as $dp) : ?>
                                                 <tr>
                                                     <td><?= $i++; ?></td>
                                                     <td><?= $dp['date']; ?></td>
                                                     <td><?= $dp['No_form']; ?></td>
-                                                    <td><?= $dp['namasupplier'] ?></td>
+                                                    <td><?= $dp['nama'] ?></td>
                                                     <?php if ($dp['status'] == 1) : ?>
                                                         <td><span class="label label-success">Konfirmasi</span></td>
                                                     <?php else : ?>
                                                         <td><span class="label label-warning">Belum di Konfirmasi</span></td>
                                                     <?php endif ?>
 
-                                                    <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
+                                                    <td><a href="detail_storebahan.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
                                                     </td>
                                                 </tr>
 
