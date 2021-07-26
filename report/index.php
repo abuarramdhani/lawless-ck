@@ -41,18 +41,18 @@ $juhal = "Laporan Purchasing";
                                 </div>
                                 <div class="dropdown pull-centre">
                                     <button class="btn btn-primary waves-effect waves-light" data-toggle="modal"
-                                        data-target="#input-close-modal">Pemasukan : Rp. 0
+                                        data-target="#input-close-modal">
                                     </button>
                                     <button class="btn btn-info waves-effect waves-light" data-toggle="modal"
                                         data-target="#output-close-modal">
-                                        Pengeluaran : Rp. 0</button>
+                                    </button>
 
                                     <!-- <button class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#output-close-modal">
                                         Saldo Kas : Rp. 0</button> -->
 
                                     <button class="btn btn-success waves-effect waves-light" data-toggle="modal"
                                         data-target="#output-close-modal">
-                                        Saldo Kas : Rp. 0</button>
+                                    </button>
                                 </div>
 
                             </div>

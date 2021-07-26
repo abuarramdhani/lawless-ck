@@ -10,7 +10,7 @@ require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 require '../controller/c_item-bahan.php';
 $bagian = "Data Master";
-$juhal = "Item-Bahan";
+$juhal = "Item Bahan";
 ?>
 
 
@@ -46,6 +46,7 @@ $juhal = "Item-Bahan";
                                 <br>
                                 <form class="form-horizontal group-border-dashed" id="formbahan">
                                     <input type="hidden" value="inputbahan" id="inputbahan" name="inputbahan">
+                                    <input type="hidden" value="<?= $kodeoutlet; ?>" id="kodeoutlet" name="kodeoutlet">
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Nama Bahan</label>
                                         <div class="col-sm-8">
@@ -238,6 +239,7 @@ $(document).ready(function() {
         var data = new FormData(dataform);
 
         var inputbahan = $('#inputbahan').val();
+        var kodeoutlet = $('#kodeoutlet').val();
         var nbahan = $('#nbahan').val();
 
         if (nbahan == "") {

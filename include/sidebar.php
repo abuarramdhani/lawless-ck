@@ -12,6 +12,7 @@ if($_SESSION['userlevel']!=0){
     
 }else{
     $kodeusermenu = query("SELECT * FROM user_menu ORDER BY id ASC ");  
+}
 ?>
 <!-- ========== Left Sidebar Start ========== -->
 <div class="left side-menu">
