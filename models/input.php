@@ -953,4 +953,121 @@ if (isset($_POST['kasmasuk'])) {
     // header("Location: form-po.php?msg=" . urlencode('1'));
 
     header("location: ../store/");
+} else if (isset($_POST['inputformstorebahan'])) {
+
+    $namabarang       = $_POST['namabarang'];
+    $harga         = $_POST['harga'];
+    $jumlah     = $_POST['jumlah'];
+    $subtotal    = $_POST['subtotal'];
+    $kodesupplier    = $_POST['supplier'];
+    $total_keseluruhan    = $_POST['total_keseluruhan'];
+    $namaoutlet = $_SESSION['outlet'];
+    $kodeoutlet = $_SESSION['kodeoutlet'];
+
+
+    // var_dump($kodeoutlet);
+    var_dump($namabarang);
+    // var_dump($harga);
+    // var_dump($jumlah);
+    // var_dump($subtotal);
+    // var_dump($kodesupplier);
+
+    // die;
+    // $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
+    // $outlet['kodeoutlet'];
+
+
+    $total = count($namabarang);
+    $dt_input = date('Y-m-d');
+    $date = date('ymd');
+
+    // isi noform
+
+    // $result_noform = mysqli_query($conn, "SELECT id,No_form FROM form_po ORDER BY No_form DESC");
+    // $ambil_noform = mysqli_fetch_row($result_noform);
+
+    $ambil_noform = query("SELECT id,No_form FROM form_storebahan ORDER BY No_form DESC");
+    $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
+    $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
+
+
+    // var_dump($ambil_noform);
+    // var_dump($pecah_po);
+    // var_dump($pecah_po_b);
+    // die;
+
+
+    if ($pecah_po == "FSB$date") {
+        $pecah_po_b += 1;
+        $pecah_po_b = sprintf("%03d", $pecah_po_b);
+        $No_form = 'FSB' . $date . $pecah_po_b;
+    } else {
+        $No_form = 'FSB' . $date . '001';
+    }
+    //akhir isi noform
+    var_dump($No_form);
+    // die;
+
+
+    // bahan
+    foreach ($namabarang as $row) {
+
+        $sql = "SELECT * 
+        FROM bahan 
+        WHERE namabahan = '$row'
+        ";
+        $result = mysqli_query($conn, $sql);
+
+        while ($d = mysqli_fetch_array($result)) {
+            $kodebahan[] = $d['kodebahan'];
+            // echo $kodebahan;
+        }
+    }
+
+    // var_dump($kodeproduk);
+
+    // input ke tabel form po
+
+
+    mysqli_query($conn, "insert into form_storebahan set
+            No_form    = '$No_form',
+            kodeoutlet      = '$kodeoutlet',
+            kodesupplier = '$kodesupplier',
+            Form_po = '0',
+            date ='$dt_input'
+            
+        ");
+
+
+
+    // var_dump($No_form);
+    // var_dump($kodeoutlet);
+    // var_dump($kodesupplier);
+    // var_dump($dt_input);
+    // die;
+    // var_dump($No_form);
+
+
+    // input ke tabel item po
+    for ($i = 0; $i < $total; $i++) {
+
+        mysqli_query($conn, "insert into item_storebahan set
+            No_form    = '$No_form',
+            kodebahan      = '$kodebahan[$i]',
+            qty = '$jumlah[$i]',
+            harga ='$harga[$i]',
+            subtotal = '$subtotal[$i]'
+        ");
+    }
+
+    $result = mysqli_affected_rows($conn);
+    // var_dump($result);
+    // die;
+
+
+    //kembali ke halaman sebelumnya
+    $_SESSION["msg"] = "$result";
+    // header("Location: form-po.php?msg=" . urlencode('1'));
+
+    header("location: ../store/store-bahan");
 }

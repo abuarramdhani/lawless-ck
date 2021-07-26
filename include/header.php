@@ -21,8 +21,7 @@ $username = $user["username"];
     <link href="../assets/plugins/fileuploads/css/dropify.min.css" rel="stylesheet" type="text/css" />
 
     <!-- X-editable css -->
-    <link type="text/css" href="../assets/plugins/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css"
-        rel="stylesheet">
+    <link type="text/css" href="../assets/plugins/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
 
     <!--venobox lightbox-->
     <link rel="stylesheet" href="../assets/plugins/magnific-popup/dist/magnific-popup.css" />
@@ -44,8 +43,7 @@ $username = $user["username"];
     <link href="../assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
     <link href="../assets/plugins/switchery/switchery.min.css" rel="stylesheet" />
     <link href="../assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
-    <link href="../assets/plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css"
-        rel="stylesheet">
+    <link href="../assets/plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
     <link href="../assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="../assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
@@ -57,6 +55,7 @@ $username = $user["username"];
     <link href="../assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />
 
     <!-- App css -->
+
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/core.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/components.css" rel="stylesheet" type="text/css" />
@@ -64,7 +63,6 @@ $username = $user["username"];
     <link href="../assets/css/pages.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/menu.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/all.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

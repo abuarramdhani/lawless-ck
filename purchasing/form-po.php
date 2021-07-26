@@ -13,7 +13,6 @@ $bagian = "Purchasing";
 $juhal = "Form PO";
 $kodeoutlet = $_SESSION['kodeoutlet'];
 $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' ORDER BY id DESC");
-// var_dump($kodesupplierr);
 ?>
 
 
@@ -92,6 +91,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                         </div>
                         <!-- end row -->
                     </div>
+
                     <div class="col-lg-6">
                         <div class="row">
                             <form class="form-horizontal" role="formpo" method="POST" action="../models/input.php">
