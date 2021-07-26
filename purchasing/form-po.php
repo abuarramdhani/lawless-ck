@@ -11,6 +11,9 @@ require '../include/fungsi_indotgl.php';
 //require '../controller/c_form-po.php';
 $bagian = "Purchasing";
 $juhal = "Form PO";
+$kodeoutlet = $_SESSION['kodeoutlet'];
+$kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' ORDER BY id DESC");
+// var_dump($kodesupplierr);
 ?>
 
 
@@ -146,7 +149,7 @@ $juhal = "Form PO";
                                             <!-- <p class="form-control-static" id="total-harga" name="total_keseluruhan"></p> -->
                                         </div>
                                     </div>
-                                    <?php $kodesupplierr = query("SELECT * FROM supplier ORDER BY id DESC "); ?>
+
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Supplier</label>
                                         <div class="col-sm-10">
@@ -156,7 +159,6 @@ $juhal = "Form PO";
                                                     <option value="<?= $row["kodesupplier"] ?>">
                                                         <?= ucwords($row["namasupplier"]) ?></option>
                                                 <?php endforeach; ?>
-
                                             </select>
 
                                         </div>

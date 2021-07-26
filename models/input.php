@@ -882,7 +882,7 @@ if (isset($_POST['kasmasuk'])) {
     // $result_noform = mysqli_query($conn, "SELECT id,No_form FROM form_po ORDER BY No_form DESC");
     // $ambil_noform = mysqli_fetch_row($result_noform);
 
-    $ambil_noform = query("SELECT id,No_form FROM form_store ORDER BY No_form DESC");
+    $ambil_noform = query("SELECT id,No_form FROM form_storeproduk ORDER BY No_form DESC");
     $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
     $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
 
@@ -893,12 +893,12 @@ if (isset($_POST['kasmasuk'])) {
     // die;
 
 
-    if ($pecah_po == "FST$date") {
+    if ($pecah_po == "FSP$date") {
         $pecah_po_b += 1;
         $pecah_po_b = sprintf("%03d", $pecah_po_b);
-        $No_form = 'FST' . $date . $pecah_po_b;
+        $No_form = 'FSP' . $date . $pecah_po_b;
     } else {
-        $No_form = 'FST' . $date . '001';
+        $No_form = 'FSP' . $date . '001';
     }
     //akhir isi noform
     // echo $No_form;
@@ -908,13 +908,13 @@ if (isset($_POST['kasmasuk'])) {
     foreach ($namabarang as $row) {
 
         $sql = "SELECT * 
-        FROM bahan 
-        WHERE namabahan = '$row'
+        FROM produk 
+        WHERE namaproduk = '$row'
         ";
         $result = mysqli_query($conn, $sql);
 
         while ($d = mysqli_fetch_array($result)) {
-            $kodebahan[] = $d['kodebahan'];
+            $kodeproduk[] = $d['kodeproduk'];
             // echo $kodebahan;
         }
     }
@@ -924,7 +924,7 @@ if (isset($_POST['kasmasuk'])) {
     // input ke tabel form po
 
 
-    mysqli_query($conn, "insert into form_store set
+    mysqli_query($conn, "insert into form_storeproduk set
             No_form    = '$No_form',
             kodeoutlet      = '$kodeoutlet',
             date ='$dt_input',
@@ -932,16 +932,16 @@ if (isset($_POST['kasmasuk'])) {
         ");
 
     // input ke tabel item po
-    // for ($i = 0; $i < $total; $i++) {
+    for ($i = 0; $i < $total; $i++) {
 
-    //     mysqli_query($conn, "insert into item_po set
-    //         No_form    = '$No_form',
-    //         kodebahan      = '$kodebahan[$i]',
-    //         qty = '$jumlah[$i]',
-    //         harga ='$harga[$i]',
-    //         subtotal = '$subtotal[$i]'
-    //     ");
-    // }
+        mysqli_query($conn, "insert into item_storeproduk set
+            No_form    = '$No_form',
+            kodeproduk      = '$kodeproduk[$i]',
+            qty = '$jumlah[$i]',
+            harga ='$harga[$i]',
+            subtotal = '$subtotal[$i]'
+        ");
+    }
 
     $result = mysqli_affected_rows($conn);
 
