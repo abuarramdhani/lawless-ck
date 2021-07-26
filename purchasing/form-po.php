@@ -11,6 +11,9 @@ require '../include/fungsi_indotgl.php';
 //require '../controller/c_form-po.php';
 $bagian = "Purchasing";
 $juhal = "Form PO";
+$kodeoutlet = $_SESSION['kodeoutlet'];
+$kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' ORDER BY id DESC");
+// var_dump($kodesupplierr);
 ?>
 
 
@@ -146,7 +149,7 @@ $juhal = "Form PO";
                                             <!-- <p class="form-control-static" id="total-harga" name="total_keseluruhan"></p> -->
                                         </div>
                                     </div>
-                                    <?php $kodesupplierr = query("SELECT * FROM supplier ORDER BY id DESC "); ?>
+
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Supplier</label>
                                         <div class="col-sm-10">
@@ -156,7 +159,6 @@ $juhal = "Form PO";
                                                     <option value="<?= $row["kodesupplier"] ?>">
                                                         <?= ucwords($row["namasupplier"]) ?></option>
                                                 <?php endforeach; ?>
-
                                             </select>
 
                                         </div>
@@ -338,170 +340,6 @@ $juhal = "Form PO";
 
 
 
-        $('#tombol-kasmasuk').click(function(e) {
 
-            e.preventDefault();
-            var dataform = $('#formkasmasuk')[0];
-            var data = new FormData(dataform);
-
-            var kasmasuk = $('#kasmasuk').val();
-            var kodeakun = $('#kodeakun').val();
-            var tanggal = $('#tanggal').val();
-            var keterangan = $('#keterangan').val();
-            var payto = $('#payto').val();
-            var jumlah = $('#jumlahinput').val();
-
-            if (kodeakun == "000") {
-                swal("Kode Akun Belum di Pilih!", "", "error")
-            } else if (tanggal == " ") {
-                swal("Tanggal Belum di Isi!", "", "error")
-            } else if (keterangan == "") {
-                swal("Keterangan Belum di Isi!", "", "error")
-            } else if (payto == "") {
-                swal("Payto Belum di Isi!", "", "error")
-            } else if (jumlah == "") {
-                swal("Jumlah Belum di Isi!", "", "error")
-            } else {
-                $.ajax({
-                    url: '../models/input.php',
-                    type: 'post',
-                    data: data,
-                    enctype: 'multipart/form-data',
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    beforeSend: function() {
-                        $('.spinn').show();
-                    },
-                    success: function(hasil) {
-                        // alert(hasil);
-                        console.log(hasil);
-                        //sukses
-                        if (hasil == 1) {
-                            swal("Input Gagal!", "", "error")
-                        } else if (hasil == 2) {
-                            swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
-                        } else if (hasil == 3) {
-                            swal({
-                                title: "Input Berhasil!",
-                                type: "success",
-                                //text: "I will close in 2 seconds.",
-                                timer: 1000,
-                                showConfirmButton: false
-                            })
-                            location.reload();
-
-                        }
-                    }
-                });
-            }
-        })
-
-        $('#tombol-kaskeluar').click(function(e) {
-
-            e.preventDefault();
-            var dataform = $('#formkaskeluar')[0];
-            var data = new FormData(dataform);
-
-            var kaskeluar = $('#kaskeluar').val();
-            var kodeakunout = $('#kodeakunout').val();
-            var tanggalout = $('#tanggalout').val();
-            var keteranganout = $('#keteranganout').val();
-            var paytoout = $('#paytoout').val();
-            var jumlahout = $('#jumlahoutput').val();
-
-            if (kodeakunout == "000") {
-                swal("Kode Akun Belum di Pilih!", "", "error")
-            } else if (tanggalout == " ") {
-                swal("Tanggal Belum di Isi!", "", "error")
-            } else if (keteranganout == "") {
-                swal("Keterangan Belum di Isi!", "", "error")
-            } else if (paytoout == "") {
-                swal("Payto Belum di Isi!", "", "error")
-            } else if (jumlahout == "") {
-                swal("Jumlah Belum di Isi!", "", "error")
-            } else {
-                $.ajax({
-                    url: '../models/input.php',
-                    type: 'post',
-                    data: data,
-                    enctype: 'multipart/form-data',
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    beforeSend: function() {
-                        $('.spinn').show();
-                    },
-                    success: function(hasil) {
-                        // alert(hasil);
-                        console.log(hasil);
-                        //sukses
-                        if (hasil == 1) {
-                            swal("Input Gagal!", "", "error")
-                        } else if (hasil == 2) {
-                            swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
-                        } else if (hasil == 3) {
-                            swal({
-                                title: "Input Berhasil!",
-                                type: "success",
-                                //text: "I will close in 2 seconds.",
-                                timer: 1000,
-                                showConfirmButton: false
-                            })
-                            location.reload();
-
-                        }
-                    }
-                });
-            }
-        })
-
-        $('.tombol-deletekas').click(function(e) {
-            e.preventDefault();
-            //alert('hapus');
-            //var delete = 'delete';
-            var tabel = 'kas';
-            var iddelete = $(this).closest('tr').find('.delete_id_value').val();
-            swal({
-                title: "Apakah Anda Yakin?",
-                text: "Data Anda Akan Terhapus!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Ya, Hapus!",
-                cancelButtonText: "Tidak!",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function(isConfirm) {
-                if (isConfirm) {
-
-
-                    $.ajax({
-                        url: '../models/delete.php',
-                        type: 'post',
-                        data: {
-                            'tabel': tabel,
-                            'delete_id': iddelete
-                        },
-                        success: function(hasil) {
-                            // alert(hasil);
-                            console.log(hasil);
-                            //sukses
-                            if (hasil == 2) {
-
-                            } else if (hasil == 3) {
-                                swal("Deleted!",
-                                    "Hapus Data Berhasil.",
-                                    "success");
-                                location.reload();
-
-                            }
-                        }
-                    });
-                } else {
-                    swal("Cancelled", "", "error");
-                }
-            });
-        });
     })
 </script>

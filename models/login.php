@@ -17,33 +17,32 @@ if (isset($_POST['login'])) {
         //cek password
         $row = mysqli_fetch_assoc($ceklogin);
         if (password_verify($password, $row["password"])) {
-                        
-            $datauser = query("SELECT * FROM admin WHERE email = '$email' ")[0];            
-            $userlevel = $datauser['userlevel'];            
+
+            $datauser = query("SELECT * FROM admin WHERE email = '$email' ")[0];
+            $userlevel = $datauser['userlevel'];
             $useroutlet = $datauser['outlet'];
 
-            if($userlevel!=0){
-                if($kodeoutlet!=$useroutlet){
+            if ($userlevel != 0) {
+                if ($kodeoutlet != $useroutlet) {
                     echo 4;
-                }else{
+                } else {
                     session_start();
                     $_SESSION['email'] = $email;
                     $_SESSION['userlevel'] = $datauser['userlevel'];
                     $_SESSION['jabatan'] = $datauser['jabatan'];
                     $dataoutlet = query("SELECT * FROM companypanel WHERE kodeoutlet = '$kodeoutlet' ")[0];
                     $_SESSION['outlet'] = $dataoutlet['nama'];
-                    $_SESSION['kodeoutlet'] = $useroutlet;
-                    echo 3;    
+                    $_SESSION['kodeoutlet'] = $kodeoutlet;
+                    echo 3;
                 }
-                
-            }else{
+            } else {
                 session_start();
                 $_SESSION['email'] = $email;
                 $_SESSION['userlevel'] = $datauser['userlevel'];
                 $_SESSION['jabatan'] = $datauser['jabatan'];
                 $dataoutlet = query("SELECT * FROM companypanel WHERE kodeoutlet = '$kodeoutlet' ")[0];
                 $_SESSION['outlet'] = $dataoutlet['nama'];
-                $_SESSION['kodeoutlet'] = $useroutlet;
+                $_SESSION['kodeoutlet'] = $kodeoutlet;
                 echo 3;
             }
         } else {
