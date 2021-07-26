@@ -122,12 +122,12 @@ require 'include/fungsi.php';
                         </div>
                     </div>
 
-                    <!-- <div class="form-group m-t-30 m-b-0">
+                    <div class="form-group m-t-30 m-b-0">
                         <div class="col-sm-12">
-                            <a href="page-recoverpw.html" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot
+                            <a href="lupapassword" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot
                                 your password?</a>
                         </div>
-                    </div> -->
+                    </div>
                 </form>
 
             </div>

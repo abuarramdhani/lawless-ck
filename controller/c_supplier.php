@@ -1,6 +1,11 @@
 <?php
+$kodeoutlet = $_SESSION['kodeoutlet'];
+if ($kodeoutlet !="OUT000"){
+    $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' ORDER BY id DESC ");
+}else{
+    $kodesupplierr = query("SELECT * FROM supplier ORDER BY id DESC ");
+}
 
-$kodesupplierr = query("SELECT * FROM supplier ORDER BY id DESC ");
 
 if (isset($_POST["updatesupplier"])) {
     //var_dump($_POST);

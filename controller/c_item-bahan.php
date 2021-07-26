@@ -1,6 +1,10 @@
 <?php
-
-$kodebahan = query("SELECT * FROM bahan ORDER BY id DESC ");
+$kodeoutlet = $_SESSION['kodeoutlet'];
+if ($kodeoutlet !="OUT000"){
+    $kodebahan = query("SELECT * FROM bahan WHERE kodeoutlet = '$kodeoutlet' ORDER BY id DESC ");
+}else{
+    $kodebahan = query("SELECT * FROM bahan ORDER BY id DESC ");
+}
 
 if (isset($_POST["updatebahan"])) {
     //var_dump($_POST);

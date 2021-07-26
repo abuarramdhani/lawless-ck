@@ -28,7 +28,88 @@ $juhal = "Store Produk";
         <!-- ============================================================== -->
         <div class="content-page">
             <!-- Start content -->
+            <?php if ($_SESSION['kodeoutlet']=="OUT002" OR $_SESSION['kodeoutlet']=="OUT001")   : ?>
 
+            <!-- Start content -->
+            <div class="content">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="card-box">
+
+                                <!-- <div class="dropdown pull-right">
+                                 <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button>
+                            </div> -->
+                                <div class="dropdown pull-centre">
+                                    <h4 class="header-title m-t-0 m-b-30">Data Order Produk</h4>
+                                </div>
+
+                            </div>
+                        </div><!-- end col -->
+
+                        <div class="col-lg-5">
+                            <div class="card-box">
+
+                                <form method="post" action="">
+                                    <?php require '../include/tgltahun.php'; ?>
+                                </form>
+
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+
+
+                                <table id="datatable-buttons" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tanggal</th>
+                                            <th>No. Form PO</th>
+                                            <th>Supplier</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <?php $i = 1 ?>
+                                        <?php foreach ($data_po as $dp) : ?>
+
+                                        <tr>
+                                            <td><?= $i++; ?></td>
+                                            <td><?= $dp['date']; ?></td>
+                                            <td><?= $dp['No_form']; ?></td>
+                                            <td><?= $dp['namasupplier'] ?></td>
+                                            <?php if ($dp['status'] == 1) : ?>
+                                            <td><span class="label label-success">Konfirmasi</span></td>
+                                            <?php else : ?>
+                                            <td><span class="label label-warning">Belum di Konfirmasi</span></td>
+                                            <?php endif ?>
+
+                                            <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>"
+                                                    class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
+                                            </td>
+                                        </tr>
+
+                                        <?php endforeach ?>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+            <?php else : ?>
             <div class="content">
                 <div class="container" style="margin-top: 5px;">
                     <div class="row">
@@ -207,10 +288,9 @@ $juhal = "Store Produk";
                     </div>
                 </div>
             </div> <!-- container -->
-
-
-
         </div> <!-- content -->
+
+        <?php endif ; ?>
 
         <?php require '../include/footer.php'; ?>
 

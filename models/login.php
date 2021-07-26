@@ -29,8 +29,10 @@ if (isset($_POST['login'])) {
                     session_start();
                     $_SESSION['email'] = $email;
                     $_SESSION['userlevel'] = $datauser['userlevel'];
+                    $_SESSION['jabatan'] = $datauser['jabatan'];
                     $dataoutlet = query("SELECT * FROM companypanel WHERE kodeoutlet = '$kodeoutlet' ")[0];
                     $_SESSION['outlet'] = $dataoutlet['nama'];
+                    $_SESSION['kodeoutlet'] = $useroutlet;
                     echo 3;    
                 }
                 
@@ -38,8 +40,10 @@ if (isset($_POST['login'])) {
                 session_start();
                 $_SESSION['email'] = $email;
                 $_SESSION['userlevel'] = $datauser['userlevel'];
+                $_SESSION['jabatan'] = $datauser['jabatan'];
                 $dataoutlet = query("SELECT * FROM companypanel WHERE kodeoutlet = '$kodeoutlet' ")[0];
                 $_SESSION['outlet'] = $dataoutlet['nama'];
+                $_SESSION['kodeoutlet'] = $useroutlet;
                 echo 3;
             }
         } else {

@@ -42,7 +42,8 @@
                                         $nj = "Super User";
                                     }
                                 ?>
-                                <h5 class="page-title"><a href="../user/profile"><?= strtoupper($username)." - ".$nj; ?>
+                                <h5 class="page-title"><a
+                                        href="../user/profile"><?= strtoupper($username)." - ".$nj." - ".$_SESSION['kodeoutlet']; ?>
                                     </a> </h5>
 
                             </li>

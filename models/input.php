@@ -384,7 +384,7 @@ if (isset($_POST['kasmasuk'])) {
 
     $kode = "SUP";
     $kp = $kode . $newkodetr;
-
+    $kodeoutlet = htmlspecialchars($_POST["kodeoutlet"]);
     $nsupplier = strtolower(htmlspecialchars($_POST["nsupplier"]));
     $nohp = htmlspecialchars($_POST["nohp"]);
     $alamat = htmlspecialchars($_POST["alamat"]);
@@ -402,7 +402,7 @@ if (isset($_POST['kasmasuk'])) {
     //query insert data
     $query = "INSERT INTO supplier 
                 VALUES 
-                ('','$kp','$nsupplier','$nohp','$alamat')
+                ('','$kodeoutlet','$kp','$nsupplier','$nohp','$alamat')
             ";
 
     $masuk_data = mysqli_query($conn, $query);
@@ -787,7 +787,7 @@ if (isset($_POST['kasmasuk'])) {
         } else {
             $query = "INSERT INTO user_menu 
                         VALUES 
-                        ('','$menu','$url')
+                        ('','$menu','$url','','')
                      ";
             $masuk_data = mysqli_query($conn, $query);
             if ($masuk_data) {
