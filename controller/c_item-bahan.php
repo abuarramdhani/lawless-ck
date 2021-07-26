@@ -12,11 +12,13 @@ if (isset($_POST["updatebahan"])) {
     $nbahan = strtolower(htmlspecialchars($_POST["namabahan"]));
     $hargabeli = htmlspecialchars($_POST["hargabeli"]);
     $hargajual = htmlspecialchars($_POST["hargajual"]);
+    $minstok = htmlspecialchars($_POST["minstok"]);
     
     $query = "UPDATE bahan SET
                 namabahan = '$nbahan',
                 harga = '$hargabeli',
-                hargaj = '$hargajual'
+                hargaj = '$hargajual',
+                minstok = '$minstok'
         WHERE id = $idbahan
     ";
     $masuk_data = mysqli_query($conn, $query);

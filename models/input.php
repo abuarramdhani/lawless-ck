@@ -474,6 +474,7 @@ if (isset($_POST['kasmasuk'])) {
 
     $kodeoutlet = htmlspecialchars($_POST["kodeoutlet"]);
     $nbahan = strtolower(htmlspecialchars($_POST["nbahan"]));
+    $nhargabeli = strtolower(htmlspecialchars($_POST["nhargabeli"]));
 
 
     $ceknama = mysqli_query($conn, "SELECT * FROM bahan WHERE namabahan ='$nbahan' ");
@@ -489,7 +490,7 @@ if (isset($_POST['kasmasuk'])) {
     //query insert data
     $query = "INSERT INTO bahan 
                 VALUES 
-                ('','$kodeoutlet','$kp','$nbahan','','')
+                ('','$kodeoutlet','$kp','$nbahan','$nhargabeli','','0','0')
             ";
 
     $masuk_data = mysqli_query($conn, $query);
@@ -695,7 +696,7 @@ if (isset($_POST['kasmasuk'])) {
     if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
         if ($ukuran < 2044070) {
             move_uploaded_file($file_tmp, '../assets/images/products/' . $gambar);
-            $query = "INSERT INTO produk VALUES ('','$kp','$nkategoriproduk','$nproduk','$nharga','$gambar')";
+            $query = "INSERT INTO produk VALUES ('','$kp','$nkategoriproduk','$nproduk','$nharga','$gambar','0','0')";
             $masuk_data = mysqli_query($conn, $query);
             if ($masuk_data) {
                 echo 3;

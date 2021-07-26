@@ -54,7 +54,13 @@ $juhal = "Item Bahan";
                                                 id="nbahan" placeholder="Nama bahan"></input>
                                         </div>
                                     </div>
-
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Harga Beli</label>
+                                        <div class="col-sm-8">
+                                            <input autofocus type="text" class="form-control" required name="nhargabeli"
+                                                id="nhargabeli" placeholder="Harga Beli"></input>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-4 col-sm-6 m-t-15">
                                             <button type="submit" class="btn btn-success waves-effect waves-light"
@@ -95,6 +101,8 @@ $juhal = "Item Bahan";
                                             <th>Nama bahan</th>
                                             <th>Harga Beli</th>
                                             <th>Harga Jual</th>
+                                            <th>Stok</th>
+                                            <th>Min Stok</th>
                                             <th>Action </th>
                                         </tr>
                                     </thead>
@@ -108,6 +116,8 @@ $juhal = "Item Bahan";
                                             <td><?= ucwords($row["namabahan"]) ?></td>
                                             <td><?= $row["harga"] ?></td>
                                             <td><?= $row["hargaj"] ?></td>
+                                            <td><?= $row["stok"] ?></td>
+                                            <td><?= $row["minstok"] ?></td>
                                             <td>
                                                 <a class="on-default edit-row badge badge-success" data-toggle="modal"
                                                     data-target="#edit<?= $row["id"] ?>"><i
@@ -145,7 +155,16 @@ $juhal = "Item Bahan";
                                                                                     id="namabahan" name="namabahan">
                                                                             </div>
                                                                         </div>
-
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label for="minstok"
+                                                                                    class="control-label">Minimal
+                                                                                    Stok</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    value="<?= $row["minstok"] ?>"
+                                                                                    id="minstok" name="minstok">
+                                                                            </div>
+                                                                        </div>
 
                                                                     </div>
                                                                     <div class="row">
@@ -241,6 +260,7 @@ $(document).ready(function() {
         var inputbahan = $('#inputbahan').val();
         var kodeoutlet = $('#kodeoutlet').val();
         var nbahan = $('#nbahan').val();
+        var nhargabeli = $('#nhargabeli').val();
 
         if (nbahan == "") {
             swal("Nama bahan belum di isi!", "", "error")

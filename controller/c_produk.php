@@ -2,7 +2,6 @@
 $kodekategoriproduk = query("SELECT * FROM kategoriproduk ORDER BY namakategoriproduk ASC ");
 $kodeproduk = query("SELECT * FROM produk ORDER BY id DESC ");
 
-
 if (isset($_POST["updateproduk"])) {
     //var_dump($_POST);
     $idproduk = $_POST["idproduk"];
