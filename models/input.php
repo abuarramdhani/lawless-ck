@@ -803,6 +803,7 @@ if (isset($_POST['kasmasuk'])) {
 
     $cekdata = mysqli_query($conn, "SELECT * FROM user_menu WHERE menu = '$menu'");
 
+
     if (mysqli_num_rows($cekdata) > 0) {
         echo 1;
     } else {
@@ -810,14 +811,15 @@ if (isset($_POST['kasmasuk'])) {
         if (mysqli_num_rows($cekurl) > 0) {
             echo 2;
         } else {
-            $query = "INSERT INTO user_menu 
-                        VALUES 
-                        ('','$menu','$url','','')
+            $query = "INSERT INTO user_menu SET 
+                       menu ='$menu',
+                       url  = '$url'
                      ";
             $masuk_data = mysqli_query($conn, $query);
             if ($masuk_data) {
                 echo 4;
             } else {
+
                 echo 3;
             }
         }
@@ -953,7 +955,7 @@ if (isset($_POST['kasmasuk'])) {
     $harga         = $_POST['harga'];
     $jumlah     = $_POST['jumlah'];
     $subtotal    = $_POST['subtotal'];
-    $kodesupplier    = $_POST['supplier'];
+    // $kodesupplier    = $_POST['supplier'];
     $total_keseluruhan    = $_POST['total_keseluruhan'];
     $namaoutlet = $_SESSION['outlet'];
     $kodeoutlet = $_SESSION['kodeoutlet'];
@@ -1018,32 +1020,42 @@ if (isset($_POST['kasmasuk'])) {
         }
     }
 
-    // var_dump($kodeproduk);
+    //   ambil stok
+    foreach ($kodebahan as $row) {
 
-    // input ke tabel form po
+        $sql = "SELECT stok 
+        FROM bahan 
+        WHERE kodebahan = '$row'
+    ";
+        $result = mysqli_query($conn, $sql);
 
+        while ($d = mysqli_fetch_array($result)) {
+            $stok[] = $d['stok'];
+            // echo $kodebahan;
+        }
+    }
 
+    for ($i = 0; $i < count($jumlah); $i++) {
+        $t_stok[] = $stok[$i] - $jumlah[$i];
+    }
+    // akhir stok
+
+    // input ke tabel form storebahan
     mysqli_query($conn, "insert into form_storebahan set
             No_form    = '$No_form',
             kodeoutlet      = '$kodeoutlet',
-            kodesupplier = '$kodesupplier',
             Form_po = '0',
-            date ='$dt_input'
+            date ='$dt_input',
+            status ='1'
             
         ");
 
-
-
-    // var_dump($No_form);
-    // var_dump($kodeoutlet);
-    // var_dump($kodesupplier);
-    // var_dump($dt_input);
-    // die;
-    // var_dump($No_form);
-
-
     // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
+
+        mysqli_query($conn, "UPDATE bahan SET 
+        stok= '$t_stok[$i]' 
+        WHERE kodebahan='$kodebahan[$i]'");
 
         mysqli_query($conn, "insert into item_storebahan set
             No_form    = '$No_form',

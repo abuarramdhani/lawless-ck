@@ -35,6 +35,7 @@ $juhal = "Menu";
                     </div>
                     <!-- end row -->
 
+
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="card-box">
@@ -45,7 +46,7 @@ $juhal = "Menu";
                                 <h4 class="header-title m-t-0">Input Menu Sidebar<br></h4>
                                 <br>
                                 <form class="form-horizontal group-border-dashed" id="formmenu">
-                                    <input type="hidden" value="inputmenu" id="inputmenu" name="inputmenu">
+                                    <input type="hidden" name="inputmenu">
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Nama Menu</label>
                                         <div class="col-sm-8">
@@ -61,7 +62,7 @@ $juhal = "Menu";
 
                                     <div class="form-group">
                                         <div class="col-sm-offset-4 col-sm-6 m-t-15">
-                                            <button type="submit" class="btn btn-success waves-effect waves-light" name="tombol-menu" id="tombol-menu">
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="tombol-menu">
                                                 Input menu
                                             </button>
                                             <!-- <button type="reset" class="btn btn-default waves-effect m-l-5">
@@ -197,15 +198,13 @@ $juhal = "Menu";
             var nmenu = $('#nmenu').val();
             var nurl = $('#nurl').val();
 
-            // console.log(nmenu);
-            // console.log(nurl);
-
             //alert(ngambar)
-            if (umenu == "") {
+            if (nmenu == "") {
                 swal("Nama menu belum di isi!", "", "error")
-            } else if (uurl == "") {
+            } else if (nurl == "") {
                 swal("URL belum di isi!", "", "error")
             } else {
+
                 $.ajax({
                     url: '../models/input.php',
                     type: 'post',
@@ -219,14 +218,14 @@ $juhal = "Menu";
                     },
                     success: function(hasil) {
                         // alert(hasil);
-                        console.log(hasil);
+                        // console.log(hasil);
                         //sukses
                         if (hasil == 1) {
                             swal("Nama menu sudah ada!", "", "error")
                         } else if (hasil == 2) {
-                            swal("Url Sudah ada ", "", "error")
+                            swal("URL Sudah ada ", "", "error")
                         } else if (hasil == 3) {
-                            swal("Input Erorr, Coba Lagi ", "", "error")
+                            swal("Input Eror, Coba Lagi ", "", "error")
                         } else if (hasil == 4) {
                             swal({
                                 title: "Update Berhasil!",

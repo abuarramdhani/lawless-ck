@@ -213,11 +213,11 @@ $juhal = "Sub Menu";
             var nurl = $('#nurl').val();
 
 
-            if (umenu == "") {
+            if (nmenu == "") {
                 swal("Nama menu belum di isi!", "", "error")
             } else if (nparent == "Pilih Kategori") {
                 swal("Menu Parent belum di pilih!", "", "error")
-            } else if (uurl == "") {
+            } else if (nurl == "") {
                 swal("URL belum di isi!", "", "error")
 
             } else {
@@ -234,14 +234,14 @@ $juhal = "Sub Menu";
                     },
                     success: function(hasil) {
                         // alert(hasil);
-                        console.log(hasil);
+                        // console.log('ok');
                         //sukses
                         if (hasil == 1) {
                             swal("Nama menu sudah ada!", "", "error")
                         } else if (hasil == 2) {
-                            swal("Url Sudah ada ", "", "error")
+                            swal("URL Sudah ada ", "", "error")
                         } else if (hasil == 3) {
-                            swal("Input Erorr, Coba Lagi ", "", "error")
+                            swal("Input Eror, Coba Lagi ", "", "error")
                         } else if (hasil == 4) {
                             swal({
                                 title: "Update Berhasil!",
