@@ -26,16 +26,19 @@ $conn = mysqli_connect('localhost', 'root', '', 'lawlessburgerbar_lb');
 // mysqli_close($conn);
 
 $company = query("SELECT * FROM companypanel WHERE baseurl = '$basehost' ")[0];
-$outlet = $_SESSION['kodeoutlet'];
+if (isset($_SESSION['kodeoutlet'])) {
 
-// kirim email
-$mailer = query("SELECT * FROM mailer WHERE kodeoutlet = '$outlet'")[0];
-$mailhost1 = $mailer['mailhost1'];
-$username1 = $mailer['username1'];
-$password1 = $mailer['password1'];
-$setfrom1 = $mailer['setfrom1'];
-$email = 'admin@lawless-ck.net';
-// akhir kirim email
+    $outlet = $_SESSION['kodeoutlet'];
+
+    // kirim email
+    $mailer = query("SELECT * FROM mailer WHERE kodeoutlet = '$outlet'")[0];
+    $mailhost1 = $mailer['mailhost1'];
+    $username1 = $mailer['username1'];
+    $password1 = $mailer['password1'];
+    $setfrom1 = $mailer['setfrom1'];
+    $email = 'admin@lawless-ck.net';
+    // akhir kirim email
+}
 
 function query($query)
 {

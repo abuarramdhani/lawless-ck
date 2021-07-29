@@ -9,9 +9,9 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
-require '../controller/c_data_in.php';
+require '../controller/c_databahan.php';
 $bagian = "Inventory";
-$juhal = "Data Bahan";
+$juhal = "Data Keluar";
 ?>
 
 
@@ -212,15 +212,14 @@ $juhal = "Data Bahan";
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
 
-                                <h4 class="header-title m-t-0 m-b-30">Data Inventory</h4>
+                                <h4 class="header-title m-t-0 m-b-30">Data Keluar</h4>
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Tanggal</th>
-                                            <th>No. Form IN</th>
-                                            <th>No. Form PO</th>
-                                            <th>Supplier</th>
+                                            <th>No. Form</th>
+                                            <th>Outlet</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -228,25 +227,23 @@ $juhal = "Data Bahan";
 
                                     <tbody>
                                         <?php $i = 1 ?>
-                                        <?php foreach ($data_po as $dp) : ?>
+                                        <?php foreach ($data as $dp) : ?>
+
                                             <tr>
                                                 <td><?= $i++; ?></td>
                                                 <td><?= $dp['date']; ?></td>
                                                 <td><?= $dp['No_form']; ?></td>
-                                                <td><?= $dp['Form_po']; ?></td>
-                                                <td>
-                                                    <?= $dp['kodesupplier'] ?>
-
-                                                </td>
+                                                <td><?= $dp['nama'] ?></td>
                                                 <?php if ($dp['status'] == 1) : ?>
                                                     <td><span class="label label-success">Konfirmasi</span></td>
                                                 <?php else : ?>
                                                     <td><span class="label label-warning">Belum di Konfirmasi</span></td>
                                                 <?php endif ?>
 
-                                                <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-primary m-b-5">Details</a>
+                                                <td><a href="detail_barangkeluar.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-primary m-b-5">Details</a>
                                                 </td>
                                             </tr>
+
                                         <?php endforeach ?>
 
                                     </tbody>

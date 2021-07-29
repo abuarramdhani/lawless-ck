@@ -240,7 +240,7 @@ ORDER BY sb.id DESC");
                                                 <!-- <p class="form-control-static" id="total-harga" name="total_keseluruhan"></p> -->
                                             </div>
                                         </div>
-                                        <?php $kodesupplierr = query("SELECT * FROM supplier ORDER BY id DESC "); ?>
+                                        <!-- <?php $kodesupplierr = query("SELECT * FROM supplier ORDER BY id DESC "); ?>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Supplier</label>
                                             <div class="col-sm-10">
@@ -254,12 +254,12 @@ ORDER BY sb.id DESC");
                                                 </select>
 
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="form-group  text-center" style="margin-top: 10px;">
-                                            <button class="btn btn-danger waves-effect waves-light mr-1">
+                                            <!-- <button class="btn btn-danger waves-effect waves-light mr-1">
                                                 <span>Batal</span>
-                                            </button>
+                                            </button> -->
                                             <button type="submit" class="btn btn-purple waves-effect waves-light mr-1" id="">
                                                 <span>Simpan</span>
                                             </button>

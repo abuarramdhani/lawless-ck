@@ -667,11 +667,6 @@ if (isset($_POST['kasmasuk'])) {
     $gambar .= '.';
     $gambar .=   $ekstensi;
 
-
-
-
-
-
     $ukuran    = $ngambar['size'];
     $file_tmp = $ngambar['tmp_name'];
 
@@ -1004,7 +999,7 @@ if (isset($_POST['kasmasuk'])) {
         $No_form = 'FSB' . $date . '001';
     }
     //akhir isi noform
-    var_dump($No_form);
+    // var_dump($No_form);
     // die;
 
 
