@@ -326,10 +326,10 @@ $juhal = "Sub Menu";
 
         })
 
-        $('.tombol-hapus').click(function(e) {
+        $('#datatable').on('click', '.tombol-hapus', function(e) {
 
             console.log('ok');
-            const tabel = 'user_menu';
+            const tabel = 'user_sub_menu';
             const id = $(this).data('id');
 
             e.preventDefault();
@@ -352,17 +352,29 @@ $juhal = "Sub Menu";
                             'tabel': tabel,
                             'delete_id': id
                         },
+                        beforeSend: function() {
+                            $('.spinn').show();
+                        },
                         success: function(hasil) {
                             // alert(hasil);
-                            console.log(hasil);
+
                             //sukses
                             if (hasil == 2) {
 
                             } else if (hasil == 3) {
-                                swal("Deleted!",
-                                    "Hapus Data Berhasil.",
-                                    "success");
+
+                                swal({
+                                    title: "Update Berhasil!",
+                                    type: "success",
+                                    //text: "I will close in 2 seconds.",
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                })
+
                                 location.reload();
+
+
+
 
                             }
                         }

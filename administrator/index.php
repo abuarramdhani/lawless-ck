@@ -304,15 +304,11 @@ $juhal = "Menu";
                     }
                 });
             }
-
-
-
-
         })
 
-        $('.tombol-hapus').click(function(e) {
+        $('#datatable').on('click', '.tombol-hapus', function(e) {
 
-            console.log('ok');
+            // console.log('ok');
             const tabel = 'user_menu';
             const id = $(this).data('id');
 
@@ -336,6 +332,9 @@ $juhal = "Menu";
                             'tabel': tabel,
                             'delete_id': id
                         },
+                        beforeSend: function() {
+                            $('.spinn').show();
+                        },
                         success: function(hasil) {
                             // alert(hasil);
                             console.log(hasil);
@@ -343,9 +342,13 @@ $juhal = "Menu";
                             if (hasil == 2) {
 
                             } else if (hasil == 3) {
-                                swal("Deleted!",
-                                    "Hapus Data Berhasil.",
-                                    "success");
+                                swal({
+                                    title: "hapus Berhasil!",
+                                    type: "success",
+                                    //text: "I will close in 2 seconds.",
+                                    timer: 22000,
+                                    showConfirmButton: false
+                                });
                                 location.reload();
 
                             }
@@ -355,52 +358,7 @@ $juhal = "Menu";
                     swal("Cancelled", "", "error");
                 }
             });
-
-            //alert('hapus');
-            //var delete = 'delete';
-            // var tabel = 'menu';
-            // var iddelete = $(this).closest('tr').find('.delete_id_value').val();
-            // swal({
-            //     title: "Apakah Anda Yakin?",
-            //     text: "Data Anda Akan Terhapus!",
-            //     type: "warning",
-            //     showCancelButton: true,
-            //     confirmButtonColor: "#DD6B55",
-            //     confirmButtonText: "Ya, Hapus!",
-            //     cancelButtonText: "Tidak!",
-            //     closeOnConfirm: false,
-            //     closeOnCancel: false
-            // }, function(isConfirm) {
-            //     if (isConfirm) {
-
-
-            //         $.ajax({
-            //             url: '../models/delete.php',
-            //             type: 'post',
-            //             data: {
-            //                 'tabel': tabel,
-            //                 'delete_id': iddelete
-            //             },
-            //             success: function(hasil) {
-            //                 // alert(hasil);
-            //                 console.log(hasil);
-            //                 //sukses
-            //                 if (hasil == 2) {
-
-            //                 } else if (hasil == 3) {
-            //                     swal("Deleted!",
-            //                         "Hapus Data Berhasil.",
-            //                         "success");
-            //                     location.reload();
-
-            //                 }
-            //             }
-            //         });
-            //     } else {
-            //         swal("Cancelled", "", "error");
-            //     }
-            // });
-        });
+        })
 
     })
 </script>

@@ -21,13 +21,9 @@ $juhal = "User Management";
 
 
 <body class="fixed-left" onload="sweetfunction()">
-
     <div id="wrapper">
-
         <?php require_once '../include/topbar.php'; ?>
-
         <?php require_once '../include/sidebar.php'; ?>
-
         <div class="content-page">
             <!-- terima msg -->
             <?php if (isset($_SESSION['msg'])) : ?>
@@ -156,7 +152,7 @@ $juhal = "User Management";
 
                                                 <td class="actions">
                                                     <a id="edit" data-id="<?= $user['id'] ?>" data-menu="<?= $user['access_menu_id'] ?>" data-nama="<?= $user['username'] ?>" data-email="<?= $user['email'] ?>" data-outlet="<?= $user['companypanel_id'] ?>" data-jabatan="<?= $user['jabatan_id'] ?>" class="on-default edit-row badge badge-warning"><i class="fa fa-pencil"></i></a> |
-                                                    <a id="delete" data-id="<?= $user['id'] ?>" class="on-default remove-row badge badge-danger"><i class="fa fa-trash-o"></i></a>
+                                                    <a id="tombol-hapus" data-id="<?= $user['id'] ?>" class="on-default remove-row badge badge-danger "><i class="fa fa-trash-o"></i></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -176,13 +172,9 @@ $juhal = "User Management";
     </div>
 
     <div id="edit-user" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
         <div class="modal-dialog">
-
             <div class="modal-content">
-
                 <div class="modal-header">
-
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
                     <h4 class="modal-title" id="myModalLabel">Edit User</h4>
@@ -344,6 +336,52 @@ $juhal = "User Management";
                 }
             })
             // akhir tambah data
+
+            // awal hapus data
+            $('#datatable').on('click', '#tombol-hapus', function(e) {
+                e.preventDefault();
+                const tabel = 'admin';
+                const id = $(this).data('id');
+                const href = $(this).attr('href');
+                swal({
+                    title: 'Anda Yakin ingin menghapus?',
+                    text: "Data Akan Dihapus",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Iya',
+                    cancelButtonText: `Tidak`
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: '../models/delete.php',
+                            type: 'post',
+                            data: {
+                                'tabel': tabel,
+                                'delete_id': id
+                            },
+                            success: function(hasil) {
+                                // alert(hasil);
+                                console.log(hasil);
+                                //sukses
+                                if (hasil == 2) {
+
+                                } else if (hasil == 3) {
+                                    swal("Deleted!",
+                                        "Hapus Data Berhasil.",
+                                        "success");
+                                    location.reload();
+
+                                }
+                            }
+                        });
+                    } else {
+                        swal("Cancelled", "", "error");
+                    }
+                });
+            });
+            // akhir hapus data
 
 
             // $('#datatable').dataTable();
