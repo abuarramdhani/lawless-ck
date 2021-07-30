@@ -111,18 +111,12 @@ class User
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "UPDATE admin SET password=:password WHERE email=:email";
+        $update = mysqli_query($this->conn,"UPDATE admin SET password='$password' WHERE email='$email'");
 
-        $stmt = $this->conn->prepare($sql);
-
-        $parameter = array(
-            ":password" => $password,
-            ":email" => $email
-        );
-
-        $update = $stmt->execute($parameter);
         if ($update) {
-            header("location: index");
+            $_SESSION['message'] = '<script>Swal.fire({icon: "success",title: "Berhasil menyimpan password",showConfirmButton: false,timer: 1500})</script>';
+        }else{
+            $_SESSION['message'] = '<script>Swal.fire({icon: "error",title: "Oops...",text: "Gagal menyimpan password"})</script>';
         }
     }
 

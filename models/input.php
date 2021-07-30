@@ -1070,11 +1070,10 @@ if (isset($_POST['kasmasuk'])) {
 
     if ($result) {
         $subject = "Request Bahan";
+        $email = 'admin@lawless-ck.net';
         include '../mail/storebahan.php';
         include '../models/sendmail.php';
     }
-    // var_dump($result);
-    // die;
 
     //kembali ke halaman sebelumnya
     $_SESSION["msg"] = "$result";
@@ -1188,15 +1187,6 @@ if (isset($_POST['kasmasuk'])) {
 
     $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
 
-    // var_dump($nopo);
-    // var_dump($kodebahan);
-    // var_dump($harga);
-    // var_dump($subtotal);
-    // var_dump($kodesupplier);
-    // var_dump($tanggal);
-    // var_dump($noin);
-    // die;
-
     //ambil noform 
     $ambil_noform = query("SELECT id,No_form FROM form_in ORDER BY No_form DESC");
     $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
@@ -1251,4 +1241,44 @@ if (isset($_POST['kasmasuk'])) {
     //kembali ke halaman sebelumnya
     $_SESSION["msg"] = "$result";
     header("Location: ../inventory/barangmasuk.php");
+} else if (isset($_POST['tambah-user'])) {
+
+
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $outlet = $_POST['outlet'];
+    $jabatan = $_POST['jabatan'];
+
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM admin WHERE email = '$email'");
+
+    if (mysqli_num_rows($cekdata) > 0) {
+        echo 1;
+    } else {
+        $query = "INSERT INTO admin SET 
+                       username ='$name',
+                       email  = '$email',
+                       outlet = '$outlet',
+                       jabatan = '$jabatan',
+                       userlevel = '1'
+                     ";
+        $result = mysqli_query($conn, $query);
+
+        if ($result) {
+            // echo 3;
+            $subject = "PENDAFTARAN AKUN";
+            $email = $email;
+            $secret = '#$eCr37';
+            $token = MD5($email . $secret);
+            $linkhref = "localhost/lawless-ck/confirm?email=$email&token=$token";
+
+            include '../mail/mail_confirmpass.php';
+            include '../models/sendmail.php';
+            if ($mail->send()) {
+                echo 3;
+            } else {
+                echo 2;
+            }
+        }
+    }
 }

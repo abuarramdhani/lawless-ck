@@ -36,7 +36,7 @@ if (isset($_SESSION['kodeoutlet'])) {
     $username1 = $mailer['username1'];
     $password1 = $mailer['password1'];
     $setfrom1 = $mailer['setfrom1'];
-    $email = 'admin@lawless-ck.net';
+
     // akhir kirim email
 }
 

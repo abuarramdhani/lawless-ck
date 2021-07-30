@@ -9,21 +9,11 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
-require '../controller/c_data-po.php';
+// require '../controller/c_data-po.php';
 $bagian = "Purchasing";
 $juhal = "Detail PO";
 
-$No_form = $_GET['No_form'];
-$item_po = query("SELECT * FROM item_po 
-    JOIN bahan 
-    ON item_po.kodebahan = bahan.kodebahan 
-    WHERE No_form = '$No_form'");
-
-$detail = query("SELECT *
-    FROM form_po
-    JOIN supplier
-    ON form_po.kodesupplier = supplier.kodesupplier
-    WHERE No_form = '$No_form'")[0];
+include '../controller/c_detail-po.php';
 
 ?>
 
@@ -50,7 +40,7 @@ $detail = query("SELECT *
                             <div class="card-box table-responsive">
 
                                 <h4 class="header-title m-t-0 m-b-20">Detail PO</h4>
-                                <div class="col-6 m-b-25">
+                                <div class="pull-left">
                                     <table class="">
                                         <tr>
                                             <td style="font-weight: 600; width:100px">No Form PO</td>
@@ -74,32 +64,39 @@ $detail = query("SELECT *
                                         </tr>
                                     </table>
                                 </div>
+                                <div class="pull-right">
+                                    <a href="report?No_form=<?= $No_form; ?>" class="btn btn-danger waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 m-t-10">
+                                        <table id="" class="table table-striped table-bordered m-t-5">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama Barang</th>
+                                                    <th>Harga</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <?php $i = 1; ?>
+                                            <tbody>
+                                                <?php foreach ($item_po as $item) : ?>
+                                                    <tr>
+                                                        <td><?= $i++;  ?></td>
+                                                        <td><?= $item['namabahan']; ?></td>
+                                                        <td><?= $item['harga']; ?></td>
+                                                        <td><?= $item['qty']  ?></td>
+                                                        <td><?= $item['subtotal']; ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
 
-                                <table id="" class="table table-striped table-bordered m-t-5">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Barang</th>
-                                            <th>Harga</th>
-                                            <th>Jumlah</th>
-                                            <th>Subtotal</th>
-                                        </tr>
-                                    </thead>
-                                    <?php $i = 1; ?>
-                                    <tbody>
-                                        <?php foreach ($item_po as $item) : ?>
-                                            <tr>
-                                                <td><?= $i++;  ?></td>
-                                                <td><?= $item['namabahan']; ?></td>
-                                                <td><?= $item['harga']; ?></td>
-                                                <td><?= $item['qty']  ?></td>
-                                                <td><?= $item['subtotal']; ?></td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                        <a href="index" class="btn btn-primary"><i class="fa fa-angle-left" style="margin-right: 8px;"></i>Back</a>
+                                    </div>
+                                </div>
 
-                                    </tbody>
-                                </table>
-                                <a href="index" class="btn btn-primary"><i class="fa fa-angle-left" style="margin-right: 8px;"></i>Back</a>
                             </div>
                         </div><!-- end col -->
                     </div>

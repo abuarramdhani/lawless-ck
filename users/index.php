@@ -1,47 +1,26 @@
 <?php
 
 require_once "../vendor/autoload.php";
-
 session_start();
-
 if (!isset($_SESSION['email'])) {
-
     header("location:../index");
-
     exit;
 }
 
-require_once '../include/connection.php';
-
 require_once '../include/fungsi.php';
-
 require_once '../include/header.php';
-
+include '../controller/c_users.php';
 include '../models/user.php';
 
 $bagian = "Users";
-
 $juhal = "User Management";
 
-
-
-$userObj = new User($koneksi);
-
-$users = $userObj->getUsers();
-
-// var_dump($users);
-// die;
-
-$data = $userObj->index();
-
-// var_dump($data);
-// die;
 
 ?>
 
 
 
-<body class="fixed-left">
+<body class="fixed-left" onload="sweetfunction()">
 
     <div id="wrapper">
 
@@ -50,8 +29,15 @@ $data = $userObj->index();
         <?php require_once '../include/sidebar.php'; ?>
 
         <div class="content-page">
+            <!-- terima msg -->
+            <?php if (isset($_SESSION['msg'])) : ?>
+                <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
+                <?php unset($_SESSION['msg']); ?>
+            <?php endif ?>
+            <!-- akhir terima msg -->
 
             <div class="content">
+
 
                 <div class="container">
 
@@ -66,28 +52,23 @@ $data = $userObj->index();
                                 <!--<hr>-->
 
                                 <form id="add-user" method="POST">
-
                                     <div class="form-group">
-
-                                        <input type="text" name="name" parsley-trigger="change" placeholder="Nama" class="form-control" id="name" data-parsley-id="6" required>
-
+                                        <input type="text" name="name" parsley-trigger="change" placeholder="Nama" class="form-control" id="name">
                                     </div>
 
                                     <div class="form-group">
 
-                                        <input type="email" name="email" parsley-trigger="change" required="" placeholder="Email" class="form-control" id="emailAddress" data-parsley-id="6" required>
+                                        <input type="email" name="email" parsley-trigger="change" required="" placeholder="Email" class="form-control" id="emailAddress">
 
                                     </div>
 
                                     <div class="form-group">
 
                                         <select class="select2 form-control" id="outlet" name="outlet">
-
                                             <option></option>
+                                            <?php foreach ($outlet as $o) : ?>
 
-                                            <?php foreach ($data['outlets'] as $outlet) : ?>
-
-                                                <option value="<?= $outlet['kodeoutlet'] ?>"><?= ucwords($outlet['nama']) ?>
+                                                <option value="<?= $o['kodeoutlet'] ?>"><?= ucwords($o['nama']) ?>
                                                 </option>
 
                                             <?php endforeach; ?>
@@ -97,31 +78,19 @@ $data = $userObj->index();
                                     </div>
 
                                     <div class="form-group">
-
                                         <select class="select2 form-control" id="jabatan" name="jabatan">
-
                                             <option></option>
-
-                                            <?php foreach ($data['jabatans'] as $jabatan) : ?>
-
-                                                <option value="<?= $jabatan['kodejabatan'] ?>">
-                                                    <?= ucwords($jabatan['namajabatan']) ?>
+                                            <?php foreach ($jabatan as $j) : ?>
+                                                <option value="<?= $j['kodejabatan'] ?>">
+                                                    <?= ucwords($j['namajabatan']) ?>
                                                 </option>
-
                                             <?php endforeach; ?>
-
                                         </select>
-
                                     </div>
-
-                                    <input type="hidden" name="submit">
-
+                                    <input type="hidden" name="tambah-user">
                                     <div class="form-group text-right m-b-0">
-
-                                        <button type="submit" class="btn btn-success waves-effect waves-light">Simpan</button>
-
+                                        <button type="submit" id="tombol-simpan" class="btn btn-success waves-effect waves-light">Simpan</button>
                                     </div>
-
                                 </form>
 
                             </div>
@@ -137,41 +106,26 @@ $data = $userObj->index();
                                 <!--<hr>-->
 
                                 <table id="datatable" class="table">
-
                                     <thead>
-
                                         <tr>
-
                                             <th>No</th>
-
                                             <th>Nama</th>
-
                                             <th>Email</th>
-
                                             <th>Outlet</th>
-
                                             <th>Jabatan</th>
-
                                             <th>Action</th>
-
                                         </tr>
 
                                     </thead>
-
                                     <tbody>
 
                                         <?php $i = 1; ?>
 
                                         <?php foreach ($users as $user) : ?>
-
                                             <tr>
-
                                                 <th><?= $i++ ?></th>
-
                                                 <td><?= ucwords($user['username']) ?></td>
-
                                                 <td><?= $user['email'] ?></td>
-
                                                 <td>
                                                     <?php
                                                     $kodeoutlet = $user['outlet'];
@@ -183,13 +137,10 @@ $data = $userObj->index();
                                                     } else {;
                                                         echo "Super Outlet";
                                                     }
-
-
                                                     ?>
                                                 </td>
 
                                                 <td>
-
                                                     <?php
                                                     $kodejabatan = $user['jabatan'];
                                                     if ($kodejabatan != "JAB000") {
@@ -200,33 +151,20 @@ $data = $userObj->index();
                                                     } else {;
                                                         echo "Super User";
                                                     }
-
-
                                                     ?>
                                                 </td>
 
                                                 <td class="actions">
-
                                                     <a id="edit" data-id="<?= $user['id'] ?>" data-menu="<?= $user['access_menu_id'] ?>" data-nama="<?= $user['username'] ?>" data-email="<?= $user['email'] ?>" data-outlet="<?= $user['companypanel_id'] ?>" data-jabatan="<?= $user['jabatan_id'] ?>" class="on-default edit-row badge badge-warning"><i class="fa fa-pencil"></i></a> |
-
                                                     <a id="delete" data-id="<?= $user['id'] ?>" class="on-default remove-row badge badge-danger"><i class="fa fa-trash-o"></i></a>
-
                                                 </td>
-
                                             </tr>
-
                                         <?php endforeach; ?>
-
                                     </tbody>
-
                                 </table>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
 
             </div>
@@ -324,210 +262,292 @@ $data = $userObj->index();
     <?php require_once '../include/scriptfooter.php'; ?>
 
     <script>
+        // $("#total-harga").val('Rp. ' + sum)
+        function sweetfunction() {
+
+            const msg = $('#msg').data('msg');
+
+            if (msg == 1) {
+                swal({
+                    title: "Input Berhasil!",
+                    type: "success",
+                    //text: "I will close in 2 seconds.",
+                    timer: 1500,
+                    showConfirmButton: false
+
+                })
+                // // sleep(1000);
+                // setTimeout(function() {
+                //     window.location.replace("../purchasing/");
+                // }, 1300);
+
+            } else if (msg == 2) {
+                swal("Kode Akun Belum di Pilih!", "", "error")
+            }
+
+        }
         $(document).ready(function() {
 
-            $('#datatable').dataTable();
-
-            $('#outlet').select2({
-
-                placeholder: "Pilih Outlet",
-
-                allowClear: true
-
-            });
-
-            $('#jabatan').select2({
-
-                placeholder: "Pilih Jabatan",
-
-                allowClear: true
-
-            });
-
-            $("#add-user").on("submit", function(e) {
-
-                $.ajax({
-
-                    url: 'add.php',
-
-                    data: $(this).serialize(),
-
-                    type: 'POST',
-
-                }).done(function(result) {
-
-                    if (result == 1) {
-
-                        swal("Email sudah terdaftar!", "", "error")
-
-                    } else if (result == 2) {
-
-                        swal("Gagal menambahkan user!", "", "error")
-
-                    } else if (result == 3) {
-
-                        swal({
-
-                            title: "Berhasil menambahkan user!",
-
-                            type: "success",
-
-                            timer: 1000,
-
-                            showConfirmButton: false
-
-                        });
-
-                        location.reload();
-
-                    }
-
-                });
+            // tambah data
+            $('#tombol-simpan').click(function(e) {
 
                 e.preventDefault();
+                var dataform = $('#add-user')[0];
+                var data = new FormData(dataform);
 
-            });
-
-            $(document).on("click", "#edit", function() {
-
-                var id = $(this).data("id");
-
-                var menu = $(this).data("menu");
-
-                var nama = $(this).data("nama");
-
-                var email = $(this).data("email");
-
-                var outlet = $(this).data("outlet");
-
-                var jabatan = $(this).data("jabatan");
-
-                $("#edit-user").modal("show");
-
-                $("#name-edit").val(nama);
-
-                $("#email-edit").val(email);
-
-                $("#outlet-edit").val(outlet);
-
-                $("#id").val(id);
-
-                $("#menu").val(menu);
-
-                $("#outlet-edit").trigger("change");
-
-                $("#jabatan-edit").val(jabatan);
-
-                $("#jabatan-edit").trigger("change");
-
-            });
-
-            $(document).on("click", "#delete", function(e) {
-
-                var id = $(this).data("id");
-
-                swal({
-
-                    title: "Are you sure?",
-
-                    text: "Data yang telah dihapus tidak dapat dikembalikan!",
-
-                    type: "warning",
-
-                    showCancelButton: true,
-
-                    confirmButtonClass: 'btn-danger waves-effect waves-light',
-
-                    confirmButtonText: 'Hapus'
-
-                }, function(hapus) {
-
-                    if (hapus) {
-
-                        $.ajax({
-
-                            url: 'add.php',
-
-                            data: {
-                                'id': id,
-                                'delete': true
-                            },
-
-                            type: 'POST'
-
-                        }).done(function(result) {
-
-                            if (!result) {
-
-                                swal("Gagal menghapus data!", "", "error")
-
-                            } else {
-
+                var name = $('#name').val();
+                var emailAddress = $('#emailAddress').val();
+                var outlet = $('#outlet').val();
+                var jabatan = $('#jabatan').val();
+                //alert(ngambar)
+                if (name == "") {
+                    swal("Nama belum di isi!", "", "error")
+                } else if (emailAddress == "") {
+                    swal("Email belum di isi!", "", "error")
+                } else if (outlet == "") {
+                    swal("Outlet belum di isi!", "", "error")
+                } else if (jabatan == "") {
+                    swal("jabatan belum di isi!", "", "error")
+                } else {
+                    $.ajax({
+                        url: '../models/input.php',
+                        type: 'post',
+                        data: data,
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        beforeSend: function() {
+                            $('.spinn').show();
+                        },
+                        success: function(hasil) {
+                            // alert(hasil);
+                            console.log(hasil);
+                            //sukses
+                            if (hasil == 1) {
+                                swal("Email sudah terdaftar", "", "error")
+                            } else if (hasil == 2) {
+                                swal("Input Gagal!", "", "error")
+                            } else if (hasil == 3) {
                                 swal({
-
-                                    title: "Berhasil menghapus data!",
-
+                                    title: "Input Berhasil!",
                                     type: "success",
-
-                                    timer: 1000,
-
+                                    //text: "I will close in 2 seconds.",
+                                    timer: 2000,
                                     showConfirmButton: false
-
-                                });
-
+                                })
                                 location.reload();
 
                             }
+                        }
+                    });
+                }
+            })
+            // akhir tambah data
 
-                        });
 
-                        e.preventDefault();
+            // $('#datatable').dataTable();
 
-                    }
+            // $('#outlet').select2({
 
-                });
+            //     placeholder: "Pilih Outlet",
 
-            });
+            //     allowClear: true
 
-            $("#editForm").on("submit", function(e) {
+            // });
 
-                $.ajax({
+            // $('#jabatan').select2({
 
-                    url: 'add.php',
+            //     placeholder: "Pilih Jabatan",
 
-                    data: $(this).serialize(),
+            //     allowClear: true
 
-                    type: 'POST',
+            // });
 
-                }).done(function(result) {
+            // $("#add-user").on("submit", function(e) {
 
-                    if (!result) {
+            //     $.ajax({
 
-                        swal("Gagal mengubah data!", "", "error")
+            //         url: 'add.php',
 
-                    } else {
+            //         data: $(this).serialize(),
 
-                        swal({
+            //         type: 'POST',
 
-                            title: "Berhasil mengubah data!",
+            //     }).done(function(result) {
 
-                            type: "success",
+            //         if (result == 1) {
 
-                            timer: 1000,
+            //             swal("Email sudah terdaftar!", "", "error")
 
-                            showConfirmButton: false
+            //         } else if (result == 2) {
 
-                        });
+            //             swal("Gagal menambahkan user!", "", "error")
 
-                        location.reload();
+            //         } else if (result == 3) {
 
-                    }
+            //             swal({
 
-                });
+            //                 title: "Berhasil menambahkan user!",
 
-                e.preventDefault();
+            //                 type: "success",
 
-            });
+            //                 timer: 1000,
+
+            //                 showConfirmButton: false
+
+            //             });
+
+            //             location.reload();
+
+            //         }
+
+            //     });
+
+            //     e.preventDefault();
+
+            // });
+
+            // $(document).on("click", "#edit", function() {
+
+            //     var id = $(this).data("id");
+
+            //     var menu = $(this).data("menu");
+
+            //     var nama = $(this).data("nama");
+
+            //     var email = $(this).data("email");
+
+            //     var outlet = $(this).data("outlet");
+
+            //     var jabatan = $(this).data("jabatan");
+
+            //     $("#edit-user").modal("show");
+
+            //     $("#name-edit").val(nama);
+
+            //     $("#email-edit").val(email);
+
+            //     $("#outlet-edit").val(outlet);
+
+            //     $("#id").val(id);
+
+            //     $("#menu").val(menu);
+
+            //     $("#outlet-edit").trigger("change");
+
+            //     $("#jabatan-edit").val(jabatan);
+
+            //     $("#jabatan-edit").trigger("change");
+
+            // });
+
+            // $(document).on("click", "#delete", function(e) {
+
+            //     var id = $(this).data("id");
+
+            //     swal({
+
+            //         title: "Are you sure?",
+
+            //         text: "Data yang telah dihapus tidak dapat dikembalikan!",
+
+            //         type: "warning",
+
+            //         showCancelButton: true,
+
+            //         confirmButtonClass: 'btn-danger waves-effect waves-light',
+
+            //         confirmButtonText: 'Hapus'
+
+            //     }, function(hapus) {
+
+            //         if (hapus) {
+
+            //             $.ajax({
+
+            //                 url: 'add.php',
+
+            //                 data: {
+            //                     'id': id,
+            //                     'delete': true
+            //                 },
+
+            //                 type: 'POST'
+
+            //             }).done(function(result) {
+
+            //                 if (!result) {
+
+            //                     swal("Gagal menghapus data!", "", "error")
+
+            //                 } else {
+
+            //                     swal({
+
+            //                         title: "Berhasil menghapus data!",
+
+            //                         type: "success",
+
+            //                         timer: 1000,
+
+            //                         showConfirmButton: false
+
+            //                     });
+
+            //                     location.reload();
+
+            //                 }
+
+            //             });
+
+            //             e.preventDefault();
+
+            //         }
+
+            //     });
+
+            // });
+
+            // $("#editForm").on("submit", function(e) {
+
+            //     $.ajax({
+
+            //         url: 'add.php',
+
+            //         data: $(this).serialize(),
+
+            //         type: 'POST',
+
+            //     }).done(function(result) {
+
+            //         if (!result) {
+
+            //             swal("Gagal mengubah data!", "", "error")
+
+            //         } else {
+
+            //             swal({
+
+            //                 title: "Berhasil mengubah data!",
+
+            //                 type: "success",
+
+            //                 timer: 1000,
+
+            //                 showConfirmButton: false
+
+            //             });
+
+            //             location.reload();
+
+            //         }
+
+            //     });
+
+            //     e.preventDefault();
+
+            // });
 
 
 

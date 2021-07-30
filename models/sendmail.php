@@ -16,7 +16,7 @@ $mail->SMTPAuth = true;
 $mail->Username = "$username1";
 $mail->Password = "$password1";
 $mail->SetFrom($username1, $setfrom1);
-$mail->addAddress($email);
+$mail->addAddress($email); // email tujuan
 // $mail->addAddress($email);
 $mail->Subject = "$subject";
 $mail->isHTML(true);
