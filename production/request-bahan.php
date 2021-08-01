@@ -9,8 +9,8 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_storebahan.php';
-$bagian = "Store";
-$juhal = "Store Bahan";
+$bagian = "Production";
+$juhal = "Request Bahan";
 
 $data_bahan = query("SELECT *
 FROM form_storebahan as sb
