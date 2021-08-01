@@ -124,7 +124,7 @@ require 'include/fungsi.php';
 
                     <div class="form-group m-t-30 m-b-0">
                         <div class="col-sm-12">
-                            <a href="lupapassword" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot
+                            <a href="reset-password" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot
                                 your password?</a>
                         </div>
                     </div>

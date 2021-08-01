@@ -18,7 +18,6 @@ $juhal = "Menu";
 
     <!-- Begin page -->
     <div id="wrapper">
-
         <?php require '../include/topbar.php'; ?>
 
         <?php require '../include/sidebar.php'; ?>
@@ -348,7 +347,7 @@ $juhal = "Menu";
                                     //text: "I will close in 2 seconds.",
                                     timer: 22000,
                                     showConfirmButton: false
-                                });
+                                })
                                 location.reload();
 
                             }

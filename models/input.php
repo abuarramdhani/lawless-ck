@@ -1281,4 +1281,32 @@ if (isset($_POST['kasmasuk'])) {
             }
         }
     }
+}elseif (isset($_POST['create-password'])) {
+    $email = $_POST['_email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $update = mysqli_query($conn,"UPDATE admin SET password='$password' WHERE email='$email'");
+    if($update){
+        echo true;
+    }else{
+        echo false;
+    }
+}elseif (isset($_POST['reset-password'])) {
+    $email = $_POST['email'];
+    $check = mysqli_query($conn, "SELECT * FROM admin WHERE email='$email'");
+    if(mysqli_num_rows($check) > 0){
+        $subject = "RESET PASSWORD";
+        $key = '#$eCr37';
+        $token = md5($email.$key);
+        $linkhref = "localhost/lawless-ck/confirm?email=$email&token=$token";
+
+        include '../mail/recovery.php';
+        include '../models/sendmail.php';
+        if($mail->send()){
+            echo 1;
+        }else{
+            echo 2;
+        }
+    }else{
+        echo 3;
+    }
 }

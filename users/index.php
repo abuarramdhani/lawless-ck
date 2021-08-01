@@ -370,8 +370,8 @@ $juhal = "User Management";
                                 } else if (hasil == 3) {
                                     swal("Deleted!",
                                         "Hapus Data Berhasil.",
-                                        "success");
-                                    location.reload();
+                                        "success")
+                                    location.reload()
 
                                 }
                             }

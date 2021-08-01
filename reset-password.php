@@ -1,18 +1,5 @@
 <?php
 require 'include/fungsi.php';
-require_once 'models/user.php';
-$secret = '#$eCr37';
-
-if (!isset($_GET['email']) || !isset($_GET['token'])) {
-    header("Location:index");
-}
-
-
-$email = $_GET['email'];
-$token = $_GET['token'];
-if (md5($email . $secret) != $token) {
-    header("Location:index");
-}
 
 ?>
 <!DOCTYPE html>
@@ -77,27 +64,17 @@ if (md5($email . $secret) != $token) {
             </div>
 
             <div class="panel-body">
-                <form class="form-horizontal m-t-20" id="form-password">
-                    <input type="hidden" id="email" name="_email" value="<?= $email ?>">
-                    <input type="hidden" name="_token" value="<?= $token ?>">
+                <form class="form-horizontal m-t-20" id="form-reset">
                     <div class="form-group ">
                         <div class="col-xs-12">
-                            <input class="form-control" required="" type="password" id="password" name="password" placeholder="Enter your password">
+                            <input class="form-control" required="" type="email" id="email" name="email" placeholder="Enter your Email">
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <input class="form-control" required="" type="password" id="password-confirm" placeholder="Confirm your password">
-                            <ul class="parsley-errors-list filled">
-                                <li class="parsley-required" id="error-message"></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <input type="hidden" name="create-password">
+                    <input type="hidden" name="reset-password">
                     <div class="form-group text-center m-t-30">
                         <div class="col-xs-12">
-                            <button class="btn btn-custom btn-bordred btn-block waves-effect waves-light" type="submit" id="tombol-simpan">Simpan</button>
+                            <button class="btn btn-custom btn-bordred btn-block waves-effect waves-light" type="submit" id="tombol-simpan">Reset Password</button>
                         </div>
                     </div>
                 </form>
@@ -129,28 +106,19 @@ if (md5($email . $secret) != $token) {
     <script src="assets/js/jquery.app.js"></script>
     <script>
         $(document).ready(function() {
-            $("#password-confirm").on("input", function() {
-                if ($("#password-confirm").val() != $("#password").val()) {
-                    $("#password-confirm").addClass("parsley-error");
-                    $("#error-message").text("password tidak sama");
-                    $("#tombol-simpan").prop('disabled', true);
-                } else {
-                    $("#password-confirm").removeClass("parsley-error");
-                    $("#error-message").empty();
-                    $("#tombol-simpan").prop('disabled', false);
-                }
-            });
-            $("#form-password").on("submit", function(e){
+            $("#form-reset").on("submit", function(e){
                 e.preventDefault();
                 $.ajax({
                     url : 'models/input.php',
                     data: $(this).serialize(),
                     type: 'POST'
                 }).done(function(result){
-                    if(result){
-                        Swal.fire({icon: "success",title: "Berhasil menyimpan password",showConfirmButton: false,timer: 1500});
+                    if(result == 1){
+                        Swal.fire({icon: "success",title: "Silakan cek email anda untuk reset password",showConfirmButton: true});
+                    }else if(result==2){
+                        Swal.fire({icon: "error",title: "Oops...",text: "Gagal mengirim link reset password"});
                     }else{
-                        Swal.fire({icon: "error",title: "Oops...",text: "Gagal menyimpan password"});
+                        Swal.fire({icon: "error",title: "Oops...",text: "Email tidak terdaftar"});
                     }
                 });
             });
