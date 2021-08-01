@@ -117,6 +117,11 @@ $header = array(
     'odd' => array(
         'L' => array(
             'content' => '<img src="../assets/images/logo.png">',
+        ), 'C' => array(
+            'content' => 'Lawless burger',
+            'font-size' => 10,
+            'font-style' => 'B',
+            'color' => '#000000'
         ),
         'R' => array(
             'content' => 'Jl. H. Agus Salim No.60, RW.4, Gondangdia, Kec. Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10230',
