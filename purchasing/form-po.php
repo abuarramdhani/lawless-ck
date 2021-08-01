@@ -280,7 +280,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                 html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan + '</td><td>' + res.harga + '</td>';
                 html += '<td><button id="add" data-id="' + res.id + '" data-nama="' + res.namabahan +
                     '" data-harga="' + res.harga +
-                    '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
+                    '" class="btn btn-icon waves-effect waves-light btn-sm btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
                 i++;
                 $("#barang>tbody").append(html);
             });

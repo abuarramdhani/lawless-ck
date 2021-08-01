@@ -1040,15 +1040,6 @@ if (isset($_POST['kasmasuk'])) {
     }
     // akhir stok
 
-    // input ke tabel form storebahan
-    mysqli_query($conn, "insert into form_storebahan set
-            No_form    = '$No_form',
-            kodeoutlet      = '$kodeoutlet',
-            Form_po = '0',
-            date ='$dt_input',
-            status ='1'
-            
-        ");
 
     // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
@@ -1065,6 +1056,16 @@ if (isset($_POST['kasmasuk'])) {
             subtotal = '$subtotal[$i]'
         ");
     }
+    // input ke tabel form storebahan
+    mysqli_query($conn, "insert into form_storebahan set
+     No_form    = '$No_form',
+     kodeoutlet      = '$kodeoutlet',
+     Form_po = '0',
+     date ='$dt_input',
+     status_ot ='0',
+     status_ck ='0'
+     
+ ");
 
     $result = mysqli_affected_rows($conn);
 
@@ -1073,6 +1074,7 @@ if (isset($_POST['kasmasuk'])) {
         $email = 'admin@lawless-ck.net';
         include '../mail/storebahan.php';
         include '../models/sendmail.php';
+        $mail->send();
     }
 
     //kembali ke halaman sebelumnya
@@ -1281,32 +1283,143 @@ if (isset($_POST['kasmasuk'])) {
             }
         }
     }
-}elseif (isset($_POST['create-password'])) {
+} elseif (isset($_POST['create-password'])) {
     $email = $_POST['_email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $update = mysqli_query($conn,"UPDATE admin SET password='$password' WHERE email='$email'");
-    if($update){
+    $update = mysqli_query($conn, "UPDATE admin SET password='$password' WHERE email='$email'");
+    if ($update) {
         echo true;
-    }else{
+    } else {
         echo false;
     }
-}elseif (isset($_POST['reset-password'])) {
+} elseif (isset($_POST['reset-password'])) {
     $email = $_POST['email'];
     $check = mysqli_query($conn, "SELECT * FROM admin WHERE email='$email'");
-    if(mysqli_num_rows($check) > 0){
+    if (mysqli_num_rows($check) > 0) {
         $subject = "RESET PASSWORD";
         $key = '#$eCr37';
-        $token = md5($email.$key);
+        $token = md5($email . $key);
         $linkhref = "localhost/lawless-ck/confirm?email=$email&token=$token";
 
         include '../mail/recovery.php';
         include '../models/sendmail.php';
-        if($mail->send()){
+        if ($mail->send()) {
             echo 1;
-        }else{
+        } else {
             echo 2;
         }
-    }else{
+    } else {
         echo 3;
     }
+} elseif (isset($_POST['requestbahan'])) {
+    $namabahan = $_POST['namabahan'];
+    $harga         = $_POST['harga'];
+    $jumlah     = $_POST['jumlah'];
+    $subtotal    = $_POST['subtotal'];
+    $kodeoutlet = 'OUT002';
+
+    $total = count($namabahan);
+    $dt_input = date('Y-m-d');
+    $date = date('ymd');
+
+    // isi noform
+
+    $ambil_noform = query("SELECT id,No_form FROM form_requestbahan ORDER BY No_form DESC");
+    $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
+    $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
+
+
+    // var_dump($ambil_noform);
+    // var_dump($pecah_po);
+    // var_dump($pecah_po_b);
+    // die;
+
+
+    if ($pecah_po == "FSB$date") {
+        $pecah_po_b += 1;
+        $pecah_po_b = sprintf("%03d", $pecah_po_b);
+        $No_form = 'FSB' . $date . $pecah_po_b;
+    } else {
+        $No_form = 'FSB' . $date . '001';
+    }
+    //akhir isi noform
+
+
+    // bahan
+    foreach ($namabahan as $row) {
+
+        $sql = "SELECT * 
+        FROM bahan 
+        WHERE namabahan = '$row'
+        ";
+        $result = mysqli_query($conn, $sql);
+
+        while ($d = mysqli_fetch_array($result)) {
+            $kodebahan[] = $d['kodebahan'];
+            // echo $kodebahan;
+        }
+    }
+
+    //   ambil stok
+    foreach ($kodebahan as $row) {
+
+        $sql = "SELECT stok 
+        FROM bahan 
+        WHERE kodebahan = '$row'
+    ";
+        $result = mysqli_query($conn, $sql);
+
+        while ($d = mysqli_fetch_array($result)) {
+            $stok[] = $d['stok'];
+            // echo $kodebahan;
+        }
+    }
+
+    for ($i = 0; $i < count($jumlah); $i++) {
+        $t_stok[] = $stok[$i] - $jumlah[$i];
+    }
+    // akhir stok
+
+
+    // input ke tabel item po
+    for ($i = 0; $i < $total; $i++) {
+
+        mysqli_query($conn, "UPDATE bahan SET 
+        stok= '$t_stok[$i]' 
+        WHERE kodebahan='$kodebahan[$i]'");
+
+        mysqli_query($conn, "insert into item_storebahan set
+            No_form    = '$No_form',
+            kodebahan      = '$kodebahan[$i]',
+            qty = '$jumlah[$i]',
+            harga ='$harga[$i]',
+            subtotal = '$subtotal[$i]'
+        ");
+    }
+    // input ke tabel form storebahan
+    mysqli_query($conn, "insert into form_storebahan set
+     No_form    = '$No_form',
+     kodeoutlet      = '$kodeoutlet',
+     Form_po = '0',
+     date ='$dt_input',
+     status_ot ='0',
+     status_ck ='0'
+     
+ ");
+
+    $result = mysqli_affected_rows($conn);
+
+    // if ($result) {
+    //     $subject = "Request Bahan";
+    //     $email = 'admin@lawless-ck.net';
+    //     include '../mail/storebahan.php';
+    //     include '../models/sendmail.php';
+    //     $mail->send();
+    // }
+
+    //kembali ke halaman sebelumnya
+    $_SESSION["msg"] = "$result";
+    // header("Location: form-po.php?msg=" . urlencode('1'));
+
+    header("location: ../store/store-bahan");
 }

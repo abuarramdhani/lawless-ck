@@ -47,41 +47,54 @@ $juhal = "User Management";
 
                                 <!--<hr>-->
 
-                                <form id="add-user" method="POST">
+                                <form id="add-user" class="form-horizontal group-border-dashed" method="POST">
                                     <div class="form-group">
-                                        <input type="text" name="name" parsley-trigger="change" placeholder="Nama" class="form-control" id="name">
+                                        <label class="col-sm-4 control-label">Nama</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="name" placeholder="Nama" class="form-control" id="name">
+                                        </div>
                                     </div>
 
                                     <div class="form-group">
+                                        <label class="col-sm-4 control-label">Email</label>
+                                        <div class="col-sm-8">
 
-                                        <input type="email" name="email" parsley-trigger="change" required="" placeholder="Email" class="form-control" id="emailAddress">
-
-                                    </div>
-
-                                    <div class="form-group">
-
-                                        <select class="select2 form-control" id="outlet" name="outlet">
-                                            <option></option>
-                                            <?php foreach ($outlet as $o) : ?>
-
-                                                <option value="<?= $o['kodeoutlet'] ?>"><?= ucwords($o['nama']) ?>
-                                                </option>
-
-                                            <?php endforeach; ?>
-
-                                        </select>
+                                            <input type="email" name="email" parsley-trigger="change" required="" placeholder="Email" class="form-control" id="emailAddress">
+                                        </div>
 
                                     </div>
 
                                     <div class="form-group">
-                                        <select class="select2 form-control" id="jabatan" name="jabatan">
-                                            <option></option>
-                                            <?php foreach ($jabatan as $j) : ?>
-                                                <option value="<?= $j['kodejabatan'] ?>">
-                                                    <?= ucwords($j['namajabatan']) ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                        <label class="col-sm-4 control-label">Outlet</label>
+                                        <div class="col-sm-8">
+                                            <select class="select2 form-control" id="outlet" name="outlet">
+                                                <option>Pilih Outlet</option>
+                                                <?php foreach ($outlet as $o) : ?>
+
+                                                    <option value="<?= $o['kodeoutlet'] ?>"><?= ucwords($o['nama']) ?>
+                                                    </option>
+
+                                                <?php endforeach; ?>
+
+                                            </select>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">jabatan</label>
+                                        <div class="col-sm-8">
+                                            <select class="select2 form-control" id="jabatan" name="jabatan">
+                                                <option>Pilih Jabatan</option>
+                                                <?php foreach ($jabatan as $j) : ?>
+                                                    <option value="<?= $j['kodejabatan'] ?>">
+                                                        <?= ucwords($j['namajabatan']) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+
                                     </div>
                                     <input type="hidden" name="tambah-user">
                                     <div class="form-group text-right m-b-0">
@@ -94,13 +107,7 @@ $juhal = "User Management";
                         </div>
 
                         <div class="col-lg-8">
-
                             <div class="card-box">
-
-                                <!--<h4 class="header-title m-t-0">Daftar User</h4>-->
-
-                                <!--<hr>-->
-
                                 <table id="datatable" class="table">
                                     <thead>
                                         <tr>
@@ -151,7 +158,7 @@ $juhal = "User Management";
                                                 </td>
 
                                                 <td class="actions">
-                                                    <a id="edit" data-id="<?= $user['id'] ?>" data-menu="<?= $user['access_menu_id'] ?>" data-nama="<?= $user['username'] ?>" data-email="<?= $user['email'] ?>" data-outlet="<?= $user['companypanel_id'] ?>" data-jabatan="<?= $user['jabatan_id'] ?>" class="on-default edit-row badge badge-warning"><i class="fa fa-pencil"></i></a> |
+                                                    <a id="tombol-edit" data-id="<?= $user['id'] ?>" data-nama="<?= $user['username'] ?>" data-outlet="<?= $user['outlet'] ?>" data-jabatan="<?= $user['jabatan'] ?>" data-email="<?= $user['email'] ?>" class="on-default edit-row badge badge-warning"><i class="fa fa-pencil"></i></a>
                                                     <a id="tombol-hapus" data-id="<?= $user['id'] ?>" class="on-default remove-row badge badge-danger "><i class="fa fa-trash-o"></i></a>
                                                 </td>
                                             </tr>
@@ -171,24 +178,19 @@ $juhal = "User Management";
 
     </div>
 
-    <div id="edit-user" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="modaledit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-
                     <h4 class="modal-title" id="myModalLabel">Edit User</h4>
-
                 </div>
-
                 <form id="editForm" method="POST">
 
                     <div class="modal-body">
 
                         <div class="form-group">
-
                             <input type="text" name="name" parsley-trigger="change" placeholder="Nama" class="form-control" id="name-edit" data-parsley-id="6" required>
-
                         </div>
 
                         <div class="form-group">
@@ -198,14 +200,10 @@ $juhal = "User Management";
                         </div>
 
                         <div class="form-group">
-
                             <select class="select2 form-control" id="outlet-edit" name="outlet">
-
-                                <?php foreach ($data['outlets'] as $outlet) : ?>
-
-                                    <option value="<?= $outlet['id'] ?>">
-                                        <?= $outlet['kodeoutlet'] . ' - ' . ucwords($outlet['nama']) ?></option>
-
+                                <?php foreach ($outlet as $o) : ?>
+                                    <option value="<?= $o['id'] ?>">
+                                        <?= $o['kodeoutlet'] . ' - ' . ucwords($o['nama']) ?></option>
                                 <?php endforeach; ?>
 
                             </select>
@@ -215,38 +213,25 @@ $juhal = "User Management";
                         <div class="form-group">
 
                             <select class="select2 form-control" id="jabatan-edit" name="jabatan">
-
-                                <?php foreach ($data['jabatans'] as $jabatan) : ?>
-
-                                    <option value="<?= $jabatan['id'] ?>">
-                                        <?= $jabatan['kodejabatan'] . ' - ' . ucwords($jabatan['namajabatan']) ?></option>
-
+                                <?php foreach ($jabatan as $j) : ?>
+                                    <option value="<?= $j['id'] ?>">
+                                        <?= $j['kodejabatan'] . ' - ' . ucwords($j['namajabatan']) ?></option>
                                 <?php endforeach; ?>
-
                             </select>
 
                         </div>
-
                         <input type="hidden" id="id" name="id">
-
                         <input type="hidden" id="menu" name="menu_id">
-
                         <input type="hidden" name="update">
 
                     </div>
 
                     <div class="modal-footer">
-
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Batal</button>
-
                         <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan</button>
-
                     </div>
-
                 </form>
-
             </div><!-- /.modal-content -->
-
         </div><!-- /.modal-dialog -->
 
     </div><!-- /.modal -->
@@ -336,6 +321,78 @@ $juhal = "User Management";
                 }
             })
             // akhir tambah data
+
+            // awal update
+            $('#datatable').on('click', '#tombol-edit', function(e) {
+
+                var id = $(this).data("id");
+                var nama = $(this).data("nama");
+                var email = $(this).data("email");
+                var outlet = $(this).data("outlet");
+                var jabatan = $(this).data("jabatan");
+
+                $("#name-edit").val(nama);
+                $("#email-edit").val(email);
+                $("#outlet-edit").val(outlet);
+                $("#id").val(id);
+                $("#outlet-edit").trigger("change");
+                $("#jabatan-edit").val(jabatan);
+                $("#jabatan-edit").trigger("change");
+                // $('.id').val(id);
+                // $('.menu').val(menu);
+                // $('.url').val(url);
+                $('#modaledit').modal('show');
+            });
+
+            $('#tombol-update').click(function(e) {
+
+                e.preventDefault();
+                var dataform = $('#formupdatesupplier')[0];
+                var data = new FormData(dataform);
+
+                var updatesupplier = $('#updatesupplier').val();
+                var idsupplier = $('#idsupplier').val();
+                var namasupplier = $('#namasupplier').val();
+                var nohpsupplier = $('#nohpsupplier').val();
+                var alamatsupplier = $('#alamatsupplier').val();
+                //alert(nsupplier);
+
+                if (namasupplier == " ") {
+                    swal("Nama Supplier belum di isi!", "", "error")
+                } else {
+                    $.ajax({
+                        url: '../models/edit.php',
+                        type: 'post',
+                        data: data,
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        beforeSend: function() {
+                            $('.spinn').show();
+                        },
+                        success: function(hasil) {
+                            // alert(hasil);
+                            console.log(hasil);
+                            //sukses
+                            if (hasil == 1) {
+                                swal("Input Gagal!", "", "error")
+
+                            } else if (hasil == 3) {
+                                swal({
+                                    title: "Edit Berhasil!",
+                                    type: "success",
+                                    //text: "I will close in 2 seconds.",
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                })
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            })
+            // akhir update
 
             // awal hapus data
             $('#datatable').on('click', '#tombol-hapus', function(e) {

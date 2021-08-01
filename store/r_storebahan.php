@@ -13,7 +13,7 @@ $nama_dokumen = 'Report'; //Beri nama file PDF hasil.
 
 $mpdf = new \Mpdf\Mpdf();
 ob_start();
-include '../controller/c_detail-po.php';
+include '../controller/c_detail_storebahan.php'
 
 // var_dump($item_po);
 // die;
@@ -54,20 +54,21 @@ include '../controller/c_detail-po.php';
 <body class="">
     <table class="mb-3">
         <tr>
-            <th>No Form PO</th>
+            <th>No Form</th>
             <td>: <?= $detail['No_form']; ?></td>
         </tr>
         <tr>
-            <th>Supplier</th>
-            <td>: <?= $detail['namasupplier']; ?></td>
+            <th>Outlet</th>
+            <td>: <?= $detail['nama']; ?></td>
         </tr>
         <tr>
-            <th>Alamat</th>
-            <td>: <?= $detail['alamatsupplier']; ?></td>
+            <th>Tanggal</th>
+            <td>: <?= $detail['date']; ?></td>
         </tr>
+
         <tr>
             <th>Status</th>
-            <?php if ($detail['status'] == 1) : ?>
+            <?php if ($detail['status_ck'] == 1) : ?>
                 <td>: <span class="badge badge-success">KONFIRMASI</span></td>
             <?php else : ?>
                 <td>: <span class="badge badge-warning">:Belum di Konfirmasi</span></td>
@@ -89,7 +90,7 @@ include '../controller/c_detail-po.php';
 
             <?php $i = 1 ?>
 
-            <?php foreach ($item_po as $item) : ?>
+            <?php foreach ($item_storebahan as $item) : ?>
                 <tr>
                     <td><?= $i++;  ?></td>
                     <td><?= $item['namabahan']; ?></td>
@@ -118,8 +119,8 @@ $header = array(
         'L' => array(
             'content' => '<img src="../assets/images/logo.png">',
         ), 'C' => array(
-            'content' => 'Lawless burger',
-            'font-size' => 10,
+            'content' => 'Lawless Burger',
+            'font-size' => 17,
             'font-style' => 'B',
             'color' => '#000000'
         ),

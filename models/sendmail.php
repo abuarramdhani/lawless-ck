@@ -24,4 +24,4 @@ $mail->addBCC($username1, "Notif '.$setfrom1.'");
 $mail->Body = "$pesan";
 // $mail->Body = "Silakan klik tautan berikut untuk mengaktifkan akun anda https://lawlessburgerbarasia.net/confirm?email=". $email ."&token=" . $token;
 
-$mail->send();
+// $mail->send();

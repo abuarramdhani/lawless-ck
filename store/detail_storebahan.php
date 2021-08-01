@@ -13,17 +13,7 @@ require '../controller/c_data-po.php';
 $bagian = "Store";
 $juhal = "Detail Produk";
 
-$No_form = $_GET['No_form'];
-$item_storebahan = query("SELECT sp.*, p.namabahan FROM item_storebahan as sp
-    JOIN bahan as p
-    ON p.kodebahan = sp.kodebahan 
-    WHERE sp.No_form = '$No_form'");
-
-$detail = query("SELECT *
-    FROM form_storebahan as sp
-    JOIN companypanel as cp
-    ON sp.kodeoutlet = cp.kodeoutlet
-    WHERE sp.No_form = '$No_form'")[0];
+include '../controller/c_detail_storebahan.php'
 
 ?>
 
@@ -50,26 +40,32 @@ $detail = query("SELECT *
                             <div class="card-box table-responsive">
 
                                 <h4 class="header-title m-t-0 m-b-20">Detail Store Bahan</h4>
-                                <div class="col-6 m-b-25">
-                                    <table class="">
-                                        <tr>
-                                            <td style="font-weight: 600; width:100px">No Form</td>
-                                            <td><?= $detail['No_form']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="font-weight: 600; width:100px">Outlet</td>
-                                            <td><?= $detail['nama']; ?></td>
-                                        </tr>
+                                <div class="pull-left">
 
-                                        <tr>
-                                            <td style="font-weight: 600; width:100px">Status</td>
-                                            <?php if ($detail['status'] == 1) : ?>
-                                                <td><span class="label label-success">KONFIRMASI</span></td>
-                                            <?php else : ?>
-                                                <td><span class="label label-warning">Belum di Konfirmasi</span></td>
-                                            <?php endif; ?>
-                                        </tr>
-                                    </table>
+                                    <div class="col-6 m-b-25">
+                                        <table class="">
+                                            <tr>
+                                                <td style="font-weight: 600; width:100px">No Form</td>
+                                                <td><?= $detail['No_form']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight: 600; width:100px">Outlet</td>
+                                                <td><?= $detail['nama']; ?></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="font-weight: 600; width:100px">Status</td>
+                                                <?php if ($detail['status'] == 1) : ?>
+                                                    <td><span class="label label-success">KONFIRMASI</span></td>
+                                                <?php else : ?>
+                                                    <td><span class="label label-warning">Belum di Konfirmasi</span></td>
+                                                <?php endif; ?>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="r_storebahan?No_form=<?= $No_form; ?>" class="btn btn-danger waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
                                 </div>
 
                                 <table id="" class="table table-striped table-bordered m-t-5">
