@@ -185,7 +185,7 @@ $juhal = "Users";
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">Edit User</h4>
                 </div>
-                <form id="editForm" method="POST">
+                <form id="editForm">
 
                     <div class="modal-body">
 
@@ -220,15 +220,14 @@ $juhal = "Users";
                             </select>
 
                         </div>
-                        <input type="hidden" id="id" name="id">
-                        <input type="hidden" id="menu" name="menu_id">
-                        <input type="hidden" name="update">
+                        <!-- <input type="hidden" id="id" name="id"> -->
+                        <input type="hidden" id="id" name="update-user">
 
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan</button>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light" id="tombol-update">Simpan</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -347,18 +346,18 @@ $juhal = "Users";
             $('#tombol-update').click(function(e) {
 
                 e.preventDefault();
-                var dataform = $('#formupdatesupplier')[0];
+                var dataform = $('#editForm')[0];
                 var data = new FormData(dataform);
 
-                var updatesupplier = $('#updatesupplier').val();
-                var idsupplier = $('#idsupplier').val();
-                var namasupplier = $('#namasupplier').val();
-                var nohpsupplier = $('#nohpsupplier').val();
-                var alamatsupplier = $('#alamatsupplier').val();
+                var uemail = $('#email-edit').val();
+                var uoutlet = $('#outlet-edit').val();
+                var uname = $('#name-edit').val();
+                var ujabatan = $('#jabatan-edit').val();
+
                 //alert(nsupplier);
 
-                if (namasupplier == " ") {
-                    swal("Nama Supplier belum di isi!", "", "error")
+                if (uemail == " ") {
+                    swal("Email belum di isi!", "", "error")
                 } else {
                     $.ajax({
                         url: '../models/edit.php',

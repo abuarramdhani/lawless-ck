@@ -237,4 +237,31 @@ if (isset($_POST["updateproyek"])) {
     } else {
         echo 5;
     }
+} elseif (isset($_POST["update-user"])) {
+    // var_dump('ok');
+    $id = $_POST['update-user'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $outlet = $_POST['outlet'];
+    $jabatan = $_POST['jabatan'];
+
+    // var_dump($id);
+    // var_dump($name);
+    // var_dump($email);
+    // var_dump($outlet);
+    // var_dump($jabatan);
+    // die;
+    $query = "UPDATE admin SET
+    username = '$name',
+    email = '$email',
+    outlet = 'OUT00$outlet',
+    jabatan = 'JAB00$jabatan'
+WHERE id = $id
+";
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        echo 1;
+    }
 }
