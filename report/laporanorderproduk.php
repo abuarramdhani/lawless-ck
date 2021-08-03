@@ -9,8 +9,8 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 require '../controller/c_store.php';
-$bagian = "Store";
-$juhal = "Store Produk";
+$bagian = "Report";
+$juhal = "Laporan Order Produk";
 
 $tabel = 'form_storeproduk';
 $tabel_join = 'companypanel';
@@ -97,7 +97,7 @@ include '../include/filter_date.php';
                                                     <td><?= $i++; ?></td>
                                                     <td><?= $dp['date']; ?></td>
                                                     <td><?= $dp['No_form']; ?></td>
-                                                    <td><?= $dp['kodeoutlet'] ?></td>
+                                                    <td><?= $dp['nama'] ?></td>
                                                     <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
                                                         <td><span class="label label-danger">Confirm</span></td>
                                                     <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
@@ -110,7 +110,7 @@ include '../include/filter_date.php';
                                                         <td><span class="label label-primary">Delivery</span></td>
                                                     <?php endif ?>
 
-                                                    <td><a href="detail_storeproduk.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
+                                                    <td><a href="detail-produk.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
                                                     </td>
                                                 </tr>
 

@@ -8,14 +8,17 @@ require '../include/fungsi.php';
 require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
-// require '../controller/c_data-po.php';
+// require '../controller/c_kaskecil.php';
 $bagian = "Report";
-$juhal = "Laporan Purchasing";
+$juhal = "Laporan Order Produk";
 
-$tabel = 'form_po';
-$tabel_join = 'supplier';
-$kode = 'supplier';
-include '../include/filter_date.php';
+require '../controller/c_detail_storeproduk.php';
+
+
+$tabel = 'form_storeproduk';
+include '../models/cek.php';
+
+
 ?>
 
 
@@ -35,84 +38,81 @@ include '../include/filter_date.php';
             <!-- Start content -->
             <div class="content">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card-box">
-                                <form method="post" action="">
-                                    <?php require '../include/tglharian.php'; ?>
-                                </form>
-                            </div>
-                        </div><!-- end col -->
-                        <div class="col-lg-6">
-                            <div class="card-box">
-                                <form method="post" action="">
-                                    <?php require '../include/tglrange.php'; ?>
-                                </form>
-                            </div>
-                        </div><!-- end col -->
-                    </div>
-                    <!-- end row -->
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card-box">
-                                <form method="post" action="">
-                                    <input type="hidden" name="filter-date">
-                                    <?php require '../include/tgltahun.php'; ?>
-                                </form>
-                            </div>
-                        </div><!-- end col -->
-
-                    </div>
-                    <!-- end row -->
-
-
 
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
 
-                                <h4 class="header-title m-t-0 m-b-30">Tabel Purchasing</h4>
-                                <table id="datatable-buttons" class="table table-striped table-bordered">
+                                <h4 class="header-title m-t-0 m-b-20">Detail Store Produk</h4>
+                                <div class="pull-left m-b-25">
+                                    <table class="">
+                                        <tr>
+                                            <td style="font-weight: 600; width:100px">No Form</td>
+                                            <td><?= $detail['No_form']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: 600; width:100px">Outlet</td>
+                                            <td><?= $detail['nama']; ?></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="font-weight: 600; width:100px">Status</td>
+                                            <form method="POST">
+                                                <input type="hidden" name="status">
+                                                <input type="hidden" name="No_form" value="<?= $detail['No_form']; ?>">
+                                                <?php if ($sot == 0 && $sck == 0) : ?>
+                                                    <td><a><button type="submit" value="<?= $sot ?>" name="sot" class="btn btn-danger waves-effect waves-light btn-xs m-b-5">Confirm</button></a>
+                                                    </td>
+                                                <?php elseif ($sot == 1 && $sck == 0) : ?>
+                                                    <td><a> <button type="submit" value="<?= $sot; ?>" name="sot" class="btn btn-info waves-effect waves-light btn-xs m-b-5">Confirmed</button></a>
+                                                    </td>
+                                                <?php elseif ($sot == 2 && $sck == 0) : ?>
+                                                    <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by Manager</button>
+                                                    </td>
+                                                <?php elseif ($sot == 2  && $sck == 1) : ?>
+                                                    <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by CK</button>
+                                                    </td>
+                                                <?php elseif ($sot == 2  && $sck == 2) : ?>
+                                                    <td><button class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</button>
+                                                    </td>
+                                                <?php endif ?>
+                                            </form>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="pull-right">
+                                    <?php if ($sot == 2 and $sck == 2) : ?>
+                                        <a href="r_storebahan?No_form=<?= $No_form; ?>" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
+                                    <?php else : ?>
+                                        <a href="r_storebahan?No_form=<?= $No_form; ?>" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+                                    <?php endif; ?>
+                                </div>
+
+                                <table id="" class="table table-striped table-bordered m-t-5">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Tanggal</th>
-                                            <th>No. Form PO</th>
-                                            <th>Supplier</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Nama Barang</th>
+                                            <th>Harga</th>
+                                            <th>Jumlah</th>
+                                            <th>Subtotal</th>
                                         </tr>
                                     </thead>
-
+                                    <?php $i = 1; ?>
                                     <tbody>
-                                        <?php $i = 1 ?>
-                                        <?php foreach ($data as $dp) : ?>
-
+                                        <?php foreach ($item_storeproduk as $item) : ?>
                                             <tr>
-                                                <td><?= $i++; ?></td>
-                                                <td><?= $dp['date']; ?></td>
-                                                <td><?= $dp['No_form']; ?></td>
-                                                <td><?= $dp['namasupplier'] ?></td>
-                                                <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
-                                                    <td><span class="label label-danger">Confirm</span></td>
-                                                <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
-                                                    <td><span class="label label-info">Confirmed</span></td>
-                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 0) : ?>
-                                                    <td><span class="label label-success">Checked by Manager</span></td>
-                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 1) : ?>
-                                                    <td><span class="label label-success">Checked by CK</span></td>
-                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
-                                                    <td><span class="label label-primary">Delivery</span></td>
-                                                <?php endif ?>
-
-                                                <td><a href="detail-po.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
-                                                </td>
+                                                <td><?= $i++;  ?></td>
+                                                <td><?= $item['namaproduk']; ?></td>
+                                                <td><?= $item['harga']; ?></td>
+                                                <td><?= $item['qty']  ?></td>
+                                                <td><?= $item['subtotal']; ?></td>
                                             </tr>
-
-                                        <?php endforeach ?>
+                                        <?php endforeach; ?>
 
                                     </tbody>
                                 </table>
+                                <a href="../report/laporanorderproduk.php" class="btn btn-primary"><i class="fa fa-angle-left" style="margin-right: 8px;"></i>Back</a>
                             </div>
                         </div><!-- end col -->
                     </div>

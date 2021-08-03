@@ -18,7 +18,12 @@ $bh1 = explode(".", $bh);
 $basehost = $bh1[0];
 
 //koneksi database
-$conn = mysqli_connect('localhost', 'root', '', 'lawlessburgerbar_lb');
+if ($_SERVER['HTTP_HOST'] != "localhost") {
+    $conn = mysqli_connect('localhost', 'lawlessburgerbar_lbba', '22e9j=V9r#A_', 'lawlessburgerbar_lb');
+} else {
+    $conn = mysqli_connect('localhost', 'root', '', 'lawlessburgerbar_lb');
+}
+
 // if (!$conn) {
 //     die("Koneksi gagal: " . mysqli_connect_error());
 // }

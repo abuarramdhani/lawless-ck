@@ -9,14 +9,17 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
-require '../controller/c_data-produk.php';
-$bagian = "Porduction";
+$tabel = 'form_produkmasuk';
+$tabel_join = 'companypanel';
+$kode = 'outlet';
+include '../include/filter_date.php';
+// require '../controller/c_data-produk.php';
+$bagian = "Production";
 $juhal = "Data Produk";
 ?>
 
 
 <body class="fixed-left">
-
     <!-- Begin page -->
     <div id="wrapper">
 
@@ -200,6 +203,7 @@ $juhal = "Data Produk";
                             <div class="card-box">
 
                                 <form method="post" action="">
+                                    <input type="hidden" name="filter-date">
                                     <?php require '../include/tgltahun.php'; ?>
                                 </form>
 
@@ -218,27 +222,27 @@ $juhal = "Data Produk";
                                         <tr>
                                             <th>No</th>
                                             <th>Tanggal</th>
-                                            <th>No. Form Produk Masuk</th>
-                                            <th>Status</th>
+                                            <th>No. Form</th>
+                                            <!-- <th>Status</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         <?php $i = 1 ?>
-                                        <?php foreach ($data_produk as $dp) : ?>
+                                        <?php foreach ($data as $dp) : ?>
 
                                             <tr>
                                                 <td><?= $i++; ?></td>
                                                 <td><?= $dp['date']; ?></td>
                                                 <td><?= $dp['No_form']; ?></td>
-                                                <?php if ($dp['status'] == 1) : ?>
+                                                <!-- <?php if ($dp['status'] == 1) : ?>
                                                     <td><span class="label label-success">Konfirmasi</span></td>
                                                 <?php else : ?>
                                                     <td><span class="label label-warning">Belum di Konfirmasi</span></td>
-                                                <?php endif ?>
+                                                <?php endif ?> -->
 
-                                                <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-primary m-b-5">Details</a>
+                                                <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-primary btn-xs m-b-5">Details</a>
                                                 </td>
                                             </tr>
 

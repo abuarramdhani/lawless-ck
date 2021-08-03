@@ -9,11 +9,13 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
-require '../controller/c_data-po.php';
+// require '../controller/c_data-po.php';
 $bagian = "Store";
-$juhal = "Detail Produk";
+$juhal = "Store Bahan";
 
-include '../controller/c_detail_storebahan.php'
+include '../controller/c_detail_storebahan.php';
+$tabel = 'form_storebahan';
+include '../models/cek.php';
 
 ?>
 
@@ -39,7 +41,7 @@ include '../controller/c_detail_storebahan.php'
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
 
-                                <h4 class="header-title m-t-0 m-b-20">Detail Store Bahan</h4>
+                                <h4 class="header-title m-t-0 m-b-20">Detail Store Bahan </h4>
                                 <div class="pull-left">
 
                                     <div class="col-6 m-b-25">
@@ -52,20 +54,39 @@ include '../controller/c_detail_storebahan.php'
                                                 <td style="font-weight: 600; width:100px">Outlet</td>
                                                 <td><?= $detail['nama']; ?></td>
                                             </tr>
-
                                             <tr>
                                                 <td style="font-weight: 600; width:100px">Status</td>
-                                                <?php if ($detail['status'] == 1) : ?>
-                                                    <td><span class="label label-success">KONFIRMASI</span></td>
-                                                <?php else : ?>
-                                                    <td><span class="label label-warning">Belum di Konfirmasi</span></td>
-                                                <?php endif; ?>
+                                                <form method="POST">
+                                                    <input type="hidden" name="status">
+                                                    <input type="hidden" name="No_form" value="<?= $detail['No_form']; ?>">
+                                                    <?php if ($sot == 0 && $sck == 0) : ?>
+                                                        <td><a><button type="submit" value="<?= $sot ?>" name="sot" class="btn btn-danger waves-effect waves-light btn-xs m-b-5">Confirm</button></a>
+                                                        </td>
+                                                    <?php elseif ($sot == 1 && $sck == 0) : ?>
+                                                        <td><a> <button type="submit" value="<?= $sot; ?>" name="sot" class="btn btn-info waves-effect waves-light btn-xs m-b-5">Confirmed</button></a>
+                                                        </td>
+                                                    <?php elseif ($sot == 2 && $sck == 0) : ?>
+                                                        <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by Manager</button>
+                                                        </td>
+                                                    <?php elseif ($sot == 2  && $sck == 1) : ?>
+                                                        <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by CK</button>
+                                                        </td>
+                                                    <?php elseif ($sot == 2  && $sck == 2) : ?>
+                                                        <td><button class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</button>
+                                                        </td>
+                                                    <?php endif ?>
+                                                </form>
+
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="r_storebahan?No_form=<?= $No_form; ?>" class="btn btn-danger waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+                                    <?php if ($sot == 2 and $sck == 2) : ?>
+                                        <a href="r_storebahan?No_form=<?= $No_form; ?>" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
+                                    <?php else : ?>
+                                        <a href="r_storebahan?No_form=<?= $No_form; ?>" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+                                    <?php endif; ?>
                                 </div>
 
                                 <table id="" class="table table-striped table-bordered m-t-5">

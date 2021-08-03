@@ -9,8 +9,8 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_storebahan.php';
-$bagian = "Store";
-$juhal = "Store Bahan";
+$bagian = "Report";
+$juhal = "Laporan Order Bahan";
 
 $tabel = 'form_storebahan';
 $tabel_join = 'companypanel';
@@ -110,7 +110,7 @@ include '../include/filter_date.php';
                                                         <td><span class="label label-primary">Delivery</span></td>
                                                     <?php endif ?>
 
-                                                    <td><a href="detail_storebahan.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
+                                                    <td><a href="detail-bahan.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
                                                     </td>
                                                 </tr>
 

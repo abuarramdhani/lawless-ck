@@ -4,6 +4,9 @@ session_start();
 if (!isset($_SESSION['email'])) {
     header("location:index"); // jika belum login, maka dikembalikan ke index
     exit;
+} elseif (!isset($_SESSION['kodeoutlet']) or !isset($_SESSION['outlet']) or !isset($_SESSION['jabatan'])) {
+    header("location:maintenance.php");
+    exit;
 } else {
     require 'include/fungsi.php';
 
@@ -75,18 +78,18 @@ if (!isset($_SESSION['email'])) {
             <!-- end wrapper page -->
             <div class="row">
 
+
                 <?php foreach ($kodemenu as $row) : ?>
-                <div class="col-lg-3">
-                    <div class="panel panel-color panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title text-center"><?= $row['menu']; ?></h3>
-                        </div>
-                        <div class="panel-body text-center">
-                            <a href="<?= $row['url']; ?>"><img src="assets/images/<?= $row['gambar']; ?>"
-                                    style="width: 125px;" class="img-circle"></a>
+                    <div class="col-lg-3">
+                        <div class="panel panel-color panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-center"><?= $row['menu']; ?></h3>
+                            </div>
+                            <div class="panel-body text-center">
+                                <a href="<?= $row['url']; ?>"><img src="assets/images/<?= $row['gambar']; ?>" style="width: 125px;" class="img-circle"></a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <?php endforeach; ?>
 
 
@@ -99,7 +102,7 @@ if (!isset($_SESSION['email'])) {
 
 
     <script>
-    var resizefunc = [];
+        var resizefunc = [];
     </script>
 
     <!-- jQuery  -->

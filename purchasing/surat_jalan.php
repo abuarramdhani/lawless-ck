@@ -223,7 +223,7 @@ $mpdf->SetHTMLHeader('
         <tr>
             <td class=" w-25" style="vertical-align: top;"><img src="../assets/images/logo.png"></td>
             <td class="center w-50 mistral">LAWLESS BURGERBAR</td>
-            <td class="center w-25"  style="vertical-align: bottom;">PURCHASE ORDER</td>
+            <td class="center w-25"  style="vertical-align: bottom;">SURAT JALAN</td>
             
         </tr>
     </table>

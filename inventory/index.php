@@ -9,7 +9,11 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
-require '../controller/c_data_in.php';
+// require '../controller/c_data_in.php';
+$tabel = 'form_in';
+$tabel_join = 'supplier';
+$kode = 'supplier';
+include '../include/filter_date.php';
 $bagian = "Inventory";
 $juhal = "Data Bahan";
 ?>
@@ -200,6 +204,7 @@ $juhal = "Data Bahan";
                             <div class="card-box">
 
                                 <form method="post" action="">
+                                    <input type="hidden" name="filter-date">
                                     <?php require '../include/tgltahun.php'; ?>
                                 </form>
 
@@ -227,27 +232,33 @@ $juhal = "Data Bahan";
                                     </thead>
 
                                     <tbody>
-                                        <?php $i = 1 ?>
-                                        <?php foreach ($data_po as $dp) : ?>
-                                            <tr>
-                                                <td><?= $i++; ?></td>
-                                                <td><?= $dp['date']; ?></td>
-                                                <td><?= $dp['No_form']; ?></td>
-                                                <td><?= $dp['Form_po']; ?></td>
-                                                <td>
-                                                    <?= $dp['kodesupplier'] ?>
+                                        <?php if (isset($data)) : ?>
+                                            <?php $i = 1 ?>
+                                            <?php foreach ($data as $dp) : ?>
+                                                <tr>
+                                                    <td><?= $i++; ?></td>
+                                                    <td><?= $dp['date']; ?></td>
+                                                    <td><?= $dp['No_form']; ?></td>
+                                                    <td><?= $dp['Form_po']; ?></td>
 
-                                                </td>
-                                                <?php if ($dp['status'] == 1) : ?>
-                                                    <td><span class="label label-success">Konfirmasi</span></td>
-                                                <?php else : ?>
-                                                    <td><span class="label label-warning">Belum di Konfirmasi</span></td>
-                                                <?php endif ?>
+                                                    <td><?= $dp['namasupplier'] ?></td>
+                                                    <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
+                                                        <td><span class="label label-danger">Confirm</span></td>
+                                                    <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
+                                                        <td><span class="label label-info">Confirmed</span></td>
+                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 0) : ?>
+                                                        <td><span class="label label-success">Checked by Manager</span></td>
+                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 1) : ?>
+                                                        <td><span class="label label-success">Checked by CK</span></td>
+                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
+                                                        <td><span class="label label-primary">Delivery</span></td>
+                                                    <?php endif ?>
 
-                                                <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-primary m-b-5">Details</a>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach ?>
+                                                    <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-xs btn-primary m-b-5">Details</a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach ?>
+                                        <?php endif ?>
 
                                     </tbody>
                                 </table>

@@ -9,7 +9,11 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
-require '../controller/c_databahan.php';
+// require '../controller/c_databahan.php';
+$tabel = 'form_storeproduk';
+$tabel_join = 'companypanel';
+$kode = 'outlet';
+include '../include/filter_date.php';
 $bagian = "Production";
 $juhal = "Produk Keluar";
 ?>
@@ -200,6 +204,7 @@ $juhal = "Produk Keluar";
                             <div class="card-box">
 
                                 <form method="post" action="">
+                                    <input type="hidden" name="filter-date">
                                     <?php require '../include/tgltahun.php'; ?>
                                 </form>
 
@@ -234,13 +239,20 @@ $juhal = "Produk Keluar";
                                                 <td><?= $dp['date']; ?></td>
                                                 <td><?= $dp['No_form']; ?></td>
                                                 <td><?= $dp['nama'] ?></td>
-                                                <?php if ($dp['status'] == 1) : ?>
-                                                    <td><span class="label label-success">Konfirmasi</span></td>
-                                                <?php else : ?>
-                                                    <td><span class="label label-warning">Belum di Konfirmasi</span></td>
+
+                                                <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
+                                                    <td><span class="label label-danger">Confirm</span></td>
+                                                <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
+                                                    <td><span class="label label-info">Confirmed</span></td>
+                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 0) : ?>
+                                                    <td><span class="label label-success">Checked by Manager</span></td>
+                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 1) : ?>
+                                                    <td><span class="label label-success">Checked by CK</span></td>
+                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
+                                                    <td><span class="label label-primary">Delivery</span></td>
                                                 <?php endif ?>
 
-                                                <td><a href="detail_barangkeluar.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-primary m-b-5">Details</a>
+                                                <td><a href="detail_produkkeluar.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-xs btn-primary m-b-5">Details</a>
                                                 </td>
                                             </tr>
 

@@ -12,8 +12,8 @@ require_once '../include/header.php';
 include '../controller/c_users.php';
 include '../models/user.php';
 
-$bagian = "Users";
-$juhal = "User Management";
+$bagian = "User";
+$juhal = "Users";
 
 
 ?>

@@ -54,14 +54,14 @@ $detail = query("SELECT *
                                             <td style="font-weight: 600; width:100px">No Form</td>
                                             <td><?= $detail['No_form']; ?></td>
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             <td style="font-weight: 600; width:100px">Status</td>
                                             <?php if ($detail['status'] == 1) : ?>
                                                 <td><span class="label label-success">KONFIRMASI</span></td>
                                             <?php else : ?>
                                                 <td><span class="label label-warning">Belum di Konfirmasi</span></td>
                                             <?php endif; ?>
-                                        </tr>
+                                        </tr> -->
                                     </table>
                                 </div>
 

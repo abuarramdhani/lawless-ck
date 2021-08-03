@@ -916,9 +916,25 @@ if (isset($_POST['kasmasuk'])) {
         }
     }
 
-    // var_dump($kodebahan);
-    // die;
-    // input ke tabel form po
+    //   ambil stok
+    foreach ($kodeproduk as $row) {
+
+        $sql = "SELECT stok 
+        FROM produk 
+        WHERE kodeproduk = '$row'
+    ";
+        $result = mysqli_query($conn, $sql);
+
+        while ($d = mysqli_fetch_array($result)) {
+            $stok[] = $d['stok'];
+            // echo $kodebahan;
+        }
+    }
+
+    for ($i = 0; $i < count($jumlah); $i++) {
+        $t_stok[] = $stok[$i] - $jumlah[$i];
+    }
+    // akhir stok
 
 
     mysqli_query($conn, "insert into form_storeproduk set
@@ -930,6 +946,10 @@ if (isset($_POST['kasmasuk'])) {
 
     // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
+
+        mysqli_query($conn, "UPDATE produk SET 
+        stok= '$t_stok[$i]' 
+        WHERE kodeproduk='$kodeproduk[$i]'");
 
         mysqli_query($conn, "insert into item_storeproduk set
             No_form    = '$No_form',
@@ -1270,6 +1290,10 @@ if (isset($_POST['kasmasuk'])) {
             // echo 3;
             $subject = "PENDAFTARAN AKUN";
             $email = $email;
+            // $mailhost1 = 'mail.lawless-ck.net';
+            // $username1 = 'office@lawless-ck.net';
+            // $Password = 'office123!!@@##';
+            // $setfrom1 = 'Lawless HO Office';
             $secret = '#$eCr37';
             $token = MD5($email . $secret);
             $linkhref = "localhost/lawless-ck/confirm?email=$email&token=$token";
