@@ -10,8 +10,7 @@ require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
 $bagian = "Store";
-$juhal = "Detail Produk";
-
+$juhal = "Store Produk";
 require '../controller/c_detail_storeproduk.php';
 
 $tabel = 'form_storeproduk';

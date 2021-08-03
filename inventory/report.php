@@ -9,8 +9,8 @@ if (!isset($_SESSION['email'])) {
 }
 include "../vendor/autoload.php";
 require '../include/fungsi.php';
-include '../controller/c_detail-po.php';
-$nama_dokumen = 'PO-' . $detail['No_form'];
+require '../controller/c_detail_in.php';
+$nama_dokumen = 'IN-' . $detail['No_form'];
 
 $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
 $fontDirs = $defaultConfig['fontDir'];
@@ -224,7 +224,7 @@ $mpdf->SetHTMLHeader('
         <tr>
             <td class=" w-25" style="vertical-align: top;"><img src="../assets/images/logo.png"></td>
             <td class="center w-50 mistral">LAWLESS BURGERBAR</td>
-            <td class="center w-25"  style="vertical-align: bottom;">PURCHASE ORDER</td>
+            <td class="center w-25"  style="vertical-align: bottom;">Inventory</td>
             
         </tr>
     </table>

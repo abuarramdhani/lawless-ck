@@ -763,22 +763,36 @@ if (isset($_POST['kasmasuk'])) {
             // echo $kodebahan;
         }
     }
+    //   ambil stok
+    // foreach ($kodebahan as $row) {
+
+    //     $sql = "SELECT stok 
+    //     FROM bahan 
+    //     WHERE kodebahan = '$row'
+    // ";
+    //     $result = mysqli_query($conn, $sql);
+
+    //     while ($d = mysqli_fetch_array($result)) {
+    //         $stok[] = $d['stok'];
+    //         // echo $kodebahan;
+    //     }
+    // }
+
+    // for ($i = 0; $i < count($jumlah); $i++) {
+    //     $t_stok[] = $stok[$i] + $jumlah[$i];
+    // }
+    // akhir stok
 
     // var_dump($kodebahan);
     // die;
     // input ke tabel form po
 
-
-    mysqli_query($conn, "insert into form_po set
-            No_form    = '$No_form',
-            kodeoutlet      = '$kodeoutlet',
-            kodesupplier = '$kodesupplier',
-            date ='$dt_input',
-            status = '1'
-        ");
-
     // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
+
+        // mysqli_query($conn, "UPDATE bahan SET 
+        // stok= '$t_stok[$i]' 
+        // WHERE kodebahan='$kodebahan[$i]'");
 
         mysqli_query($conn, "insert into item_po set
             No_form    = '$No_form',
@@ -788,6 +802,18 @@ if (isset($_POST['kasmasuk'])) {
             subtotal = '$subtotal[$i]'
         ");
     }
+
+
+    mysqli_query($conn, "insert into form_po set
+            No_form    = '$No_form',
+            kodeoutlet      = '$kodeoutlet',
+            kodesupplier = '$kodesupplier',
+            date ='$dt_input',
+            status_ck = '0',
+            status_ot = '0'
+        ");
+
+
 
     $result = mysqli_affected_rows($conn);
 
@@ -941,7 +967,8 @@ if (isset($_POST['kasmasuk'])) {
             No_form    = '$No_form',
             kodeoutlet      = '$kodeoutlet',
             date ='$dt_input',
-            status = '1'
+            status_ck = '0',
+            status_ot = '0'
         ");
 
     // input ke tabel item po
@@ -1007,12 +1034,6 @@ if (isset($_POST['kasmasuk'])) {
     $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
 
 
-    // var_dump($ambil_noform);
-    // var_dump($pecah_po);
-    // var_dump($pecah_po_b);
-    // die;
-
-
     if ($pecah_po == "FSB$date") {
         $pecah_po_b += 1;
         $pecah_po_b = sprintf("%03d", $pecah_po_b);
@@ -1021,7 +1042,7 @@ if (isset($_POST['kasmasuk'])) {
         $No_form = 'FSB' . $date . '001';
     }
     //akhir isi noform
-    // var_dump($No_form);
+    // var_dump($ambil_noform);
     // die;
 
 
@@ -1039,6 +1060,7 @@ if (isset($_POST['kasmasuk'])) {
             // echo $kodebahan;
         }
     }
+
 
     //   ambil stok
     foreach ($kodebahan as $row) {
@@ -1061,7 +1083,10 @@ if (isset($_POST['kasmasuk'])) {
     // akhir stok
 
 
-    // input ke tabel item po
+
+
+
+    // // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
 
         mysqli_query($conn, "UPDATE bahan SET 
@@ -1078,16 +1103,18 @@ if (isset($_POST['kasmasuk'])) {
     }
     // input ke tabel form storebahan
     mysqli_query($conn, "insert into form_storebahan set
-     No_form    = '$No_form',
-     kodeoutlet      = '$kodeoutlet',
-     Form_po = '0',
-     date ='$dt_input',
-     status_ot ='0',
-     status_ck ='0'
-     
- ");
+         No_form    = '$No_form',
+         kodeoutlet      = '$kodeoutlet',
+         Form_po = '0',
+         date ='$dt_input',
+         status_ot ='0',
+         status_ck ='0'
+
+     ");
 
     $result = mysqli_affected_rows($conn);
+    // var_dump($result);
+    // die;
 
     if ($result) {
         $subject = "Request Bahan";
@@ -1162,27 +1189,54 @@ if (isset($_POST['kasmasuk'])) {
         }
     }
 
+
+    //   ambil stok
+    foreach ($kodebahan as $row) {
+
+        $sql = "SELECT stok 
+        FROM produk 
+        WHERE kodeproduk = '$row'
+    ";
+        $result = mysqli_query($conn, $sql);
+
+        while ($d = mysqli_fetch_array($result)) {
+            $stok[] = $d['stok'];
+            // echo $kodeproduk;
+        }
+    }
+
+    for ($i = 0; $i < count($jumlah); $i++) {
+        $t_stok[] = $stok[$i] + $jumlah[$i];
+    }
+    // akhir stok
+
     // var_dump($kodebahan);
     // die;
     // input ke tabel form po
+    // input ke tabel item po
+    for ($i = 0; $i < $total; $i++) {
 
+        mysqli_query($conn, "UPDATE produk SET 
+    stok= '$t_stok[$i]' 
+    WHERE kodeproduk='$kodeproduk[$i]'");
+        mysqli_query($conn, "insert into item_produkmasuk set
+        No_form    = '$No_form',
+        kodeproduk      = '$kodeproduk[$i]',
+        qty = '$jumlah[$i]',
+        harga ='$harga[$i]',
+        subtotal = '$subtotal[$i]'
+    ");
+    }
 
     mysqli_query($conn, "insert into form_produkmasuk set
             No_form    = '$No_form',
             date ='$dt_input',
-            status = '1'
+            kodeoutlet = '$kodeoutlet ',
+            status_ot = '0',
+            status_ck = '0'
         ");
 
-    // input ke tabel item po
-    for ($i = 0; $i < $total; $i++) {
-        mysqli_query($conn, "insert into item_produkmasuk set
-            No_form    = '$No_form',
-            kodeproduk      = '$kodeproduk[$i]',
-            qty = '$jumlah[$i]',
-            harga ='$harga[$i]',
-            subtotal = '$subtotal[$i]'
-        ");
-    }
+
 
     $result = mysqli_affected_rows($conn);
 
@@ -1243,21 +1297,22 @@ if (isset($_POST['kasmasuk'])) {
         $t_stok[] = $qty[$i] + $stok[$i];
     }
     // akhir stok
-
+    for ($i = 0; $i < count($kodebahan); $i++) {
+        mysqli_query($conn, "UPDATE bahan SET harga='$harga[$i]', stok= '$t_stok[$i]' WHERE kodebahan='$kodebahan[$i]'");
+        mysqli_query($conn, "INSERT INTO item_in (NO_form, kodebahan, qty, harga, subtotal) VALUE ('$No_form', '$kodebahan[$i]', '$qty[$i]', '$harga[$i]', '$subtotal[$i]')");
+    }
     mysqli_query($conn, "insert into form_in set
             No_form    = '$No_form',
             Form_po = '$nopo',
             kodeoutlet = '$kodeoutlet',
             kodesupplier = '$kodesupplier',
             date ='$dt_input',
-            status = '1'
+            status_ot = '0',
+            status_ck = '0'
         ");
 
 
-    for ($i = 0; $i < count($kodebahan); $i++) {
-        mysqli_query($conn, "UPDATE bahan SET harga='$harga[$i]', stok= '$t_stok[$i]' WHERE kodebahan='$kodebahan[$i]'");
-        mysqli_query($conn, "INSERT INTO item_in (NO_form, kodebahan, qty, harga, subtotal) VALUE ('$No_form', '$kodebahan[$i]', '$qty[$i]', '$harga[$i]', '$subtotal[$i]')");
-    }
+
     $result = mysqli_affected_rows($conn);
 
     //kembali ke halaman sebelumnya

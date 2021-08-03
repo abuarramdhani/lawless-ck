@@ -9,19 +9,10 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
-require '../controller/c_data-po.php';
-$bagian = "Purchasing";
-$juhal = "Detail PO";
+require '../controller/c_produk-masuk.php';
+$bagian = "Production";
+$juhal = "Data Produk";
 
-$No_form = $_GET['No_form'];
-$item_produk = query("SELECT * FROM item_produkmasuk as pm 
-    JOIN produk as p
-    ON pm.kodeproduk = p.kodeproduk 
-    WHERE pm.No_form = '$No_form'");
-
-$detail = query("SELECT *
-    FROM form_produkmasuk
-    WHERE No_form = '$No_form'")[0];
 
 ?>
 
@@ -48,7 +39,7 @@ $detail = query("SELECT *
                             <div class="card-box table-responsive">
 
                                 <h4 class="header-title m-t-0 m-b-20">Detail Produk</h4>
-                                <div class="col-6 m-b-25">
+                                <div class="pull-left m-b-25">
                                     <table class="">
                                         <tr>
                                             <td style="font-weight: 600; width:100px">No Form</td>
@@ -63,6 +54,14 @@ $detail = query("SELECT *
                                             <?php endif; ?>
                                         </tr> -->
                                     </table>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="r_produk-masuk.php?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+                                    <!-- <?php if ($sot == 2 and $sck == 2) : ?>
+                                        <a href="surat_jalan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
+                                    <?php else : ?>
+                                        <a href="report?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+                                    <?php endif; ?> -->
                                 </div>
 
                                 <table id="" class="table table-striped table-bordered m-t-5">
@@ -89,7 +88,7 @@ $detail = query("SELECT *
 
                                     </tbody>
                                 </table>
-                                <a href="data-produk" class="btn btn-primary"><i class="fa fa-angle-left" style="margin-right: 8px;"></i>Back</a>
+                                <a href="index.php" class="btn btn-primary"><i class="fa fa-angle-left" style="margin-right: 8px;"></i>Back</a>
                             </div>
                         </div><!-- end col -->
                     </div>

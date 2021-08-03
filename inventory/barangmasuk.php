@@ -10,7 +10,7 @@ require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 require '../controller/c_barangmasuk.php';
 $bagian = "Inventory";
-$juhal = "Bahan Masuk";
+$juhal = "Barang Masuk";
 
 $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = supplier.kodesupplier");
 ?>

@@ -9,8 +9,8 @@ if (!isset($_SESSION['email'])) {
 }
 include "../vendor/autoload.php";
 require '../include/fungsi.php';
-include '../controller/c_detail-po.php';
-$nama_dokumen = 'PO-' . $detail['No_form'];
+require '../controller/c_produk-masuk.php';
+$nama_dokumen = 'PRODUK MASUK-' . $detail['No_form'];
 
 $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
 $fontDirs = $defaultConfig['fontDir'];
@@ -129,22 +129,14 @@ ob_start();
 
     <table class="mb-3 mt-100">
         <tr>
-            <th>No Form PO</th>
+            <th>No Form</th>
             <td>: <?= $detail['No_form']; ?></td>
-        </tr>
-        <tr>
-            <th>Supplier</th>
-            <td>: <?= $detail['namasupplier']; ?></td>
-        </tr>
-        <tr>
-            <th>Alamat</th>
-            <td>: <?= $detail['alamatsupplier']; ?></td>
         </tr>
         <tr>
             <th>Date</th>
             <td>: <?= $detail['date']; ?></td>
         </tr>
-        <tr>
+        <!-- <tr>
             <th>Status</th>
             <td>: <span class="badge badge-success">KONFIRMASI</span></td>
             <!-- <?php if ($detail['status'] == 1) : ?>
@@ -152,7 +144,7 @@ ob_start();
             <?php else : ?>
                 <td>: <span class="badge badge-warning">:Belum di Konfirmasi</span></td>
             <?php endif; ?> -->
-        </tr>
+        <!-- </tr> -->
     </table>
 
 
@@ -173,10 +165,10 @@ ob_start();
 
             <?php $i = 1 ?>
 
-            <?php foreach ($item_po as $item) : ?>
+            <?php foreach ($item_produk as $item) : ?>
                 <tr>
                     <td><?= $i++;  ?></td>
-                    <td><?= $item['namabahan']; ?></td>
+                    <td><?= $item['namaproduk']; ?></td>
                     <td><?= $item['harga']; ?></td>
                     <td><?= $item['qty']  ?></td>
                     <td><?= $item['subtotal']; ?></td>
@@ -224,7 +216,7 @@ $mpdf->SetHTMLHeader('
         <tr>
             <td class=" w-25" style="vertical-align: top;"><img src="../assets/images/logo.png"></td>
             <td class="center w-50 mistral">LAWLESS BURGERBAR</td>
-            <td class="center w-25"  style="vertical-align: bottom;">PURCHASE ORDER</td>
+            <td class="center w-25"  style="vertical-align: bottom;">PRODUK MASUK</td>
             
         </tr>
     </table>
