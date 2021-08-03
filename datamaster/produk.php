@@ -368,7 +368,8 @@ $juhal = "Produk";
         //     }
         // })
 
-        $('.tombol-edit').on('click', function() {
+        // $('.tombol-edit').on('click', function() {
+        $('#datatable').on('click', '.tombol-edit', function() {
 
 
             const nama = $(this).data('nama');
@@ -448,7 +449,8 @@ $juhal = "Produk";
             }
         })
 
-        $('.tombol-deleteproduk').click(function(e) {
+        // $('.tombol-deleteproduk').click(function(e) {
+        $('#datatable').on('click', '.tombol-deleteproduk', function(e) {
             e.preventDefault();
             //alert('hapus');
             //var delete = 'delete';

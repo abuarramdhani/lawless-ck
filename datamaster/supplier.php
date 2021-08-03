@@ -309,7 +309,8 @@ $juhal = "Supplier";
         //     }
         // })
 
-        $('.tombol-edit').on('click', function() {
+        // $('.tombol-edit').on('click', function() {
+        $('#datatable').on('click', '.tombol-edit', function() {
 
             const id = $(this).data('id');
             const nama = $(this).data('nama');
@@ -379,7 +380,8 @@ $juhal = "Supplier";
             }
         })
 
-        $('.tombol-deletesupplier').click(function(e) {
+        // $('.tombol-deletesupplier').click(function(e) {
+        $('#datatable').on('click', '.tombol-deletesupplier', function(e) {
             e.preventDefault();
             //alert('hapus');
             //var delete = 'delete';
@@ -394,7 +396,10 @@ $juhal = "Supplier";
                 confirmButtonText: "Ya, Hapus!",
                 cancelButtonText: "Tidak!",
                 closeOnConfirm: false,
-                closeOnCancel: false
+                closeOnCancel: false,
+                beforeSend: function() {
+                    $('.spinn').show();
+                },
             }, function(isConfirm) {
                 if (isConfirm) {
 

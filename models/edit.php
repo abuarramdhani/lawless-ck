@@ -256,12 +256,36 @@ if (isset($_POST["updateproyek"])) {
     email = '$email',
     outlet = 'OUT00$outlet',
     jabatan = 'JAB00$jabatan'
-WHERE id = $id
-";
+    WHERE id = $id
+                ";
     $masuk_data = mysqli_query($conn, $query);
     if ($masuk_data) {
         echo 3;
     } else {
+        echo 1;
+    }
+} elseif (isset($_POST["update-outlet"])) {
+    // var_dump('ok');
+    $kode = $_POST['update-outlet'];
+    $name = $_POST['unama'];
+    $notelp = $_POST['unotelp'];
+
+    // var_dump($kode);
+    // var_dump($name);
+    // var_dump($notelp);
+    // var_dump($outlet);
+    // var_dump($jabatan);
+    // die;
+    $query = "UPDATE companypanel SET
+    nama = '$name',
+    notelp = '$notelp'
+    WHERE kodeoutlet = '$kode'
+                ";
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        var_dump($masuk_data);
         echo 1;
     }
 }

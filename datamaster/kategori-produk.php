@@ -239,7 +239,9 @@ $juhal = "Kategori Produk";
             }
         })
 
-        $('.tombol-edit').on('click', function() {
+        // $('.tombol-edit').on('click', function() {
+        $('#datatable').on('click', '.tombol-edit', function() {
+
 
             const id = $(this).data('id');
             const nama = $(this).data('nama');
@@ -300,7 +302,8 @@ $juhal = "Kategori Produk";
             }
         })
 
-        $('.tombol-deletekategoriproduk').click(function(e) {
+        // $('.tombol-deletekategoriproduk').click(function(e) {
+        $('#datatable').on('click', '.tombol-deletekategoriproduk', function(e) {
             e.preventDefault();
             //alert('hapus');
             //var delete = 'delete';

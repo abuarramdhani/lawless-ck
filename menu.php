@@ -86,7 +86,7 @@ if (!isset($_SESSION['email'])) {
                                 <h3 class="panel-title text-center"><?= $row['menu']; ?></h3>
                             </div>
                             <div class="panel-body text-center">
-                                <a href="<?= $row['url']; ?>"><img src="assets/images/<?= $row['gambar']; ?>" style="width: 125px;" class="img-circle"></a>
+                                <a href="<?= $row['url']; ?>/index.php"><img src="assets/images/<?= $row['gambar']; ?>" style="width: 125px;" class="img-circle"></a>
                             </div>
                         </div>
                     </div>

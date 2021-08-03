@@ -124,9 +124,11 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                                     </div>
                                 </div>
                                 <div class="form-group  text-center" style="margin-top: 10px;">
-                                    <button type="submit" class="btn btn-purple waves-effect waves-light mr-1 m-t-10" id="simpan">
-                                        <span>Simpan</span>
-                                    </button>
+                                    <?php if ($_SESSION['kodeoutlet'] != 'OUT001') : ?>
+                                        <button type="submit" class="btn btn-purple waves-effect waves-light mr-1 m-t-10" id="simpan">
+                                            <span>Simpan</span>
+                                        </button>
+                                    <?php endif ?>
                                 </div>
                             </div>
                         </div>

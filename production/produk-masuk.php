@@ -166,9 +166,11 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                         <!-- <button class="btn btn-danger waves-effect waves-light mr-1">
                                             <span>Batal</span>
                                         </button> -->
-                                        <button type="submit" class="btn btn-purple waves-effect waves-light mr-1" id="">
-                                            <span>Simpan</span>
-                                        </button>
+                                        <?php if ($_SESSION['kodeoutlet'] != 'OUT001') : ?>
+                                            <button type="submit" class="btn btn-purple waves-effect waves-light mr-1" id="">
+                                                <span>Simpan</span>
+                                            </button>
+                                        <?php endif ?>
                                     </div>
                                     <!-- <div class="form-group">
                                     <label class="col-sm-2 control-label">Total</label>

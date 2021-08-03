@@ -9,7 +9,7 @@ if (!isset($_SESSION['email'])) {
 }
 include "../vendor/autoload.php";
 require '../include/fungsi.php';
-include '../controller/c_detail_storebahan.php';
+include '../controller/c_detail_storeproduk.php';
 $nama_dokumen = 'PO-' . $detail['No_form']; //Beri nama file PDF hasil.
 
 $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
@@ -169,10 +169,10 @@ ob_start();
 
             <?php $i = 1 ?>
 
-            <?php foreach ($item_storebahan as $item) : ?>
+            <?php foreach ($item_storeproduk as $item) : ?>
                 <tr>
                     <td><?= $i++;  ?></td>
-                    <td><?= $item['namabahan']; ?></td>
+                    <td><?= $item['namaproduk']; ?></td>
                     <td><?= $item['harga']; ?></td>
                     <td><?= $item['qty']  ?></td>
                     <td><?= $item['subtotal']; ?></td>

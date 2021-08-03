@@ -10,7 +10,7 @@ if (!isset($_SESSION['email'])) {
 include "../vendor/autoload.php";
 require '../include/fungsi.php';
 include '../controller/c_detail_storebahan.php';
-$nama_dokumen = 'PO-' . $detail['No_form']; //Beri nama file PDF hasil.
+$nama_dokumen = 'Surat Jalan-' . $detail['No_form']; //Beri nama file PDF hasil.
 
 $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
 $fontDirs = $defaultConfig['fontDir'];
@@ -29,7 +29,6 @@ $mpdf = new \Mpdf\Mpdf([
     ],
 ]);
 ob_start();
-
 
 // var_dump($item_po);
 // die;
@@ -130,7 +129,7 @@ ob_start();
 
     <table class="mb-3 mt-100">
         <tr>
-            <th>No Form PO</th>
+            <th>No Form</th>
             <td>: <?= $detail['No_form']; ?></td>
         </tr>
         <tr>
@@ -143,11 +142,9 @@ ob_start();
         </tr>
         <tr>
             <th>Status</th>
-            <?php if ($detail['status'] == 1) : ?>
-                <td>: <span class="badge badge-success">KONFIRMASI</span></td>
-            <?php else : ?>
-                <td>: <span class="badge badge-warning">:Belum di Konfirmasi</span></td>
-            <?php endif; ?>
+
+            <td>: <span class="badge badge-success">KONFIRMASI</span></td>
+
         </tr>
     </table>
 
@@ -220,7 +217,7 @@ $mpdf->SetHTMLHeader('
         <tr>
             <td class=" w-25" style="vertical-align: top;"><img src="../assets/images/logo.png"></td>
             <td class="center w-50 mistral">LAWLESS BURGERBAR</td>
-            <td class="center w-25"  style="vertical-align: bottom;">PURCHASE ORDER</td>
+            <td class="center w-25"  style="vertical-align: bottom;">SURAT JALAN</td>
             
         </tr>
     </table>

@@ -232,8 +232,8 @@ $juhal = "Jabatan";
             }
         })
 
-        $('.tombol-edit').on('click', function() {
-
+        // $('.tombol-edit').on('click', function() {
+        $('#datatable').on('click', '.tombol-edit', function() {
             const kodejabatan = $(this).data('kodejabatan');
             const namajabatan = $(this).data('nama');
 
@@ -295,7 +295,8 @@ $juhal = "Jabatan";
             }
         })
 
-        $('.tombol-deletejabatan').click(function(e) {
+        // $('.tombol-deletejabatan').click(function(e) {
+        $('#datatable').on('click', '.tombol-deletejabatan', function(e) {
             e.preventDefault();
             //alert('hapus');
             //var delete = 'delete';

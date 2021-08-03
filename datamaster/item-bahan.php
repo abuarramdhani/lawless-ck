@@ -269,7 +269,8 @@ $juhal = "Item Bahan";
             }
         })
 
-        $('.tombol-edit').on('click', function() {
+        // $('.tombol-edit').on('click', function() {
+        $('#datatable').on('click', '.tombol-edit', function() {
 
             const kodebahan = $(this).data('kodebahan');
             const namabahan = $(this).data('namabahan');
@@ -393,7 +394,9 @@ $juhal = "Item Bahan";
         //     }
         // })
 
-        $('.tombol-deletebahan').click(function(e) {
+        // $('.tombol-deletebahan').click(function(e) {
+        $('#datatable').on('click', '.tombol-deletebahan', function(e) {
+
             e.preventDefault();
             //alert('hapus');
             //var delete = 'delete';
