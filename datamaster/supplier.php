@@ -108,6 +108,7 @@ $juhal = "Supplier";
                                         </tr>
                                     </thead>
 
+
                                     <tbody>
                                         <?php $i = 1; ?>
                                         <?php foreach ($kodesupplierr as $row) : ?>
@@ -119,8 +120,11 @@ $juhal = "Supplier";
                                                 <td><?= $row["nohp"] ?></td>
                                                 <td>
                                                     <a class="on-default edit-row badge badge-success tombol-edit" data-id="<?= $row['id']; ?>" data-nama="<?= $row['namasupplier']; ?>" data-nohp="<?= $row['nohp']; ?>" data-alamat="<?= $row['alamatsupplier']; ?>" id=""><i class="fa fa-pencil"></i></a>
-                                                    <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-                                                    <a class="on-default remove-row badge badge-danger tombol-deletesupplier"><i class="fa fa-trash-o"></i></a>
+                                                    <?php if ($_SESSION['userlevel'] == 0) : ?>
+                                                        |
+                                                        <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
+                                                        <a class="on-default remove-row badge badge-danger tombol-deletesupplier"><i class="fa fa-trash-o"></i></a>
+                                                    <?php endif ?>
                                                 </td>
 
                                             </tr>
@@ -254,6 +258,8 @@ $juhal = "Supplier";
                             })
                             location.reload();
 
+                        } else if (hasil == 4) {
+                            swal("Nama Supplier Sudah Terdaftar!", "", "error")
                         }
                     }
                 });

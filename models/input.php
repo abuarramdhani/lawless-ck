@@ -389,13 +389,10 @@ if (isset($_POST['kasmasuk'])) {
     $nohp = htmlspecialchars($_POST["nohp"]);
     $alamat = htmlspecialchars($_POST["alamat"]);
 
-    $ceknama = mysqli_query($conn, "SELECT * FROM supplier WHERE namasupplier ='$nsupplier' ");
+    $ceknama = mysqli_query($conn, "SELECT * FROM supplier WHERE namasupplier ='$nsupplier' and kodeoutlet ='$kodeoutlet' ");
 
     if (mysqli_fetch_assoc($ceknama)) {
-        echo "<script>
-                alert('nama supplier sudah terdaftar');
-                document.location.href = 'supplier';
-            </script>";
+        echo 4;
         return false;
     }
 
@@ -477,25 +474,32 @@ if (isset($_POST['kasmasuk'])) {
     $nhargabeli = strtolower(htmlspecialchars($_POST["nhargabeli"]));
 
 
-    $ceknama = mysqli_query($conn, "SELECT * FROM bahan WHERE namabahan ='$nbahan' ");
+    $ceknama = mysqli_query($conn, "SELECT * FROM bahan WHERE namabahan ='$nbahan' and kodeoutlet ='$kodeoutlet' ");
 
     if (mysqli_fetch_assoc($ceknama)) {
-        echo "<script>
-                alert('nama bahan sudah terdaftar');
-                document.location.href = 'bahan';
-            </script>";
+        echo 4;
         return false;
     }
 
     //query insert data
-    $query = "INSERT INTO bahan 
-                VALUES 
-                ('','$kodeoutlet','$kp','$nbahan','$nhargabeli','','0','0')
+    // $query = "INSERT INTO bahan 
+    //             value 
+    //             ('','$kodeoutlet','$kp','$nbahan','$nhargabeli','0','0','0')
+    //         ";
+    $query = "INSERT INTO bahan SET 
+              kodeoutlet ='$kodeoutlet',
+              kodebahan  = '$kp',
+              namabahan = '$nbahan',
+              hargaj = '0',
+              harga = '$nhargabeli',
+              stok = '0',
+              minstok = '0'
+
             ";
 
     $masuk_data = mysqli_query($conn, $query);
+    // var_dump($masuk_data);
     if ($masuk_data) {
-
         echo 3;
     } else {
         echo 1;
@@ -523,10 +527,7 @@ if (isset($_POST['kasmasuk'])) {
     $ceknama = mysqli_query($conn, "SELECT * FROM companypanel WHERE nama ='$noutlet' ");
 
     if (mysqli_fetch_assoc($ceknama)) {
-        echo "<script>
-                alert('nama outlet sudah terdaftar');
-                document.location.href = 'outlet';
-            </script>";
+        echo 4;
         return false;
     }
 
@@ -566,10 +567,7 @@ if (isset($_POST['kasmasuk'])) {
     $ceknama = mysqli_query($conn, "SELECT * FROM jabatan WHERE namajabatan ='$njabatan' ");
 
     if (mysqli_fetch_assoc($ceknama)) {
-        echo "<script>
-                alert('nama jabatan sudah terdaftar');
-                document.location.href = 'jabatan';
-            </script>";
+        echo 2;
         return false;
     }
 
@@ -609,10 +607,7 @@ if (isset($_POST['kasmasuk'])) {
     $ceknama = mysqli_query($conn, "SELECT * FROM kategoriproduk WHERE namakategoriproduk ='$nkategoriproduk' ");
 
     if (mysqli_fetch_assoc($ceknama)) {
-        echo "<script>
-                alert('nama kategoriproduk sudah terdaftar');
-                document.location.href = 'kategoriproduk';
-            </script>";
+        echo 4;
         return false;
     }
 
@@ -649,34 +644,6 @@ if (isset($_POST['kasmasuk'])) {
     $nkategoriproduk = htmlspecialchars($_POST["nkategoriproduk"]);
     $nproduk = strtolower(htmlspecialchars($_POST["nproduk"]));
     $nharga = htmlspecialchars($_POST["nharga"]);
-    $ngambar = $_FILES["ngambar"];
-    // var_dump($ngambar);
-
-    $ekstensi_diperbolehkan    = array('png', 'jpg', 'jpeg');
-
-    if ($ngambar['name'] != "") {
-        $gambar = $ngambar['name'];
-    } else {
-        $gambar = "no_image.jpg";
-    }
-    $x = explode('.', $gambar);
-    $ekstensi = strtolower(end($x));
-
-
-    $gambar = uniqid();
-    $gambar .= '.';
-    $gambar .=   $ekstensi;
-
-    $ukuran    = $ngambar['size'];
-    $file_tmp = $ngambar['tmp_name'];
-
-    // var_dump($gambar);
-    // var_dump($x);
-    // var_dump($ekstensi);
-    // // var_dump($ukuran);
-    // // var_dump($file_tmp);
-    // die;
-
 
     $ceknama = mysqli_query($conn, "SELECT * FROM produk WHERE namaproduk ='$nproduk' ");
 
@@ -685,34 +652,72 @@ if (isset($_POST['kasmasuk'])) {
         return false;
     }
 
+    $ngambar = $_FILES["ngambar"];
+    if ($ngambar['name'] != "") {
+        $gambar = $ngambar['name'];
+    } else {
+        $gambar = "no_image.jpg";
+    }
+    if (!empty($_FILES["ugambar"]['name'])) {
+
+        // var_dump($ngambar);
+
+        $ekstensi_diperbolehkan    = array('png', 'jpg', 'jpeg');
+
+
+        $x = explode('.', $gambar);
+        $ekstensi = strtolower(end($x));
+
+
+        $gambar = uniqid();
+        $gambar .= '.';
+        $gambar .=   $ekstensi;
+
+        $ukuran    = $ngambar['size'];
+        $file_tmp = $ngambar['tmp_name'];
+        if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
+            // if ($ukuran < 2044070) {
+            if ($ukuran > 0) {
+                move_uploaded_file($file_tmp, '../assets/images/products/' . $gambar);
+                $query = "INSERT INTO produk VALUES ('','$kp','$nkategoriproduk','$nproduk','$nharga','$gambar','0','0')";
+                $masuk_data = mysqli_query($conn, $query);
+                if ($masuk_data) {
+                    echo 3;
+                } else {
+                    echo 1;
+                }
+            } else {
+                echo 4;
+            }
+        } else {
+            echo 5;
+        }
+    } else {
+        $query = "INSERT INTO produk VALUES ('','$kp','$nkategoriproduk','$nproduk','$nharga','$gambar','0','0')";
+        $masuk_data = mysqli_query($conn, $query);
+        if ($masuk_data) {
+            echo 3;
+        } else {
+            echo 1;
+        }
+    }
+
     //query insert data
 
 
-    if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
-        if ($ukuran < 2044070) {
-            move_uploaded_file($file_tmp, '../assets/images/products/' . $gambar);
-            $query = "INSERT INTO produk VALUES ('','$kp','$nkategoriproduk','$nproduk','$nharga','$gambar','0','0')";
-            $masuk_data = mysqli_query($conn, $query);
-            if ($masuk_data) {
-                echo 3;
-            } else {
-                echo 1;
-            }
-        } else {
-            echo 4;
-        }
-    } else {
-        echo 5;
-    }
+
 } else if (isset($_POST['inputformpo'])) {
 
     $namabarang       = $_POST['namabarang'];
+    $kodebahan       = $_POST['kodebahan'];
     $harga         = $_POST['harga'];
     $jumlah     = $_POST['jumlah'];
     $subtotal    = $_POST['subtotal'];
     $kodesupplier    = $_POST['supplier'];
     $total_keseluruhan    = $_POST['total_keseluruhan'];
     $namaoutlet = $_SESSION['outlet'];
+
+
 
     $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
     // $outlet['kodeoutlet'];
@@ -750,19 +755,19 @@ if (isset($_POST['kasmasuk'])) {
     // die;
 
     // bahan
-    foreach ($namabarang as $row) {
+    // foreach ($namabarang as $row) {
 
-        $sql = "SELECT * 
-        FROM bahan 
-        WHERE namabahan = '$row'
-        ";
-        $result = mysqli_query($conn, $sql);
+    //     $sql = "SELECT * 
+    //     FROM bahan 
+    //     WHERE namabahan = '$row'
+    //     ";
+    //     $result = mysqli_query($conn, $sql);
 
-        while ($d = mysqli_fetch_array($result)) {
-            $kodebahan[] = $d['kodebahan'];
-            // echo $kodebahan;
-        }
-    }
+    //     while ($d = mysqli_fetch_array($result)) {
+    //         $kodebahan[] = $d['kodebahan'];
+    //         // echo $kodebahan;
+    //     }
+    // }
     //   ambil stok
     // foreach ($kodebahan as $row) {
 
@@ -795,27 +800,29 @@ if (isset($_POST['kasmasuk'])) {
         // WHERE kodebahan='$kodebahan[$i]'");
 
         mysqli_query($conn, "insert into item_po set
-            No_form    = '$No_form',
-            kodebahan      = '$kodebahan[$i]',
-            qty = '$jumlah[$i]',
-            harga ='$harga[$i]',
-            subtotal = '$subtotal[$i]'
-        ");
+                No_form    = '$No_form',
+                kodebahan      = '$kodebahan[$i]',
+                qty = '$jumlah[$i]',
+                harga ='$harga[$i]',
+                subtotal = '$subtotal[$i]'
+            ");
     }
 
 
     mysqli_query($conn, "insert into form_po set
-            No_form    = '$No_form',
-            kodeoutlet      = '$kodeoutlet',
-            kodesupplier = '$kodesupplier',
-            date ='$dt_input',
-            status_ck = '0',
-            status_ot = '0'
-        ");
+                No_form    = '$No_form',
+                kodeoutlet      = '$kodeoutlet',
+                kodesupplier = '$kodesupplier',
+                date ='$dt_input',
+                status = '0'
+            ");
 
 
 
     $result = mysqli_affected_rows($conn);
+
+
+
 
     //kembali ke halaman sebelumnya
     $_SESSION["msg"] = "$result";
@@ -1061,7 +1068,6 @@ if (isset($_POST['kasmasuk'])) {
         }
     }
 
-
     //   ambil stok
     foreach ($kodebahan as $row) {
 
@@ -1189,7 +1195,6 @@ if (isset($_POST['kasmasuk'])) {
         }
     }
 
-
     //   ambil stok
     foreach ($kodebahan as $row) {
 
@@ -1255,6 +1260,8 @@ if (isset($_POST['kasmasuk'])) {
     $subtotal = $_POST['subtotal'];
     $kodesupplier = $_POST['kodesupplier'];
 
+
+
     // $total = count($namabarang);
     $dt_input = date('Y-m-d');
     $date = date('ymd');
@@ -1311,9 +1318,14 @@ if (isset($_POST['kasmasuk'])) {
             status_ck = '0'
         ");
 
-
+    // var_dump($nopo);
+    // die;
 
     $result = mysqli_affected_rows($conn);
+
+    if ($result) {
+        mysqli_query($conn, "UPDATE form_po SET status='4' WHERE No_form='$nopo'");
+    }
 
     //kembali ke halaman sebelumnya
     $_SESSION["msg"] = "$result";
@@ -1351,7 +1363,16 @@ if (isset($_POST['kasmasuk'])) {
             // $setfrom1 = 'Lawless HO Office';
             $secret = '#$eCr37';
             $token = MD5($email . $secret);
-            $linkhref = "localhost/lawless-ck/confirm?email=$email&token=$token";
+            $link = query("SELECT baseurl FROM companypanel WHERE kodeoutlet = '$outlet'")[0]['baseurl'];
+            // var_dump($_SERVER['HTTP_HOST']);
+            // var_dump($link);
+            // die;
+            if ($_SERVER['HTTP_HOST'] != "localhost") {
+                $linkhref = "https://$link.net/confirm?email=$email&token=$token";
+            } else {
+                $linkhref = "localhost/lawless-ck/confirm?email=$email&token=$token";
+            }
+
 
             include '../mail/mail_confirmpass.php';
             include '../models/sendmail.php';

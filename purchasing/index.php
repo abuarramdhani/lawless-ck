@@ -8,6 +8,7 @@ require '../include/fungsi.php';
 require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
+include '../models/information.php';
 // require '../controller/c_kaskecil.php';
 // require '../controller/c_data-po.php';
 $tabel = 'form_po';
@@ -43,6 +44,7 @@ $juhal = "Data PO";
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     <h2 class="modal-title">Transaksi Pemasukan Kas</h2>
                                 </div>
+
                                 <form id="formkasmasuk">
                                     <div class="modal-body">
                                         <div class="row">
@@ -179,22 +181,20 @@ $juhal = "Data PO";
                     <div class="row">
                         <div class="col-lg-7">
                             <div class="card-box">
-
                                 <div class="dropdown pull-right">
-
                                     <!--  <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button> -->
                                 </div>
                                 <div class="dropdown pull-centre">
-                                    <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#input-close-modal">Pemasukan : Rp. 0
-                                    </button>
-                                    <button class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#output-close-modal">
-                                        Pengeluaran : Rp. 0</button>
-
-                                    <!-- <button class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#output-close-modal">
-                                        Saldo Kas : Rp. 0</button> -->
-
-                                    <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#output-close-modal">
-                                        Saldo Kas : Rp. 0</button>
+                                    <a class="btn btn-danger  waves-effect waves-light">Check : <?= $check['COUNT(status)'] ?>
+                                    </a>
+                                    <a class="btn  btn-custom waves-effect waves-light">
+                                        Checked by Admin : <?= $c_admin['COUNT(status)'] ?></a>
+                                    <a class="btn  btn-info waves-effect waves-light">
+                                        Checked by Manager : <?= $c_manager['COUNT(status)'] ?></a>
+                                    <a class="btn  btn-primary waves-effect waves-light">
+                                        Delivery : <?= $delivery['COUNT(status)'] ?></a>
+                                    <a class="btn  btn-success waves-effect waves-light">
+                                        Delivered : <?= $delivered['COUNT(status)'] ?></a>
                                 </div>
 
                             </div>
@@ -243,16 +243,16 @@ $juhal = "Data PO";
                                                     <td><?= $dp['No_form']; ?></td>
                                                     <td><?= $dp['namasupplier'] ?></td>
 
-                                                    <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
-                                                        <td><span class="label label-danger">Confirm</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
-                                                        <td><span class="label label-info">Confirmed</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 0) : ?>
-                                                        <td><span class="label label-success">Checked by Manager</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 1) : ?>
-                                                        <td><span class="label label-success">Checked by CK</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
+                                                    <?php if ($dp['status'] == 0) : ?>
+                                                        <td><span class="label label-danger">Check</span></td>
+                                                    <?php elseif ($dp['status'] == 1) : ?>
+                                                        <td><span class="label label-default">Checked by Admin</span></td>
+                                                    <?php elseif ($dp['status'] == 2) : ?>
+                                                        <td><span class="label label-info">Checked by Manager</span></td>
+                                                    <?php elseif ($dp['status'] == 3) : ?>
                                                         <td><span class="label label-primary">Delivery</span></td>
+                                                    <?php elseif ($dp['status'] == 4 or $dp['status'] == 5) : ?>
+                                                        <td><span class="label label-success">Delivered</span></td>
                                                     <?php endif ?>
 
                                                     <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-primary btn-xs m-b-5">Details</a>

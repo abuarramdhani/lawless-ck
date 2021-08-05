@@ -40,274 +40,98 @@ include '../include/filter_date.php';
                 <?php unset($_SESSION['msg']); ?>
             <?php endif ?>
             <!-- akhir terima msg -->
-            <?php if ($_SESSION['kodeoutlet'] == "OUT002" or $_SESSION['kodeoutlet'] == "OUT001") : ?>
-
-                <!-- Start content -->
-                <div class="content">
-                    <div class="container">
-
-                        <div class="row">
-                            <div class="col-lg-7">
-                                <div class="card-box">
-
-                                    <!-- <div class="dropdown pull-right">
-                                 <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button>
-                            </div> -->
-                                    <div class="dropdown pull-centre">
-                                        <h4 class="header-title m-t-0 m-b-30">Data Order Bahan</h4>
-                                    </div>
-
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-lg-5">
-                                <div class="card-box">
-
-                                    <form method="post" action="">
-                                        <input type="hidden" name="filter-date">
-                                        <?php require '../include/tgltahun.php'; ?>
-                                    </form>
-
-                                </div>
-                            </div><!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="card-box table-responsive">
 
 
-                                    <table id="datatable-buttons" class="table table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Tanggal</th>
-                                                <th>No. Form order bahan</th>
-                                                <th>Outlet</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
+            <!-- Start content -->
+            <div class="content">
+                <div class="container">
 
-                                        <tbody>
-                                            <?php $i = 1 ?>
-                                            <?php foreach ($data as $dp) : ?>
-                                                <tr>
-                                                    <td><?= $i++; ?></td>
-                                                    <td><?= $dp['date']; ?></td>
-                                                    <td><?= $dp['No_form']; ?></td>
-                                                    <td><?= $dp['nama'] ?></td>
-                                                    <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
-                                                        <td><span class="label label-danger">Confirm</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
-                                                        <td><span class="label label-info">Confirmed</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 0) : ?>
-                                                        <td><span class="label label-success">Checked by Manager</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 1) : ?>
-                                                        <td><span class="label label-success">Checked by CK</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
-                                                        <td><span class="label label-primary">Delivery</span></td>
-                                                    <?php endif ?>
-
-                                                    <td><a href="detail-bahan.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
-                                                    </td>
-                                                </tr>
-
-                                            <?php endforeach ?>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div><!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                    </div> <!-- container -->
-
-                </div> <!-- content -->
-            <?php else : ?>
-                <!-- Start content -->
-                <!-- terima msg -->
-                <?php if (isset($_SESSION['msg'])) : ?>
-                    <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
-                    <?php unset($_SESSION['msg']); ?>
-                <?php endif ?>
-                <!-- akhir terima msg -->
-
-                <div class="content">
-                    <div class="container" style="margin-top: 5px;">
+                    <div class="row">
                         <div class="col-lg-6">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <form>
-                                        <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <button type="submit" class="btn waves-effect waves-light btn-primary"><i class="fa fa-search"></i></button>
-                                            </span>
-                                            <input type="text" id="search" name="keyword_form-po" class="form-control" placeholder="Search" oninput="loadData();">
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- <?php var_dump($bahan); ?> -->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="card-box table-responsive" style=" margin-top: 10px;">
-                                        <!-- <div class="dropdown pull-right">
-                                        <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown"
-                                            aria-expanded="false">
-                                            <i class="zmdi zmdi-more-vert"></i>
-                                        </a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">Action</a></li>
-                                            <li><a href="#">Another action</a></li>
-                                            <li><a href="#">Something else here</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Separated link</a></li>
-                                        </ul>
-                                    </div>
-
-                                    <h4 class="header-title m-t-0 m-b-30">Default Example</h4> -->
-                                        <?php $i = 1 ?>
-                                        <table id="barang" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Kode</th>
-                                                    <th>Item</th>
-                                                    <th>Harga</th>
-                                                    <th data-priority="1">Aksi</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div><!-- end col -->
-                            </div>
-                            <!-- end row -->
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="row">
-                                <form class="form-horizontal" role="formpo" method="POST" action="../models/input.php">
-                                    <input type="hidden" name="inputformstorebahan">
-                                    <div class="card-box" style="height:350px; overflow-y: auto;">
-                                        <div class="col-lg-12">
-                                            <div class="responsive-table-plugin">
-                                                <div class="table-rep-plugin">
-                                                    <div class="table-responsive" data-pattern="priority-columns">
-                                                        <table id="order" class="table table-striped mb-0">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Nama Barang</th>
-                                                                    <th data-priority="1">Harga</th>
-
-                                                                    <th data-priority="3">Jumlah</th>
-
-                                                                    <th data-priority="1">Subtotal</th>
-                                                                    <th data-priority="1">Aksi</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <!-- <tr>
-                                                                <th><input readonly type="text" name="kodesupplier[]" id="" value="1202929"></th>
-                                                                <td>20000</td>
-                                                                <td width="5"><input type="number" width="5"></td>
-                                                                <td>40000</td>
-                                                                <td><button class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
-                                                                        <i class="fa fa-remove"></i> </button></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><input readonly type="text" name="kodesupplier[]" id="" value="9002929"></th>
-                                                                <td>20000</td>
-                                                                <td width="5"><input type="number" width="5"></td>
-                                                                <td>40000</td>
-                                                                <td><button class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
-                                                                        <i class="fa fa-remove"></i> </button></td>
-                                                            </tr> -->
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="card-box" style="height:170px; ">
-
-
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label" name="total_keseluruhan">Total</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" readonly name="total_keseluruhan" id="total-harga" class="form-control" value="Rp. 0">
-                                                <!-- <p class="form-control-static" id="total-harga" name="total_keseluruhan"></p> -->
-                                            </div>
-                                        </div>
-                                        <!-- <?php $kodesupplierr = query("SELECT * FROM supplier ORDER BY id DESC "); ?>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Supplier</label>
-                                            <div class="col-sm-10">
-                                                <select class="form-control select2" name="supplier">
-                                                    <option>Pilih Supplier</option>
-                                                    <?php foreach ($kodesupplierr as $row) : ?>
-                                                        <option value="<?= $row["kodesupplier"] ?>">
-                                                            <?= ucwords($row["namasupplier"]) ?></option>
-                                                    <?php endforeach; ?>
-
-                                                </select>
-
-                                            </div>
-                                        </div> -->
-
-                                        <div class="form-group  text-center" style="margin-top: 10px;">
-                                            <!-- <button class="btn btn-danger waves-effect waves-light mr-1">
-                                                <span>Batal</span>
-                                            </button> -->
-                                            <button type="submit" class="btn btn-purple waves-effect waves-light mr-1" id="">
-                                                <span>Simpan</span>
-                                            </button>
-                                        </div>
-
-
-
-                                        <!-- <div class="form-group">
-                                    <label class="col-sm-2 control-label">Total</label>
-                                    <div class="col-sm-10">
-                                        <p class="form-control-static">Rp. 90.000.00</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Suplier</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="form-group  text-center" style="margin-top: 10px;">
-                                    <button class="btn btn-danger waves-effect waves-light mr-1">
-                                        <span>Cancel</span>
-                                    </button>
-                                    <button class="btn btn-purple waves-effect waves-light mr-1"> <span>Save</span>
-                                    </button> -->
-
-                                    </div>
+                            <div class="card-box">
+                                <form method="post" action="">
+                                    <?php require '../include/tglharian.php'; ?>
                                 </form>
                             </div>
-                        </div>
+                        </div><!-- end col -->
+                        <div class="col-lg-6">
+                            <div class="card-box">
+                                <form method="post" action="">
+                                    <?php require '../include/tglrange.php'; ?>
+                                </form>
+                            </div>
+                        </div><!-- end col -->
                     </div>
+                    <!-- end row -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card-box">
+                                <form method="post" action="">
+                                    <input type="hidden" name="filter-date">
+                                    <?php require '../include/tgltahun.php'; ?>
+                                </form>
+                            </div>
+                        </div><!-- end col -->
+
+                    </div>
+                    <!-- end row -->
+                    <!-- end row -->
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+
+
+                                <table id="datatable-buttons" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tanggal</th>
+                                            <th>No. Form order bahan</th>
+                                            <th>Outlet</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <?php $i = 1 ?>
+                                        <?php foreach ($data as $dp) : ?>
+                                            <tr>
+                                                <td><?= $i++; ?></td>
+                                                <td><?= $dp['date']; ?></td>
+                                                <td><?= $dp['No_form']; ?></td>
+                                                <td><?= $dp['nama'] ?></td>
+                                                <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
+                                                    <td><span class="label label-danger">Confirm</span></td>
+                                                <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
+                                                    <td><span class="label label-info">Confirmed</span></td>
+                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 0) : ?>
+                                                    <td><span class="label label-success">Checked by Manager</span></td>
+                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 1) : ?>
+                                                    <td><span class="label label-success">Checked by CK</span></td>
+                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
+                                                    <td><span class="label label-primary">Delivery</span></td>
+                                                <?php endif ?>
+
+                                                <td><a href="detail-bahan.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
+                                                </td>
+                                            </tr>
+
+                                        <?php endforeach ?>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
                 </div> <!-- container -->
 
+            </div> <!-- content -->
 
-            <?php endif; ?>
+
 
 
         </div> <!-- content -->

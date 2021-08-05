@@ -11,5 +11,7 @@ JOIN supplier
 ON form_po.kodesupplier = supplier.kodesupplier
 WHERE No_form = '$No_form'")[0];
 
-$sot = $detail['status_ot'];
-$sck = $detail['status_ck'];
+// $sot = $detail['status_ot'];
+// $sck = $detail['status_ck'];
+
+$status = $detail['status'];

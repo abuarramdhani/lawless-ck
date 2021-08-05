@@ -116,9 +116,11 @@ $juhal = "Item Bahan";
                                                 <td><?= $row["stok"] ?></td>
                                                 <td><?= $row["minstok"] ?></td>
                                                 <td>
-                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-kodebahan="<?= $row["kodebahan"] ?>" data-namabahan="<?= $row['namabahan']; ?>" data-harga="<?= $row['harga']; ?>" data-hargaj="<?= $row["hargaj"] ?>" data-stok="<?= $row['stok']; ?>" data-mstok="<?= $row['minstok']; ?>"><i class="fa fa-pencil"></i></a> |
+                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-kodebahan="<?= $row["kodebahan"] ?>" data-namabahan="<?= $row['namabahan']; ?>" data-harga="<?= $row['harga']; ?>" data-hargaj="<?= $row["hargaj"] ?>" data-stok="<?= $row['stok']; ?>" data-mstok="<?= $row['minstok']; ?>"><i class="fa fa-pencil"></i></a>
                                                     <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-                                                    <a class="on-default remove-row badge badge-danger tombol-deletebahan"><i class="fa fa-trash-o"></i></a>
+                                                    <?php if ($_SESSION['userlevel'] == 0) : ?>
+                                                        | <a class="on-default remove-row badge badge-danger tombol-deletebahan"><i class="fa fa-trash-o"></i></a>
+                                                    <?php endif ?>
                                                 </td>
 
                                             </tr>
@@ -263,6 +265,8 @@ $juhal = "Item Bahan";
                             })
                             location.reload();
 
+                        } else if (hasil == 4) {
+                            swal("Nama Bahan Sudah Terdaftar!", "", "error")
                         }
                     }
                 });

@@ -146,9 +146,12 @@ $juhal = "Produk";
                                                 <td><?= $row["stok"] ?></td>
                                                 <td><?= $row["minstok"] ?></td>
                                                 <td>
-                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-kodekproduk="<?= $row['kodekategoriproduk']; ?>" data-kode="<?= $row['kodeproduk']; ?>" data-nama="<?= $row['namaproduk']; ?>" data-harga="<?= $row['harga']; ?>" data-minstok="<?= $row['minstok']; ?>"><i class="fa fa-pencil"></i></a> |
-                                                    <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-                                                    <a class="on-default remove-row badge badge-danger tombol-deleteproduk"><i class="fa fa-trash-o"></i></a>
+                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-gambar="<?= $row['gambar']; ?>" data-kodekproduk="<?= $row['kodekategoriproduk']; ?>" data-kode="<?= $row['kodeproduk']; ?>" data-nama="<?= $row['namaproduk']; ?>" data-harga="<?= $row['harga']; ?>" data-minstok="<?= $row['minstok']; ?>"><i class="fa fa-pencil"></i></a>
+                                                    <?php if ($_SESSION['userlevel'] == 0) : ?>
+                                                        |
+                                                        <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
+                                                        <a class="on-default remove-row badge badge-danger tombol-deleteproduk"><i class="fa fa-trash-o"></i></a>
+                                                    <?php endif ?>
                                                 </td>
                                             </tr>
                                             <?php $i++; ?>
@@ -195,6 +198,12 @@ $juhal = "Produk";
                         <div class="row">
                             <input type="hidden" class="kode" name="update-produk">
                             <div class="row">
+                                <div class="col-md-12 text-center m-b-10">
+
+                                    <img class="gambar img-thumbnail" style="height: 250px;width: 250px;" name="gambar">
+                                    <!-- <input type="text" class="form-control url" id="ugambar" name="ugambar"> -->
+
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="unama" class="control-label">Nama Produk</label>
@@ -228,6 +237,7 @@ $juhal = "Produk";
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="namamenu" class="control-label">gambar</label>
@@ -235,6 +245,8 @@ $juhal = "Produk";
                                         <!-- <input type="text" class="form-control url" id="ugambar" name="ugambar"> -->
                                     </div>
                                 </div>
+
+
 
                             </div>
 
@@ -274,9 +286,11 @@ $juhal = "Produk";
             // console.log(ngambar);
             //alert(ngambar)
             if (nkategoriproduk == "Pilih Kategori") {
-                swal("Nama produk belum di isi!", "", "error")
+                swal("Kategori produk blm di pilih!", "", "error")
             } else if (nharga == "") {
                 swal("Harga belum di isi!", "", "error")
+            } else if (nproduk == "") {
+                swal("Nama Produk belum di isi!", "", "error")
             } else {
                 $.ajax({
                     url: '../models/input.php',
@@ -377,11 +391,15 @@ $juhal = "Produk";
             const minstok = $(this).data('minstok');
             const kode = $(this).data('kode');
             const kodekproduk = $(this).data('kodekproduk');
+            const gambar = $(this).data('gambar');
 
 
-
+            $('.gambar').attr("src", "../assets/images/products/" + gambar);
+            $('.gambar').val(gambar);
             $('.kode').val(kode);
+            // $('.gambar').val(gambar);
             $('.kodekproduk').val(kodekproduk);
+            $('#kodekproduk').trigger('change');
             $('.unama').val(nama);
             $('.uhargaj').val(harga);
             $('.uminstok').val(minstok);

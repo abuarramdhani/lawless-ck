@@ -16,7 +16,7 @@ $kode = 'outlet';
 include '../include/filter_date.php';
 
 $bagian = "Inventory";
-$juhal = "Barang Keluar";
+$juhal = "Bahan Keluar";
 ?>
 
 

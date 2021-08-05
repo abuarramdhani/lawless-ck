@@ -104,9 +104,11 @@ $juhal = "Outlet";
                                                 <td><?= ucwords($row["nama"]) ?></td>
                                                 <td><?= $row["notelp"] ?></td>
                                                 <td>
-                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-kode="<?= $row['kodeoutlet']; ?>" data-nama="<?= $row['nama']; ?>" data-notelp="<?= $row['notelp']; ?>"><i class="fa fa-pencil"></i></a> |
+                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-kode="<?= $row['kodeoutlet']; ?>" data-nama="<?= $row['nama']; ?>" data-notelp="<?= $row['notelp']; ?>"><i class="fa fa-pencil"></i></a>
                                                     <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-                                                    <a class="on-default remove-row badge badge-danger tombol-deleteoutlet"><i class="fa fa-trash-o"></i></a>
+                                                    <?php if ($_SESSION['userlevel'] == 0) : ?>
+                                                        | <a class="on-default remove-row badge badge-danger tombol-deleteoutlet"><i class="fa fa-trash-o"></i></a>
+                                                    <?php endif ?>
                                                 </td>
 
                                             </tr>
@@ -232,6 +234,8 @@ $juhal = "Outlet";
                             })
                             location.reload();
 
+                        } else if (hasil == 4) {
+                            swal("Nama Outlet Sudah Terdaftar!", "", "error")
                         }
                     }
                 });

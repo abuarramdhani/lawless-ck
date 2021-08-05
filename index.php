@@ -77,6 +77,9 @@ require 'include/fungsi.php';
                 <form class="form-horizontal m-t-20" id="formmasuk">
                     <input type="hidden" id="login" name="login" value="login">
 
+                    <?php if ($_SERVER['HTTP_HOST'] != "localhost") :?>
+                    <input type="hidden" id="kodeoutlet" name="kodeoutlet" value="<?= $company['kodeoutlet']; ?>">
+                    <?php else: ?>
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <select class="form-control select2" name="kodeoutlet" id="kodeoutlet">
@@ -89,6 +92,7 @@ require 'include/fungsi.php';
                             </select>
                         </div>
                     </div>
+                    <?php endif; ?>
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <input class="form-control" type="email" required="" type="email" id="email" name="email"

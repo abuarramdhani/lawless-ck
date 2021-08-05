@@ -146,12 +146,12 @@ ob_start();
         </tr>
         <tr>
             <th>Status</th>
-            <td>: <span class="badge badge-success">KONFIRMASI</span></td>
-            <!-- <?php if ($detail['status'] == 1) : ?>
-                <td>: <span class="badge badge-success">KONFIRMASI</span></td>
-            <?php else : ?>
-                <td>: <span class="badge badge-warning">:Belum di Konfirmasi</span></td>
-            <?php endif; ?> -->
+
+            <?php if ($detail['status'] == 2) : ?>
+                <td>: <span class="">Checked by Manager</span></td>
+            <?php elseif ($detail['status'] == 3) : ?>
+                <td>: <span class="">Delivery</span></td>
+            <?php endif; ?>
         </tr>
     </table>
 

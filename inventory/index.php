@@ -226,7 +226,7 @@ $juhal = "Data Bahan";
                                             <th>No. Form IN</th>
                                             <th>No. Form PO</th>
                                             <th>Supplier</th>
-                                            <th>Status</th>
+                                            <!-- <th>Status</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -242,7 +242,7 @@ $juhal = "Data Bahan";
                                                     <td><?= $dp['Form_po']; ?></td>
 
                                                     <td><?= $dp['namasupplier'] ?></td>
-                                                    <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
+                                                    <!-- <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
                                                         <td><span class="label label-danger">Confirm</span></td>
                                                     <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
                                                         <td><span class="label label-info">Confirmed</span></td>
@@ -252,7 +252,7 @@ $juhal = "Data Bahan";
                                                         <td><span class="label label-success">Checked by CK</span></td>
                                                     <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
                                                         <td><span class="label label-primary">Delivery</span></td>
-                                                    <?php endif ?>
+                                                    <?php endif ?> -->
 
                                                     <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-xs btn-primary m-b-5">Details</a>
                                                     </td>
