@@ -74,9 +74,11 @@ if (md5($email . $secret) != $token) {
             <div class="text-center">
 
                 <a href="index.html" class="logo"><span><?= ucwords($company['nama']); ?> <span></span></span></a>
+
             </div>
 
             <div class="panel-body">
+                <p class="m-b-0 text-center">Silahkan Isikan Password Anda</p>
                 <form class="form-horizontal m-t-20" id="form-password">
                     <input type="hidden" id="email" name="_email" value="<?= $email ?>">
                     <input type="hidden" name="_token" value="<?= $token ?>">
@@ -97,7 +99,7 @@ if (md5($email . $secret) != $token) {
                     <input type="hidden" name="create-password">
                     <div class="form-group text-center m-t-30">
                         <div class="col-xs-12">
-                            <button class="btn btn-custom btn-bordred btn-block waves-effect waves-light" type="submit" id="tombol-simpan">Simpan</button>
+                            <button class="btn btn-custom btn-bordred btn-block waves-effect waves-light" type="submit" id="tombol-simpan">Simpan Password</button>
                         </div>
                     </div>
                 </form>
@@ -140,17 +142,27 @@ if (md5($email . $secret) != $token) {
                     $("#tombol-simpan").prop('disabled', false);
                 }
             });
-            $("#form-password").on("submit", function(e){
+            $("#form-password").on("submit", function(e) {
                 e.preventDefault();
                 $.ajax({
-                    url : 'models/input.php',
+                    url: 'models/input.php',
                     data: $(this).serialize(),
                     type: 'POST'
-                }).done(function(result){
-                    if(result){
-                        Swal.fire({icon: "success",title: "Berhasil menyimpan password",showConfirmButton: false,timer: 1500});
-                    }else{
-                        Swal.fire({icon: "error",title: "Oops...",text: "Gagal menyimpan password"});
+                }).done(function(result) {
+                    if (result) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Berhasil menyimpan password",
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        window.location.replace('/');
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Gagal menyimpan password"
+                        });
                     }
                 });
             });

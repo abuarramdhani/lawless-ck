@@ -1,9 +1,10 @@
 <?php
+$kodeoutlet = $_SESSION['kodeoutlet'];
 if ($_SESSION['kodeoutlet'] == "OUT001" or $_SESSION['kodeoutlet'] == "OUT000") {
     if (isset($_POST['filter-date'])) {
         $bulan = $_POST['bulan'];
         $tahun = $_POST['tahun'];
-        $kodeoutlet = $_POST['kodeoutlet'];
+
 
         $data = query("SELECT * 
         FROM $tabel
@@ -28,15 +29,16 @@ if ($_SESSION['kodeoutlet'] == "OUT001" or $_SESSION['kodeoutlet'] == "OUT000") 
         FROM $tabel
         JOIN $tabel_join
         ON $tabel.kode$kode = $tabel_join.kode$kode
-        WHERE date 
+        WHERE  $tabel.kodeoutlet ='$kodeoutlet' and date 
         LIKE '$tahun-$bulan%'
         ORDER BY $tabel.id DESC
         ");
-    } else {
+    } else if (!isset($_POST['filter-date'])) {
         $data = query("SELECT *
         FROM $tabel
         JOIN $tabel_join
         ON $tabel.kode$kode = $tabel_join.kode$kode
+        WHERE $tabel.kodeoutlet ='$kodeoutlet'
         ORDER BY $tabel.id DESC");
     }
 }

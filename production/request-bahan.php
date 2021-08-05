@@ -79,6 +79,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                                 <th>Kode</th>
                                                 <th>Item</th>
                                                 <th>Harga</th>
+                                                <th>Stok</th>
                                                 <th data-priority="1">Aksi</th>
                                             </tr>
                                         </thead>
@@ -166,9 +167,11 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                         <!-- <button class="btn btn-danger waves-effect waves-light mr-1">
                                             <span>Batal</span>
                                         </button> -->
-                                        <button type="submit" class="btn btn-purple waves-effect waves-light mr-1" id="">
-                                            <span>Simpan</span>
-                                        </button>
+                                        <?php if ($_SESSION['kodeoutlet'] != 'OUT001') : ?>
+                                            <button type="submit" class="btn btn-purple waves-effect waves-light mr-1" id="">
+                                                <span>Simpan</span>
+                                            </button>
+                                        <?php endif ?>
                                     </div>
                                     <!-- <div class="form-group">
                                     <label class="col-sm-2 control-label">Total</label>
@@ -262,24 +265,27 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
     function loadData() {
         $("#barang>tbody").empty();
         var search = $("#search").val();
-        $.ajax({
-            url: '../controller/c_requestbahan.php',
-            data: {
-                'keyword_form-po': search
-            },
-            type: 'POST'
-        }).done(function(response) {
-            var result = JSON.parse(response);
-            var i = 1;
-            result.forEach(res => {
-                html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan + '</td><td>' + res.harga + '</td>';
-                html += '<td><button id="add" data-id="' + res.id + '" data-nama="' + res.namabahan +
-                    '" data-harga="' + res.harga +
-                    '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
-                i++;
-                $("#barang>tbody").append(html);
+        if (search != '') {
+            $.ajax({
+                url: '../controller/c_requestbahan.php',
+                data: {
+                    'keyword_form-po': search
+                },
+                type: 'POST'
+            }).done(function(response) {
+                var result = JSON.parse(response);
+                var i = 1;
+                result.forEach(res => {
+                    html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan + '</td><td>' + res.harga + '</td><td>' + res.stok + '</td>';
+                    html += '<td><button id="add" data-stok="' + res.stok + '" data-id="' + res.id + '" data-nama="' + res.namabahan +
+                        '" data-harga="' + res.harga +
+                        '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
+                    i++;
+                    $("#barang>tbody").append(html);
+                });
             });
-        });
+        }
+
     }
 
     function totalharga() {
@@ -295,25 +301,44 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
             var id = $(this).data("id");
             var nama = $(this).data("nama");
             var harga = $(this).data("harga");
+            var stok = $(this).data("stok");
             var jumlah = 1;
 
             // html = '<tr><td class="item_nama">' + nama + '</td><td class="harga item">' + harga + '</td><td class="item"><input id="jumlah" type="number" name="jumlah[]" value="' + jumlah + '"></td><td class="total item">' + harga + '</td>';
             // html += '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
             // $("#order>tbody").append(html);
             // totalharga();
-            html =
-                '<tr><td><input readonly type="text" name="namabahan[]"  class="form-control"  value="' +
-                nama +
-                '"></td><td ><input type="text"  readonly  class="form-control harga"  name="harga[]"  value="' +
-                harga +
-                '"></td><td><input id="jumlah" class="form-control" type="number" name="jumlah[]" value="' +
-                jumlah +
-                '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total" id="subtotal_item" value="' +
-                harga + '" ></td>';
-            html +=
-                '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
-            $("#order>tbody").append(html);
+            var check = document.getElementsByClassName(id)[0];
+            if (check != null) {
+                var qty = check.value;
+                var newQty = parseInt(qty) + parseInt(jumlah);
+                check.value = newQty;
+                var price = parseInt(document.getElementsByClassName("hrg-" + id)[0].value);
+                var newPrice = price * newQty;
+                document.getElementsByClassName("sub-" + id)[0].value = newPrice;
+            } else {
+                if (stok == 0) {
+                    swal("Stok Kosong!!!", "", "error")
+                } else {
+
+
+                    html =
+                        '<tr><td><input readonly type="text" name="namabahan[]"  class="form-control"  value="' +
+                        nama +
+                        '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' + id + '"  name="harga[]"  value="' +
+                        harga +
+                        '"></td><td><input id="jumlah" class="form-control ' + id + '" type="number" name="jumlah[]" value="' +
+                        jumlah +
+                        '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' + id + '" id="subtotal_item" value="' +
+                        harga + '" ></td>';
+                    html +=
+                        '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
+                    $("#order>tbody").append(html);
+
+                }
+            }
             totalharga();
+
         });
 
         $(document).on("click", "#remove", function() {

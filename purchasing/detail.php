@@ -11,11 +11,13 @@ require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
 // require '../controller/c_data-po.php';
 $bagian = "Purchasing";
-$juhal = "Detail PO";
+$juhal = "Data PO";
 
 include '../controller/c_detail-po.php';
 $tabel = 'form_po';
 include '../models/cek.php';
+$jab = $_SESSION['jabatan'];
+
 ?>
 
 
@@ -40,6 +42,7 @@ include '../models/cek.php';
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
 
+
                                 <h4 class="header-title m-t-0 m-b-20">Detail PO</h4>
                                 <div class="pull-left">
                                     <table class="">
@@ -58,22 +61,39 @@ include '../models/cek.php';
                                         <tr>
                                             <td style="font-weight: 600; width:100px">Status</td>
                                             <form method="POST">
-                                                <input type="hidden" name="status">
+                                                <input type="hidden" name="status2">
                                                 <input type="hidden" name="No_form" value="<?= $detail['No_form']; ?>">
-                                                <?php if ($sot == 0 && $sck == 0) : ?>
-                                                    <td><a><button type="submit" value="<?= $sot ?>" name="sot" class="btn btn-danger waves-effect waves-light btn-xs m-b-5">Confirm</button></a>
+
+                                                <?php if ($status == 0) : ?>
+                                                    <?php if ($jab == 'JAB002') : ?>
+                                                        <td><a><button type="submit" value="<?= $status ?>" name="status" class="btn btn-danger waves-effect waves-light btn-xs m-b-5">Check</button></a>
+                                                        </td>
+                                                    <?php else : ?>
+                                                        <td><a class="btn btn-danger waves-effect waves-light btn-xs m-b-5">Check</a>
+                                                        </td>
+                                                    <?php endif ?>
+                                                <?php elseif ($status == 1) : ?>
+                                                    <?php if ($jab == 'JAB001') : ?>
+                                                        <td><a> <button type="submit" value="<?= $status; ?>" name="status" class="btn btn-custom waves-effect waves-light btn-xs m-b-5">Checked by Admin</button></a>
+                                                        </td>
+                                                    <?php else : ?>
+                                                        <td><a class="btn btn-custom waves-effect waves-light btn-xs m-b-5">Checked by Admin</a>
+                                                        </td>
+                                                    <?php endif ?>
+
+                                                <?php elseif ($status == 2) : ?>
+                                                    <?php if ($jab == 'JAB003') : ?>
+                                                        <td><button type="submit" value="<?= $status; ?>" name="status" class="btn btn-info waves-effect waves-light btn-xs m-b-5">Checked by Manager</button>
+                                                        </td>
+                                                    <?php else : ?>
+                                                        <td><a class="btn btn-info waves-effect waves-light btn-xs m-b-5">Checked by Manager</a>
+                                                        </td>
+                                                    <?php endif ?>
+                                                <?php elseif ($status == 3) : ?>
+                                                    <td><a class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</a>
                                                     </td>
-                                                <?php elseif ($sot == 1 && $sck == 0) : ?>
-                                                    <td><a> <button type="submit" value="<?= $sot; ?>" name="sot" class="btn btn-info waves-effect waves-light btn-xs m-b-5">Confirmed</button></a>
-                                                    </td>
-                                                <?php elseif ($sot == 2 && $sck == 0) : ?>
-                                                    <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by Manager</button>
-                                                    </td>
-                                                <?php elseif ($sot == 2  && $sck == 1) : ?>
-                                                    <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by CK</button>
-                                                    </td>
-                                                <?php elseif ($sot == 2  && $sck == 2) : ?>
-                                                    <td><button class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</button>
+                                                <?php elseif ($status == 4) : ?>
+                                                    <td><a class="btn btn-success waves-effect waves-light btn-xs m-b-5">Delivered</a>
                                                     </td>
                                                 <?php endif ?>
                                             </form>
@@ -81,11 +101,12 @@ include '../models/cek.php';
                                     </table>
                                 </div>
                                 <div class="pull-right">
-                                    <?php if ($sot == 2 and $sck == 2) : ?>
-                                        <a href="surat_jalan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
-                                    <?php else : ?>
+                                    <?php if ($status == 2 or $status == 3) : ?>
                                         <a href="report?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
-                                    <?php endif; ?>
+
+                                    <?php elseif ($status == 4) : ?>
+                                        <a href="" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+                                    <?php endif ?>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 m-t-10">

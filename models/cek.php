@@ -14,3 +14,11 @@ if (isset($_POST['status'])) {
         WHERE No_form = '$No_form'");
     }
 }
+if (isset($_POST['status2'])) {
+    $No_form = $_POST['No_form'];
+
+    $status = $_POST['status'] + 1;
+    mysqli_query($conn, "UPDATE $tabel
+        SET status='$status'
+        WHERE No_form = '$No_form'");
+}

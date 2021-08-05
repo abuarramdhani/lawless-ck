@@ -10,8 +10,7 @@ require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
 $bagian = "Store";
-$juhal = "Detail Produk";
-
+$juhal = "Store Produk";
 require '../controller/c_detail_storeproduk.php';
 
 $tabel = 'form_storeproduk';
@@ -82,9 +81,9 @@ include '../models/cek.php';
 
                                 <div class="pull-right">
                                     <?php if ($sot == 2 and $sck == 2) : ?>
-                                        <a href="r_storebahan?No_form=<?= $No_form; ?>" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
+                                        <a href="storepro_suratjalan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
                                     <?php else : ?>
-                                        <a href="r_storebahan?No_form=<?= $No_form; ?>" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+                                        <a href="r_storeproduk?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
                                     <?php endif; ?>
                                 </div>
 

@@ -1,0 +1,29 @@
+[03-Aug-2021 03:19:11 UTC] PHP Fatal error:  Uncaught Error: Class 'PHPMailer' not found in /home/lawlessburgerbar/public_html/mail/scriptmailer.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/lawlessburgerbar/public_html/mail/scriptmailer.php on line 21
+[03-Aug-2021 03:19:29 UTC] PHP Warning:  include(classes/class.phpmailer.php): failed to open stream: No such file or directory in /home/lawlessburgerbar/public_html/mail/scriptmailer.php on line 19
+[03-Aug-2021 03:19:29 UTC] PHP Warning:  include(classes/class.phpmailer.php): failed to open stream: No such file or directory in /home/lawlessburgerbar/public_html/mail/scriptmailer.php on line 19
+[03-Aug-2021 03:19:29 UTC] PHP Warning:  include(): Failed opening 'classes/class.phpmailer.php' for inclusion (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/lawlessburgerbar/public_html/mail/scriptmailer.php on line 19
+[03-Aug-2021 03:19:29 UTC] PHP Fatal error:  Uncaught Error: Class 'PHPMailer' not found in /home/lawlessburgerbar/public_html/mail/scriptmailer.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/lawlessburgerbar/public_html/mail/scriptmailer.php on line 21
+[03-Aug-2021 03:20:00 UTC] PHP Fatal error:  Uncaught phpmailerException: Invalid address:  in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php:423
+Stack trace:
+#0 /home/lawlessburgerbar/public_html/classes/class.phpmailer.php(369): PHPMailer->AddAnAddress('to', '', '')
+#1 /home/lawlessburgerbar/public_html/mail/scriptmailer.php(32): PHPMailer->AddAddress(NULL)
+#2 {main}
+  thrown in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php on line 423
+[03-Aug-2021 03:20:04 UTC] PHP Fatal error:  Uncaught phpmailerException: Invalid address:  in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php:423
+Stack trace:
+#0 /home/lawlessburgerbar/public_html/classes/class.phpmailer.php(369): PHPMailer->AddAnAddress('to', '', '')
+#1 /home/lawlessburgerbar/public_html/mail/scriptmailer.php(32): PHPMailer->AddAddress(NULL)
+#2 {main}
+  thrown in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php on line 423
+[03-Aug-2021 03:23:47 UTC] PHP Fatal error:  Uncaught phpmailerException: Invalid address:  in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php:423
+Stack trace:
+#0 /home/lawlessburgerbar/public_html/classes/class.phpmailer.php(369): PHPMailer->AddAnAddress('to', '', '')
+#1 /home/lawlessburgerbar/public_html/mail/scriptmailer.php(32): PHPMailer->AddAddress(NULL)
+#2 {main}
+  thrown in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php on line 423

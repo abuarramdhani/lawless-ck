@@ -81,11 +81,12 @@ include '../models/cek.php';
                                     </table>
                                 </div>
                                 <div class="pull-right">
-                                    <?php if ($sot == 2 and $sck == 2) : ?>
+                                    <a href="r-po?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+                                    <!-- <?php if ($sot == 2 and $sck == 2) : ?>
                                         <a href="surat_jalan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
                                     <?php else : ?>
-                                        <a href="report?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
-                                    <?php endif; ?>
+                                        <a href="r-po?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+                                    <?php endif; ?> -->
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 m-t-10">

@@ -163,10 +163,10 @@ include '../include/filter_date.php';
                                                         <div class="col-md-6 col-xl-3 col-lg-4 <?= $p['kodekategoriproduk']; ?>">
                                                             <div class="gal-detail thumb">
                                                                 <a href="../assets/images/products/<?= $p['gambar']; ?>" class="image-popup" title="Screenshot-3">
-                                                                    <img src="../assets/images/products/<?= $p['gambar']; ?>" class="thumb-img img-fluid" alt="work-thumbnail">
+                                                                    <img src="../assets/images/products/<?= $p['gambar']; ?>" class="thumb-img img-fluid" style="height: 220px;" alt="work-thumbnail">
                                                                 </a>
                                                                 <div class="text-center">
-                                                                    <a href="javascript:;" id="add" data-nama="<?= $p['namaproduk'] ?>" data-harga="<?= $p['harga'] ?>">
+                                                                    <a href="javascript:;" id="add" data-id="<?= $p['id'] ?>" data-nama="<?= $p['namaproduk'] ?>" data-harga="<?= $p['harga'] ?>">
                                                                         <h4 class="text-capitalize"><?= $p['namaproduk']; ?>
                                                                         </h4>
                                                                     </a>
@@ -383,23 +383,37 @@ include '../include/filter_date.php';
 
             });
             $(document).on("click", "#add", function() {
-
+                var id = $(this).data("id");
                 var nama = $(this).data("nama");
                 var harga = $(this).data("harga");
+                console.log(id)
+                console.log(nama)
+                console.log(harga)
                 var jumlah = 1;
+                var check = document.getElementsByClassName(id)[0];
+                if (check != null) {
+                    var qty = check.value;
+                    var newQty = parseInt(qty) + parseInt(jumlah);
+                    check.value = newQty;
+                    var price = parseInt(document.getElementsByClassName("hrg-" + id)[0].value);
+                    var newPrice = price * newQty;
+                    document.getElementsByClassName("sub-" + id)[0].value = newPrice;
+                } else {
+                    html =
+                        '<tr><td><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
+                        nama +
+                        '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' + id + '"  name="harga[]"  value="' +
+                        harga +
+                        '"></td><td><input id="jumlah" class="form-control ' + id + '" type="number" name="jumlah[]" value="' +
+                        jumlah +
+                        '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' + id + '" id="subtotal_item" value="' +
+                        harga + '" ></td>';
+                    html +=
+                        '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
+                    $("#order>tbody").append(html);
+                }
 
-                html =
-                    '<tr><td><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
-                    nama +
-                    '"></td><td ><input type="text"  readonly  class="form-control harga"  name="harga[]"  value="' +
-                    harga +
-                    '"></td><td><input id="jumlah" class="form-control" type="number" name="jumlah[]" value="' +
-                    jumlah +
-                    '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total" id="subtotal_item" value="' +
-                    harga + '" ></td>';
-                html +=
-                    '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
-                $("#order>tbody").append(html);
+
                 totalharga();
             });
 

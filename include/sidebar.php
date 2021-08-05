@@ -1,30 +1,5 @@
 <?php
-if ($_SESSION['userlevel'] != 0) {
-    if($_SESSION['kodeoutlet']=="OUT000" OR $_SESSION['kodeoutlet']=="OUT001"){
-        if ($_SESSION['jabatan'] === "JAB001") {
-            $kodeusermenu = query("SELECT * FROM user_menu WHERE id<7 ORDER BY id ASC ");
-        } else if ($_SESSION['jabatan'] === "JAB002") {
-            $kodeusermenu = query("SELECT * FROM user_menu WHERE id NOT IN (6,8) ORDER BY id ASC ");
-        } else if ($_SESSION['jabatan'] === "JAB003") {
-            $kodeusermenu = query("SELECT * FROM user_menu WHERE id=1 OR id=2 ORDER BY id ASC ");
-        } else if ($_SESSION['jabatan'] === "JAB004") {
-            $kodeusermenu = query("SELECT * FROM user_menu WHERE id=2 OR id=3 OR id=7 ORDER BY id ASC ");
-        }
-    }else{
-        if ($_SESSION['jabatan'] === "JAB001") {
-            $kodeusermenu = query("SELECT * FROM user_menu WHERE id NOT IN (3,6,8) ORDER BY id ASC ");
-        } else if ($_SESSION['jabatan'] === "JAB002") {
-            $kodeusermenu = query("SELECT * FROM user_menu WHERE id NOT IN (3,6,8) ORDER BY id ASC ");
-        } else if ($_SESSION['jabatan'] === "JAB003") {
-            $kodeusermenu = query("SELECT * FROM user_menu WHERE id=1 OR id=2 ORDER BY id ASC ");
-        } else if ($_SESSION['jabatan'] === "JAB004") {
-            $kodeusermenu = query("SELECT * FROM user_menu WHERE id=2 OR id=7 ORDER BY id ASC ");
-        }
-    }
-    
-} else {
-    $kodeusermenu = query("SELECT * FROM user_menu ORDER BY id ASC ");
-}
+require '../controller/c_sidebar.php';
 ?>
 <!-- ========== Left Sidebar Start ========== -->
 <div class="left side-menu">
@@ -53,14 +28,40 @@ if ($_SESSION['userlevel'] != 0) {
 
                         <?php
                             $menu_id = $row["id"];
-                            if($_SESSION['jabatan']=="JAB000" OR $_SESSION['jabatan']=="JAB001"){
+                            if ($_SESSION['userlevel'] != 0) {
+                                if ($_SESSION['kodeoutlet'] == 'OUT000' or $_SESSION['kodeoutlet'] == 'OUT001') {
+                                    if ($_SESSION['jabatan'] == "JAB000" or $_SESSION['jabatan'] == "JAB001") {
+                                        $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' ORDER BY menu_id ASC ");
+                                    } else if ($_SESSION['jabatan'] == "JAB004") {
+                                        $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' AND id NOT IN (6,12,13) ORDER BY menu_id ASC ");
+                                    } else {
+                                        $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' AND id NOT IN (12,13) ORDER BY menu_id ASC ");
+                                    }
+                                } else if ($_SESSION['kodeoutlet'] == 'OUT002') {
+                                    if ($_SESSION['jabatan'] == "JAB000" ) {
+                                        $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' ORDER BY menu_id ASC ");
+                                    } else if ($_SESSION['jabatan'] == "JAB001") {
+                                        $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' AND id NOT IN (12,13) ORDER BY menu_id ASC ");
+                                    } else if ($_SESSION['jabatan'] == "JAB004") {
+                                        $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' AND id NOT IN (6,12,13) ORDER BY menu_id ASC ");
+                                    } else {
+                                        $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' AND id NOT IN (12,13) ORDER BY menu_id ASC ");
+                                    }                                
+                                } else {
+                                    if ($_SESSION['jabatan'] == "JAB000" or $_SESSION['jabatan'] == "JAB001") {
+                                        $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' AND id NOT IN (5,9,10,12,13) ORDER BY menu_id ASC ");
+                                    } else if ($_SESSION['jabatan'] == "JAB004") {
+                                        $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' AND id NOT IN (5,9,10,6,12,13) ORDER BY menu_id ASC ");
+                                    } else {
+                                        $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' AND id NOT IN (5,9,10,12,13) ORDER BY menu_id ASC ");
+                                    }
+                                }
+                            } else {
                                 $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' ORDER BY menu_id ASC ");
-                            }else if($_SESSION['jabatan']=="JAB004"){
-                                $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' AND id NOT IN (6,12,13) ORDER BY menu_id ASC ");
-                            }else{
-                                $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' AND id NOT IN (12,13) ORDER BY menu_id ASC ");
                             }
-                            
+
+
+
                             ?>
 
                         <?php foreach ($kodeusersubmenu as $row1) : ?>

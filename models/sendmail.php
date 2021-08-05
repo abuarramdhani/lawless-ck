@@ -1,6 +1,6 @@
 <?php
 require_once "../vendor/autoload.php";
-include "../include/fungsi.php";
+// include "../include/fungsi.php";
 // include 'pesan.php';
 
 // echo $kodeoutlet = "OUT001";

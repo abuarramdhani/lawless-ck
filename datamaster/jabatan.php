@@ -101,9 +101,11 @@ $juhal = "Jabatan";
                                                 <td><?= $row["kodejabatan"] ?></td>
                                                 <td><?= ucwords($row["namajabatan"]) ?></td>
                                                 <td>
-                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-kodejabatan="<?= $row["kodejabatan"] ?>" data-nama="<?= $row['namajabatan']; ?>"><i class="fa fa-pencil"></i></a> |
+                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-kodejabatan="<?= $row["kodejabatan"] ?>" data-nama="<?= $row['namajabatan']; ?>"><i class="fa fa-pencil"></i></a>
                                                     <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-                                                    <a class="on-default remove-row badge badge-danger tombol-deletejabatan"><i class="fa fa-trash-o"></i></a>
+                                                    <?php if ($_SESSION['userlevel'] == 0) : ?>
+                                                        | <a class="on-default remove-row badge badge-danger tombol-deletejabatan"><i class="fa fa-trash-o"></i></a>
+                                                    <?php endif ?>
                                                 </td>
 
                                             </tr>
@@ -215,7 +217,7 @@ $juhal = "Jabatan";
                         if (hasil == 1) {
                             swal("Input Gagal!", "", "error")
                         } else if (hasil == 2) {
-                            swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
+                            swal("Nama Jabatan sudah terdaftar!", "", "error")
                         } else if (hasil == 3) {
                             swal({
                                 title: "Input Berhasil!",
@@ -232,8 +234,8 @@ $juhal = "Jabatan";
             }
         })
 
-        $('.tombol-edit').on('click', function() {
-
+        // $('.tombol-edit').on('click', function() {
+        $('#datatable').on('click', '.tombol-edit', function() {
             const kodejabatan = $(this).data('kodejabatan');
             const namajabatan = $(this).data('nama');
 
@@ -295,7 +297,8 @@ $juhal = "Jabatan";
             }
         })
 
-        $('.tombol-deletejabatan').click(function(e) {
+        // $('.tombol-deletejabatan').click(function(e) {
+        $('#datatable').on('click', '.tombol-deletejabatan', function(e) {
             e.preventDefault();
             //alert('hapus');
             //var delete = 'delete';

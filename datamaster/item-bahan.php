@@ -54,6 +54,19 @@ $juhal = "Item Bahan";
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-4 control-label">Kategori Unit</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control select2" name="nunit" id="nunit">
+                                                <option>Pilih Unit</option>
+                                                <?php foreach ($unit as $row) : ?>
+                                                    <option value="<?= $row["kodeunit"] ?>">
+                                                        <?= ucwords($row["namaunit"]) ?></option>
+                                                <?php endforeach; ?>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-4 control-label">Harga Beli</label>
                                         <div class="col-sm-8">
                                             <input autofocus type="text" class="form-control" required name="nhargabeli" id="nhargabeli" placeholder="Harga Beli"></input>
@@ -96,6 +109,7 @@ $juhal = "Item Bahan";
                                             <th>No</th>
                                             <th>Kode bahan</th>
                                             <th>Nama bahan</th>
+                                            <th>Unit</th>
                                             <th>Harga Beli</th>
                                             <th>Harga Jual</th>
                                             <th>Stok</th>
@@ -111,14 +125,17 @@ $juhal = "Item Bahan";
                                                 <td width="2%" ;><?= $i ?></td>
                                                 <td><?= $row["kodebahan"] ?></td>
                                                 <td><?= ucwords($row["namabahan"]) ?></td>
+                                                <td><?= $row["namaunit"] ?></td>
                                                 <td><?= $row["harga"] ?></td>
                                                 <td><?= $row["hargaj"] ?></td>
                                                 <td><?= $row["stok"] ?></td>
                                                 <td><?= $row["minstok"] ?></td>
                                                 <td>
-                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-kodebahan="<?= $row["kodebahan"] ?>" data-namabahan="<?= $row['namabahan']; ?>" data-harga="<?= $row['harga']; ?>" data-hargaj="<?= $row["hargaj"] ?>" data-stok="<?= $row['stok']; ?>" data-mstok="<?= $row['minstok']; ?>"><i class="fa fa-pencil"></i></a> |
+                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-kodeunit="<?= $row['kodeunit']; ?>" data-kodebahan="<?= $row["kodebahan"] ?>" data-namabahan="<?= $row['namabahan']; ?>" data-harga="<?= $row['harga']; ?>" data-hargaj="<?= $row["hargaj"] ?>" data-stok="<?= $row['stok']; ?>" data-mstok="<?= $row['minstok']; ?>"><i class="fa fa-pencil"></i></a>
                                                     <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-                                                    <a class="on-default remove-row badge badge-danger tombol-deletebahan"><i class="fa fa-trash-o"></i></a>
+                                                    <?php if ($_SESSION['userlevel'] == 0) : ?>
+                                                        | <a class="on-default remove-row badge badge-danger tombol-deletebahan"><i class="fa fa-trash-o"></i></a>
+                                                    <?php endif ?>
                                                 </td>
 
                                             </tr>
@@ -185,6 +202,19 @@ $juhal = "Item Bahan";
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="nunit" class="control-label">Unit</label>
+                                        <select class="form-control select2 kodeunit" id="kodeunit" name="uunit">
+                                            <option>Pilih Unit</option>
+                                            <?php foreach ($unit as $row) : ?>
+                                                <option value="<?= $row["kodeunit"] ?>">
+                                                    <?= ucwords($row["namaunit"]) ?></option>
+                                            <?php endforeach; ?>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="hargabeli" class="control-label">Harga
                                             Beli</label>
                                         <input type="text" class="form-control harga" id="harga" name="harga">
@@ -197,6 +227,7 @@ $juhal = "Item Bahan";
                                         <input type="text" class="form-control hargaj" id="hargaj" name="hargaj">
                                     </div>
                                 </div>
+
                             </div>
                         </div>
 
@@ -230,9 +261,13 @@ $juhal = "Item Bahan";
             var kodeoutlet = $('#kodeoutlet').val();
             var nbahan = $('#nbahan').val();
             var nhargabeli = $('#nhargabeli').val();
+            var nunit = $('#nunit').val();
+
 
             if (nbahan == "") {
                 swal("Nama bahan belum di isi!", "", "error")
+            } else if (nunit == "Pilih Unit") {
+                swal("Nama Unit belum di Pilih!", "", "error")
             } else {
                 $.ajax({
                     url: '../models/input.php',
@@ -263,13 +298,16 @@ $juhal = "Item Bahan";
                             })
                             location.reload();
 
+                        } else if (hasil == 4) {
+                            swal("Nama Bahan Sudah Terdaftar!", "", "error")
                         }
                     }
                 });
             }
         })
 
-        $('.tombol-edit').on('click', function() {
+        // $('.tombol-edit').on('click', function() {
+        $('#datatable').on('click', '.tombol-edit', function() {
 
             const kodebahan = $(this).data('kodebahan');
             const namabahan = $(this).data('namabahan');
@@ -277,8 +315,11 @@ $juhal = "Item Bahan";
             const hargaj = $(this).data('hargaj');
             const stok = $(this).data('stok');
             const mstok = $(this).data('mstok');
+            const kodeunit = $(this).data('kodeunit');
 
 
+            $('.kodeunit').val(kodeunit);
+            $('#kodeunit').trigger('change');
             $('.kodebahan').val(kodebahan);
             $('.namabahan').val(namabahan);
             $('.harga').val(harga);
@@ -393,7 +434,9 @@ $juhal = "Item Bahan";
         //     }
         // })
 
-        $('.tombol-deletebahan').click(function(e) {
+        // $('.tombol-deletebahan').click(function(e) {
+        $('#datatable').on('click', '.tombol-deletebahan', function(e) {
+
             e.preventDefault();
             //alert('hapus');
             //var delete = 'delete';

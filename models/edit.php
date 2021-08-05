@@ -141,6 +141,7 @@ if (isset($_POST["updateproyek"])) {
     $mstok = $_POST['mstok'];
     $harga = $_POST['harga'];
     $hargaj = $_POST['hargaj'];
+    $uunit = $_POST['uunit'];
 
     // var_dump($kodeoutlet);
     // die;
@@ -150,9 +151,10 @@ if (isset($_POST["updateproyek"])) {
                      kodebahan = '$kodebahan',
                      namabahan = '$namabahan',
                      minstok = '$mstok',
+                     unit = '$uunit',
                      harga = '$harga',
                      hargaj = '$hargaj'
-             WHERE kodebahan = '$kodebahan'
+             WHERE kodebahan = '$kodebahan' and kodeoutlet = '$kodeoutlet'
       ";
     $masuk_data = mysqli_query($conn, $query);
     if ($masuk_data) {
@@ -191,50 +193,124 @@ if (isset($_POST["updateproyek"])) {
     $mstok = $_POST['uminstok'];
     $kodekategoriproduk = 'KAP001';
 
+
+
     // var_dump($kodeproduk);
     // var_dump($namaproduk);
     // var_dump($hargaj);
-    // var_dump($mstok);
-    // die;
-    $ugambar = $_FILES["ugambar"];
-    $ekstensi_diperbolehkan    = array('png', 'jpg', 'jpeg');
 
-    if ($ugambar['name'] != "") {
-        $gambar = $ugambar['name'];
-    } else {
-        $gambar = "no_image.jpg";
-    }
-    $x = explode('.', $gambar);
-    $ekstensi = strtolower(end($x));
+    if (!empty($_FILES["ugambar"]['name'])) {
+        $ugambar = $_FILES["ugambar"];
+        $ekstensi_diperbolehkan    = array('png', 'jpg', 'jpeg');
+
+        if ($ugambar['name'] != "") {
+            $gambar = $ugambar['name'];
+        } else {
+            $gambar = "no_image.jpg";
+        }
+        $x = explode('.', $gambar);
+        $ekstensi = strtolower(end($x));
 
 
-    $gambar = uniqid();
-    $gambar .= '.';
-    $gambar .=   $ekstensi;
+        $gambar = uniqid();
+        $gambar .= '.';
+        $gambar .=   $ekstensi;
 
-    $ukuran    = $ngambar['size'];
-    $file_tmp = $ugambar['tmp_name'];
-
-    if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
-        if ($ukuran < 2044070) {
-            move_uploaded_file($file_tmp, '../assets/images/products/' . $gambar);
-            $query = "UPDATE produk SET
-    kodekategoriproduk = '$kodekproduk',
-                     namaproduk = '$namaproduk',
-                     minstok = '$mstok',
-                     harga = '$hargaj'
-             WHERE kodeproduk = '$kodeproduk'
-      ";
-            $masuk_data = mysqli_query($conn, $query);
-            if ($masuk_data) {
-                echo 3;
+        $ukuran    = $ugambar['size'];
+        // var_dump($ukuran > 0);
+        // var_dump($ukuran);
+        // var_dump($ugambar);
+        // die;
+        $file_tmp = $ugambar['tmp_name'];
+        if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
+            // if ($ukuran < 2044070) {
+            if ($ukuran > 0) {
+                move_uploaded_file($file_tmp, '../assets/images/products/' . $gambar);
+                $query = "UPDATE produk SET
+                         kodekategoriproduk = '$kodekproduk',
+                         namaproduk = '$namaproduk',
+                         minstok = '$mstok',
+                         harga = '$hargaj',
+                         gambar = '$gambar'
+                 WHERE kodeproduk = '$kodeproduk'
+          ";
+                $masuk_data = mysqli_query($conn, $query);
+                if ($masuk_data) {
+                    echo 3;
+                } else {
+                    echo 1;
+                }
             } else {
-                echo 1;
+                echo 4;
             }
         } else {
-            echo 4;
+            echo 5;
         }
     } else {
-        echo 5;
+        $query = "UPDATE produk SET
+        kodekategoriproduk = '$kodekproduk',
+                         namaproduk = '$namaproduk',
+                         minstok = '$mstok',
+                         harga = '$hargaj'
+                 WHERE kodeproduk = '$kodeproduk'
+          ";
+        $masuk_data = mysqli_query($conn, $query);
+        if ($masuk_data) {
+            echo 3;
+        } else {
+            echo 'disini';
+            echo 1;
+        }
+    }
+} elseif (isset($_POST["update-user"])) {
+    // var_dump('ok');
+    $id = $_POST['update-user'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $outlet = $_POST['outlet'];
+    $jabatan = $_POST['jabatan'];
+
+    // var_dump($id);
+    // var_dump($name);
+    // var_dump($email);
+    // var_dump($outlet);
+    // var_dump($jabatan);
+    // die;
+    $query = "UPDATE admin SET
+    username = '$name',
+    email = '$email',
+    outlet = '$outlet',
+    jabatan = '$jabatan'
+    WHERE id = $id
+                ";
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        echo 1;
+    }
+} elseif (isset($_POST["update-outlet"])) {
+    // var_dump('ok');
+    $kode = $_POST['update-outlet'];
+    $name = $_POST['unama'];
+    $notelp = $_POST['unotelp'];
+
+    // var_dump($kode);
+    // var_dump($name);
+    // var_dump($notelp);
+    // var_dump($outlet);
+    // var_dump($jabatan);
+    // die;
+    $query = "UPDATE companypanel SET
+    nama = '$name',
+    notelp = '$notelp'
+    WHERE kodeoutlet = '$kode'
+                ";
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        var_dump($masuk_data);
+        echo 1;
     }
 }

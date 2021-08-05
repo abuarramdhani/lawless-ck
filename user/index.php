@@ -39,13 +39,13 @@ $juhal = "User";
                         <div class="col-lg-4">
                             <div class="card-box">
                                 <div class="dropdown pull-right">
-                                    <!-- <h4 class="header-title m-t-0">Kode jabatan : <?php echo $kp ; ?></h4> -->
+                                    <!-- <h4 class="header-title m-t-0">Kode users : <?php echo $kp ; ?></h4> -->
                                 </div>
 
                                 <h4 class="header-title m-t-0">Input Users <br></h4>
                                 <br>
-                                <form class="form-horizontal group-border-dashed" id="formjabatan">
-                                    <input type="hidden" value="inputjabatan" id="inputjabatan" name="inputjabatan">
+                                <form class="form-horizontal group-border-dashed" id="forminputusers">
+                                    <input type="hidden" value="inputusers" id="inputusers" name="inputusers">
                                     <!-- <div class="form-group">
                                         <label class="col-sm-4 control-label">Username</label>
                                         <div class="col-sm-8">
@@ -56,21 +56,21 @@ $juhal = "User";
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Nama</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" required name="nama" id="nama"
+                                            <input type="text" class="form-control" name="nnama" id="nnama"
                                                 placeholder="Nama"></input>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Email</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" required name="email" id="email"
+                                            <input type="text" class="form-control" name="nemail" id="nemail"
                                                 placeholder="Email"></input>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Outlet</label>
                                         <div class="col-sm-8">
-                                            <select class="form-control select2" name="outlet" id="outlet">
+                                            <select class="form-control select2" name="noutlet" id="noutlet">
                                                 <option>- Select Outlet -</option>
                                                 <?php foreach ($kodeoutlet as $row ) : ?>
                                                 <option value="<?= $row['kodeoutlet'] ?>">
@@ -82,7 +82,7 @@ $juhal = "User";
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Jabatan</label>
                                         <div class="col-sm-8">
-                                            <select class="form-control select2" name="outlet" id="outlet">
+                                            <select class="form-control select2" name="njabatan" id="njabatan">
                                                 <option>- Select Jabatan -</option>
                                                 <?php foreach ($kodejabatan as $row ) : ?>
                                                 <option value="<?= $row['kodejabatan'] ?>">
@@ -96,7 +96,7 @@ $juhal = "User";
                                     <div class="form-group">
                                         <div class="col-sm-offset-4 col-sm-6 m-t-15">
                                             <button type="submit" class="btn btn-success waves-effect waves-light"
-                                                name="tombol-jabatan" id="tombol-jabatan">
+                                                name="tombol-inputusers" id="tombol-inputusers">
                                                 Input
                                             </button>
                                             <!-- <button type="reset" class="btn btn-default waves-effect m-l-5">
@@ -151,10 +151,10 @@ $juhal = "User";
                                                         class="fa fa-pencil"></i></a> |
                                                 <input type="hidden" class="delete_id_value" value="<?=$row["id"]?>">
                                                 <a
-                                                    class="on-default remove-row badge badge-danger tombol-deletejabatan"><i
+                                                    class="on-default remove-row badge badge-danger tombol-deleteinputusers"><i
                                                         class="fa fa-trash-o"></i></a>
                                             </td>
-                                            <div id="edit<?= $row["id"] ?>" class="modal fade" tabindex="-1"
+                                            <!-- <div id="edit<?= $row["id"] ?>" class="modal fade" tabindex="-1"
                                                 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
                                                 style="display: none;">
                                                 <div class="modal-dialog">
@@ -201,7 +201,8 @@ $juhal = "User";
 
                                                     </div>
                                                 </div>
-                                            </div><!-- /.modal -->
+                                            </div> -->
+                                            <!-- /.modal -->
                                         </tr>
                                         <?php $i++; ?>
                                         <?php endforeach; ?>
@@ -248,20 +249,29 @@ $juhal = "User";
 
 <script>
 $(document).ready(function() {
-    $('#tombol-jabatan').click(function(e) {
+    $('#tombol-inputusers').click(function(e) {
 
         e.preventDefault();
-        var dataform = $('#formjabatan')[0];
+        var dataform = $('#forminputusers')[0];
         var data = new FormData(dataform);
 
-        var inputjabatan = $('#inputjabatan').val();
+        var inputusers = $('#inputusers').val();
+        var nnama = $('#nnama').val();
+        var nemail = $('#nemail').val();
+        var noutlet = $('#noutlet').val();
         var njabatan = $('#njabatan').val();
 
-        if (njabatan == "") {
-            swal("Nama jabatan belum di isi!", "", "error")
+        if (nnama == "") {
+            swal("Nama belum di isi!", "", "error")
+        } else if (nemail == "") {
+            swal("Email belum di isi!", "", "error")
+        } else if (noutlet == "") {
+            swal("Outlet belum di pilih!", "", "error")
+        } else if (njabatan == "") {
+            swal("Jabatan belum di pilih!", "", "error")
         } else {
             $.ajax({
-                url: '../models/input.php',
+                url: '../models/daftar.php',
                 type: 'post',
                 data: data,
                 enctype: 'multipart/form-data',
@@ -344,11 +354,11 @@ $(document).ready(function() {
     //     }
     // })
 
-    $('.tombol-deletejabatan').click(function(e) {
+    $('.tombol-deleteinputusers').click(function(e) {
         e.preventDefault();
         //alert('hapus');
         //var delete = 'delete';
-        var tabel = 'jabatan';
+        var tabel = 'admin';
         var iddelete = $(this).closest('tr').find('.delete_id_value').val();
         swal({
             title: "Apakah Anda Yakin?",

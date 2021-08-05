@@ -1,9 +1,17 @@
 <?php
 $kodeoutlet = $_SESSION['kodeoutlet'];
+
+$unit = query("SELECT * FROM unit ORDER BY namaunit ASC");
 if ($kodeoutlet != "OUT001") {
-    $kodebahan = query("SELECT * FROM bahan WHERE kodeoutlet = '$kodeoutlet' ORDER BY id DESC ");
+    $kodebahan = query("SELECT * FROM bahan as b
+    JOIN unit as u
+    ON b.unit = u.kodeunit
+    WHERE b.kodeoutlet = '$kodeoutlet' ORDER BY b.id DESC ");
 } else {
-    $kodebahan = query("SELECT * FROM bahan ORDER BY id DESC ");
+    $kodebahan = query("SELECT * FROM bahan as b
+    JOIN unit as u
+    ON b.unit = u.kodeunit
+    ORDER BY b.id DESC ");
 }
 
 // if (isset($_POST["updatebahan"])) {

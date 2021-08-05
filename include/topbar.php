@@ -28,27 +28,28 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <div class="page-title">
-                        <?php //foreach ($user as $row): ?>
+                        <?php //foreach ($user as $row): 
+                        ?>
                         <ul class="list-inline m-b-0">
                             <li>
                                 <?php
-                                    $email = $_SESSION['email'];                                                
-                                    $dataadmin = query("SELECT * FROM admin WHERE email = '$email'")[0];
-                                    if($dataadmin['jabatan']!="JAB000"){
-                                        $kj = $dataadmin['jabatan'];
-                                        $jabatan = query("SELECT * FROM jabatan WHERE kodejabatan = '$kj'")[0];
-                                        $nj = ucwords($jabatan['namajabatan']);
-                                    }else{;
-                                        $nj = "Super User";
-                                    }
+                                $email = $_SESSION['email'];
+                                $dataadmin = query("SELECT * FROM admin WHERE email = '$email'")[0];
+                                if ($dataadmin['jabatan'] != "JAB000") {
+                                    $kj = $dataadmin['jabatan'];
+                                    $jabatan = query("SELECT * FROM jabatan WHERE kodejabatan = '$kj'")[0];
+                                    $nj = ucwords($jabatan['namajabatan']);
+                                } else {;
+                                    $nj = "Super User";
+                                }
                                 ?>
-                                <h5 class="page-title"><a
-                                        href="../user/profile"><?= strtoupper($username)." - ".$nj." - ".$_SESSION['kodeoutlet']; ?>
+                                <h5 class="page-title"><a href="../user/profile"><?= strtoupper($username) . " - " . $nj; ?>
                                     </a> </h5>
 
                             </li>
                         </ul>
-                        <?php ///endforeach;?>
+                        <?php ///endforeach;
+                        ?>
                     </div>
 
                 </li>

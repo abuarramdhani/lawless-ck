@@ -104,9 +104,11 @@ $juhal = "Kategori Produk";
                                                     <?= $row["kodekategoriproduk"] ?></td>
                                                 <td><?= ucwords($row["namakategoriproduk"]) ?></td>
                                                 <td>
-                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-id="<?= $row["id"]; ?>" data-nama="<?= $row["namakategoriproduk"]; ?>"><i class="fa fa-pencil"></i></a> |
+                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-id="<?= $row["id"]; ?>" data-nama="<?= $row["namakategoriproduk"]; ?>"><i class="fa fa-pencil"></i></a>
                                                     <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-                                                    <a class="on-default remove-row badge badge-danger tombol-deletekategoriproduk"><i class="fa fa-trash-o"></i></a>
+                                                    <?php if ($_SESSION['userlevel'] == 0) : ?>
+                                                        | <a class="on-default remove-row badge badge-danger tombol-deletekategoriproduk"><i class="fa fa-trash-o"></i></a>
+                                                    <?php endif ?>
                                                 </td>
 
                                             </tr>
@@ -233,13 +235,17 @@ $juhal = "Kategori Produk";
                             })
                             location.reload();
 
+                        } else if (hasil == 4) {
+                            swal("Kategori Produk Sudah Terdaftar!", "", "error")
                         }
                     }
                 });
             }
         })
 
-        $('.tombol-edit').on('click', function() {
+        // $('.tombol-edit').on('click', function() {
+        $('#datatable').on('click', '.tombol-edit', function() {
+
 
             const id = $(this).data('id');
             const nama = $(this).data('nama');
@@ -300,7 +306,8 @@ $juhal = "Kategori Produk";
             }
         })
 
-        $('.tombol-deletekategoriproduk').click(function(e) {
+        // $('.tombol-deletekategoriproduk').click(function(e) {
+        $('#datatable').on('click', '.tombol-deletekategoriproduk', function(e) {
             e.preventDefault();
             //alert('hapus');
             //var delete = 'delete';

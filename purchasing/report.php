@@ -9,7 +9,8 @@ if (!isset($_SESSION['email'])) {
 }
 include "../vendor/autoload.php";
 require '../include/fungsi.php';
-$nama_dokumen = 'Report'; //Beri nama file PDF hasil.
+include '../controller/c_detail-po.php';
+$nama_dokumen = 'PO-' . $detail['No_form'];
 
 $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
 $fontDirs = $defaultConfig['fontDir'];
@@ -28,7 +29,6 @@ $mpdf = new \Mpdf\Mpdf([
     ],
 ]);
 ob_start();
-include '../controller/c_detail-po.php';
 
 // var_dump($item_po);
 // die;
@@ -146,10 +146,11 @@ include '../controller/c_detail-po.php';
         </tr>
         <tr>
             <th>Status</th>
-            <?php if ($detail['status'] == 1) : ?>
-                <td>: <span class="badge badge-success">KONFIRMASI</span></td>
-            <?php else : ?>
-                <td>: <span class="badge badge-warning">:Belum di Konfirmasi</span></td>
+
+            <?php if ($detail['status'] == 2) : ?>
+                <td>: <span class="">Checked by Manager</span></td>
+            <?php elseif ($detail['status'] == 3) : ?>
+                <td>: <span class="">Delivery</span></td>
             <?php endif; ?>
         </tr>
     </table>

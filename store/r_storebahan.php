@@ -9,11 +9,27 @@ if (!isset($_SESSION['email'])) {
 }
 include "../vendor/autoload.php";
 require '../include/fungsi.php';
-$nama_dokumen = 'Report'; //Beri nama file PDF hasil.
+include '../controller/c_detail_storebahan.php';
+$nama_dokumen = 'PO-' . $detail['No_form']; //Beri nama file PDF hasil.
 
-$mpdf = new \Mpdf\Mpdf();
+$defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
+$fontDirs = $defaultConfig['fontDir'];
+
+$defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
+$fontData = $defaultFontConfig['fontdata'];
+
+$mpdf = new \Mpdf\Mpdf([
+    'fontDir' => array_merge($fontDirs, [
+        __DIR__ . '../assets/fonts/',
+    ]),
+    'fontdata' => $fontData + [
+        'mistral' => [
+            'R' => 'MISTRAL.TTF',
+        ]
+    ],
+]);
 ob_start();
-include '../controller/c_detail_storebahan.php'
+
 
 // var_dump($item_po);
 // die;
@@ -34,6 +50,15 @@ include '../controller/c_detail_storebahan.php'
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+        @font-face {
+            font-family: 'mistral';
+            /*memberikan nama bebas untuk font*/
+            src: url('../assets/fonts/MISTRAL.TTF');
+            /*memanggil file font eksternalnya di folder nexa*/
+        }
+
         .indent {
             text-indent: 45px;
         }
@@ -47,34 +72,88 @@ include '../controller/c_detail_storebahan.php'
         .table-borderless td {
             border: 0 !important;
         }
+
+        td.center {
+            text-align: center;
+        }
+
+        .w-33 {
+            width: 33.333%;
+        }
+
+        .w-50 {
+            width: 50%;
+        }
+
+        .w-25 {
+            width: 25%;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        .head {
+            text-align: middle;
+            margin-bottom: 10px;
+        }
+
+        .mistral {
+            font-family: 'mistral';
+            font-size: 38px;
+            font-weight: bolder;
+        }
+
+        .height {
+            height: 30px;
+            display: block;
+            /* background-color: aqua; */
+        }
+
+        .mt-100 {
+            margin-top: 100px;
+        }
     </style>
     <title>REPORT</title>
 </head>
 
-<body class="">
-    <table class="mb-3">
+<body>
+    <!-- 
+    <table class="table table-borderless w-100 ">
         <tr>
-            <th>No Form</th>
+            <td class=" w-25" style="vertical-align: top;"><img src="../assets/images/logo.png"></td>
+            <td class="center w-50 mistral">LAWLESS BURGERBAR</td>
+            <td class="center w-25" style="vertical-align: bottom;">PURCHASE ORDER</td>
+
+        </tr>
+    </table> -->
+
+    <table class="mb-3 mt-100">
+        <tr>
+            <th>No Form PO</th>
             <td>: <?= $detail['No_form']; ?></td>
         </tr>
         <tr>
-            <th>Outlet</th>
+            <th>Supplier</th>
             <td>: <?= $detail['nama']; ?></td>
         </tr>
         <tr>
-            <th>Tanggal</th>
+            <th>Date</th>
             <td>: <?= $detail['date']; ?></td>
         </tr>
-
         <tr>
             <th>Status</th>
-            <?php if ($detail['status_ck'] == 1) : ?>
+            <?php if ($detail['status'] == 1) : ?>
                 <td>: <span class="badge badge-success">KONFIRMASI</span></td>
             <?php else : ?>
                 <td>: <span class="badge badge-warning">:Belum di Konfirmasi</span></td>
             <?php endif; ?>
         </tr>
     </table>
+
+
+
+
 
     <table class="table table-bordered border-none">
         <thead>
@@ -99,7 +178,6 @@ include '../controller/c_detail_storebahan.php'
                     <td><?= $item['subtotal']; ?></td>
                 </tr>
             <?php endforeach; ?>
-
         </tbody>
     </table>
 
@@ -114,33 +192,46 @@ include '../controller/c_detail_storebahan.php'
 
 // $mpdf->SetHeader('<img src="img/logo.png" alt="" class="mb-3">|tengah|');
 
-$header = array(
-    'odd' => array(
-        'L' => array(
-            'content' => '<img src="../assets/images/logo.png">',
-        ), 'C' => array(
-            'content' => 'Lawless Burger',
-            'font-size' => 17,
-            'font-style' => 'B',
-            'color' => '#000000'
-        ),
-        'R' => array(
-            'content' => 'PURCHASE ORDER',
-            'font-size' => 10,
-            // 'font-style' => 'B',
-            // 'font-family' => 'serif',
-            'color' => '#000000'
-        ),
-        'line' => 0,
-    ),
-    'even' => array()
-);
-$mpdf->SetHeader($header);
+// $header = array(
+//     'odd' => array(
+//         'L' => array(
+//             'content' => '<img src="../assets/images/logo.png">',
+//         ), 'C' => array(
+//             'content' => 'Lawless burger',
+//             'font-size' => 10,
+//             'font-style' => 'B',
+//             'color' => '#000000'
+//         ),
+//         'R' => array(
+//             'content' => 'PURCHASE ORDER',
+//             'font-size' => 10,
+//             // 'font-style' => 'B',
+//             // 'font-family' => 'serif',
+//             'color' => '#000000'
+//         ),
+//         'line' => 0,
+//     ),
+//     'even' => array()
+// );
+// $mpdf->SetHeader($header);
+$mpdf->SetHTMLHeader('
+
+<table class="table table-borderless w-100 ">
+        <tr>
+            <td class=" w-25" style="vertical-align: top;"><img src="../assets/images/logo.png"></td>
+            <td class="center w-50 mistral">LAWLESS BURGERBAR</td>
+            <td class="center w-25"  style="vertical-align: bottom;">PURCHASE ORDER</td>
+            
+        </tr>
+    </table>
+', 'O');
+// $mpdf->SetHTMLHeader('<div style="border-bottom: 10px solid #000000;">My document</div>', 'E');
+
 $html = ob_get_contents(); //Proses untuk mengambil hasil dari OB..
 ob_end_clean();
 
 //ukuran A4
-$mpdf->AddPage("P", "", "", "", "", "15", "15", "35", "15", "", "", "", "", "", "", "", "", "", "", "", "A4");
+$mpdf->AddPage("P", "", "", "", "", "15", "15", "42", "15", "", "", "", "", "", "", "", "", "", "", "", "A4");
 //Disini dimulai proses convert UTF-8, kalau ingin ISO-8859-1 cukup dengan mengganti $mpdf->WriteHTML($html);
 $mpdf->WriteHTML($html);
 $mpdf->Output($nama_dokumen . ".pdf", 'I');

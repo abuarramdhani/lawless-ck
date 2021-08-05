@@ -8,3 +8,23 @@
 [24-Jul-2021 18:53:22 UTC] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/lawlessburgerbar/public_html/models/user.php on line 110
 [24-Jul-2021 18:54:02 UTC] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/lawlessburgerbar/public_html/models/user.php on line 110
 [24-Jul-2021 18:56:19 UTC] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home/lawlessburgerbar/public_html/models/user.php on line 69
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'kodejabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 91
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'namajabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 92
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'kodejabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 91
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'namajabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 92
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'kodejabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 91
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'namajabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 92
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'kodejabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 91
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'namajabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 92
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'id' in /home/lawlessburgerbar/public_html/users/index.php on line 217
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'kodejabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 218
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'namajabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 218
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'id' in /home/lawlessburgerbar/public_html/users/index.php on line 217
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'kodejabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 218
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'namajabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 218
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'id' in /home/lawlessburgerbar/public_html/users/index.php on line 217
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'kodejabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 218
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'namajabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 218
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'id' in /home/lawlessburgerbar/public_html/users/index.php on line 217
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'kodejabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 218
+[04-Aug-2021 04:51:18 UTC] PHP Warning:  Illegal string offset 'namajabatan' in /home/lawlessburgerbar/public_html/users/index.php on line 218

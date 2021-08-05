@@ -9,15 +9,43 @@ if (!isset($_SESSION['email'])) {
     exit;
 } else {
     require 'include/fungsi.php';
-
-    $user = query("SELECT * FROM admin WHERE email = '" . $_SESSION['email'] . "'")[0];
-    $email = $user["email"];
-    $username = $user["username"];
-    $outlet = $user["outlet"];
-    $jabatan = $user["jabatan"];
-    $userlevel = $user["userlevel"];
-
-    $kodemenu = query("SELECT * FROM user_menu WHERE id<8 ");
+    require 'controller/c_sidebar.php';
+    
+    // if ($_SESSION['userlevel'] != 0) {
+    //     if ($_SESSION['kodeoutlet'] == "OUT000" or $_SESSION['kodeoutlet'] == "OUT001") {
+    //         if ($_SESSION['jabatan'] == "JAB001") {
+    //             $kodeusermenu = query("SELECT * FROM user_menu WHERE id<7 ORDER BY id ASC ");
+    //         } else if ($_SESSION['jabatan'] == "JAB002") {
+    //             $kodeusermenu = query("SELECT * FROM user_menu WHERE id NOT IN (6,8) ORDER BY id ASC ");
+    //         } else if ($_SESSION['jabatan'] == "JAB003") {
+    //             $kodeusermenu = query("SELECT * FROM user_menu WHERE id=1 OR id=2 ORDER BY id ASC ");
+    //         } else if ($_SESSION['jabatan'] == "JAB004") {
+    //             $kodeusermenu = query("SELECT * FROM user_menu WHERE id=2 OR id=3 OR id=7 ORDER BY id ASC ");
+    //         }
+    //     }   else if ($_SESSION['kodeoutlet'] == "OUT002" ) {
+    //             if ($_SESSION['jabatan'] == "JAB001") {
+    //                 $kodeusermenu = query("SELECT * FROM user_menu WHERE id NOT IN (6,8) ORDER BY id ASC ");
+    //             } else if ($_SESSION['jabatan'] == "JAB002") {
+    //                 $kodeusermenu = query("SELECT * FROM user_menu WHERE id=1 OR id=2 OR id=3 OR id=4 OR id=5 OR id=7 ORDER BY id ASC ");
+    //             } else if ($_SESSION['jabatan'] == "JAB003") {
+    //                 $kodeusermenu = query("SELECT * FROM user_menu WHERE id=1 OR id=2 ORDER BY id ASC ");
+    //             } else if ($_SESSION['jabatan'] == "JAB004") {
+    //                 $kodeusermenu = query("SELECT * FROM user_menu WHERE id=2 OR id=3 OR id=7 ORDER BY id ASC ");
+    //             }
+    //     } else {
+    //         if ($_SESSION['jabatan'] == "JAB001") {
+    //             $kodeusermenu = query("SELECT * FROM user_menu WHERE id NOT IN (3,6,8) ORDER BY id ASC ");
+    //         } else if ($_SESSION['jabatan'] == "JAB002") {
+    //             $kodeusermenu = query("SELECT * FROM user_menu WHERE id NOT IN (3,6,8) ORDER BY id ASC ");
+    //         } else if ($_SESSION['jabatan'] == "JAB003") {
+    //             $kodeusermenu = query("SELECT * FROM user_menu WHERE id=1 OR id=2 ORDER BY id ASC ");
+    //         } else if ($_SESSION['jabatan'] == "JAB004") {
+    //             $kodeusermenu = query("SELECT * FROM user_menu WHERE id=2 OR id=7 ORDER BY id ASC ");
+    //         }
+    //     }
+    // } else {
+    //     $kodeusermenu = query("SELECT * FROM user_menu WHERE id<8 ");
+    // }
 }
 
 ?>
@@ -68,10 +96,8 @@ if (!isset($_SESSION['email'])) {
             <div class="wrapper-page">
                 <div class="text-center">
 
-
                     <img src="assets/images/big/lawless-logo.jpg" width="25%">
-                    <!-- <br>
-                    <a href="index.html" class="logo"><span>PT. Skut <span></span> Refrigo Star</span></a> -->
+
 
                 </div>
             </div>
@@ -79,17 +105,19 @@ if (!isset($_SESSION['email'])) {
             <div class="row">
 
 
-                <?php foreach ($kodemenu as $row) : ?>
-                    <div class="col-lg-3">
-                        <div class="panel panel-color panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title text-center"><?= $row['menu']; ?></h3>
-                            </div>
-                            <div class="panel-body text-center">
-                                <a href="<?= $row['url']; ?>"><img src="assets/images/<?= $row['gambar']; ?>" style="width: 125px;" class="img-circle"></a>
-                            </div>
+
+                <?php foreach ($kodeusermenu as $row) : ?>
+                <div class="col-lg-3">
+                    <div class="panel panel-color panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center"><?= $row['menu']; ?></h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            <a href="<?= $row['url']; ?>/index.php"><img src="assets/images/<?= $row['gambar']; ?>"
+                                    style="width: 125px;" class="img-circle"></a>
                         </div>
                     </div>
+                </div>
                 <?php endforeach; ?>
 
 
@@ -102,7 +130,7 @@ if (!isset($_SESSION['email'])) {
 
 
     <script>
-        var resizefunc = [];
+    var resizefunc = [];
     </script>
 
     <!-- jQuery  -->
