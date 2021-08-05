@@ -240,8 +240,12 @@ $juhal = "Users";
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary waves-effect waves-light"
+                        <<<<<<< HEAD <button type="submit" class="btn btn-primary waves-effect waves-light"
                             id="tombol-update">Simpan</button>
+                            =======
+                            <button type="submit" class="btn btn-primary waves-effect waves-light"
+                                id="tombol-update">Simpan</button>
+                            >>>>>>> 93fef0aee9d267d8d13184e2ae42bbdf5f6bf456
                     </div>
                 </form>
             </div><!-- /.modal-content -->

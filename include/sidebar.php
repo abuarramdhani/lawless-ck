@@ -29,7 +29,7 @@ require '../controller/c_sidebar.php';
                         <?php
                             $menu_id = $row["id"];
                             if ($_SESSION['userlevel'] != 0) {
-                                if ($_SESSION['kodeoutlet'] == 'OUT000' or $_SESSION['kodeoutlet'] == 'OUT001') {
+                                if ($_SESSION['kodeoutlet'] == 'OUT000' or $_SESSION['kodeoutlet'] == 'OUT001' or $_SESSION['kodeoutlet'] == 'OUT002') {
                                     if ($_SESSION['jabatan'] == "JAB000" or $_SESSION['jabatan'] == "JAB001") {
                                         $kodeusersubmenu = query("SELECT * FROM user_sub_menu WHERE menu_id ='$menu_id' ORDER BY menu_id ASC ");
                                     } else if ($_SESSION['jabatan'] == "JAB004") {
