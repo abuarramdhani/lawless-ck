@@ -8,7 +8,6 @@ if (isset($_POST["updateproduk"])) {
     $nproduk = strtolower(htmlspecialchars($_POST["namaproduk"]));
     $hargabeli = htmlspecialchars($_POST["hargabeli"]);
     $hargajual = htmlspecialchars($_POST["hargajual"]);
-    
     $query = "UPDATE produk SET
                 namaproduk = '$nproduk',
                 harga = '$hargabeli',
@@ -29,4 +28,4 @@ if (isset($_POST["updateproduk"])) {
             </script>";
         //echo 1;
     }
-}   
+}

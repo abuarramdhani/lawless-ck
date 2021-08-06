@@ -84,15 +84,13 @@ if (isset($_POST["updateproyek"])) {
         echo 1;
     }
 } else if (isset($_POST["update-supplier"])) {
+
     $namasupplier = $_POST['unama'];
     $nohpsupplier = $_POST['unohp'];
     $alamatsupplier = $_POST['ualamat'];
+    $bank = $_POST['ubank'];
+    $norek = $_POST['unorek'];
     $id = $_POST['update-supplier'];
-
-    // var_dump($namasupplier);
-    // var_dump($nohpsupplier);
-    // var_dump($alamatsupplier);
-    // die;
 
     // $id = $_POST['updatemenu'];
     // $menu = $_POST['unama'];
@@ -101,12 +99,17 @@ if (isset($_POST["updateproyek"])) {
     $query = "UPDATE supplier SET
                      namasupplier = '$namasupplier',
                      nohp = '$nohpsupplier',
-                     alamatsupplier = '$alamatsupplier'
-             WHERE id = $id
+                     alamatsupplier = '$alamatsupplier',
+                     kodebank ='$bank',
+                     norek ='$norek'
+             WHERE kodesupplier = '$id'
       ";
+
     $masuk_data = mysqli_query($conn, $query);
     if ($masuk_data) {
         echo 3;
+        // echo $bank;
+        // echo $norek;
     } else {
         echo 1;
     }
@@ -141,6 +144,7 @@ if (isset($_POST["updateproyek"])) {
     $mstok = $_POST['mstok'];
     $harga = $_POST['harga'];
     $hargaj = $_POST['hargaj'];
+    $uunit = $_POST['uunit'];
 
     // var_dump($kodeoutlet);
     // die;
@@ -150,6 +154,7 @@ if (isset($_POST["updateproyek"])) {
                      kodebahan = '$kodebahan',
                      namabahan = '$namabahan',
                      minstok = '$mstok',
+                     unit = '$uunit',
                      harga = '$harga',
                      hargaj = '$hargaj'
              WHERE kodebahan = '$kodebahan' and kodeoutlet = '$kodeoutlet'
@@ -277,8 +282,8 @@ if (isset($_POST["updateproyek"])) {
     $query = "UPDATE admin SET
     username = '$name',
     email = '$email',
-    outlet = 'OUT00$outlet',
-    jabatan = 'JAB00$jabatan'
+    outlet = '$outlet',
+    jabatan = '$jabatan'
     WHERE id = $id
                 ";
     $masuk_data = mysqli_query($conn, $query);

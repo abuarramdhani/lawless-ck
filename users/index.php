@@ -201,21 +201,20 @@ $juhal = "Users";
 
                         <div class="form-group">
                             <select class="select2 form-control" id="outlet-edit" name="outlet">
-                                <?php foreach ($outlet as $o) : ?>
-                                    <option value="<?= $o['id'] ?>">
-                                        <?= $o['kodeoutlet'] . ' - ' . ucwords($o['nama']) ?></option>
+
+                                <?php foreach ($outlet as $row) : ?>
+                                    <option value="<?= $row['kodeoutlet']; ?>">
+                                        <?= ucwords($row["nama"]) ?></option>
                                 <?php endforeach; ?>
-
                             </select>
-
                         </div>
 
                         <div class="form-group">
 
                             <select class="select2 form-control" id="jabatan-edit" name="jabatan">
-                                <?php foreach ($jabatan as $j) : ?>
-                                    <option value="<?= $j['id'] ?>">
-                                        <?= $j['kodejabatan'] . ' - ' . ucwords($j['namajabatan']) ?></option>
+                                <?php foreach ($jabatan as $row) : ?>
+                                    <option value="<?= $row['kodejabatan']; ?>">
+                                        <?= ucwords($row["namajabatan"]) ?></option>
                                 <?php endforeach; ?>
                             </select>
 
@@ -329,6 +328,12 @@ $juhal = "Users";
                 var email = $(this).data("email");
                 var outlet = $(this).data("outlet");
                 var jabatan = $(this).data("jabatan");
+
+                console.log(id)
+                console.log(nama)
+                console.log(email)
+                console.log(outlet)
+                console.log(jabatan)
 
                 $("#name-edit").val(nama);
                 $("#email-edit").val(email);

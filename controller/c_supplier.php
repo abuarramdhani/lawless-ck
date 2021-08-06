@@ -1,9 +1,16 @@
 <?php
 $kodeoutlet = $_SESSION['kodeoutlet'];
+$bank = query("SELECT * FROM namabank ORDER BY namabank asc ");
 if ($kodeoutlet != "OUT000") {
-    $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' ORDER BY id DESC ");
+    $kodesupplierr = query("SELECT * FROM supplier as s
+    JOIN namabank as nb
+    ON s.kodebank = nb.kodebank
+     WHERE s.kodeoutlet = '$kodeoutlet' ORDER BY s.id DESC ");
 } else {
-    $kodesupplierr = query("SELECT * FROM supplier ORDER BY id DESC ");
+    $kodesupplierr = query("SELECT * FROM supplier as s
+    JOIN namabank as nb
+    ON s.kodebank = nb.kodebank
+     ORDER BY s.id DESC ");
 }
 
 

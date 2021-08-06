@@ -65,6 +65,25 @@ $juhal = "Supplier";
                                             <input type="text" class="form-control" name="alamat" id="alamat" placeholder="Alamat Supplier"></input>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Nama Bank</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control select2" name="bank" id="bank">
+                                                <option>Pilih Bank</option>
+                                                <?php foreach ($bank as $row) : ?>
+                                                    <option value="<?= $row["kodebank"] ?>">
+                                                        <?= ucwords($row["namabank"]) ?></option>
+                                                <?php endforeach; ?>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">No Rekening</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="norek" id="norek" placeholder="Masukkan No Rekening"></input>
+                                        </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="col-sm-offset-4 col-sm-6 m-t-15">
@@ -103,11 +122,12 @@ $juhal = "Supplier";
                                             <th>No</th>
                                             <th>Kode Supplier</th>
                                             <th>Nama Supplier</th>
+                                            <th>Nama Bank</th>
+                                            <th>No Rekening</th>
                                             <th>No Telp</th>
                                             <th>Action </th>
                                         </tr>
                                     </thead>
-
 
                                     <tbody>
                                         <?php $i = 1; ?>
@@ -117,9 +137,11 @@ $juhal = "Supplier";
                                                 <td>
                                                     <?= $row["kodesupplier"] ?></td>
                                                 <td><?= ucwords($row["namasupplier"]) ?></td>
+                                                <td><?= ucwords($row["namabank"]) ?></td>
+                                                <td><?= ucwords($row["norek"]) ?></td>
                                                 <td><?= $row["nohp"] ?></td>
                                                 <td>
-                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-id="<?= $row['id']; ?>" data-nama="<?= $row['namasupplier']; ?>" data-nohp="<?= $row['nohp']; ?>" data-alamat="<?= $row['alamatsupplier']; ?>" id=""><i class="fa fa-pencil"></i></a>
+                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-norek="<?= $row['norek']; ?>" data-bank="<?= $row['kodebank']; ?>" data-id="<?= $row['kodesupplier']; ?>" data-nama="<?= $row['namasupplier']; ?>" data-nohp="<?= $row['nohp']; ?>" data-alamat="<?= $row['alamatsupplier']; ?>" id=""><i class="fa fa-pencil"></i></a>
                                                     <?php if ($_SESSION['userlevel'] == 0) : ?>
                                                         |
                                                         <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
@@ -184,13 +206,33 @@ $juhal = "Supplier";
                                         <input type="text" class="nohp form-control" id="unohp" name="unohp">
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Nama Bank</label>
+                                        <select class="form-control select2 ubank" name="ubank" id="ubank">
+                                            <option>Pilih Bank</option>
+                                            <?php foreach ($bank as $row) : ?>
+                                                <option value="<?= $row["kodebank"] ?>">
+                                                    <?= ucwords($row["namabank"]) ?></option>
+                                            <?php endforeach; ?>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="unorek" class="control-label">No Rekening</label>
+                                        <input type="text" class="form-control unorek" name="unorek" id="unorek" placeholder="Masukkan No Rekening"></input>
+
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="alamatsupplier" class="control-label">Alamat</label>
                                         <textarea class="form-control alamat" rows="2" id="ualamat" name="ualamat"></textarea>
-
                                     </div>
                                 </div>
+
 
                             </div>
                         </div>
@@ -322,11 +364,17 @@ $juhal = "Supplier";
             const nama = $(this).data('nama');
             const nohp = $(this).data('nohp');
             const alamat = $(this).data('alamat');
+            const bank = $(this).data('bank');
+            const norek = $(this).data('norek');
+
 
             $('.id').val(id);
             $('.nama').val(nama);
             $('.nohp').val(nohp);
             $('.alamat').val(alamat);
+            $('.ubank').val(bank);
+            $('#ubank').trigger('change');
+            $('.unorek').val(norek);
             $('#modaledit').modal('show');
         });
 
@@ -341,11 +389,8 @@ $juhal = "Supplier";
             var namasupplier = $('#unama').val();
             var nohpsupplier = $('#unohp').val();
             var alamatsupplier = $('#ualamat').val();
-
-            console.log(namasupplier);
-            console.log(nohpsupplier);
-            console.log(alamatsupplier);
-
+            var ubank = $('#ubank').val();
+            var unorek = $('#unorek').val();
 
             if (namasupplier == "") {
                 swal("namasupplier belum di isi!", "", "error")

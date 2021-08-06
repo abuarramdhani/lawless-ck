@@ -163,7 +163,7 @@ include '../include/filter_date.php';
                                                         <div class="col-md-6 col-xl-3 col-lg-4 <?= $p['kodekategoriproduk']; ?>">
                                                             <div class="gal-detail thumb">
                                                                 <a href="../assets/images/products/<?= $p['gambar']; ?>" class="image-popup" title="Screenshot-3">
-                                                                    <img src="../assets/images/products/<?= $p['gambar']; ?>" class="thumb-img img-fluid" style="height: 240px;" alt="work-thumbnail">
+                                                                    <img src="../assets/images/products/<?= $p['gambar']; ?>" class="thumb-img img-fluid" style="height: 220px;" alt="work-thumbnail">
                                                                 </a>
                                                                 <div class="text-center">
                                                                     <a href="javascript:;" id="add" data-id="<?= $p['id'] ?>" data-nama="<?= $p['namaproduk'] ?>" data-harga="<?= $p['harga'] ?>">

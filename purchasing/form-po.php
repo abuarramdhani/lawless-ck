@@ -78,6 +78,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                                 <th>No</th>
                                                 <th>Kode</th>
                                                 <th>Item</th>
+                                                <th>Unit</th>
                                                 <th>Harga</th>
                                                 <th data-priority="1">Aksi</th>
 
@@ -164,9 +165,9 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
 
                                     <?php if ($_SESSION['kodeoutlet'] != 'OUT001') : ?>
                                         <div class="form-group  text-center" style="margin-top: 10px;">
-                                            <button class="btn btn-danger waves-effect waves-light mr-1">
+                                            <!-- <button class="btn btn-danger waves-effect waves-light mr-1">
                                                 <span>Batal</span>
-                                            </button>
+                                            </button> -->
 
                                             <button type="submit" class="btn btn-purple waves-effect waves-light mr-1" id="simpan">
                                                 <span>Simpan</span>
@@ -283,7 +284,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                 var result = JSON.parse(response);
                 var i = 1;
                 result.forEach(res => {
-                    html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan + '</td><td>' + res.harga + '</td>';
+                    html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan + '</td><td>' + res.namaunit + '</td><td>' + res.harga + '</td>';
                     html += '<td><button id="add" data-kodebahan="' + res.kodebahan + '" data-id="' + res.id + '" data-nama="' + res.namabahan +
                         '" data-harga="' + res.harga +
                         '" class="btn btn-icon waves-effect waves-light btn-sm btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';

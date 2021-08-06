@@ -388,6 +388,8 @@ if (isset($_POST['kasmasuk'])) {
     $nsupplier = strtolower(htmlspecialchars($_POST["nsupplier"]));
     $nohp = htmlspecialchars($_POST["nohp"]);
     $alamat = htmlspecialchars($_POST["alamat"]);
+    $bank = htmlspecialchars($_POST["bank"]);
+    $norek = htmlspecialchars($_POST["norek"]);
 
     $ceknama = mysqli_query($conn, "SELECT * FROM supplier WHERE namasupplier ='$nsupplier' and kodeoutlet ='$kodeoutlet' ");
 
@@ -399,7 +401,7 @@ if (isset($_POST['kasmasuk'])) {
     //query insert data
     $query = "INSERT INTO supplier 
                 VALUES 
-                ('','$kodeoutlet','$kp','$nsupplier','$nohp','$alamat')
+                ('','$kodeoutlet','$kp','$nsupplier','$nohp','$alamat','$bank','$norek')
             ";
 
     $masuk_data = mysqli_query($conn, $query);
@@ -472,6 +474,7 @@ if (isset($_POST['kasmasuk'])) {
     $kodeoutlet = htmlspecialchars($_POST["kodeoutlet"]);
     $nbahan = strtolower(htmlspecialchars($_POST["nbahan"]));
     $nhargabeli = strtolower(htmlspecialchars($_POST["nhargabeli"]));
+    $nunit = $_POST["nunit"];
 
 
     $ceknama = mysqli_query($conn, "SELECT * FROM bahan WHERE namabahan ='$nbahan' and kodeoutlet ='$kodeoutlet' ");
@@ -490,6 +493,7 @@ if (isset($_POST['kasmasuk'])) {
               kodeoutlet ='$kodeoutlet',
               kodebahan  = '$kp',
               namabahan = '$nbahan',
+              unit = '$nunit',
               hargaj = '0',
               harga = '$nhargabeli',
               stok = '0',
