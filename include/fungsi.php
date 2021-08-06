@@ -13,15 +13,19 @@ $url;
 //echo "<br>";
 $pan = explode("/", $url);
 //var_dump($panel);
-$bh = $pan[3];
-$bh1 = explode(".", $bh);
-$basehost = $bh1[0];
+
 
 //koneksi database
 if ($_SERVER['HTTP_HOST'] != "localhost") {
     $conn = mysqli_connect('localhost', 'lawlessburgerbar_lbba', '22e9j=V9r#A_', 'lawlessburgerbar_lb');
+    $bh = $pan[2];
+    $bh1 = explode(".", $bh);
+    $basehost = $bh1[0];
 } else {
     $conn = mysqli_connect('localhost', 'root', '', 'lawlessburgerbar_lb');
+    $bh = $pan[3];
+    $bh1 = explode(".", $bh);
+    $basehost = $bh1[0];
 }
 
 // if (!$conn) {

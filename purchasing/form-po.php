@@ -284,8 +284,10 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                 var result = JSON.parse(response);
                 var i = 1;
                 result.forEach(res => {
-                    html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan + '</td><td>' + res.namaunit + '</td><td>' + res.harga + '</td>';
-                    html += '<td><button id="add" data-kodebahan="' + res.kodebahan + '" data-id="' + res.id + '" data-nama="' + res.namabahan +
+                    html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan +
+                        '</td><td>' + res.namaunit + '</td><td>' + res.harga + '</td>';
+                    html += '<td><button id="add" data-kodebahan="' + res.kodebahan + '" data-id="' + res
+                        .id + '" data-nama="' + res.namabahan +
                         '" data-harga="' + res.harga +
                         '" class="btn btn-icon waves-effect waves-light btn-sm btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
                     i++;
@@ -340,11 +342,14 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                     kodebahan +
                     '"><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
                     nama +
-                    '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' + id + '"  name="harga[]"  value="' +
+                    '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' + id +
+                    '"  name="harga[]"  value="' +
                     harga +
-                    '"></td><td><input id="jumlah" class="form-control ' + id + '" type="number" name="jumlah[]" value="' +
+                    '"></td><td><input id="jumlah" class="form-control ' + id +
+                    '" type="number" name="jumlah[]" value="' +
                     jumlah +
-                    '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' + id + '" id="subtotal_item" value="' +
+                    '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' +
+                    id + '" id="subtotal_item" value="' +
                     harga + '" ></td>';
                 html +=
                     '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';

@@ -1,4 +1,4 @@
 <?php
-$users = query("SELECT * FROM admin");
+$users = query("SELECT * FROM admin WHERE userlevel != 0");
 $outlet = query("SELECT id,kodeoutlet,nama from companypanel");
-$jabatan = query("SELECT id,kodejabatan,namajabatan from jabatan ");
+$jabatan = query("SELECT * from jabatan ");

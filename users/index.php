@@ -81,13 +81,13 @@ $juhal = "Users";
 
 
                                     </div>
-
+                                    <?php $jab = query("SELECT * from jabatan "); ?>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">jabatan</label>
                                         <div class="col-sm-8">
                                             <select class="select2 form-control" id="jabatan" name="jabatan">
                                                 <option>Pilih Jabatan</option>
-                                                <?php foreach ($jabatan as $j) : ?>
+                                                <?php foreach ($jab as $j) : ?>
                                                     <option value="<?= $j['kodejabatan'] ?>">
                                                         <?= ucwords($j['namajabatan']) ?>
                                                     </option>
@@ -226,7 +226,10 @@ $juhal = "Users";
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary waves-effect waves-light" id="tombol-update">Simpan</button>
+                        <<<<<<< HEAD <button type="submit" class="btn btn-primary waves-effect waves-light" id="tombol-update">Simpan</button>
+                            =======
+                            <button type="submit" class="btn btn-primary waves-effect waves-light" id="tombol-update">Simpan</button>
+                            >>>>>>> 93fef0aee9d267d8d13184e2ae42bbdf5f6bf456
                     </div>
                 </form>
             </div><!-- /.modal-content -->

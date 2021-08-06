@@ -67,6 +67,19 @@ $juhal = "Item Bahan";
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-4 control-label">Kategori Unit</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control select2" name="nunit" id="nunit">
+                                                <option>Pilih Unit</option>
+                                                <?php foreach ($unit as $row) : ?>
+                                                    <option value="<?= $row["kodeunit"] ?>">
+                                                        <?= ucwords($row["namaunit"]) ?></option>
+                                                <?php endforeach; ?>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-4 control-label">Harga Beli</label>
                                         <div class="col-sm-8">
                                             <input autofocus type="text" class="form-control" required name="nhargabeli" id="nhargabeli" placeholder="Harga Beli"></input>

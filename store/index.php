@@ -402,11 +402,14 @@ include '../include/filter_date.php';
                     html =
                         '<tr><td><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
                         nama +
-                        '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' + id + '"  name="harga[]"  value="' +
+                        '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' +
+                        id + '"  name="harga[]"  value="' +
                         harga +
-                        '"></td><td><input id="jumlah" class="form-control ' + id + '" type="number" name="jumlah[]" value="' +
+                        '"></td><td><input id="jumlah" class="form-control ' + id +
+                        '" type="number" name="jumlah[]" value="' +
                         jumlah +
-                        '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' + id + '" id="subtotal_item" value="' +
+                        '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' +
+                        id + '" id="subtotal_item" value="' +
                         harga + '" ></td>';
                     html +=
                         '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';

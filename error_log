@@ -1,0 +1,52 @@
+[01-Aug-2021 16:27:31 UTC] PHP Fatal error:  Uncaught phpmailerException: SMTP Error: Could not authenticate. in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php:775
+Stack trace:
+#0 /home/lawlessburgerbar/public_html/classes/class.phpmailer.php(666): PHPMailer->SmtpConnect()
+#1 /home/lawlessburgerbar/public_html/classes/class.phpmailer.php(537): PHPMailer->SmtpSend('Date: Sun, 1 Au...', '--b1_cb6bfd074a...')
+#2 /home/lawlessburgerbar/public_html/mail.php(18): PHPMailer->Send()
+#3 {main}
+  thrown in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php on line 775
+[03-Aug-2021 03:25:33 UTC] PHP Warning:  include(../classes/class.phpmailer.php): failed to open stream: No such file or directory in /home/lawlessburgerbar/public_html/mail.php on line 21
+[03-Aug-2021 03:25:33 UTC] PHP Warning:  include(../classes/class.phpmailer.php): failed to open stream: No such file or directory in /home/lawlessburgerbar/public_html/mail.php on line 21
+[03-Aug-2021 03:25:33 UTC] PHP Warning:  include(): Failed opening '../classes/class.phpmailer.php' for inclusion (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/lawlessburgerbar/public_html/mail.php on line 21
+[03-Aug-2021 03:25:33 UTC] PHP Fatal error:  Uncaught Error: Class 'PHPMailer' not found in /home/lawlessburgerbar/public_html/mail.php:23
+Stack trace:
+#0 {main}
+  thrown in /home/lawlessburgerbar/public_html/mail.php on line 23
+[03-Aug-2021 03:26:23 UTC] PHP Fatal error:  Uncaught phpmailerException: Invalid address:  in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php:423
+Stack trace:
+#0 /home/lawlessburgerbar/public_html/classes/class.phpmailer.php(369): PHPMailer->AddAnAddress('to', '', '')
+#1 /home/lawlessburgerbar/public_html/mail.php(34): PHPMailer->AddAddress(NULL)
+#2 {main}
+  thrown in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php on line 423
+[03-Aug-2021 03:29:13 UTC] PHP Fatal error:  Uncaught phpmailerException: Invalid address:  in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php:423
+Stack trace:
+#0 /home/lawlessburgerbar/public_html/classes/class.phpmailer.php(369): PHPMailer->AddAnAddress('to', '', '')
+#1 /home/lawlessburgerbar/public_html/mail.php(34): PHPMailer->AddAddress(NULL)
+#2 {main}
+  thrown in /home/lawlessburgerbar/public_html/classes/class.phpmailer.php on line 423
+[03-Aug-2021 04:40:09 UTC] PHP Parse error:  syntax error, unexpected 'kodeoutlet' (T_STRING) in /home/lawlessburgerbar/public_html/include/fungsi.php on line 37
+[03-Aug-2021 04:40:13 UTC] PHP Parse error:  syntax error, unexpected 'kodeoutlet' (T_STRING) in /home/lawlessburgerbar/public_html/include/fungsi.php on line 37
+[03-Aug-2021 04:40:23 UTC] PHP Parse error:  syntax error, unexpected 'kodeoutlet' (T_STRING) in /home/lawlessburgerbar/public_html/include/fungsi.php on line 37
+[03-Aug-2021 04:50:28 UTC] PHP Parse error:  syntax error, unexpected 'kodeoutlet' (T_STRING) in /home/lawlessburgerbar/public_html/include/fungsi.php on line 39
+[03-Aug-2021 04:51:02 UTC] PHP Parse error:  syntax error, unexpected 'kodeoutlet' (T_STRING) in /home/lawlessburgerbar/public_html/include/fungsi.php on line 39
+[04-Aug-2021 12:12:52 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 12:13:25 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 12:56:26 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 13:21:13 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 13:22:39 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 13:22:43 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 14:48:55 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 14:49:06 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 14:49:14 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 14:49:17 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 14:56:57 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 14:59:01 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 15:00:51 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 15:57:59 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 16:19:06 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 17:38:04 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 19:57:45 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[04-Aug-2021 19:58:04 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[05-Aug-2021 03:22:15 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[05-Aug-2021 03:37:12 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
+[05-Aug-2021 04:47:52 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/lawlessburgerbar/public_html/menu.php on line 109
