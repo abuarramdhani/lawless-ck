@@ -10,7 +10,7 @@ require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
 $bagian = "Inventory";
-$juhal = "Detail In";
+$juhal = "Data Bahan";
 
 require '../controller/c_detail_in.php';
 
@@ -96,6 +96,7 @@ include '../models/cek.php';
                                             <th>Nama Barang</th>
                                             <th>Harga</th>
                                             <th>Jumlah</th>
+                                            <th>Unit</th>
                                             <th>Subtotal</th>
                                         </tr>
                                     </thead>
@@ -104,9 +105,10 @@ include '../models/cek.php';
                                         <?php foreach ($item_po as $item) : ?>
                                             <tr>
                                                 <td><?= $i++;  ?></td>
-                                                <td><?= $item['namabahan']; ?></td>
+                                                <td><?= $item['namabarang']; ?></td>
                                                 <td><?= $item['harga']; ?></td>
                                                 <td><?= $item['qty']  ?></td>
+                                                <td><?= $item['namaunit']  ?></td>
                                                 <td><?= $item['subtotal']; ?></td>
                                             </tr>
                                         <?php endforeach; ?>

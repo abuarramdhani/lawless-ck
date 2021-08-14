@@ -6,8 +6,8 @@ $keyword = $_POST["keyword_form-po"];
 
 if (isset($keyword)) {
 
-    $produk = query("SELECT * FROM produk 
-    WHERE namaproduk LIKE '%" . $keyword . "%'
+    $produk = query("SELECT * FROM barang 
+    WHERE namabarang LIKE '%" . $keyword . "%' AND kategoribarang = 'KAB001'
     ORDER BY id DESC ");
     // $bahan = query("SELECT * FROM produk 
     // WHERE kodeoutlet = '$kodeoutlet' AND (namabahan LIKE '%" . $keyword . "%' OR kodebahan like '%" . $keyword . "%')

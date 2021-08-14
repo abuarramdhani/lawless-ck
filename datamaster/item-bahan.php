@@ -15,7 +15,11 @@ $juhal = "Item Bahan";
 
 
 <body class="fixed-left">
-
+    <div class="rowspin">
+        <div class="spinn">
+            <i class="fa fa-spin fa-circle-o-notch spinn2"></i>
+        </div>
+    </div>
     <!-- Begin page -->
     <div id="wrapper">
 
@@ -51,19 +55,6 @@ $juhal = "Item Bahan";
                                         <label class="col-sm-4 control-label">Nama Bahan</label>
                                         <div class="col-sm-8">
                                             <input autofocus type="text" class="form-control" required name="nbahan" id="nbahan" placeholder="Nama bahan"></input>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Kategori Unit</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control select2" name="nunit" id="nunit">
-                                                <option>Pilih Unit</option>
-                                                <?php foreach ($unit as $row) : ?>
-                                                    <option value="<?= $row["kodeunit"] ?>">
-                                                        <?= ucwords($row["namaunit"]) ?></option>
-                                                <?php endforeach; ?>
-
-                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -205,14 +196,17 @@ $juhal = "Item Bahan";
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="minstok" class="control-label">Stok</label>
+                                        <input type="text" class="form-control stok" id="stok" name="stok">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="minstok" class="control-label">Minimal
                                             Stok</label>
                                         <input type="text" class="form-control mstok" id="mstok" name="mstok">
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nunit" class="control-label">Unit</label>
@@ -226,6 +220,10 @@ $juhal = "Item Bahan";
                                         </select>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="row">
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="hargabeli" class="control-label">Harga
@@ -291,9 +289,11 @@ $juhal = "Item Bahan";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
+                        $('.spinn').hide();
                         // alert(hasil);
                         console.log(hasil);
                         //sukses
@@ -374,10 +374,12 @@ $juhal = "Item Bahan";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
                         // alert(hasil);
+                        $('.spinn').hide();
                         console.log(hasil);
                         //sukses
                         if (hasil == 1) {

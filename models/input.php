@@ -648,6 +648,7 @@ if (isset($_POST['kasmasuk'])) {
     $nkategoriproduk = htmlspecialchars($_POST["nkategoriproduk"]);
     $nproduk = strtolower(htmlspecialchars($_POST["nproduk"]));
     $nharga = htmlspecialchars($_POST["nharga"]);
+    $nunit = htmlspecialchars($_POST["nunit"]);
 
     $ceknama = mysqli_query($conn, "SELECT * FROM produk WHERE namaproduk ='$nproduk' ");
 
@@ -683,7 +684,7 @@ if (isset($_POST['kasmasuk'])) {
             // if ($ukuran < 2044070) {
             if ($ukuran > 0) {
                 move_uploaded_file($file_tmp, '../assets/images/products/' . $gambar);
-                $query = "INSERT INTO produk VALUES ('','$kp','$nkategoriproduk','$nproduk','$nharga','$gambar','0','0')";
+                $query = "INSERT INTO produk VALUES ('','$kp','$nkategoriproduk','$nproduk','$nharga','$gambar','0','0','$nunit')";
                 $masuk_data = mysqli_query($conn, $query);
                 if ($masuk_data) {
                     echo 3;
@@ -697,7 +698,7 @@ if (isset($_POST['kasmasuk'])) {
             echo 5;
         }
     } else {
-        $query = "INSERT INTO produk VALUES ('','$kp','$nkategoriproduk','$nproduk','$nharga','$gambar','0','0')";
+        $query = "INSERT INTO produk VALUES ('','$kp','$nkategoriproduk','$nproduk','$nharga','0','$gambar','0','0','$nunit')";
         $masuk_data = mysqli_query($conn, $query);
         if ($masuk_data) {
             echo 3;
@@ -713,9 +714,10 @@ if (isset($_POST['kasmasuk'])) {
 } else if (isset($_POST['inputformpo'])) {
 
     $namabarang       = $_POST['namabarang'];
-    $kodebahan       = $_POST['kodebahan'];
+    $kodebahan       = $_POST['kodebarang'];
     $harga         = $_POST['harga'];
     $jumlah     = $_POST['jumlah'];
+    $unitbeli     = $_POST['unitbeli'];
     $subtotal    = $_POST['subtotal'];
     $kodesupplier    = $_POST['supplier'];
     $total_keseluruhan    = $_POST['total_keseluruhan'];
@@ -776,8 +778,8 @@ if (isset($_POST['kasmasuk'])) {
     // foreach ($kodebahan as $row) {
 
     //     $sql = "SELECT stok 
-    //     FROM bahan 
-    //     WHERE kodebahan = '$row'
+    //     FROM barang 
+    //     WHERE kodebarang = '$row'
     // ";
     //     $result = mysqli_query($conn, $sql);
 
@@ -799,15 +801,16 @@ if (isset($_POST['kasmasuk'])) {
     // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
 
-        // mysqli_query($conn, "UPDATE bahan SET 
+        // mysqli_query($conn, "UPDATE barang SET 
         // stok= '$t_stok[$i]' 
-        // WHERE kodebahan='$kodebahan[$i]'");
+        // WHERE kodebarang='$kodebahan[$i]'");
 
         mysqli_query($conn, "insert into item_po set
                 No_form    = '$No_form',
                 kodebahan      = '$kodebahan[$i]',
                 qty = '$jumlah[$i]',
                 harga ='$harga[$i]',
+                unit ='$unitbeli[$i]',
                 subtotal = '$subtotal[$i]'
             ");
     }
@@ -1013,20 +1016,13 @@ if (isset($_POST['kasmasuk'])) {
     $harga         = $_POST['harga'];
     $jumlah     = $_POST['jumlah'];
     $subtotal    = $_POST['subtotal'];
-    // $kodesupplier    = $_POST['supplier'];
+    $unitjual    = $_POST['unitjual'];
+    $kodebahan    = $_POST['kodebarang'];
+    $kodesupplier = 'SUP000';
     $total_keseluruhan    = $_POST['total_keseluruhan'];
     $namaoutlet = $_SESSION['outlet'];
     $kodeoutlet = $_SESSION['kodeoutlet'];
 
-
-    // var_dump($kodeoutlet);
-    // var_dump($namabarang);
-    // var_dump($harga);
-    // var_dump($jumlah);
-    // var_dump($subtotal);
-    // var_dump($kodesupplier);
-
-    // die;
     // $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
     // $outlet['kodeoutlet'];
 
@@ -1040,17 +1036,17 @@ if (isset($_POST['kasmasuk'])) {
     // $result_noform = mysqli_query($conn, "SELECT id,No_form FROM form_po ORDER BY No_form DESC");
     // $ambil_noform = mysqli_fetch_row($result_noform);
 
-    $ambil_noform = query("SELECT id,No_form FROM form_storebahan ORDER BY No_form DESC");
+    $ambil_noform = query("SELECT id,No_form FROM form_po ORDER BY No_form DESC");
     $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
     $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
 
 
-    if ($pecah_po == "FSB$date") {
+    if ($pecah_po == "FPO$date") {
         $pecah_po_b += 1;
         $pecah_po_b = sprintf("%03d", $pecah_po_b);
-        $No_form = 'FSB' . $date . $pecah_po_b;
+        $No_form = 'FPO' . $date . $pecah_po_b;
     } else {
-        $No_form = 'FSB' . $date . '001';
+        $No_form = 'FPO' . $date . '001';
     }
     //akhir isi noform
     // var_dump($ambil_noform);
@@ -1058,88 +1054,83 @@ if (isset($_POST['kasmasuk'])) {
 
 
     // bahan
-    foreach ($namabarang as $row) {
+    // foreach ($namabarang as $row) {
 
-        $sql = "SELECT * 
-        FROM bahan 
-        WHERE namabahan = '$row'
-        ";
-        $result = mysqli_query($conn, $sql);
+    //     $sql = "SELECT * 
+    //     FROM bahan 
+    //     WHERE namabahan = '$row'
+    //     ";
+    //     $result = mysqli_query($conn, $sql);
 
-        while ($d = mysqli_fetch_array($result)) {
-            $kodebahan[] = $d['kodebahan'];
-            // echo $kodebahan;
-        }
-    }
+    //     while ($d = mysqli_fetch_array($result)) {
+    //         $kodebahan[] = $d['kodebahan'];
+    //         // echo $kodebahan;
+    //     }
+    // }
 
     //   ambil stok
-    foreach ($kodebahan as $row) {
+    // foreach ($kodebahan as $row) {
 
-        $sql = "SELECT stok 
-        FROM bahan 
-        WHERE kodebahan = '$row'
-    ";
-        $result = mysqli_query($conn, $sql);
+    //     $sql = "SELECT stok 
+    //     FROM barang 
+    //     WHERE kodebarang = '$row'
+    // ";
+    //     $result = mysqli_query($conn, $sql);
 
-        while ($d = mysqli_fetch_array($result)) {
-            $stok[] = $d['stok'];
-            // echo $kodebahan;
-        }
-    }
+    //     while ($d = mysqli_fetch_array($result)) {
+    //         $stok[] = $d['stok'];
+    //         // echo $kodebahan;
+    //     }
+    // }
 
-    for ($i = 0; $i < count($jumlah); $i++) {
-        $t_stok[] = $stok[$i] - $jumlah[$i];
-    }
+    // for ($i = 0; $i < count($jumlah); $i++) {
+    //     $t_stok[] = $stok[$i] - $jumlah[$i];
+    // }
     // akhir stok
-
-
-
-
 
     // // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
 
-        mysqli_query($conn, "UPDATE bahan SET 
+        mysqli_query($conn, "UPDATE barang SET 
         stok= '$t_stok[$i]' 
-        WHERE kodebahan='$kodebahan[$i]'");
+        WHERE kodebarang='$kodebahan[$i]'");
 
-        mysqli_query($conn, "insert into item_storebahan set
-            No_form    = '$No_form',
-            kodebahan      = '$kodebahan[$i]',
-            qty = '$jumlah[$i]',
-            harga ='$harga[$i]',
-            subtotal = '$subtotal[$i]'
-        ");
+        mysqli_query($conn, "insert into item_po set
+No_form    = '$No_form',
+kodebahan      = '$kodebahan[$i]',
+qty = '$jumlah[$i]',
+harga ='$harga[$i]',
+unit ='$unitjual[$i]',
+subtotal = '$subtotal[$i]'
+");
     }
     // input ke tabel form storebahan
-    mysqli_query($conn, "insert into form_storebahan set
-         No_form    = '$No_form',
-         kodeoutlet      = '$kodeoutlet',
-         Form_po = '0',
-         date ='$dt_input',
-         status_ot ='0',
-         status_ck ='0'
-
-     ");
+    mysqli_query($conn, "insert into form_po set
+    No_form    = '$No_form',
+    kodeoutlet      = '$kodeoutlet',
+    kodesupplier = '$kodesupplier',
+    date ='$dt_input',
+    status = '0'
+");
 
     $result = mysqli_affected_rows($conn);
     // var_dump($result);
     // die;
 
-    if ($result) {
-        $subject = "Request Bahan";
-        $email = 'admin@lawless-ck.net';
-        include '../mail/storebahan.php';
-        include '../models/sendmail.php';
-        $mail->send();
-    }
+    // if ($result) {
+    //     $subject = "Request Bahan";
+    //     $email = 'admin@lawless-ck.net';
+    //     include '../mail/storebahan.php';
+    //     include '../models/sendmail.php';
+    //     $mail->send();
+    // }
 
     //kembali ke halaman sebelumnya
     $_SESSION["msg"] = "$result";
     // header("Location: form-po.php?msg=" . urlencode('1'));
 
     header("location: ../store/store-bahan");
-} elseif (isset($_POST['inputprodukmasuk'])) {
+} else if (isset($_POST['inputprodukmasuk'])) {
     $namaproduk       = $_POST['namaproduk'];
     $harga         = $_POST['harga'];
     $jumlah     = $_POST['jumlah'];
@@ -1261,10 +1252,24 @@ if (isset($_POST['kasmasuk'])) {
     $kodebahan = $_POST['kodebahan'];
     $harga = $_POST['harga'];
     $qty = $_POST['qty'];
+    $unit = $_POST['unit'];
     $subtotal = $_POST['subtotal'];
     $kodesupplier = $_POST['kodesupplier'];
 
+    // var_dump($qty);
+    // die;
 
+
+    //cek apakah harga terjadi perubahan
+    for ($i = 0; $i < count($harga); $i++) {
+        $cekharga[] =  query("SELECT hargabeli FROM barang WHERE kodebarang = '$kodebahan[$i]'");
+        if ($cekharga[$i][0]['hargabeli'] > $harga) {
+            $harga = $cekharga[$i]['hargabeli'];
+        } else {
+            $harga = $harga;
+        }
+    }
+    // akhir cek
 
     // $total = count($namabarang);
     $dt_input = date('Y-m-d');
@@ -1293,8 +1298,8 @@ if (isset($_POST['kasmasuk'])) {
     foreach ($kodebahan as $row) {
 
         $sql = "SELECT stok 
-        FROM bahan 
-        WHERE kodebahan = '$row'
+        FROM barang 
+        WHERE kodebarang = '$row'
     ";
         $result = mysqli_query($conn, $sql);
 
@@ -1309,8 +1314,15 @@ if (isset($_POST['kasmasuk'])) {
     }
     // akhir stok
     for ($i = 0; $i < count($kodebahan); $i++) {
-        mysqli_query($conn, "UPDATE bahan SET harga='$harga[$i]', stok= '$t_stok[$i]' WHERE kodebahan='$kodebahan[$i]'");
-        mysqli_query($conn, "INSERT INTO item_in (NO_form, kodebahan, qty, harga, subtotal) VALUE ('$No_form', '$kodebahan[$i]', '$qty[$i]', '$harga[$i]', '$subtotal[$i]')");
+        mysqli_query($conn, "UPDATE barang SET hargabeli='$harga[$i]', stok= '$t_stok[$i]' WHERE kodebarang='$kodebahan[$i]'");
+        mysqli_query($conn, "INSERT INTO item_in SET
+         No_form = '$No_form' , 
+         kodebahan = '$kodebahan[$i]', 
+         qty = '$qty[$i]', 
+         harga = '$harga[$i]', 
+         subtotal = '$subtotal[$i]',
+         unit = '$unit[$i]'
+         ");
     }
     mysqli_query($conn, "insert into form_in set
             No_form    = '$No_form',
@@ -1328,7 +1340,7 @@ if (isset($_POST['kasmasuk'])) {
     $result = mysqli_affected_rows($conn);
 
     if ($result) {
-        mysqli_query($conn, "UPDATE form_po SET status='4' WHERE No_form='$nopo'");
+        mysqli_query($conn, "UPDATE form_po SET status_ot='2' WHERE No_form='$nopo'");
     }
 
     //kembali ke halaman sebelumnya
@@ -1357,14 +1369,20 @@ if (isset($_POST['kasmasuk'])) {
                      ";
         $result = mysqli_query($conn, $query);
 
+
+
         if ($result) {
             // echo 3;
             $subject = "PENDAFTARAN AKUN";
             $email = $email;
-            // $mailhost1 = 'mail.lawless-ck.net';
-            // $username1 = 'office@lawless-ck.net';
-            // $Password = 'office123!!@@##';
-            // $setfrom1 = 'Lawless HO Office';
+
+            $mailhost1 = "mail.lawless-ck.net";
+            $username1 = "admin@lawless-ck.net";
+            $password1 = "ck123!!@@##";
+            $setfrom1 = "Lawless HO Office";
+
+
+
             $secret = '#$eCr37';
             $token = MD5($email . $secret);
             $link = query("SELECT baseurl FROM companypanel WHERE kodeoutlet = '$outlet'")[0]['baseurl'];
@@ -1526,4 +1544,433 @@ if (isset($_POST['kasmasuk'])) {
     // header("Location: form-po.php?msg=" . urlencode('1'));
 
     header("location: ../store/store-bahan");
+} else if (isset($_POST['inputbank'])) {
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM namabank ");
+    //cek ada data?
+    if (mysqli_num_rows($cekdata) > 0) {
+        $kodebank = query("SELECT * FROM namabank ORDER BY id DESC LIMIT 1")[0];
+        $kodes = substr($kodebank['kodebank'], 3);
+        $noUrut = (int) $kodes;
+        $noUrut++;
+        $newkodetr = sprintf("%03s", $noUrut);
+    } else {
+        $newkodetr = "001";
+    }
+
+    $kode = "BAN";
+    $kp = $kode . $newkodetr;
+
+    $nbank = htmlspecialchars($_POST["nbank"]);
+
+
+    $ceknama = mysqli_query($conn, "SELECT * FROM namabank WHERE namabank ='$nbank' ");
+
+    if (mysqli_fetch_assoc($ceknama)) {
+        echo "<script>
+                alert('nama unit sudah terdaftar');
+                document.location.href = 'unit';
+            </script>";
+        return false;
+    }
+
+    //query insert data
+    $query = "INSERT INTO namabank 
+                VALUES 
+                ('','$kp','$nbank')
+            ";
+
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+
+        echo 3;
+    } else {
+        echo 1;
+    }
+} else if (isset($_POST['inputpackage'])) {
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM package ");
+    //cek ada data?
+    if (mysqli_num_rows($cekdata) > 0) {
+        $kodepackage = query("SELECT * FROM package ORDER BY id DESC LIMIT 1")[0];
+        $kodes = substr($kodepackage['kodepackage'], 3);
+        $noUrut = (int) $kodes;
+        $noUrut++;
+        $newkodetr = sprintf("%03s", $noUrut);
+    } else {
+        $newkodetr = "001";
+    }
+
+    $kode = "PAC";
+    $kp = $kode . $newkodetr;
+
+    $npackage = strtolower(htmlspecialchars($_POST["npackage"]));
+    $nhargabeli = strtolower(htmlspecialchars($_POST["nhargabeli"]));
+    $nunit = $_POST["nunit"];
+
+
+    $ceknama = mysqli_query($conn, "SELECT * FROM package WHERE namapackage ='$npackage'");
+
+    if (mysqli_fetch_assoc($ceknama)) {
+        echo 4;
+        return false;
+    }
+
+    //query insert data
+    // $query = "INSERT INTO package 
+    //             value 
+    //             ('','$kodeoutlet','$kp','$npackage','$nhargabeli','0','0','0')
+    //         ";
+    $query = "INSERT INTO package SET 
+              kodepackage  = '$kp',
+              namapackage = '$npackage',
+              unit = '$nunit',
+              hargaj = '0',
+              harga = '$nhargabeli',
+              stok = '0',
+              minstok = '0'
+
+            ";
+
+    $masuk_data = mysqli_query($conn, $query);
+    // var_dump($masuk_data);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        echo 1;
+    }
+} else if (isset($_POST['inputformstorepackage'])) {
+
+    $namapackage       = $_POST['namapackage'];
+    $harga         = $_POST['harga'];
+    $jumlah     = $_POST['jumlah'];
+    $subtotal    = $_POST['subtotal'];
+    $total_keseluruhan    = $_POST['total_keseluruhan'];
+    $namaoutlet = $_SESSION['outlet'];
+    $kodeoutlet = $_SESSION['kodeoutlet'];
+
+    $kodepackage = $_POST['kodepackage'];
+
+    $total = count($namapackage);
+    $dt_input = date('Y-m-d');
+    $date = date('ymd');
+
+    $ambil_noform = query("SELECT id,No_form FROM form_storepackage ORDER BY No_form DESC");
+    $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
+    $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
+
+
+    if ($pecah_po == "FSK$date") {
+        $pecah_po_b += 1;
+        $pecah_po_b = sprintf("%03d", $pecah_po_b);
+        $No_form = 'FSK' . $date . $pecah_po_b;
+    } else {
+        $No_form = 'FSK' . $date . '001';
+    }
+
+
+    //   ambil stok
+    foreach ($kodepackage as $row) {
+
+        $sql = "SELECT stok 
+        FROM package 
+        WHERE kodepackage = '$row'
+    ";
+        $result = mysqli_query($conn, $sql);
+
+        while ($d = mysqli_fetch_array($result)) {
+            $stok[] = $d['stok'];
+            // echo $kodebahan;
+        }
+    }
+
+    for ($i = 0; $i < count($jumlah); $i++) {
+        $t_stok[] = $stok[$i] - $jumlah[$i];
+    }
+    // akhir stok
+
+    // // input ke tabel item po
+    for ($i = 0; $i < $total; $i++) {
+
+        mysqli_query($conn, "UPDATE package SET 
+        stok= '$t_stok[$i]' 
+        WHERE kodepackage='$kodepackage[$i]'");
+
+        mysqli_query($conn, "insert into item_storepackage set
+            No_form    = '$No_form',
+            kodepackage      = '$kodepackage[$i]',
+            qty = '$jumlah[$i]',
+            harga ='$harga[$i]',
+            subtotal = '$subtotal[$i]'
+        ");
+    }
+    // input ke tabel form storebahan
+    mysqli_query($conn, "insert into form_storepackage set
+         No_form    = '$No_form',
+         kodeoutlet      = '$kodeoutlet',
+         date ='$dt_input',
+         status ='0'
+
+     ");
+
+    $result = mysqli_affected_rows($conn);
+    // var_dump($result);
+    // die;
+
+    // if ($result) {
+    //     $subject = "Request Bahan";
+    //     $email = 'admin@lawless-ck.net';
+    //     include '../mail/storebahan.php';
+    //     include '../models/sendmail.php';
+    //     $mail->send();
+    // }
+
+    //kembali ke halaman sebelumnya
+    $_SESSION["msg"] = "$result";
+    // header("Location: form-po.php?msg=" . urlencode('1'));
+
+    header("location: ../store/storepackage");
+} else if (isset($_POST['inputformretur'])) {
+
+    $namabarang       = $_POST['namabarang'];
+    $kodebahan       = $_POST['kodebarang'];
+    $harga         = $_POST['harga'];
+    $jumlah     = $_POST['jumlah'];
+    $subtotal    = $_POST['subtotal'];
+    // $kodesupplier    = $_POST['supplier'];
+    $total_keseluruhan    = $_POST['total_keseluruhan'];
+    $namaoutlet = $_SESSION['outlet'];
+    $kodeoutlet = $_SESSION['kodeoutlet'];
+
+    $total = count($namabarang);
+    $dt_input = date('Y-m-d');
+    $date = date('ymd');
+
+    var_dump($total);
+    $ambil_noform = query("SELECT id,No_form FROM form_returbahan ORDER BY No_form DESC");
+    $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
+    $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
+
+
+    if ($pecah_po == "FRB$date") {
+        $pecah_po_b += 1;
+        $pecah_po_b = sprintf("%03d", $pecah_po_b);
+        $No_form = 'FRB' . $date . $pecah_po_b;
+    } else {
+        $No_form = 'FRB' . $date . '001';
+    }
+
+
+    //   ambil stok
+    foreach ($kodebahan as $row) {
+
+        $sql = "SELECT stok 
+        FROM bahan 
+        WHERE kodebahan = '$row'
+    ";
+        $result = mysqli_query($conn, $sql);
+
+        while ($d = mysqli_fetch_array($result)) {
+            $stok[] = $d['stok'];
+            // echo $kodebahan;
+        }
+    }
+    //   ambil stok
+    for ($i = 0; $i < $total; $i++) {
+
+        $result = mysqli_query($conn, "SELECT stok FROM bahan 
+        WHERE kodeoutlet='$kodeoutlet' and namabahan='$namabarang[$i]'");
+        while ($d = mysqli_fetch_array($result)) {
+            $stokk[] = $d['stok'];
+            // echo $kodebahan;
+        }
+    }
+
+
+    for ($i = 0; $i < count($jumlah); $i++) {
+        $t_stok[] = $stok[$i] + $jumlah[$i];
+    }
+    // akhir stok
+    for ($i = 0; $i < count($jumlah); $i++) {
+        $tkurang_stok[] = $stokk[$i] - $jumlah[$i];
+    }
+    // akhir stok
+
+
+    // // input ke tabel item po
+    for ($i = 0; $i < $total; $i++) {
+
+        mysqli_query($conn, "UPDATE bahan SET 
+        stok= '$t_stok[$i]' 
+        WHERE kodebahan='$kodebahan[$i]'");
+
+        mysqli_query($conn, "UPDATE bahan SET 
+          stok= '$tkurang_stok[$i]' 
+          WHERE kodeoutlet='$kodeoutlet' and namabahan='$namabarang[$i]'");
+
+        mysqli_query($conn, "insert into item_returbahan set
+            No_form    = '$No_form',
+            kodebahan      = '$kodebahan[$i]',
+            qty = '$jumlah[$i]',
+            harga ='$harga[$i]',
+            subtotal = '$subtotal[$i]'
+        ");
+    }
+    // input ke tabel form storebahan
+    mysqli_query($conn, "insert into form_returbahan set
+         No_form    = '$No_form',
+         kodeoutlet      = '$kodeoutlet',
+         Form_po = '0',
+         date ='$dt_input',
+         status_ot ='0',
+         status_ck ='0'
+
+     ");
+
+    $result = mysqli_affected_rows($conn);
+    // var_dump($result);
+    // die;
+
+    // if ($result) {
+    //     $subject = "Request Bahan";
+    //     $email = 'admin@lawless-ck.net';
+    //     include '../mail/storebahan.php';
+    //     include '../models/sendmail.php';
+    //     $mail->send();
+    // }
+
+    //kembali ke halaman sebelumnya
+    $_SESSION["msg"] = "$result";
+    // header("Location: form-po.php?msg=" . urlencode('1'));
+
+    header("location: ../store/retur");
+} else if (isset($_POST['inputbarang'])) {
+
+    // $data = [
+    //     'kodeoutlet'       => $_POST['kodeoutlet'],
+    //     'kategoribarang'       => $_POST['kategoribarang'],
+    //     'subkategoribarang'       => $_POST['subkategoribarang'],
+    //     'nbarang'       => $_POST['nbarang'],
+    //     'hargabeli'       => $_POST['hargabeli'],
+    //     'nunit'       => $_POST['nunit'],
+    //     'stok'       => $_POST['stok'],
+    //     'hargajual1'       => $_POST['hargajual1'],
+    //     'hargajual2'       => $_POST['hargajual2'],
+    //     'nunitjual'       => $_POST['nunitjual'],
+    //     'minstok'       => $_POST['minstok']
+    // ];
+    $kodeoutlet       = $_POST['kodeoutlet'];
+    $kategoribarang       = $_POST['kategoribarang'];
+    $subkategoribarang       = $_POST['subkategoribarang'];
+    $nbarang       = $_POST['nbarang'];
+    $hargabeli       = $_POST['hargabeli'];
+    $nunit       = $_POST['nunit'];
+    $stok       = $_POST['stok'];
+    $hargajual1       = $_POST['hargajual1'];
+    $hargajual2       = $_POST['hargajual2'];
+    $nunitjual       = $_POST['nunitjual'];
+    $minstok       = $_POST['minstok'];
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM barang ");
+    //cek ada data?
+    if (mysqli_num_rows($cekdata) > 0) {
+        $kodeproduk = query("SELECT * FROM barang ORDER BY id DESC LIMIT 1")[0];
+        $kodes = substr($kodeproduk['kodebarang'], 3);
+        $noUrut = (int) $kodes;
+        $noUrut++;
+        $newkodetr = sprintf("%03s", $noUrut);
+    } else {
+        $newkodetr = "001";
+    }
+
+    $kode = "BAR";
+    $kb = $kode . $newkodetr;
+
+    $query = "INSERT INTO barang SET 
+    kodeoutlet = '$kodeoutlet',
+    kategoribarang = '$kategoribarang',
+    subkatbarang = '$subkategoribarang',
+    kodebarang = '$kb',
+    namabarang = '$nbarang',
+    hargabeli = '$hargabeli',
+    unitbeli = '$nunit',
+    stok = '$stok',
+    hargajual1 = '$hargajual1',
+    hargajual2 = '$hargajual2',
+    unitjual = '$nunitjual',
+    minstok = '$minstok'
+
+ ";
+
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        echo 1;
+    }
+} elseif (isset($_POST['inputkategoribarang'])) {
+    $cekdata = mysqli_query($conn, "SELECT * FROM kategoribarang");
+    if (mysqli_num_rows($cekdata) > 0) {
+        $kodekategoribarang = query("SELECT * FROM kategoribarang ORDER BY id DESC LIMIT 1")[0];
+        $kodes = substr($kodekategoribarang['kodekategoribarang'], 3);
+        $noUrut = (int) $kodes;
+        $noUrut++;
+        $newkodetr = sprintf("%03s", $noUrut);
+    } else {
+        $newkodetr = "001";
+    }
+
+    $kode = "KAB";
+    $kb = $kode . $newkodetr;
+
+    $nkategoribarang = strtolower(htmlspecialchars($_POST['nkategoribarang']));
+    $ceknama = mysqli_query($conn, "SELECT * FROM kategoribarang WHERE namakategoribarang = '$nkategoribarang'");
+    if (mysqli_fetch_assoc($ceknama)) {
+        echo 4;
+        return false;
+    }
+
+    $query = "INSERT INTO kategoribarang VALUE ('', '$kb', '$nkategoribarang')";
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        echo 1;
+    }
+} elseif (isset($_POST['inputsubkatbarang'])) {
+    $nkategoribarang = $_POST['nkategoribarang'];
+    $nsubkatbarang = strtolower(htmlspecialchars($_POST['nsubkatbarang']));
+
+    $kategoribarang = query("SELECT * FROM kategoribarang WHERE kodekategoribarang ='$nkategoribarang'")[0];
+    $kodekat = substr($kategoribarang['namakategoribarang'], 0, 1);
+    $kode = "CK" . $kodekat;
+    $kodecek = $kode . "%";
+
+    $cekdata = mysqli_query($conn, "SELECT * FROM subkatbarang WHERE kodesubkatbarang LIKE '$kodecek'");
+
+    if (mysqli_num_rows($cekdata) > 0) {
+        $kodesubkategoribarang = query("SELECT * FROM subkatbarang WHERE kodesubkatbarang LIKE '$kodecek' ORDER BY id DESC LIMIT 1")[0];
+        $kodes = substr($kodesubkategoribarang['kodesubkatbarang'], 3);
+        $noUrut = (int) $kodes;
+        $noUrut++;
+        $newkodetr = sprintf("%03s", $noUrut);
+    } else {
+        $newkodetr = "001";
+    }
+
+    $ksb = $kode . $newkodetr;
+
+    $ceknama = mysqli_query($conn, "SELECT * FROM subkatbarang WHERE namasubkatbarang = '$nsubkatbarang'");
+    if (mysqli_fetch_assoc($ceknama)) {
+        echo 4;
+        return false;
+    }
+
+    $query = "INSERT INTO subkatbarang VALUE ('', '$nkategoribarang', '$ksb', '$nsubkatbarang')";
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        echo 1;
+    }
 }

@@ -12,10 +12,14 @@ require '../include/fungsi_indotgl.php';
 $bagian = "Report";
 $juhal = "Laporan Order Bahan";
 
-$tabel = 'form_storebahan';
-$tabel_join = 'companypanel';
-$kode = 'outlet';
-include '../include/filter_date.php';
+// $tabel = 'form_storebahan';
+// $tabel_join = 'companypanel';
+// $kode = 'outlet';
+// include '../include/filter_date.php';
+
+$tabel_filter = 'bahan';
+include '../include/filter_range.php';
+$kodeoutlet = $_SESSION['kodeoutlet'];
 
 ?>
 
@@ -47,79 +51,58 @@ include '../include/filter_date.php';
                 <div class="container">
 
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card-box">
-                                <form method="post" action="">
-                                    <?php require '../include/tglharian.php'; ?>
-                                </form>
-                            </div>
-                        </div><!-- end col -->
-                        <div class="col-lg-6">
-                            <div class="card-box">
-                                <form method="post" action="">
-                                    <?php require '../include/tglrange.php'; ?>
-                                </form>
-                            </div>
-                        </div><!-- end col -->
-                    </div>
-                    <!-- end row -->
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card-box">
-                                <form method="post" action="">
-                                    <input type="hidden" name="filter-date">
-                                    <?php require '../include/tgltahun.php'; ?>
-                                </form>
-                            </div>
-                        </div><!-- end col -->
 
+                        <div class="col-lg-12">
+                            <div class="card-box">
+                                <form method="post" action="">
+                                    <input type="hidden" name="filter_range">
+                                    <?php require '../include/tglrange.php'; ?>
+
+                                </form>
+                            </div>
+                        </div><!-- end col -->
                     </div>
                     <!-- end row -->
+
                     <!-- end row -->
 
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
 
-
                                 <table id="datatable-buttons" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Tanggal</th>
-                                            <th>No. Form order bahan</th>
-                                            <th>Outlet</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Nama Bahan</th>
+                                            <?php if (isset($_POST['laporan'])) : ?>
+                                                <?php if ($_POST['laporan'] != 'in') : ?>
+                                                    <th>OUT</th>
+                                                <?php else : ?>
+                                                    <th>IN</th>
+                                                <?php endif ?>
+                                            <?php else : ?>
+                                                <th>IN</th>
+                                            <?php endif ?>
+                                            <th>Total</th>
+
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         <?php $i = 1 ?>
-                                        <?php foreach ($data as $dp) : ?>
-                                            <tr>
-                                                <td><?= $i++; ?></td>
-                                                <td><?= $dp['date']; ?></td>
-                                                <td><?= $dp['No_form']; ?></td>
-                                                <td><?= $dp['nama'] ?></td>
-                                                <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
-                                                    <td><span class="label label-danger">Confirm</span></td>
-                                                <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
-                                                    <td><span class="label label-info">Confirmed</span></td>
-                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 0) : ?>
-                                                    <td><span class="label label-success">Checked by Manager</span></td>
-                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 1) : ?>
-                                                    <td><span class="label label-success">Checked by CK</span></td>
-                                                <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
-                                                    <td><span class="label label-primary">Delivery</span></td>
-                                                <?php endif ?>
-
-                                                <td><a href="detail-bahan.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
-                                                </td>
-                                            </tr>
-
-                                        <?php endforeach ?>
-
+                                        <?php if (isset($_POST['filter_range'])) : ?>
+                                            <?php foreach ($data as $row) : ?>
+                                                <tr>
+                                                    <td><?= $i++; ?></td>
+                                                    <td><?= $row['date']; ?></td>
+                                                    <td><?= $row['namabahan']; ?></td>
+                                                    <td><?= $row['total']; ?></td>
+                                                    <td><?= $row['subtotalmasuk'] ?></td>
+                                                </tr>
+                                            <?php endforeach ?>
+                                        <?php endif ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -181,7 +164,7 @@ include '../include/filter_date.php';
             // }, 1300);
 
         } else if (msg == 2) {
-            swal("Kode Akun Belum di Pilih!", "", "error")
+            swal("Tidak ada Data", "", "error")
         }
 
     }

@@ -10,9 +10,9 @@ require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 require '../controller/c_barangmasuk.php';
 $bagian = "Inventory";
-$juhal = "Bahan Masuk";
-
-$form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = supplier.kodesupplier WHERE form_po.status='3'");
+$juhal = "Barang Masuk";
+$kodeoutlet = $_SESSION['kodeoutlet'];
+$form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = supplier.kodesupplier WHERE form_po.kodeoutlet = '$kodeoutlet' and (form_po.status_ck='2' and form_po.status_ot='1')");
 ?>
 
 
@@ -43,7 +43,6 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                         <div class="col-lg-6">
                             <form action="" method="POST">
                                 <select onchange="this.form.submit()" class="form-control select2" name="keyword_bahan_masuk">
-
                                     <option>PILIH NO PO ATAU NAMA SUPPLIER</option>
                                     <?php foreach ($form as $f) : ?>
                                         <option value="<?= $f['No_form']; ?>"> <?= $f['No_form']; ?> || <?= $f['namasupplier']; ?> </option>
@@ -86,6 +85,7 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                                                                 <th>Nama Barang</th>
                                                                 <th data-priority="1">Harga</th>
                                                                 <th data-priority="3">Jumlah</th>
+                                                                <th data-priority="1">Unit</th>
                                                                 <th data-priority="1">Subtotal</th>
                                                                 <th data-priority="1">Aksi</th>
                                                             </tr>
@@ -96,10 +96,12 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                                                                     <tr>
                                                                         <input type="hidden" name="noform" value="<?= $detail['No_form']; ?>">
                                                                         <input type="hidden" name="kodesupplier" value="<?= $detail['kodesupplier']; ?>">
-                                                                        <input type="hidden" name="kodebahan[]" value="<?= $item["kodebahan"]; ?>">
-                                                                        <th><input readonly type="text" class="form-control" value="<?= $item['namabahan']; ?>"></th>
+                                                                        <input type="hidden" name="kodebahan[]" value="<?= $item["kodebarang"]; ?>">
+                                                                        <input type="hidden" name="unit[]" value="<?= $item["unit"]; ?>">
+                                                                        <th><input readonly type="text" class="form-control" value="<?= $item['namabarang']; ?>"></th>
                                                                         <td><input type="text" name="harga[]" class="form-control harga" value="<?= $item['harga']; ?>"></td>
                                                                         <td><input type="number" id="qty" name="qty[]" class="form-control qty" value="<?= $item['qty']; ?>"></td>
+                                                                        <td><input readonly type="text" class="form-control " value="<?= $item['namaunit']; ?>"></td>
                                                                         <td><input readonly name="subtotal[]" type="text" class="form-control subtotal" value=" <?= $item['subtotal']; ?>"></td>
                                                                         <td><button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 delete">
                                                                                 <i class="fa fa-remove"></i> </button></td>

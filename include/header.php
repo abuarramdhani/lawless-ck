@@ -63,6 +63,21 @@ $username = $user["username"];
     <link href="../assets/css/pages.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/menu.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <style>
+        .rowspin {
+            display: none;
+            justify-content: center;
+            height: 100vh;
+            width: 100%;
+            align-items: center;
+            position: absolute;
+            z-index: 999999;
+        }
+
+        .spinn2 {
+            font-size: 80px;
+        }
+    </style>
 
     <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

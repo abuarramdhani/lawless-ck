@@ -10,11 +10,14 @@ require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 // require '../controller/c_storebahan.php';
 $bagian = "Store";
-$juhal = "Store Bahan";
+$juhal = "Store Barang";
 
-$tabel = 'form_storebahan';
+// $tabel = 'form_storebahan';
 $tabel_join = 'companypanel';
 $kode = 'outlet';
+$tabel = 'form_po';
+// $tabel_join = 'supplier';
+// $kode = 'supplier';
 include '../include/filter_date.php';
 
 ?>
@@ -40,6 +43,8 @@ include '../include/filter_date.php';
                 <?php unset($_SESSION['msg']); ?>
             <?php endif ?>
             <!-- akhir terima msg -->
+
+
             <?php if ($_SESSION['kodeoutlet'] == "OUT002" or $_SESSION['kodeoutlet'] == "OUT001") : ?>
 
                 <!-- Start content -->
@@ -93,26 +98,32 @@ include '../include/filter_date.php';
                                         <tbody>
                                             <?php $i = 1 ?>
                                             <?php foreach ($data as $dp) : ?>
-                                                <tr>
-                                                    <td><?= $i++; ?></td>
-                                                    <td><?= $dp['date']; ?></td>
-                                                    <td><?= $dp['No_form']; ?></td>
-                                                    <td><?= $dp['nama'] ?></td>
-                                                    <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
-                                                        <td><span class="label label-danger">Confirm</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
-                                                        <td><span class="label label-info">Confirmed</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 0) : ?>
-                                                        <td><span class="label label-success">Checked by Manager</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 1) : ?>
-                                                        <td><span class="label label-success">Checked by CK</span></td>
-                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
-                                                        <td><span class="label label-primary">Delivery</span></td>
-                                                    <?php endif ?>
+                                                <?php if ($dp['kodesupplier'] == 'SUP000') : ?>
+                                                    <tr>
+                                                        <td><?= $i++; ?></td>
+                                                        <td><?= $dp['date']; ?></td>
+                                                        <td><?= $dp['No_form']; ?></td>
+                                                        <td><?= $dp['nama'] ?></td>
 
-                                                    <td><a href="detail_storebahan.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
-                                                    </td>
-                                                </tr>
+                                                        <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
+                                                            <td><span class="label label-danger">Confirm</span>
+                                                            </td>
+                                                        <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
+                                                            <td><span class="label label-default">Checked by Manager</span></td>
+                                                        <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 1) : ?>
+                                                            <td><span class="label label-info">Checked by CK</span></td>
+                                                        <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 2) : ?>
+                                                            <td><span class="label label-primary">Delivery</span></td>
+                                                        <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
+                                                            <td><span class="label label-success">Delivered</span></td>
+                                                        <?php endif ?>
+
+
+
+                                                        <td><a href="detail_storebahan.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Details</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php endif ?>
 
                                             <?php endforeach ?>
 
@@ -177,6 +188,7 @@ include '../include/filter_date.php';
                                                     <th>Kode</th>
                                                     <th>Item</th>
                                                     <th>Harga</th>
+                                                    <th>Unit</th>
                                                     <th>Stok</th>
                                                     <th data-priority="1">Aksi</th>
 
@@ -206,7 +218,7 @@ include '../include/filter_date.php';
                                                                     <th data-priority="1">Harga</th>
 
                                                                     <th data-priority="3">Jumlah</th>
-
+                                                                    <th data-priority="1">Unit</th>
                                                                     <th data-priority="1">Subtotal</th>
                                                                     <th data-priority="1">Aksi</th>
                                                                 </tr>
@@ -364,6 +376,7 @@ include '../include/filter_date.php';
     }
 
     function loadData() {
+
         $("#barang>tbody").empty();
         var search = $("#search").val();
         if (search != '') {
@@ -377,12 +390,21 @@ include '../include/filter_date.php';
                 var result = JSON.parse(response);
                 var i = 1;
                 result.forEach(res => {
-                    html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan +
-                        '</td><td>' + res.hargaj + '</td><td>' + res.stok + '</td>';
-                    html += '<td><button id="add" data-stok="' + res.stok + '" data-id="' + res.id + '" data-nama="' + res.namabahan +
-                        '" data-harga="' + res.hargaj +
-                        '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
-                    i++;
+                    <?php if ($_SESSION['kodeoutlet'] != "OUT007") : ?>
+                        html = '<tr><td>' + i + '</td><td>' + res.kodebarang + '</td><td>' + res.namabarang +
+                            '</td><td>' + res.hargajual1 + '</td><td>' + res.namaunit + '</td><td>' + res.stok + '</td>';
+                        html += '<td><button id="add" data-kodebarang="' + res.kodebarang + '" data-namaunit="' + res.namaunit + '"  data-unitjual="' + res.unitjual + '" data-stok="' + res.stok + '" data-id="' + res.id + '" data-nama="' + res.namabarang +
+                            '" data-harga="' + res.hargajual1 +
+                            '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
+                        i++;
+                    <?php else : ?>
+                        html = '<tr><td>' + i + '</td><td>' + res.kodebarang + '</td><td>' + res.namabarang +
+                            '</td><td>' + res.hargajual2 + '</td><td>' + res.namaunit + '</td><td>' + res.stok + '</td>';
+                        html += '<td><button id="add" data-kodebarang="' + res.kodebarang + '" data-namaunit="' + res.namaunit + '" data-unitjual="' + res.unitjual + '" data-stok="' + res.stok + '" data-id="' + res.id + '" data-nama="' + res.namabarang +
+                            '" data-harga="' + res.hargajual2 +
+                            '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
+                        i++;
+                    <?php endif ?>
 
                     $("#barang>tbody").append(html);
 
@@ -405,6 +427,9 @@ include '../include/filter_date.php';
             var id = $(this).data("id");
             var nama = $(this).data("nama");
             var harga = $(this).data("harga");
+            var namaunit = $(this).data("namaunit");
+            var kodebarang = $(this).data("kodebarang");
+            var unitjual = $(this).data("unitjual");
             var stok = $(this).data("stok");
             var jumlah = 1;
             var check = document.getElementsByClassName(id)[0];
@@ -424,12 +449,18 @@ include '../include/filter_date.php';
                     swal("Stok Kosong!!!", "", "error")
                 } else {
                     html =
-                        '<tr><td><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
+                        '<tr><td><input type="hidden" name="kodebarang[]"  class="form-control"  value="' +
+                        kodebarang +
+                        '"><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
                         nama +
                         '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' + id + '"  name="harga[]"  value="' +
                         harga +
-                        '"></td><td><input id="jumlah" class="form-control ' + id + '" type="number" name="jumlah[]" value="' +
+                        '"></td><td><input id="jumlah" min="0" class="form-control ' + id + '" type="number" name="jumlah[]" value="' +
                         jumlah +
+                        '"></td><td><input class="form-control " type="hidden" name="unitjual[]" value="' +
+                        unitjual +
+                        '"><input readonly class="form-control " type="text"  value="' +
+                        namaunit +
                         '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' + id + '" id="subtotal_item" value="' +
                         harga + '" ></td>';
                     html +=

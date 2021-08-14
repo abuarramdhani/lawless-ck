@@ -15,7 +15,11 @@ $juhal = "Unit";
 
 
 <body class="fixed-left">
-
+    <div class="rowspin">
+        <div class="spinn">
+            <i class="fa fa-spin fa-circle-o-notch spinn2"></i>
+        </div>
+    </div>
     <!-- Begin page -->
     <div id="wrapper">
 
@@ -104,50 +108,14 @@ $juhal = "Unit";
                                                     <?= $row["kodeunit"] ?></td>
                                                 <td><?= $row["namaunit"] ?></td>
                                                 <td>
-                                                    <a class="on-default edit-row badge badge-success" data-toggle="modal" data-target="#edit<?= $row["id"] ?>"><i class="fa fa-pencil"></i></a>
+                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-id="<?= $row['id']; ?>" data-namaunit="<?= $row['namaunit']; ?>"><i class="fa fa-pencil"></i></a>
                                                     <?php if ($_SESSION['userlevel'] == 0) : ?>
                                                         |
                                                         <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
                                                         <a class="on-default remove-row badge badge-danger tombol-deleteunit"><i class="fa fa-trash-o"></i></a>
                                                     <?php endif ?>
                                                 </td>
-                                                <div id="edit<?= $row["id"] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                                <h2 class="modal-title">Edit unit
-                                                                    <?= $row["kodeunit"] ?></h2>
-                                                            </div>
-                                                            <form method="post" action="">
-                                                                <div class="modal-body">
-                                                                    <div class="row">
-                                                                        <input type="hidden" value="updateunit" id="updateunit" name="updateunit">
-                                                                        <input type="hidden" value="<?= $row["id"] ?>" id="idunit" name="idunit">
-                                                                        <div class="row">
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group">
-                                                                                    <label for="namaunit" class="control-label">Nama
-                                                                                        Unit</label>
-                                                                                    <input type="text" class="form-control" value="<?= $row["namaunit"] ?>" id="namaunit" name="namaunit">
-                                                                                </div>
-                                                                            </div>
 
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-
-
-                                                                <div class="modal-footer">
-                                                                    <button type="submit" class="btn btn-success waves-effect" id="tombol-updateunit" name="tombol-updateunit">Save</button>
-                                                                </div>
-                                                            </form>
-
-                                                        </div>
-                                                    </div>
-                                                </div><!-- /.modal -->
                                             </tr>
                                             <?php $i++; ?>
                                         <?php endforeach; ?>
@@ -185,6 +153,42 @@ $juhal = "Unit";
 
     </div>
     <!-- END wrapper -->
+    <div id="modaledit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h2 class="modal-title">Edit unit
+                        <?= $row["kodeunit"] ?></h2>
+                </div>
+                <form id="formupdate">
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="hidden" class="id" name="update-unit">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="namaunit" class="control-label">Nama
+                                            Unit</label>
+                                        <input type="text" class="form-control" value="<?= $row["namaunit"] ?>" id="namaunit" name="unamaunit">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success waves-effect" id="tombol-update">Save</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div><!-- /.modal -->
 
     <?php require '../include/scriptfooter.php'; ?>
 
@@ -215,10 +219,12 @@ $juhal = "Unit";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
                         // alert(hasil);
+                        $('.spinn').hide();
                         console.log(hasil);
                         //sukses
                         if (hasil == 1) {
@@ -241,54 +247,69 @@ $juhal = "Unit";
             }
         })
 
-        // $('#tombol-updatesupplier').click(function(e) {
-        //     //alert("klik");
-        //     e.preventDefault();
-        //     var dataform = $('#formupdatesupplier')[0];
-        //     var data = new FormData(dataform);
+        $('#datatable').on('click', '.tombol-edit', function() {
 
-        //     var updatesupplier = $('#updatesupplier').val();
-        //     var idsupplier = $('#idsupplier').val();
-        //     var namasupplier = $('#namasupplier').val();
-        //     var nohpsupplier = $('#nohpsupplier').val();
-        //     var alamatsupplier = $('#alamatsupplier').val();
-        //     //alert(nsupplier);
 
-        //     if (namasupplier == " ") {
-        //         swal("Nama Supplier belum di isi!", "", "error")
-        //     } else {
-        //         $.ajax({
-        //             url: '../models/edit.php',
-        //             type: 'post',
-        //             data: data,
-        //             enctype: 'multipart/form-data',
-        //             processData: false,
-        //             contentType: false,
-        //             cache: false,
-        //             beforeSend: function() {
-        //                 $('.spinn').show();
-        //             },
-        //             success: function(hasil) {
-        //                 // alert(hasil);
-        //                 console.log(hasil);
-        //                 //sukses
-        //                 if (hasil == 1) {
-        //                     swal("Input Gagal!", "", "error")
+            const id = $(this).data('id');
+            const namaunit = $(this).data('namaunit');
 
-        //                 } else if (hasil == 3) {
-        //                     swal({
-        //                         title: "Edit Berhasil!",
-        //                         type: "success",
-        //                         //text: "I will close in 2 seconds.",
-        //                         timer: 2000,
-        //                         showConfirmButton: false
-        //                     })
-        //                     location.reload();
-        //                 }
-        //             }
-        //         });
-        //     }
-        // })
+
+            $('.id').val(id);
+            $('#namaunit').val(namaunit);
+            $('#modaledit').modal('show');
+        });
+
+        $('#tombol-update').click(function(e) {
+
+            // alert('ok');
+            e.preventDefault();
+            var dataform = $('#formupdate')[0];
+            var data = new FormData(dataform);
+            // console.log(data);
+
+            var unamaunit = $('#unamaunit').val();
+
+            // console.log(unamakbarang);
+
+
+            if (unamaunit == "") {
+                swal("Nama Unit belum di isi!", "", "error")
+            } else {
+                $.ajax({
+                    url: '../models/edit.php',
+                    // url: '../controller/c_supplier.php',
+                    type: 'post',
+                    data: data,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    beforeSend: function() {
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
+                    },
+                    success: function(hasil) {
+                        $('.spinn').hide();
+                        // alert(hasil);
+                        // console.log(hasil);
+                        //sukses
+                        if (hasil == 1) {
+                            swal("Tidak Berhasil ditambahkan!", "", "error")
+                        } else if (hasil == 3) {
+                            swal({
+                                title: "Update Berhasil!",
+                                type: "success",
+                                //text: "I will close in 2 seconds.",
+                                timer: 2000,
+                                showConfirmButton: false
+                            })
+                            location.reload();
+
+                        }
+                    }
+                });
+            }
+        })
 
         $('.tombol-deleteunit').click(function(e) {
             e.preventDefault();

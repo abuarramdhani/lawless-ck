@@ -109,7 +109,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                                                 <th data-priority="1">Harga</th>
 
                                                                 <th data-priority="3">Jumlah</th>
-
+                                                                <th data-priority="1">Unit</th>
                                                                 <th data-priority="1">Subtotal</th>
                                                                 <th data-priority="1">Aksi</th>
                                                             </tr>
@@ -284,11 +284,10 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                 var result = JSON.parse(response);
                 var i = 1;
                 result.forEach(res => {
-                    html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan +
-                        '</td><td>' + res.namaunit + '</td><td>' + res.harga + '</td>';
-                    html += '<td><button id="add" data-kodebahan="' + res.kodebahan + '" data-id="' + res
-                        .id + '" data-nama="' + res.namabahan +
-                        '" data-harga="' + res.harga +
+                    html = '<tr><td>' + i + '</td><td>' + res.kodebarang + '</td><td>' + res.namabarang +
+                        '</td><td>' + res.namaunit + '</td><td>' + res.hargabeli + '</td>';
+                    html += '<td><button id="add" data-namaunit="' + res.namaunit + '" data-unitbeli="' + res.unitbeli + '" data-kodebarang="' + res.kodebarang + '" data-id="' + res.id + '" data-nama="' + res.namabarang +
+                        '" data-harga="' + res.hargabeli +
                         '" class="btn btn-icon waves-effect waves-light btn-sm btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
                     i++;
                     $("#barang>tbody").append(html);
@@ -325,31 +324,37 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
             // console.log(id)
             var nama = $(this).data("nama");
             var harga = $(this).data("harga");
-            var kodebahan = $(this).data("kodebahan");
+            var kodebarang = $(this).data("kodebarang");
+            var unitbeli = $(this).data("unitbeli");
+            var namaunit = $(this).data("namaunit");
             var jumlah = 1;
-            var check = document.getElementsByClassName(id)[0];
+            var check = document.getElementsByClassName(kodebarang)[0];
             if (check != null) {
                 var qty = check.value;
                 var newQty = parseInt(qty) + parseInt(jumlah);
                 check.value = newQty;
-                var price = parseInt(document.getElementsByClassName("hrg-" + id)[0].value);
+                var price = parseInt(document.getElementsByClassName("hrg-" + kodebarang)[0].value);
                 var newPrice = price * newQty;
-                document.getElementsByClassName("sub-" + id)[0].value = newPrice;
+                document.getElementsByClassName("sub-" + kodebarang)[0].value = newPrice;
             } else {
                 html =
 
-                    '<tr><td><input type="hidden" name="kodebahan[]"  class="form-control"  value="' +
-                    kodebahan +
+                    '<tr><td><input type="hidden" name="kodebarang[]"  class="form-control"  value="' +
+                    kodebarang +
                     '"><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
                     nama +
-                    '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' + id +
+                    '"></td><td ><input type="number" id="harga" class="form-control harga hrg-' + kodebarang +
                     '"  name="harga[]"  value="' +
                     harga +
-                    '"></td><td><input id="jumlah" class="form-control ' + id +
+                    '"></td><td><input min="0" id="jumlah" class="jumlah form-control ' + kodebarang +
                     '" type="number" name="jumlah[]" value="' +
                     jumlah +
+                    '"></td><input class=" form-control" type="hidden" name="unitbeli[]" value="' +
+                    unitbeli +
+                    '"><td><input class=" form-control" readonly type="text" value="' +
+                    namaunit +
                     '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' +
-                    id + '" id="subtotal_item" value="' +
+                    kodebarang + '" id="subtotal_item" value="' +
                     harga + '" ></td>';
                 html +=
                     '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
@@ -365,6 +370,14 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
         $(document).on("input", "#jumlah", function() {
             var jumlah = parseInt($(this).val());
             var harga = parseInt($(this).closest("tr").find(".harga").val());
+            var total = jumlah * harga;
+            $(this).closest("tr").find("input#subtotal_item").val(total);
+
+            totalharga();
+        });
+        $(document).on("input", "#harga", function() {
+            var harga = parseInt($(this).val());
+            var jumlah = parseInt($(this).closest("tr").find(".jumlah").val());
             var total = jumlah * harga;
             $(this).closest("tr").find("input#subtotal_item").val(total);
 

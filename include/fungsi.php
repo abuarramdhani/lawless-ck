@@ -15,7 +15,7 @@ $pan = explode("/", $url);
 //var_dump($panel);
 
 
-//koneksi database
+// //koneksi database
 if ($_SERVER['HTTP_HOST'] != "localhost") {
     $conn = mysqli_connect('localhost', 'lawlessburgerbar_lbba', '22e9j=V9r#A_', 'lawlessburgerbar_lb');
     $bh = $pan[2];
@@ -27,6 +27,8 @@ if ($_SERVER['HTTP_HOST'] != "localhost") {
     $bh1 = explode(".", $bh);
     $basehost = $bh1[0];
 }
+
+
 
 // if (!$conn) {
 //     die("Koneksi gagal: " . mysqli_connect_error());

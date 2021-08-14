@@ -15,6 +15,12 @@ $juhal = "Produk";
 
 
 <body class="fixed-left">
+    <div class="rowspin">
+        <div class="spinn">
+            <i class="fa fa-spin fa-circle-o-notch spinn2"></i>
+        </div>
+    </div>
+
 
     <!-- Begin page -->
     <div id="wrapper">
@@ -67,17 +73,30 @@ $juhal = "Produk";
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-4 control-label">Kategori Unit</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control select2" name="nunit" id="nunit">
+                                                <option>Pilih Unit</option>
+                                                <?php foreach ($kodeunit as $row) : ?>
+                                                    <option value="<?= $row["kodeunit"] ?>">
+                                                        <?= ucwords($row["namaunit"]) ?></option>
+                                                <?php endforeach; ?>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-4 control-label">Harga Jual</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" required name="nharga" id="nharga" placeholder="Harga Jual"></input>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-sm-4 control-label">Gambar</label>
                                         <div class="col-sm-8">
                                             <input type="file" name="ngambar" id="ngambar" class="dropify" data-height="100" />
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="form-group">
                                         <div class="col-sm-offset-4 col-sm-6 m-t-15">
@@ -119,6 +138,7 @@ $juhal = "Produk";
                                             <th>Kategori</th>
                                             <th>Nama Produk</th>
                                             <th>Harga Jual</th>
+                                            <th>Unit</th>
                                             <th>Stok</th>
                                             <th>Min Stok</th>
                                             <th>Action </th>
@@ -143,10 +163,11 @@ $juhal = "Produk";
                                                 </td>
                                                 <td><?= ucwords($row["namaproduk"]) ?></td>
                                                 <td><?= $row["harga"] ?></td>
+                                                <td><?= $row["namaunit"] ?></td>
                                                 <td><?= $row["stok"] ?></td>
                                                 <td><?= $row["minstok"] ?></td>
                                                 <td>
-                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-gambar="<?= $row['gambar']; ?>" data-kodekproduk="<?= $row['kodekategoriproduk']; ?>" data-kode="<?= $row['kodeproduk']; ?>" data-nama="<?= $row['namaproduk']; ?>" data-harga="<?= $row['harga']; ?>" data-minstok="<?= $row['minstok']; ?>"><i class="fa fa-pencil"></i></a>
+                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-unit="<?= $row['unit']; ?>" data-stok="<?= $row['stok']; ?>" data-gambar="<?= $row['gambar']; ?>" data-kodekproduk="<?= $row['kodekategoriproduk']; ?>" data-kode="<?= $row['kodeproduk']; ?>" data-nama="<?= $row['namaproduk']; ?>" data-harga="<?= $row['harga']; ?>" data-minstok="<?= $row['minstok']; ?>"><i class="fa fa-pencil"></i></a>
                                                     <?php if ($_SESSION['userlevel'] == 0) : ?>
                                                         |
                                                         <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
@@ -198,12 +219,12 @@ $juhal = "Produk";
                         <div class="row">
                             <input type="hidden" class="kode" name="update-produk">
                             <div class="row">
-                                <div class="col-md-12 text-center m-b-10">
+                                <!-- <div class="col-md-12 text-center m-b-10">
 
                                     <img class="gambar img-thumbnail" style="height: 250px;width: 250px;" name="gambar">
-                                    <!-- <input type="text" class="form-control url" id="ugambar" name="ugambar"> -->
+                                    
 
-                                </div>
+                                </div> -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="unama" class="control-label">Nama Produk</label>
@@ -215,6 +236,12 @@ $juhal = "Produk";
                                     <div class="form-group">
                                         <label for="uhargaj" class="control-label">Harga Jual</label>
                                         <input type="text" class="form-control uhargaj" id="uhargaj" name="uhargaj">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ustok" class="control-label">Stok</label>
+                                        <input type="text" class="form-control ustok" id="ustok" name="ustok">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -237,13 +264,26 @@ $juhal = "Produk";
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="uunit" class="control-label">Kategori Unit</label>
+                                        <select class="form-control select2 uunit" name="uunit" id="uunit">
+                                            <option>Pilih Unit</option>
+                                            <?php foreach ($kodeunit as $row) : ?>
+                                                <option value="<?= $row['kodeunit']; ?>">
+                                                    <?= ucwords($row["namaunit"]) ?></option>
+                                            <?php endforeach; ?>
+
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="namamenu" class="control-label">gambar</label>
                                         <input type="file" name="ugambar" id="ugambar" class="dropify" data-height="100" />
-                                        <!-- <input type="text" class="form-control url" id="ugambar" name="ugambar"> -->
-                                    </div>
+                                      
+                                    </div> -->
                                 </div>
 
 
@@ -271,6 +311,8 @@ $juhal = "Produk";
 
 <script>
     $(document).ready(function() {
+        // $('.rowspin').css('display', 'flex');
+        // $('.rowspin').hide();
         $('#tombol-produk').click(function(e) {
 
             e.preventDefault();
@@ -282,11 +324,14 @@ $juhal = "Produk";
             var nproduk = $('#nproduk').val();
             var nharga = $('#nharga').val();
             var ngambar = $('#ngambar').val();
+            var nunit = $('#nunit').val();
 
             // console.log(ngambar);
             //alert(ngambar)
             if (nkategoriproduk == "Pilih Kategori") {
-                swal("Kategori produk blm di pilih!", "", "error")
+                swal("Kategori Produk belum di pilih!", "", "error")
+            } else if (nunit == "Pilih Unit") {
+                swal("Kategori Unit belum di pilih!", "", "error")
             } else if (nharga == "") {
                 swal("Harga belum di isi!", "", "error")
             } else if (nproduk == "") {
@@ -301,11 +346,15 @@ $juhal = "Produk";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.rowspin').show();
+                        // $('.rowspin').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
+                        // $('.rowspin').css('display', 'none');
                         // alert(hasil);
-                        console.log(hasil);
+                        $('.rowspin').hide();
+                        // console.log(hasil);
                         //sukses
                         if (hasil == 1) {
                             swal("Input Gagal!", "", "error")
@@ -392,6 +441,10 @@ $juhal = "Produk";
             const kode = $(this).data('kode');
             const kodekproduk = $(this).data('kodekproduk');
             const gambar = $(this).data('gambar');
+            const stok = $(this).data('stok');
+            const unit = $(this).data('unit');
+
+            // console.log(unit)
 
 
             $('.gambar').attr("src", "../assets/images/products/" + gambar);
@@ -400,7 +453,10 @@ $juhal = "Produk";
             // $('.gambar').val(gambar);
             $('.kodekproduk').val(kodekproduk);
             $('#kodekproduk').trigger('change');
+            $('.uunit').val(unit);
+            $('#uunit').trigger('change');
             $('.unama').val(nama);
+            $('.ustok').val(stok);
             $('.uhargaj').val(harga);
             $('.uminstok').val(minstok);
             $('#modaledit').modal('show');
@@ -416,7 +472,8 @@ $juhal = "Produk";
 
             var unama = $('#unama').val();
             var uhargaj = $('#uhargaj').val();
-            // console.log(namabahan);
+            var uunit = $('#uunit').val();
+            console.log(uunit);
             // console.log(mstok);
             // console.log(harga);
 
@@ -428,6 +485,8 @@ $juhal = "Produk";
                 swal("harga jual belum di isi!", "", "error")
             } else if (kodekproduk == "Pilih Kategori") {
                 swal("Kateogri Produk Belum dipilih!", "", "error")
+            } else if (uunit == null) {
+                swal("Unit Belum dipilih!", "", "error")
             } else {
                 $.ajax({
                     url: '../models/edit.php',
@@ -439,10 +498,12 @@ $juhal = "Produk";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
                         // alert(hasil);
+                        $('.spinn').hide();
                         console.log(hasil);
                         //sukses
                         if (hasil == 1) {
@@ -470,10 +531,11 @@ $juhal = "Produk";
         // $('.tombol-deleteproduk').click(function(e) {
         $('#datatable').on('click', '.tombol-deleteproduk', function(e) {
             e.preventDefault();
-            //alert('hapus');
+            // alert('hapus');
             //var delete = 'delete';
             var tabel = 'produk';
             var iddelete = $(this).closest('tr').find('.delete_id_value').val();
+            // console.log(iddelete);
             swal({
                 title: "Apakah Anda Yakin?",
                 text: "Data Anda Akan Terhapus!",

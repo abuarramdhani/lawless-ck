@@ -79,6 +79,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                                 <th>Kode</th>
                                                 <th>Item</th>
                                                 <th>Harga</th>
+                                                <th>Unit</th>
                                                 <th>Stok</th>
                                                 <th data-priority="1">Aksi</th>
                                             </tr>
@@ -276,9 +277,9 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                 var result = JSON.parse(response);
                 var i = 1;
                 result.forEach(res => {
-                    html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan + '</td><td>' + res.harga + '</td><td>' + res.stok + '</td>';
-                    html += '<td><button id="add" data-stok="' + res.stok + '" data-id="' + res.id + '" data-nama="' + res.namabahan +
-                        '" data-harga="' + res.harga +
+                    html = '<tr><td>' + i + '</td><td>' + res.kodebarang + '</td><td>' + res.namabarang + '</td><td>' + res.hargabeli + '</td><td>' + res.namaunit + '</td><td>' + res.stok + '</td>';
+                    html += '<td><button id="add" data-kode="' + res.kodebarang + '" data-stok="' + res.stok + '" data-id="' + res.id + '" data-nama="' + res.namabarang +
+                        '" data-harga="' + res.hargabeli +
                         '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
                     i++;
                     $("#barang>tbody").append(html);
@@ -302,20 +303,21 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
             var nama = $(this).data("nama");
             var harga = $(this).data("harga");
             var stok = $(this).data("stok");
+            var kodebarang = $(this).data("kode");
             var jumlah = 1;
 
             // html = '<tr><td class="item_nama">' + nama + '</td><td class="harga item">' + harga + '</td><td class="item"><input id="jumlah" type="number" name="jumlah[]" value="' + jumlah + '"></td><td class="total item">' + harga + '</td>';
             // html += '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
             // $("#order>tbody").append(html);
             // totalharga();
-            var check = document.getElementsByClassName(id)[0];
+            var check = document.getElementsByClassName(kodebarang)[0];
             if (check != null) {
                 var qty = check.value;
                 var newQty = parseInt(qty) + parseInt(jumlah);
                 check.value = newQty;
-                var price = parseInt(document.getElementsByClassName("hrg-" + id)[0].value);
+                var price = parseInt(document.getElementsByClassName("hrg-" + kodebarang)[0].value);
                 var newPrice = price * newQty;
-                document.getElementsByClassName("sub-" + id)[0].value = newPrice;
+                document.getElementsByClassName("sub-" + kodebarang)[0].value = newPrice;
             } else {
                 if (stok == 0) {
                     swal("Stok Kosong!!!", "", "error")
@@ -325,11 +327,11 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                     html =
                         '<tr><td><input readonly type="text" name="namabahan[]"  class="form-control"  value="' +
                         nama +
-                        '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' + id + '"  name="harga[]"  value="' +
+                        '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' + kodebarang + '"  name="harga[]"  value="' +
                         harga +
-                        '"></td><td><input id="jumlah" class="form-control ' + id + '" type="number" name="jumlah[]" value="' +
+                        '"></td><td><input id="jumlah" min="0" class="form-control ' + kodebarang + '" type="number" name="jumlah[]" value="' +
                         jumlah +
-                        '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' + id + '" id="subtotal_item" value="' +
+                        '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' + kodebarang + '" id="subtotal_item" value="' +
                         harga + '" ></td>';
                     html +=
                         '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';

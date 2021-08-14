@@ -78,7 +78,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                                 <th>No</th>
                                                 <th>Kode</th>
                                                 <th>Item</th>
-                                                <th>Harga</th>
+                                                <th>Cost Produk</th>
                                                 <th data-priority="1">Aksi</th>
                                             </tr>
                                         </thead>
@@ -274,9 +274,9 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
             var result = JSON.parse(response);
             var i = 1;
             result.forEach(res => {
-                html = '<tr><td>' + i + '</td><td>' + res.kodeproduk + '</td><td>' + res.namaproduk + '</td><td>' + res.harga + '</td>';
-                html += '<td><button id="add" data-id="' + res.id + '" data-nama="' + res.namaproduk +
-                    '" data-harga="' + res.harga +
+                html = '<tr><td>' + i + '</td><td>' + res.kodebarang + '</td><td>' + res.namabarang + '</td><td>' + res.hargabeli + '</td>';
+                html += '<td><button id="add" data-id="' + res.id + '" data-nama="' + res.namabarang +
+                    '" data-harga="' + res.hargabeli +
                     '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
                 i++;
                 $("#barang>tbody").append(html);

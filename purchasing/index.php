@@ -8,12 +8,12 @@ require '../include/fungsi.php';
 require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
-include '../models/information.php';
 // require '../controller/c_kaskecil.php';
 // require '../controller/c_data-po.php';
 $tabel = 'form_po';
 $tabel_join = 'supplier';
 $kode = 'supplier';
+include '../models/information.php';
 include '../include/filter_date.php';
 $bagian = "Purchasing";
 $juhal = "Data PO";
@@ -177,7 +177,21 @@ $juhal = "Data PO";
                         </div>
                     </div><!-- /.modal -->
 
+                    <!-- <div class="row">
+                        <form method="post" enctype="multipart/form-data" action="../models/importexcel.php">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label">Import Excel</label>
+                                    <input type="hidden" name="importpo">
+                                    <div>
+                                        <input type="file" name="import" class="dropify" data-height="100" />
+                                    </div>
 
+                                </div>
+                                <button type="submit" class="btn btn-purple">Import</button>
+                            </div>
+                        </form>
+                    </div> -->
                     <div class="row">
                         <div class="col-lg-7">
                             <div class="card-box">
@@ -185,16 +199,16 @@ $juhal = "Data PO";
                                     <!--  <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button> -->
                                 </div>
                                 <div class="dropdown pull-centre">
-                                    <a class="btn btn-danger  waves-effect waves-light">Check : <?= $check['COUNT(status)'] ?>
+                                    <a class="btn btn-danger  waves-effect waves-light">Check : <?= $check['informasi'] ?>
                                     </a>
                                     <a class="btn  btn-custom waves-effect waves-light">
-                                        Checked by Admin : <?= $c_admin['COUNT(status)'] ?></a>
+                                        Checked by Manager : <?= $c_admin['informasi'] ?></a>
                                     <a class="btn  btn-info waves-effect waves-light">
-                                        Checked by Manager : <?= $c_manager['COUNT(status)'] ?></a>
+                                        Checked by CK : <?= $c_manager['informasi'] ?></a>
                                     <a class="btn  btn-primary waves-effect waves-light">
-                                        Delivery : <?= $delivery['COUNT(status)'] ?></a>
+                                        Delivery : <?= $delivery['informasi'] ?></a>
                                     <a class="btn  btn-success waves-effect waves-light">
-                                        Delivered : <?= $delivered['COUNT(status)'] ?></a>
+                                        Delivered : <?= $delivered['informasi'] ?></a>
                                 </div>
 
                             </div>
@@ -232,33 +246,36 @@ $juhal = "Data PO";
                                         </tr>
                                     </thead>
 
+
                                     <tbody>
                                         <?php if (isset($data)) : ?>
                                             <?php $i = 1 ?>
+
                                             <?php foreach ($data as $dp) : ?>
+                                                <?php if ($dp['kodeoutlet'] == $kodeoutlet) : ?>
+                                                    <tr>
+                                                        <td><?= $i++; ?></td>
+                                                        <td><?= $dp['date']; ?></td>
+                                                        <td><?= $dp['No_form']; ?></td>
+                                                        <td><?= $dp['namasupplier'] ?></td>
 
-                                                <tr>
-                                                    <td><?= $i++; ?></td>
-                                                    <td><?= $dp['date']; ?></td>
-                                                    <td><?= $dp['No_form']; ?></td>
-                                                    <td><?= $dp['namasupplier'] ?></td>
+                                                        <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
+                                                            <td><span class="label label-danger">Confirm</span>
+                                                            </td>
+                                                        <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
+                                                            <td><span class="label label-default">Checked by Manager</span></td>
+                                                        <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 1) : ?>
+                                                            <td><span class="label label-info">Checked by CK</span></td>
+                                                        <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 2) : ?>
+                                                            <td><span class="label label-primary">Delivery</span></td>
+                                                        <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
+                                                            <td><span class="label label-success">Delivered</span></td>
+                                                        <?php endif ?>
 
-                                                    <?php if ($dp['status'] == 0) : ?>
-                                                        <td><span class="label label-danger">Check</span></td>
-                                                    <?php elseif ($dp['status'] == 1) : ?>
-                                                        <td><span class="label label-default">Checked by Admin</span></td>
-                                                    <?php elseif ($dp['status'] == 2) : ?>
-                                                        <td><span class="label label-info">Checked by Manager</span></td>
-                                                    <?php elseif ($dp['status'] == 3) : ?>
-                                                        <td><span class="label label-primary">Delivery</span></td>
-                                                    <?php elseif ($dp['status'] == 4 or $dp['status'] == 5) : ?>
-                                                        <td><span class="label label-success">Delivered</span></td>
-                                                    <?php endif ?>
-
-                                                    <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-primary btn-xs m-b-5">Details</a>
-                                                    </td>
-                                                </tr>
-
+                                                        <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-primary btn-xs m-b-5">Details</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php endif ?>
                                             <?php endforeach ?>
                                         <?php endif ?>
 

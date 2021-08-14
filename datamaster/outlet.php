@@ -15,6 +15,11 @@ $juhal = "Outlet";
 
 
 <body class="fixed-left">
+    <div class="rowspin">
+        <div class="spinn">
+            <i class="fa fa-spin fa-circle-o-notch spinn2"></i>
+        </div>
+    </div>
 
     <!-- Begin page -->
     <div id="wrapper">
@@ -214,10 +219,12 @@ $juhal = "Outlet";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
                         // alert(hasil);
+                        $('.spinn').hide();
                         console.log(hasil);
                         //sukses
                         if (hasil == 1) {
@@ -332,10 +339,12 @@ $juhal = "Outlet";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
                         // alert(hasil);
+                        $('.spinn').hide();
                         console.log(hasil);
                         //sukses
                         if (hasil == 1) {

@@ -15,7 +15,11 @@ $juhal = "Kategori Produk";
 
 
 <body class="fixed-left">
-
+    <div class="rowspin">
+        <div class="spinn">
+            <i class="fa fa-spin fa-circle-o-notch spinn2"></i>
+        </div>
+    </div>
     <!-- Begin page -->
     <div id="wrapper">
 
@@ -215,9 +219,11 @@ $juhal = "Kategori Produk";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
+                        $('.spinn').hide();
                         // alert(hasil);
                         console.log(hasil);
                         //sukses
@@ -282,9 +288,11 @@ $juhal = "Kategori Produk";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
+                        $('.spinn').hide();
                         // alert(hasil);
                         // console.log(hasil);
                         //sukses

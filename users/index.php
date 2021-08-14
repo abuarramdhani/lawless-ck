@@ -21,6 +21,11 @@ $juhal = "Users";
 
 
 <body class="fixed-left" onload="sweetfunction()">
+    <div class="rowspin">
+        <div class="spinn">
+            <i class="fa fa-spin fa-circle-o-notch spinn2"></i>
+        </div>
+    </div>
     <div id="wrapper">
         <?php require_once '../include/topbar.php'; ?>
         <?php require_once '../include/sidebar.php'; ?>
@@ -210,9 +215,9 @@ $juhal = "Users";
                         </div>
 
                         <div class="form-group">
-
                             <select class="select2 form-control" id="jabatan-edit" name="jabatan">
-                                <?php foreach ($jabatan as $row) : ?>
+
+                                <?php foreach ($jab as $row) : ?>
                                     <option value="<?= $row['kodejabatan']; ?>">
                                         <?= ucwords($row["namajabatan"]) ?></option>
                                 <?php endforeach; ?>
@@ -226,10 +231,7 @@ $juhal = "Users";
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Batal</button>
-                        <<<<<<< HEAD <button type="submit" class="btn btn-primary waves-effect waves-light" id="tombol-update">Simpan</button>
-                            =======
-                            <button type="submit" class="btn btn-primary waves-effect waves-light" id="tombol-update">Simpan</button>
-                            >>>>>>> 93fef0aee9d267d8d13184e2ae42bbdf5f6bf456
+                        <button type="submit" class="btn btn-primary waves-effect waves-light" id="tombol-update">Simpan</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -296,10 +298,12 @@ $juhal = "Users";
                         contentType: false,
                         cache: false,
                         beforeSend: function() {
-                            $('.spinn').show();
+                            // $('.spinn').show();
+                            $('.rowspin').css('display', 'flex');
                         },
                         success: function(hasil) {
                             // alert(hasil);
+                            $('.spinn').hide();
                             console.log(hasil);
                             //sukses
                             if (hasil == 1) {
@@ -376,10 +380,12 @@ $juhal = "Users";
                         contentType: false,
                         cache: false,
                         beforeSend: function() {
-                            $('.spinn').show();
+                            // $('.spinn').show();
+                            $('.rowspin').css('display', 'flex');
                         },
                         success: function(hasil) {
                             // alert(hasil);
+                            $('.spinn').hide();
                             console.log(hasil);
                             //sukses
                             if (hasil == 1) {

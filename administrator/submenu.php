@@ -15,7 +15,11 @@ $juhal = "Sub Menu";
 
 
 <body class="fixed-left">
-
+    <div class="rowspin">
+        <div class="spinn">
+            <i class="fa fa-spin fa-circle-o-notch spinn2"></i>
+        </div>
+    </div>
     <!-- Begin page -->
     <div id="wrapper">
 
@@ -114,9 +118,9 @@ $juhal = "Sub Menu";
                                                 <td><?= $sm["url"] ?></td>
                                                 <td><?= $sm["icon"] ?></td>
                                                 <td>
-                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-id="<?= $row['id']; ?>" data-menu="<?= $row['menu']; ?>" data-url="<?= $row['url']; ?>" id=""><i class="fa fa-pencil"></i></a>
-                                                    <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-                                                    <a class="on-default remove-row badge badge-danger tombol-hapus " data-id="<?= $row['id'] ?>"><i class="fa fa-trash-o"></i></a>
+                                                    <a class="on-default edit-row badge badge-success tombol-edit" data-id="<?= $sm['id']; ?>" data-menu="<?= $sm['title']; ?>" data-url="<?= $sm['url']; ?>" id=""><i class="fa fa-pencil"></i></a>
+                                                    <input type="hidden" class="delete_id_value" value="<?= $sm["id"] ?>">
+                                                    <a class="on-default remove-row badge badge-danger tombol-hapus " data-id="<?= $sm['id'] ?>"><i class="fa fa-trash-o"></i></a>
                                                 </td>
                                             </tr>
                                             <?php $i++; ?>
@@ -162,7 +166,7 @@ $juhal = "Sub Menu";
                 <form id="formupdate">
                     <div class="modal-body">
                         <div class="row">
-                            <input type="hidden" class="id" name="updatemenu">
+                            <input type="hidden" class="id" name="update-submenu">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -272,7 +276,7 @@ $juhal = "Sub Menu";
 
         $('#tombol-update').click(function(e) {
 
-            // alert('ok');
+
             e.preventDefault();
             var dataform = $('#formupdate')[0];
             var data = new FormData(dataform);
@@ -298,9 +302,11 @@ $juhal = "Sub Menu";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
+                        $('.spinn').hide();
                         // alert(hasil);
                         console.log(hasil);
                         //sukses

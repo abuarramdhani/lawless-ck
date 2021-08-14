@@ -15,7 +15,11 @@ $juhal = "Supplier";
 
 
 <body class="fixed-left">
-
+    <div class="rowspin">
+        <div class="spinn">
+            <i class="fa fa-spin fa-circle-o-notch spinn2"></i>
+        </div>
+    </div>
     <!-- Begin page -->
     <div id="wrapper">
 
@@ -69,7 +73,7 @@ $juhal = "Supplier";
                                         <label class="col-sm-4 control-label">Nama Bank</label>
                                         <div class="col-sm-8">
                                             <select class="form-control select2" name="bank" id="bank">
-                                                <option>Pilih Bank</option>
+
                                                 <?php foreach ($bank as $row) : ?>
                                                     <option value="<?= $row["kodebank"] ?>">
                                                         <?= ucwords($row["namabank"]) ?></option>
@@ -280,10 +284,12 @@ $juhal = "Supplier";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
                         // alert(hasil);
+                        $('.spinn').hide();
                         console.log(hasil);
                         //sukses
                         if (hasil == 1) {
@@ -407,10 +413,12 @@ $juhal = "Supplier";
                     contentType: false,
                     cache: false,
                     beforeSend: function() {
-                        $('.spinn').show();
+                        // $('.spinn').show();
+                        $('.rowspin').css('display', 'flex');
                     },
                     success: function(hasil) {
                         // alert(hasil);
+                        $('.spinn').hide();
                         // console.log(hasil);
                         //sukses
                         if (hasil == 1) {

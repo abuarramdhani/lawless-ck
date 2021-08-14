@@ -6,11 +6,11 @@ $kodeoutlet = $_SESSION['kodeoutlet'];
 
 if (isset($keyword)) {
 
-    $bahan = query("SELECT * FROM bahan as b
+    $bahan = query("SELECT * FROM barang as b
     JOIN unit as u
-    ON b.unit = u.kodeunit
+    ON b.unitbeli = u.kodeunit
     -- WHERE kodeoutlet = '$kodeoutlet' AND (namabahan LIKE '%" . $keyword . "%' OR kodebahan like '%" . $keyword . "%')
-    WHERE b.kodeoutlet = '$kodeoutlet' AND b.namabahan LIKE '%" . $keyword . "%'
+    WHERE b.kodeoutlet = '$kodeoutlet' AND (b.namabarang LIKE '%" . $keyword . "%' AND b.kategoribarang != 'KAB001' )
     ORDER BY b.id DESC ");
     echo json_encode($bahan);
 }

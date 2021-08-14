@@ -11,10 +11,14 @@ require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
 // require '../controller/c_data-po.php';
 $bagian = "Store";
-$juhal = "Store Bahan";
+$juhal = "Store Barang";
+
+$jabatan = $_SESSION['jabatan'];
+$kodeoutlet = $_SESSION['kodeoutlet'];
+
 
 include '../controller/c_detail_storebahan.php';
-$tabel = 'form_storebahan';
+$tabel = 'form_po';
 include '../models/cek.php';
 
 ?>
@@ -44,6 +48,7 @@ include '../models/cek.php';
                                 <h4 class="header-title m-t-0 m-b-20">Detail Store Bahan </h4>
                                 <div class="pull-left">
 
+
                                     <div class="col-6 m-b-25">
                                         <table class="">
                                             <tr>
@@ -59,20 +64,41 @@ include '../models/cek.php';
                                                 <form method="POST">
                                                     <input type="hidden" name="status">
                                                     <input type="hidden" name="No_form" value="<?= $detail['No_form']; ?>">
+
                                                     <?php if ($sot == 0 && $sck == 0) : ?>
-                                                        <td><a><button type="submit" value="<?= $sot ?>" name="sot" class="btn btn-danger waves-effect waves-light btn-xs m-b-5">Confirm</button></a>
-                                                        </td>
+                                                        <?php if ($jabatan['kodejabatan'] == 'JAB001' and $kodeoutlet != 'OUT002') : ?>
+                                                            <td><a><button type="submit" value="<?= $sot ?>" name="sot" class="btn btn-danger waves-effect waves-light btn-xs m-b-5">Confirm</button></a>
+                                                            </td>
+                                                        <?php else : ?>
+                                                            <td><a class="btn btn-danger waves-effect waves-light btn-xs m-b-5">Confirm</a>
+                                                            </td>
+                                                        <?php endif ?>
                                                     <?php elseif ($sot == 1 && $sck == 0) : ?>
-                                                        <td><a> <button type="submit" value="<?= $sot; ?>" name="sot" class="btn btn-info waves-effect waves-light btn-xs m-b-5">Confirmed</button></a>
-                                                        </td>
-                                                    <?php elseif ($sot == 2 && $sck == 0) : ?>
-                                                        <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by Manager</button>
-                                                        </td>
-                                                    <?php elseif ($sot == 2  && $sck == 1) : ?>
-                                                        <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by CK</button>
-                                                        </td>
+                                                        <?php if ($jabatan['kodejabatan'] == 'JAB001' and $kodeoutlet == 'OUT002') : ?>
+                                                            <td><a> <button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-custom waves-effect waves-light btn-xs m-b-5">Checked by Manager</button></a>
+                                                            </td>
+                                                        <?php else : ?>
+                                                            <td><a class="btn btn-custom waves-effect waves-light btn-xs m-b-5">Checked by Manager</a>
+                                                            </td>
+                                                        <?php endif ?>
+                                                    <?php elseif ($sot == 1 && $sck == 1) : ?>
+                                                        <?php if ($jabatan['kodejabatan'] == 'JAB001' and $kodeoutlet == 'OUT002') : ?>
+                                                            <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-info waves-effect waves-light btn-xs m-b-5">Checked by CK</button>
+                                                            </td>
+                                                        <?php else : ?>
+                                                            <td><a class="btn btn-info waves-effect waves-light btn-xs m-b-5">Checked by CK</a>
+                                                            </td>
+                                                        <?php endif ?>
+                                                    <?php elseif ($sot == 1  && $sck == 2) : ?>
+                                                        <?php if ($jabatan['kodejabatan'] == 'JAB001' and $kodeoutlet != 'OUT002') : ?>
+                                                            <td><button type="submit" value="<?= $sot; ?>" name="sot" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</button>
+                                                            </td>
+                                                        <?php else : ?>
+                                                            <td><a class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</a>
+                                                            </td>
+                                                        <?php endif ?>
                                                     <?php elseif ($sot == 2  && $sck == 2) : ?>
-                                                        <td><button class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</button>
+                                                        <td><a class="btn btn-success waves-effect waves-light btn-xs m-b-5">Delivered</a>
                                                         </td>
                                                     <?php endif ?>
                                                 </form>
@@ -82,9 +108,9 @@ include '../models/cek.php';
                                     </div>
                                 </div>
                                 <div class="pull-right">
-                                    <?php if ($sot == 2 and $sck == 2) : ?>
+                                    <?php if ($sot == 1 and $sck == 2) : ?>
                                         <a href="store_suratjalan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
-                                    <?php else : ?>
+                                    <?php elseif ($sot == 1 and $sck == 1) : ?>
                                         <a href="r_storebahan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
                                     <?php endif; ?>
                                 </div>
@@ -96,6 +122,7 @@ include '../models/cek.php';
                                             <th>Nama Barang</th>
                                             <th>Harga</th>
                                             <th>Jumlah</th>
+                                            <th>Unit</th>
                                             <th>Subtotal</th>
                                         </tr>
                                     </thead>
@@ -104,9 +131,10 @@ include '../models/cek.php';
                                         <?php foreach ($item_storebahan as $item) : ?>
                                             <tr>
                                                 <td><?= $i++;  ?></td>
-                                                <td><?= $item['namabahan']; ?></td>
+                                                <td><?= $item['namabarang']; ?></td>
                                                 <td><?= $item['harga']; ?></td>
                                                 <td><?= $item['qty']  ?></td>
+                                                <td><?= $item['namaunit']  ?></td>
                                                 <td><?= $item['subtotal']; ?></td>
                                             </tr>
                                         <?php endforeach; ?>

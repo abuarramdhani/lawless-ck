@@ -1,8 +1,8 @@
 <?php
 $No_form = $_GET['No_form'];
 $item_po = query("SELECT * FROM item_in 
-    JOIN bahan 
-    ON item_in.kodebahan = bahan.kodebahan 
+    JOIN barang ON item_in.kodebahan = barang.kodebarang
+JOIN unit ON item_in.unit = unit.kodeunit
     WHERE No_form = '$No_form'");
 
 $detail = query("SELECT *

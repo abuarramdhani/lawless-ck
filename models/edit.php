@@ -142,6 +142,7 @@ if (isset($_POST["updateproyek"])) {
     $kodebahan = $_POST['updatebahan'];
     $namabahan = $_POST['namabahan'];
     $mstok = $_POST['mstok'];
+    $stok = $_POST['stok'];
     $harga = $_POST['harga'];
     $hargaj = $_POST['hargaj'];
     $uunit = $_POST['uunit'];
@@ -154,6 +155,7 @@ if (isset($_POST["updateproyek"])) {
                      kodebahan = '$kodebahan',
                      namabahan = '$namabahan',
                      minstok = '$mstok',
+                     stok = '$stok',
                      unit = '$uunit',
                      harga = '$harga',
                      hargaj = '$hargaj'
@@ -194,6 +196,8 @@ if (isset($_POST["updateproyek"])) {
     $namaproduk = $_POST['unama'];
     $hargaj = $_POST['uhargaj'];
     $mstok = $_POST['uminstok'];
+    $unit = $_POST['uunit'];
+    $stok = $_POST['ustok'];
     $kodekategoriproduk = 'KAP001';
 
 
@@ -254,6 +258,8 @@ if (isset($_POST["updateproyek"])) {
         kodekategoriproduk = '$kodekproduk',
                          namaproduk = '$namaproduk',
                          minstok = '$mstok',
+                         stok = '$stok',
+                         unit = '$unit',
                          harga = '$hargaj'
                  WHERE kodeproduk = '$kodeproduk'
           ";
@@ -314,6 +320,152 @@ if (isset($_POST["updateproyek"])) {
         echo 3;
     } else {
         var_dump($masuk_data);
+        echo 1;
+    }
+} else if (isset($_POST["update-bank"])) {
+
+    $kodebank = $_POST['update-bank'];
+    $namabank = $_POST['ubank'];
+
+
+    $query = "UPDATE namabank SET
+                     namabank ='$namabank'
+             WHERE kodebank = '$kodebank'
+      ";
+
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+        // echo $bank;
+        // echo $norek;
+    } else {
+        echo 1;
+    }
+} else if (isset($_POST["updatepackage"])) {
+
+
+    $kodepackage = $_POST['updatepackage'];
+    $namapackage = $_POST['namapackage'];
+    $mstok = $_POST['mstok'];
+    $harga = $_POST['harga'];
+    $stok = $_POST['stok'];
+    $hargaj = $_POST['hargaj'];
+    $uunit = $_POST['uunit'];
+
+    // var_dump($kodeoutlet);
+    // die;
+
+    $query = "UPDATE package SET
+                     kodepackage = '$kodepackage',
+                     namapackage = '$namapackage',
+                     minstok = '$mstok',
+                     unit = '$uunit',
+                    stok = '$stok',
+                     harga = '$harga',
+                     hargaj = '$hargaj'
+             WHERE kodepackage = '$kodepackage'
+      ";
+    // var_dump($query);
+    // die;
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        echo 1;
+    }
+} else if (isset($_POST["updatebarang"])) {
+
+    $ukategoribarang = $_POST['ukategoribarang'];
+    $usubkategoribarang = $_POST['usubkategoribarang'];
+    $unamabarang = $_POST['unamabarang'];
+    $uhargabeli = $_POST['uhargabeli'];
+    $uunitbeli = $_POST['uunitbeli'];
+    $ustok = $_POST['ustok'];
+    $uhargajual1 = $_POST['uhargajual1'];
+    $uhargajual2 = $_POST['uhargajual2'];
+    $uunitjual = $_POST['uunitjual'];
+    $uminstok = $_POST['uminstok'];
+    $kode = $_POST['kodebarang'];
+
+    // $data = [
+    //     'ukategoribarang' => $_POST['ukategoribarang'],
+    //     'usubkategoribarang' => $_POST['usubkategoribarang'],
+    //     'unamabarang' => $_POST['unamabarang'],
+    //     'uhargabeli' => $_POST['uhargabeli'],
+    //     'uunitbeli' => $_POST['uunitbeli'],
+    //     'ustok' => $_POST['ustok'],
+    //     'uhargajual1' => $_POST['uhargajual1'],
+    //     'uhargajual2' => $_POST['uhargajual2'],
+    //     'uunitjual' => $_POST['uunitjual'],
+    //     'uminstok' => $_POST['uminstok']
+    // ];
+
+
+    $query = "UPDATE barang SET
+    kategoribarang = '$ukategoribarang',
+    subkatbarang = '$usubkategoribarang',
+    namabarang = '$unamabarang',
+    hargabeli = '$uhargabeli',
+    unitbeli = '$uunitbeli',
+    stok = '$ustok',
+    hargajual1 = '$uhargajual1',
+    hargajual2 = '$uhargajual2',
+    unitjual = '$uunitjual',
+    minstok = '$uminstok'
+             WHERE kodebarang = '$kode'
+      ";
+
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+        // echo $bank;
+        // echo $norek;
+    } else {
+        echo 1;
+    }
+} else if (isset($_POST['update-kbarang'])) {
+    $nama = $_POST['unamakbarang'];
+    $id = $_POST['update-kbarang'];
+
+    $query = "UPDATE kategoribarang SET namakategoribarang = '$nama' WHERE id ='$id'";
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        echo 1;
+    }
+} else if (isset($_POST['update-skbarang'])) {
+    $nama = $_POST['unamaskbarang'];
+    $id = $_POST['update-skbarang'];
+
+    $query = "UPDATE subkatbarang SET namasubkatbarang = '$nama' WHERE id = '$id'";
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        echo 1;
+    }
+} else if (isset($_POST['update-unit'])) {
+    $nama = $_POST['unamaunit'];
+    $id = $_POST['update-unit'];
+
+    $query = "UPDATE unit SET namaunit = '$nama' WHERE id ='$id'";
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 3;
+    } else {
+        echo 1;
+    }
+} else if (isset($_POST['update-submenu'])) {
+    $nama = $_POST['unama'];
+    $url = $_POST['uurl'];
+    $id = $_POST['update-submenu'];
+
+    $query = "UPDATE user_sub_menu SET title = '$nama', url = '$url' WHERE id ='$id'";
+    $masuk_data = mysqli_query($conn, $query);
+    if ($masuk_data) {
+        echo 2;
+    } else {
         echo 1;
     }
 }
