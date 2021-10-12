@@ -1095,31 +1095,31 @@ if (isset($_POST['kasmasuk'])) {
     // }
 
     //   ambil stok
-    // foreach ($kodebahan as $row) {
+    foreach ($kodebahan as $row) {
 
-    //     $sql = "SELECT stok 
-    //     FROM barang 
-    //     WHERE kodebarang = '$row'
-    // ";
-    //     $result = mysqli_query($conn, $sql);
+        $sql = "SELECT stok 
+        FROM barang 
+        WHERE kodebarang = '$row'
+    ";
+        $result = mysqli_query($conn, $sql);
 
-    //     while ($d = mysqli_fetch_array($result)) {
-    //         $stok[] = $d['stok'];
-    //         // echo $kodebahan;
-    //     }
-    // }
+        while ($d = mysqli_fetch_array($result)) {
+            $stok[] = $d['stok'];
+            // echo $kodebahan;
+        }
+    }
 
-    // for ($i = 0; $i < count($jumlah); $i++) {
-    //     $t_stok[] = $stok[$i] - $jumlah[$i];
-    // }
+    for ($i = 0; $i < count($jumlah); $i++) {
+        $t_stok[] = $stok[$i] - $jumlah[$i];
+    }
     // akhir stok
 
     // // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
 
-        // mysqli_query($conn, "UPDATE barang SET 
-        // stok= '$t_stok[$i]' 
-        // WHERE kodebarang='$kodebahan[$i]'");
+        mysqli_query($conn, "UPDATE barang SET 
+        stok= '$t_stok[$i]' 
+        WHERE kodebarang='$kodebahan[$i]'");
 
         mysqli_query($conn, "insert into item_po set
 No_form    = '$No_form',
@@ -1138,7 +1138,7 @@ subtotal = '$subtotal[$i]'
     kodesupplier = '$kodesupplier',
     date ='$dt_input',
     status_ck = '2',
-    status_ot = '1'
+    status_ot = '2'
 ");
 
     $result = mysqli_affected_rows($conn);
@@ -1667,14 +1667,6 @@ subtotal = '$subtotal[$i]'
 
     // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
-        // var_dump($No_form);
-        // var_dump($kodebarang[$i]);
-        // var_dump($t_stok[$i]);
-        // var_dump($jumlah[$i]);
-        // var_dump($harga[$i]);
-        // var_dump($unit[$i]);
-        // var_dump($subtotal[$i]);
-        // die;
 
         mysqli_query($conn, "UPDATE barang SET 
         stok= '$t_stok[$i]' 

@@ -128,6 +128,16 @@ require '../include/fungsi_rupiah.php';
             font-weight :bold;
         }
     </style>
+    <style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:12px;
+    overflow:hidden;padding:3px 5px;word-break:normal;}
+    .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    font-weight:normal;overflow:hidden;padding:5px 5px;word-break:normal; font-weight :bold;}
+    .tg .tg-kiri{text-align:left;vertical-align:top}
+    .tg .tg-kanan{text-align:right;vertical-align:top}
+    .tg .tg-tengah{text-align:center;vertical-align:top}
+    </style>
  
     <title><?= $nama_dokumen?></title>
 </head>
@@ -173,16 +183,16 @@ require '../include/fungsi_rupiah.php';
 
 
 
-    <table class="table table-bordered border-none">
+    <table class="tg table table-bordered border-none">
         <thead>
             <tr>
-                <th>No</th>
+                <th width="30px">No</th>
                 <th>Nama Barang</th>
-                <th>Harga</th>
+                <th>Harga (Rp.)</th>
                 <th>Jumlah</th>
                 <th>Unit</th>
                 
-                <th>Subtotal</th>
+                <th>Subtotal (Rp.)</th>
             </tr>
         </thead>
         <tbody>
@@ -191,17 +201,17 @@ require '../include/fungsi_rupiah.php';
 
             <?php foreach ($item_storebahan as $item) : ?>
                 <tr>
-                    <td><?= $i++;  ?></td>
-                    <td><?= $item['namabarang']; ?></td>
-                    <td>Rp.<?= format_rupiah($item['harga']); ?></td>
-                    <td><?= $item['qty']  ?></td>
-                    <td><?= ucwords($item['namaunit'])?></td>
-                    <td>Rp.<?= format_rupiah($item['subtotal']); ?></td>
+                    <td class="tg-kiri"><?= $i++;  ?></td>
+                    <td class="tg-kiri"><?= $item['namabarang']; ?></td>
+                    <td class="tg-kanan"><?= format_rupiah($item['harga']); ?></td>
+                    <td class="tg-tengah"><?= $item['qty']  ?></td>
+                    <td class="tg-tengah"><?= $item['namaunit']  ?></td>
+                    <td class="tg-kanan"><?= format_rupiah($item['subtotal']); ?></td>
                 </tr>
             <?php endforeach; ?>
             <tr>
                 <td colspan="5" class="ttl">TOTAL</td>
-                <td class="ttl">Rp.<?= format_rupiah($grand_total['grand_total'])?></td>
+                <td class="tg-kanan ttl">Rp. <?= format_rupiah($grand_total['grand_total'])?></td>
             </tr>
         </tbody>
     </table>

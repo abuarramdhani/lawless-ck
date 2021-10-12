@@ -117,7 +117,7 @@ include '../models/cek.php';
                                 </div>
                                 <div class="pull-right">
                                     <?php if ($sot == 1 and $sck == 2) : ?>
-                                        <a href="store_suratjalan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
+                                        <a href="store_suratjalan?No_form=<?= $No_form; ?>&kodeoutlet=<?= $_GET['kodeoutlet'] ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
                                         <?php //elseif ($sot == 1 and $sck == 1) : 
                                         ?>
                                         <!--<a href="r_storebahan?No_form=<?= $No_form; ?>" target="_blank"-->
@@ -142,7 +142,7 @@ include '../models/cek.php';
                                             <tr>
                                                 <td><?= $i++;  ?></td>
                                                 <td><?= $item['namabarang']; ?></td>
-                                                <td>Rp.<?= format_rupiah($item['harga']); ?></td>
+                                                <td>Rp.<?php echo format_rupiah($item['harga']); ?></td>
                                                 <td><?= $item['qty']  ?></td>
                                                 <td><?= ucwords($item['namaunit'])  ?></td>
                                                 <td>Rp.<?= format_rupiah($item['subtotal']); ?></td>

@@ -113,6 +113,16 @@ ob_start();
             margin-top: 100px;
         }
     </style>
+    <style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:12px;
+    overflow:hidden;padding:3px 5px;word-break:normal;}
+    .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    font-weight:normal;overflow:hidden;padding:5px 5px;word-break:normal; font-weight :bold;}
+    .tg .tg-kiri{text-align:left;vertical-align:top}
+    .tg .tg-kanan{text-align:right;vertical-align:top}
+    .tg .tg-tengah{text-align:center;vertical-align:top}
+    </style>
     <title>REPORT</title>
 </head>
 
@@ -152,14 +162,14 @@ ob_start();
 
 
 
-    <table class="table table-bordered border-none">
+    <table class="tg table table-bordered border-none">
         <thead>
             <tr>
-                <th>No</th>
+                <th width="30px">No</th>
                 <th>Nama Barang</th>
-                <th>Harga</th>
+                <th>Harga (Rp.)</th>
                 <th>Jumlah</th>
-                <th>Subtotal</th>
+                <th>Subtotal (Rp.)</th>
             </tr>
         </thead>
         <tbody>
@@ -168,11 +178,11 @@ ob_start();
 
             <?php foreach ($item_storeproduk as $item) : ?>
                 <tr>
-                    <td><?= $i++;  ?></td>
-                    <td><?= $item['namaproduk']; ?></td>
-                    <td><?= $item['harga']; ?></td>
-                    <td><?= $item['qty']  ?></td>
-                    <td><?= $item['subtotal']; ?></td>
+                    <td class="tg-kiri"><?= $i++;  ?></td>
+                    <td class="tg-kiri"><?= $item['namaproduk']; ?></td>
+                    <td class="tg-kanan"><?= $item['harga']; ?></td>
+                    <td class="tg-tengah"><?= $item['qty']  ?></td>
+                    <td class="tg-kanan"><?= $item['subtotal']; ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
