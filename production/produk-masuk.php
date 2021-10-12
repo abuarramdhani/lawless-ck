@@ -97,6 +97,9 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                     <div class="col-lg-6">
                         <div class="row">
                             <form class="form-horizontal" role="formpo" method="POST" action="../models/input.php">
+                            <?php if ($kondisi['status'] != 1) : ?>
+                                <input type="hidden" name="tanggal_manual" value="<?= date("m/d/Y"); ?>"> 
+                                <?php else : ?>
                                 <div class="col-lg-12 m-b-10">
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="tanggal_manual"
@@ -105,6 +108,8 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                                 class="ti-calendar"></i></span>
                                     </div><!-- input-group -->
                                 </div>
+                                    <?php endif; ?>
+                                
                                 <input type="hidden" name="inputprodukmasuk">
                                 <div class="card-box" style="height:350px; overflow-y: auto;">
                                     <div class="col-lg-12">
