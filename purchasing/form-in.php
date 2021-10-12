@@ -40,7 +40,7 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                 <div class="container" style="margin-top: 5px;">
 
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="<?php if ($kondisi['status'] != 1) : ?>col-lg-6<?php else : ?>col-lg-4<?php endif; ?>">
                             <form action="" method="POST">
                                 <label>Pilih No PO Atau Nama Supplier</label>
                                 <select onchange="this.form.submit()" class="form-control select2" name="keyword_bahan_masuk">
@@ -51,35 +51,46 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
                                 </select>
                             </form>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="<?php if ($kondisi['status'] != 1) : ?>col-lg-6<?php else : ?>col-lg-8<?php endif; ?>">
                             <form class="form-horizontal" role="formpo" method="POST" action="../models/input.php">
-                                <div class="col-lg-6 m-b-10">
+                            <?php if ($kondisi['status'] != 1) : ?>
+                                <input type="hidden" name="tanggal_manual" value="<?= date("m/d/Y"); ?>">
+                                <div class="col-lg-12 m-b-10">
 
-<label>Tanggal Barang Datang</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="tanggal_manual"
-                                        placeholder="<?= date("m/d/Y"); ?>" id="datepicker-autoclose1">
-
-                                        <span class="input-group-addon bg-primary b-0 text-white"><i
-                                                class="ti-calendar"></i></span>
-
-                                    </div><!-- input-group -->
-
-                                </div>
-
-                                <div class="col-lg-6 m-b-10">
-
-
-<label>Tanggal jatuh tempo</label>
+                                    <label>Tanggal jatuh tempo</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="tgl_tempo"
                                         placeholder="<?= jatuhtempo(date("Y-m-d"), '14', 'days') ?>"  id="datepicker-autoclose">
-
                                         <span class="input-group-addon bg-primary b-0 text-white"><i
                                                 class="ti-calendar"></i></span>
 
                                     </div><!-- input-group -->
                                 </div>
+                            <?php else : ?>
+                                <div class="col-lg-6 m-b-10">
+
+                                    <label>Tanggal Barang Datang</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="tanggal_manual"
+                                        placeholder="<?= date("m/d/Y"); ?>" id="datepicker-autoclose1">
+                                        <span class="input-group-addon bg-primary b-0 text-white"><i
+                                                class="ti-calendar"></i></span>
+
+                                    </div><!-- input-group -->
+
+                                </div>
+                                <div class="col-lg-6 m-b-10">
+
+                                    <label>Tanggal jatuh tempo</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="tgl_tempo"
+                                        placeholder="<?= jatuhtempo(date("Y-m-d"), '14', 'days') ?>"  id="datepicker-autoclose">
+                                        <span class="input-group-addon bg-primary b-0 text-white"><i
+                                                class="ti-calendar"></i></span>
+
+                                    </div><!-- input-group -->
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="row">
