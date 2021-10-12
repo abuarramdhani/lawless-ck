@@ -1453,7 +1453,7 @@ subtotal = '$subtotal[$i]'
 
     //kembali ke halaman sebelumnya
     $_SESSION["msg"] = "$result";
-    header("Location: ../purchasing/form-in");
+    header("Location: ../purchasing/index");
 } else if (isset($_POST['tambah-user'])) {
 
 
