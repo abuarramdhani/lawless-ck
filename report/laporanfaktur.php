@@ -8,20 +8,24 @@ require '../include/fungsi.php';
 require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
-require '../controller/c_kaskecil.php';
-require '../controller/c_barang.php';
+require '../controller/c_reportbarang-masuk.php';
+$bagian = "Report";
+$juhal = "Laporan Faktur";
 
-$tabel = 'form_in';
-$tabel_join = 'supplier';
-$kode = 'supplier';
-include '../models/information.php';
-include '../include/filter_date.php';
-$bagian = "Inventory";
-$juhal = "Data Barang";
+// $tabel = 'form_storebahan';
+// $tabel_join = 'companypanel';
+// $kode = 'outlet';
+// include '../include/filter_date.php';
+
+$tabel_filter = 'produk';
+include '../include/filter_range.php';
+$kodeoutlet = $_SESSION['kodeoutlet'];
+
 ?>
 
 
-<body class="fixed-left">
+
+<body class="fixed-left" onload="sweetfunction()">
 
     <!-- Begin page -->
     <div id="wrapper">
@@ -34,148 +38,102 @@ $juhal = "Data Barang";
         <!-- Start right Content here -->
         <!-- ============================================================== -->
         <div class="content-page">
+            <!-- terima msg -->
+            <?php if (isset($_SESSION['msg'])) : ?>
+            <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
+            <?php unset($_SESSION['msg']); ?>
+            <?php endif ?>
+            <!-- akhir terima msg -->
+
+
             <!-- Start content -->
             <div class="content">
                 <div class="container">
 
-
-
-
                     <div class="row">
+
                         <div class="col-lg-12">
                             <div class="card-box">
-
-                                <div class="dropdown pull-right">
-
-                                    <!--  <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button> -->
-                                </div>
-                                <div class="dropdown pull-centre">
-                                    <button class="btn btn-primary waves-effect waves-light" data-toggle="modal"
-                                        data-target="#input-close-modal">Supplier : <?= $totalsupplier ?>
-                                    </button>
-                                    <button class="btn btn-info waves-effect waves-light" data-toggle="modal"
-                                        data-target="#output-close-modal">
-                                        Product : <?= $totalproduct ?></button>
-
-                                    <button class="btn btn-success waves-effect waves-light" data-toggle="modal"
-                                        data-target="#output-close-modal">
-                                        Material : <?= $totalmaterial ?></button>
-                                    <button class="btn btn-purple waves-effect waves-light" data-toggle="modal"
-                                        data-target="#output-close-modal">
-                                        Supplies : <?= $totalsupplies ?></button>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- <div class="col-lg-5">
-                            <div class="card-box">
-
                                 <form method="post" action="">
-                                    <input type="hidden" name="filter-date">
-                                    <?php require '../include/tgltahun.php'; ?>
-                                </form>
+                                    <input type="hidden" name="filter_range">
+                                    <?php require '../include/tglrange.php'; ?>
 
+                                </form>
                             </div>
-                        </div> -->
+                        </div><!-- end col -->
                     </div>
                     <!-- end row -->
 
+                    <!-- end row -->
+
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-sm-12">
                             <div class="card-box table-responsive">
 
-                                <?php //$databarang = query("SELECT * FROM barang ORDER BY namabarang ASC");
-                                ?>
-                                <h4 class="header-title m-t-0 m-b-30">Data Barang</h4>
-
-                                <table id="datatable" class="table table-striped table-bordered">
+                                <table id="datatable-buttons" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kategori</th>
-                                            <th>Sub Kat</th>
-                                            <th>Nama Barang</th>
-                                            <th>Stok</th>
-                                            <th>Unit </th>
-                                            <th>Min Stok</th>
-                                            <?php if ($_SESSION['userlevel'] == 0) : ?>
-                                            <th>Action </th>
-                                            <?php endif; ?>
+                                            <th>Tanggal</th>
+                                            <th>No FIN</th>
+                                            <th>Kode Bahan</th>
+                                            <th>Qty</th>
+                                            <th>Harga</th>
+                                            <th>Unit</th>
+                                            <th>Subtotal</th>
+                                            <!-- <?php if (isset($_POST['laporan'])) : ?>
+                                            <?php if ($_POST['laporan'] != 'produkmasuk') : ?>
+                                            <th>OUT</th>
+                                            <?php else : ?>
+                                            <th>IN</th>
+                                            <?php endif ?>
+                                            <?php else : ?>
+                                            <th>IN</th>
+                                            <?php endif ?>
+                                            <th>Total</th> -->
+
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        <?php $i = 1; ?>
+                                        <?php $i = 1 ?>
+                                        <?php //if (isset($_POST['filter_range'])) : 
+                                        ?>
+                                        <?php foreach ($data as $row) : ?>
 
-                                        <?php foreach ($databarang as $row) : ?>
                                         <tr>
-                                            <td width="2%" ;><?= $i ?></td>
+                                            <td><?= $i++; ?></td>
+                                            <td><?= $row['date']; ?></td>
+                                            <td><?= $row['No_form']; ?></td>
                                             <td>
                                                 <?php
-                                                    $kodekategoribarang = $row["kategoribarang"];
-                                                    $ka = "SELECT namakategoribarang FROM kategoribarang WHERE kodekategoribarang ='$kodekategoribarang'"; //perintah untuk menjumlahkan
+                                                    $kodebarang = $row["kodebahan"];
+                                                    $ka = "SELECT namabarang FROM barang WHERE kodebarang ='$kodebarang'"; //perintah untuk menjumlahkan
                                                     $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
                                                     $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
-                                                    echo $tampilkode = $tampil['namakategoribarang'];
+                                                    echo $tampilkode = $tampil['namabarang'];
                                                     ?>
                                             </td>
+                                            <td><?= $row['qty'] ?></td>
+                                            <td><?= $row['harga'] ?></td>
                                             <td>
                                                 <?php
-                                                    $kodesubkatbarang = $row["subkatbarang"];
-                                                    $ka = "SELECT namasubkatbarang FROM subkatbarang WHERE kodesubkatbarang ='$kodesubkatbarang'"; //perintah untuk menjumlahkan
-                                                    $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
-                                                    $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
-                                                    echo $tampilkode = $tampil['namasubkatbarang'];
-                                                    ?>
-                                            </td>
-                                            <td><?= $row["namabarang"] ?></td>
-                                            <td><?= $row["stok"] ?></td>
-
-                                            <td>
-                                                <?php
-                                                    $kodeunit = $row["unitbeli"];
+                                                    $kodeunit = $row["unit"];
                                                     $ka = "SELECT namaunit FROM unit WHERE kodeunit ='$kodeunit'"; //perintah untuk menjumlahkan
                                                     $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
                                                     $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
                                                     echo $tampilkode = $tampil['namaunit'];
                                                     ?>
                                             </td>
-
-                                            <td><?= $row["minstok"] ?></td>
-                                            <?php if ($_SESSION['userlevel'] == 0) : ?>
-                                            <td>
-
-                                                <a class="on-default edit-row badge badge-success tombol-edit"
-                                                    data-kodebarang="<?= $row['kodebarang']; ?>"
-                                                    data-unitbeli="<?= $row['unitbeli']; ?>"
-                                                    data-unitjual="<?= $row['unitjual']; ?>"
-                                                    data-kategoribarang="<?= $kodekategoribarang ?>"
-                                                    data-subkategoribarang="<?= $kodesubkatbarang ?>"
-                                                    data-namabarang="<?= $row['namabarang']; ?>"
-                                                    data-harga="<?= $row['hargabeli']; ?>"
-                                                    data-hargajual1="<?= $row["hargajual1"] ?>"
-                                                    data-hargajual2="<?= $row["hargajual2"] ?>"
-                                                    data-stok="<?= $row['stok']; ?>"
-                                                    data-mstok="<?= $row['minstok']; ?>"><i
-                                                        class="fa fa-pencil"></i></a>
-                                                <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-
-                                                | <a
-                                                    class="on-default remove-row badge badge-danger tombol-deletebahan"><i
-                                                        class="fa fa-trash-o"></i></a>
-
-                                            </td>
-                                            <?php endif; ?>
-
+                                            <td><?= $row['subtotal'] ?></td>
                                         </tr>
-                                        <?php $i++; ?>
-                                        <?php endforeach; ?>
+                                        <?php endforeach ?>
+                                        <?php //endif 
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div><!-- end col -->
-
                     </div>
                     <!-- end row -->
 
@@ -183,16 +141,21 @@ $juhal = "Data Barang";
 
             </div> <!-- content -->
 
-            <?php require '../include/footer.php'; ?>
-
-        </div>
 
 
-        <!-- ============================================================== -->
-        <!-- End Right content here -->
-        <!-- ============================================================== -->
 
-        <?php require '../include/rightsidebar.php'; ?>
+        </div> <!-- content -->
+
+        <?php require '../include/footer.php'; ?>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+
+    <?php require '../include/rightsidebar.php'; ?>
 
 
 
@@ -201,12 +164,115 @@ $juhal = "Data Barang";
 
     <?php require '../include/scriptfooter.php'; ?>
 
+
 </body>
 
 </html>
 
+
 <script>
+// $("#total-harga").val('Rp. ' + sum)
+function sweetfunction() {
+
+    const msg = $('#msg').data('msg');
+
+    if (msg == 1) {
+        swal({
+            title: "Input Berhasil!",
+            type: "success",
+            //text: "I will close in 2 seconds.",
+            timer: 1500,
+            showConfirmButton: false
+
+        })
+        // // sleep(1000);
+        // setTimeout(function() {
+        //     window.location.replace("../purchasing/");
+        // }, 1300);
+
+    } else if (msg == 2) {
+        swal("Kode Akun Belum di Pilih!", "", "error")
+    }
+
+}
+
+function loadData() {
+    $("#barang>tbody").empty();
+    var search = $("#search").val();
+    $.ajax({
+        url: '../controller/c_storebahan.php',
+        data: {
+            'keyword_form-po': search
+        },
+        type: 'POST'
+    }).done(function(response) {
+        var result = JSON.parse(response);
+        var i = 1;
+        result.forEach(res => {
+            html = '<tr><td>' + i + '</td><td>' + res.kodebahan + '</td><td>' + res.namabahan +
+                '</td><td>' + res.hargaj + '</td>';
+            html += '<td><button id="add" data-id="' + res.id + '" data-nama="' + res.namabahan +
+                '" data-harga="' + res.hargaj +
+                '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
+            i++;
+            $("#barang>tbody").append(html);
+        });
+    });
+}
+
+function totalharga() {
+    var sum = 0;
+    $(".total").each(function() {
+        sum += parseFloat($(this).val());
+    });
+    $("#total-harga").val('Rp. ' + sum);
+}
 $(document).ready(function() {
+
+    $(document).on("click", "#add", function() {
+        var id = $(this).data("id");
+        var nama = $(this).data("nama");
+        var harga = $(this).data("harga");
+        var jumlah = 1;
+
+        // html = '<tr><td class="item_nama">' + nama + '</td><td class="harga item">' + harga + '</td><td class="item"><input id="jumlah" type="number" name="jumlah[]" value="' + jumlah + '"></td><td class="total item">' + harga + '</td>';
+        // html += '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
+        // $("#order>tbody").append(html);
+        // totalharga();
+        html =
+            '<tr><td><input readonly type="text" name="namabarang[]"  class="form-control"  value="' +
+            nama +
+            '"></td><td ><input type="text"  readonly  class="form-control harga"  name="harga[]"  value="' +
+            harga +
+            '"></td><td><input id="jumlah" class="form-control" type="number" name="jumlah[]" value="' +
+            jumlah +
+            '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total" id="subtotal_item" value="' +
+            harga + '" ></td>';
+        html +=
+            '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
+        $("#order>tbody").append(html);
+        totalharga();
+    });
+
+    $(document).on("click", "#remove", function() {
+        $(this).closest("tr").remove();
+        totalharga();
+    });
+    $(document).on("input", "#jumlah", function() {
+        var jumlah = parseInt($(this).val());
+        var harga = parseInt($(this).closest("tr").find(".harga").val());
+        var total = jumlah * harga;
+        // var coba = $(this).closest("tr").find(".total").text(total);
+        // console.log($(this).closest("tr").find(".total").text(total));
+        // $(this).closest("tr").find("input#subtotal_item").val(total);
+        $(this).closest("tr").find("input#subtotal_item").val(total);
+        // $(this).closest("tr").find(".total_val").val(total);
+
+        totalharga();
+    });
+
+
+
     $('#tombol-kasmasuk').click(function(e) {
 
         e.preventDefault();

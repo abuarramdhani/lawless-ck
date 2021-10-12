@@ -12,3 +12,5 @@ $detail = query("SELECT *
     WHERE No_form = '$No_form'")[0];
 $sot = $detail['status_ot'];
 $sck = $detail['status_ck'];
+
+$grand_total =  query("SELECT sum(subtotal) as grand_total FROM item_in WHERE No_form = '$No_form' ")[0];

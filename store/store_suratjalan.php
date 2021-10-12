@@ -9,8 +9,8 @@ if (!isset($_SESSION['email'])) {
 }
 include "../vendor/autoload.php";
 require '../include/fungsi.php';
-include '../controller/c_detail_storebahan.php';
-$nama_dokumen = 'Surat Jalan-' . $detail['No_form']; //Beri nama file PDF hasil.
+
+
 
 $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
 $fontDirs = $defaultConfig['fontDir'];
@@ -28,7 +28,14 @@ $mpdf = new \Mpdf\Mpdf([
         ]
     ],
 ]);
+
 ob_start();
+include '../controller/c_detail_storebahan.php';
+require '../include/fungsi_indotgl.php';
+require '../include/fungsi_rupiah.php';
+
+     $nama_dokumen = 'Order Outlet No. '.$detail['No_form']; //Beri nama file PDF hasil.
+
 
 // var_dump($item_po);
 // die;
@@ -112,8 +119,17 @@ ob_start();
         .mt-100 {
             margin-top: 100px;
         }
+        .sj{
+            font-size :18px;
+            font-weight :bold;
+        }
+        .ttl{
+            text-align: center; 
+            font-weight :bold;
+        }
     </style>
-    <title>REPORT</title>
+ 
+    <title><?= $nama_dokumen?></title>
 </head>
 
 <body>
@@ -129,25 +145,30 @@ ob_start();
 
     <table class="mb-3 mt-100">
         <tr>
-            <th>No Form</th>
+            <th>No PO</th>
             <td>: <?= $detail['No_form']; ?></td>
         </tr>
         <tr>
-            <th>Supplier</th>
-            <td>: <?= $detail['nama']; ?></td>
+            <th>Outlet</th>
+            <td>: <?= ucwords($detail['nama']) ?></td>
         </tr>
+        <!--<tr>-->
+        <!--    <th>Alamat</th>-->
+        <!--    <td>: <?= $detail['alamatsupplier']; ?></td>-->
+        <!--</tr>-->
         <tr>
-            <th>Date</th>
-            <td>: <?= $detail['date']; ?></td>
+            <th>Tanggal</th>
+            <td>: <?= tgl_indo($detail['date']); ?></td>
         </tr>
-        <tr>
-            <th>Status</th>
-
-            <td>: <span class="badge badge-success">KONFIRMASI</span></td>
-
-        </tr>
+        <!--<tr>-->
+        <!--    <th>Status</th>-->
+        <!--    <?php if ($detail['status'] == 1) : ?>-->
+        <!--        <td>: <span class="badge badge-success">KONFIRMASI</span></td>-->
+        <!--    <?php else : ?>-->
+        <!--        <td>: <span class="badge badge-warning">:Belum di Konfirmasi</span></td>-->
+        <!--    <?php endif; ?>-->
+        <!--</tr>-->
     </table>
-
 
 
 
@@ -159,6 +180,8 @@ ob_start();
                 <th>Nama Barang</th>
                 <th>Harga</th>
                 <th>Jumlah</th>
+                <th>Unit</th>
+                
                 <th>Subtotal</th>
             </tr>
         </thead>
@@ -169,12 +192,17 @@ ob_start();
             <?php foreach ($item_storebahan as $item) : ?>
                 <tr>
                     <td><?= $i++;  ?></td>
-                    <td><?= $item['namabahan']; ?></td>
-                    <td><?= $item['harga']; ?></td>
+                    <td><?= $item['namabarang']; ?></td>
+                    <td>Rp.<?= format_rupiah($item['harga']); ?></td>
                     <td><?= $item['qty']  ?></td>
-                    <td><?= $item['subtotal']; ?></td>
+                    <td><?= ucwords($item['namaunit'])?></td>
+                    <td>Rp.<?= format_rupiah($item['subtotal']); ?></td>
                 </tr>
             <?php endforeach; ?>
+            <tr>
+                <td colspan="5" class="ttl">TOTAL</td>
+                <td class="ttl">Rp.<?= format_rupiah($grand_total['grand_total'])?></td>
+            </tr>
         </tbody>
     </table>
 
@@ -211,17 +239,23 @@ ob_start();
 //     'even' => array()
 // );
 // $mpdf->SetHeader($header);
-$mpdf->SetHTMLHeader('
+
+    $mpdf->SetHTMLHeader('
 
 <table class="table table-borderless w-100 ">
         <tr>
-            <td class=" w-25" style="vertical-align: top;"><img src="../assets/images/logo.png"></td>
+            <td  rowspan="2" class=" w-25" style="vertical-align: top;"><img src="../assets/images/logo.png"></td>
             <td class="center w-50 mistral">LAWLESS BURGERBAR</td>
-            <td class="center w-25"  style="vertical-align: bottom;">SURAT JALAN</td>
-            
+            <td  rowspan="2" class="center w-25" style="vertical-align: bottom;"></td>
         </tr>
+         <tr>
+            <td class="center w-50 sj">SURAT JALAN</td>
+        </tr>
+        
     </table>
 ', 'O');
+
+
 // $mpdf->SetHTMLHeader('<div style="border-bottom: 10px solid #000000;">My document</div>', 'E');
 
 $html = ob_get_contents(); //Proses untuk mengambil hasil dari OB..
@@ -230,6 +264,7 @@ ob_end_clean();
 //ukuran A4
 $mpdf->AddPage("P", "", "", "", "", "15", "15", "42", "15", "", "", "", "", "", "", "", "", "", "", "", "A4");
 //Disini dimulai proses convert UTF-8, kalau ingin ISO-8859-1 cukup dengan mengganti $mpdf->WriteHTML($html);
+
 $mpdf->WriteHTML($html);
 $mpdf->Output($nama_dokumen . ".pdf", 'I');
 exit;

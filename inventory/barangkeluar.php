@@ -17,7 +17,7 @@ $kode = 'outlet';
 include '../include/filter_date.php';
 
 $bagian = "Inventory";
-$juhal = "Bahan Keluar";
+$juhal = "Barang Keluar";
 ?>
 
 
@@ -203,18 +203,19 @@ $juhal = "Bahan Keluar";
 
                                     <!--  <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button> -->
                                 </div>
-                                <div class="dropdown pull-centre">
-                                    <a class="btn btn-danger  waves-effect waves-light">Check :
-                                        <?= $check['COUNT(status)'] ?>
-                                    </a>
-                                    <a class="btn  btn-custom waves-effect waves-light">
-                                        Checked by Admin : <?= $c_admin['COUNT(status)'] ?></a>
-                                    <a class="btn  btn-info waves-effect waves-light">
-                                        Checked by Manager : <?= $c_manager['COUNT(status)'] ?></a>
-                                    <a class="btn  btn-primary waves-effect waves-light">
-                                        Delivery : <?= $delivery['COUNT(status)'] ?></a>
-                                    <a class="btn  btn-success waves-effect waves-light">
-                                        Delivered : <?= $delivered['COUNT(status)'] ?></a>
+                               <div class="dropdown pull-centre">
+                                    <!--<a class="btn btn-danger  waves-effect waves-light">Check : <?= $check['informasi'] ?>-->
+                                    <!--</a>-->
+                                    <!--<a class="btn  btn-custom waves-effect waves-light">-->
+                                    <!--    Checked by Manager : <?= $c_admin['informasi'] ?></a>-->
+                                    <!--<?php if($kodeoutlet != 'OUT002'):?>-->
+                                    <!--<a class="btn  btn-info waves-effect waves-light">-->
+                                    <!--    Checked by CK : <?= $c_manager['informasi'] ?></a>-->
+                                    <!--<?php endif ?>-->
+                                    <!--<a class="btn  btn-primary waves-effect waves-light">-->
+                                    <!--    Delivery : <?= $delivery['informasi'] ?></a>-->
+                                    <!--<a class="btn  btn-success waves-effect waves-light">-->
+                                    <!--    Delivered : <?= $delivered['informasi'] ?></a>-->
                                 </div>
 
                             </div>
@@ -245,7 +246,6 @@ $juhal = "Bahan Keluar";
                                             <th>Tanggal</th>
                                             <th>No. Form</th>
                                             <th>Outlet</th>
-                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -257,20 +257,10 @@ $juhal = "Bahan Keluar";
 
                                         <tr>
                                             <td><?= $i++; ?></td>
-                                            <td><?= $dp['date']; ?></td>
+                                            <td><?= tgl_indo($dp['date']); ?></td>
                                             <td><?= $dp['No_form']; ?></td>
-                                            <td><?= $dp['nama'] ?></td>
-                                            <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
-                                            <td><span class="label label-danger">Confirm</span></td>
-                                            <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
-                                            <td><span class="label label-info">Confirmed</span></td>
-                                            <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 0) : ?>
-                                            <td><span class="label label-success">Checked by Manager</span></td>
-                                            <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 1) : ?>
-                                            <td><span class="label label-success">Checked by CK</span></td>
-                                            <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
-                                            <td><span class="label label-primary">Delivery</span></td>
-                                            <?php endif ?>
+                                            <td><?= ucwords($dp['nama']) ?></td>
+                                           
 
                                             <td><a href="detail_barangkeluar.php?No_form=<?= $dp['No_form']; ?>"
                                                     class="btn btn-icon waves-effect waves-light btn-primary btn-xs m-b-5">Details</a>

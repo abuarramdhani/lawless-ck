@@ -203,7 +203,7 @@ $juhal = "Produk Keluar";
                                     <!--  <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button> -->
                                 </div>
                                 <div class="dropdown pull-centre">
-                                    <a class="btn btn-danger  waves-effect waves-light">Check :
+                                    <!-- <a class="btn btn-danger  waves-effect waves-light">Check :
                                         <?= $check['COUNT(status)'] ?>
                                     </a>
                                     <a class="btn  btn-custom waves-effect waves-light">
@@ -213,7 +213,7 @@ $juhal = "Produk Keluar";
                                     <a class="btn  btn-primary waves-effect waves-light">
                                         Delivery : <?= $delivery['COUNT(status)'] ?></a>
                                     <a class="btn  btn-success waves-effect waves-light">
-                                        Delivered : <?= $delivered['COUNT(status)'] ?></a>
+                                        Delivered : <?= $delivered['COUNT(status)'] ?></a> -->
                                 </div>
 
                             </div>

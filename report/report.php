@@ -30,11 +30,11 @@ $mpdf = new \Mpdf\Mpdf([
 ]);
 
 ob_start();
-include '../controller/c_produk-masuk.php';
+include '../controller/c_detail_in.php';
 require '../include/fungsi_indotgl.php';
 require '../include/fungsi_rupiah.php';
 
-$nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF hasil.
+$nama_dokumen = 'Inventory No. ' . $detail['No_form']; //Beri nama file PDF hasil.
 
 
 // var_dump($item_po);
@@ -54,81 +54,82 @@ $nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF h
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
-        @font-face {
-            font-family: 'mistral';
-            /*memberikan nama bebas untuk font*/
-            src: url('../assets/fonts/MISTRAL.TTF');
-            /*memanggil file font eksternalnya di folder nexa*/
-        }
+    @font-face {
+        font-family: 'mistral';
+        /*memberikan nama bebas untuk font*/
+        src: url('../assets/fonts/MISTRAL.TTF');
+        /*memanggil file font eksternalnya di folder nexa*/
+    }
 
-        .indent {
-            text-indent: 45px;
-        }
+    .indent {
+        text-indent: 45px;
+    }
 
-        table.border-none,
-        th.border-none,
-        td.border-none {
-            border: none !important;
-        }
+    table.border-none,
+    th.border-none,
+    td.border-none {
+        border: none !important;
+    }
 
-        .table-borderless td {
-            border: 0 !important;
-        }
+    .table-borderless td {
+        border: 0 !important;
+    }
 
-        td.center {
-            text-align: center;
-        }
+    td.center {
+        text-align: center;
+    }
 
-        .w-33 {
-            width: 33.333%;
-        }
+    .w-33 {
+        width: 33.333%;
+    }
 
-        .w-50 {
-            width: 50%;
-        }
+    .w-50 {
+        width: 50%;
+    }
 
-        .w-25 {
-            width: 25%;
-        }
+    .w-25 {
+        width: 25%;
+    }
 
-        .w-100 {
-            width: 100%;
-        }
+    .w-100 {
+        width: 100%;
+    }
 
-        .head {
-            text-align: middle;
-            margin-bottom: 10px;
-        }
+    .head {
+        text-align: middle;
+        margin-bottom: 10px;
+    }
 
-        .mistral {
-            font-family: 'mistral';
-            font-size: 38px;
-            font-weight: bolder;
-        }
+    .mistral {
+        font-family: 'mistral';
+        font-size: 38px;
+        font-weight: bolder;
+    }
 
-        .height {
-            height: 30px;
-            display: block;
-            /* background-color: aqua; */
-        }
+    .height {
+        height: 30px;
+        display: block;
+        /* background-color: aqua; */
+    }
 
-        .mt-100 {
-            margin-top: 100px;
-        }
+    .mt-100 {
+        margin-top: 100px;
+    }
 
-        .sj {
-            font-size: 18px;
-            font-weight: bold;
-        }
+    .sj {
+        font-size: 18px;
+        font-weight: bold;
+    }
 
-        .ttl {
-            text-align: center;
-            font-weight: bold;
-        }
+    .ttl {
+        text-align: center;
+        font-weight: bold;
+    }
     </style>
 
     <title><?= $nama_dokumen ?></title>
@@ -147,8 +148,20 @@ $nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF h
 
     <table class="mb-3 mt-100">
         <tr>
-            <th>No</th>
+            <th>No PO</th>
+            <td>: <?= $detail['Form_po']; ?></td>
+        </tr>
+        <tr>
+            <th>No IN</th>
             <td>: <?= $detail['No_form']; ?></td>
+        </tr>
+        <tr>
+            <th>Supplier</th>
+            <td>: <?= ucwords($detail['namasupplier']) ?></td>
+        </tr>
+        <tr>
+            <th>Alamat</th>
+            <td>: <?= $detail['alamatsupplier']; ?></td>
         </tr>
         <tr>
             <th>Tanggal</th>
@@ -170,28 +183,28 @@ $nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF h
     <table class="table table-bordered border-none">
         <thead>
             <tr>
-                <th>No</th>
-                <th>Nama Barang</th>
-                <th>Harga</th>
-                <th>Jumlah</th>
-                <th>Unit</th>
+                <th class="ttl">No</th>
+                <th class="ttl">Nama Barang</th>
+                <th class="ttl">Harga</th>
+                <th class="ttl">Jumlah</th>
+                <th class="ttl">Unit</th>
 
-                <th>Subtotal</th>
+                <th class="ttl">Subtotal</th>
             </tr>
         </thead>
         <tbody>
 
             <?php $i = 1 ?>
 
-            <?php foreach ($item_produk as $item) : ?>
-                <tr>
-                    <td><?= $i++;  ?></td>
-                    <td><?= $item['namabarang']; ?></td>
-                    <td>Rp.<?= format_rupiah($item['harga']); ?></td>
-                    <td><?= $item['qty']  ?></td>
-                    <td><?= $item['namaunit']  ?></td>
-                    <td>Rp.<?= format_rupiah($item['subtotal']); ?></td>
-                </tr>
+            <?php foreach ($item_po as $item) : ?>
+            <tr>
+                <td align="center"><?= $i++;  ?></td>
+                <td><?= $item['namabarang']; ?></td>
+                <td align="right">Rp. <?= format_rupiah($item['harga']); ?></td>
+                <td align="center"><?= $item['qty']  ?></td>
+                <td align="center"><?= $item['namaunit']  ?></td>
+                <td align="right">Rp. <?= format_rupiah($item['subtotal']); ?></td>
+            </tr>
             <?php endforeach; ?>
             <tr>
                 <td colspan="5" class="ttl">TOTAL</td>
@@ -200,9 +213,15 @@ $nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF h
         </tbody>
     </table>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
@@ -243,7 +262,7 @@ $mpdf->SetHTMLHeader('
             <td  rowspan="2" class="center w-25" style="vertical-align: bottom;"></td>
         </tr>
          <tr>
-            <td class="center w-50 sj">PRODUK MASUK</td>
+            <td class="center w-50 sj">INVENTORY</td>
         </tr>
         
     </table>

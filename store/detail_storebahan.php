@@ -11,7 +11,7 @@ require '../include/fungsi_indotgl.php';
 // require '../controller/c_kaskecil.php';
 // require '../controller/c_data-po.php';
 $bagian = "Store";
-$juhal = "Store Barang";
+$juhal = "Store Product";
 
 $jabatan = $_SESSION['jabatan'];
 $kodeoutlet = $_SESSION['kodeoutlet'];
@@ -45,7 +45,7 @@ include '../models/cek.php';
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
 
-                                <h4 class="header-title m-t-0 m-b-20">Detail Store Bahan </h4>
+                                <h4 class="header-title m-t-0 m-b-20">Detail Store Product </h4>
                                 <div class="pull-left">
 
 
@@ -57,9 +57,10 @@ include '../models/cek.php';
                                             </tr>
                                             <tr>
                                                 <td style="font-weight: 600; width:100px">Outlet</td>
-                                                <td><?= $detail['nama']; ?></td>
+                                                <td><?= ucwords($detail['nama']); ?></td>
                                             </tr>
                                             <tr>
+                                              
                                                 <td style="font-weight: 600; width:100px">Status</td>
                                                 <form method="POST">
                                                     <input type="hidden" name="status">
@@ -75,23 +76,30 @@ include '../models/cek.php';
                                                         <?php endif ?>
                                                     <?php elseif ($sot == 1 && $sck == 0) : ?>
                                                         <?php if ($jabatan['kodejabatan'] == 'JAB001' and $kodeoutlet == 'OUT002') : ?>
-                                                            <td><a> <button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-custom waves-effect waves-light btn-xs m-b-5">Checked by Manager</button></a>
+                                                            <td><a> <button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-custom waves-effect waves-light btn-xs m-b-5">Checked
+                                                                        by Manager</button></a>
                                                             </td>
                                                         <?php else : ?>
-                                                            <td><a class="btn btn-custom waves-effect waves-light btn-xs m-b-5">Checked by Manager</a>
+                                                            <td><a class="btn btn-custom waves-effect waves-light btn-xs m-b-5">Checked
+                                                                    by Manager</a>
                                                             </td>
                                                         <?php endif ?>
                                                     <?php elseif ($sot == 1 && $sck == 1) : ?>
                                                         <?php if ($jabatan['kodejabatan'] == 'JAB001' and $kodeoutlet == 'OUT002') : ?>
-                                                            <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-info waves-effect waves-light btn-xs m-b-5">Checked by CK</button>
+                                                            <td> 
+                                                                <button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-info waves-effect waves-light btn-xs m-b-5">Checked
+                                                                    by CK</button>
                                                             </td>
                                                         <?php else : ?>
-                                                            <td><a class="btn btn-info waves-effect waves-light btn-xs m-b-5">Checked by CK</a>
+                                                            <td><a class="btn btn-info waves-effect waves-light btn-xs m-b-5">Checked
+                                                                    by CK</a>
                                                             </td>
                                                         <?php endif ?>
                                                     <?php elseif ($sot == 1  && $sck == 2) : ?>
-                                                        <?php if ($jabatan['kodejabatan'] == 'JAB001' and $kodeoutlet != 'OUT002') : ?>
-                                                            <td><button type="submit" value="<?= $sot; ?>" name="sot" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</button>
+                                                        <?php //if ($jabatan['kodejabatan'] == 'JAB001' and $kodeoutlet != 'OUT002') : ?>
+                                                        <?php if ($jabatan['kodejabatan'] == 'JAB001' and $kodeoutlet == 'OUT002') : ?>
+                                                            <td><input type="hidden" name="update-storebarang">
+                                                                <button type="submit" value="<?= $sot; ?>" name="sot" class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</button>
                                                             </td>
                                                         <?php else : ?>
                                                             <td><a class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</a>
@@ -110,11 +118,13 @@ include '../models/cek.php';
                                 <div class="pull-right">
                                     <?php if ($sot == 1 and $sck == 2) : ?>
                                         <a href="store_suratjalan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
-                                    <?php elseif ($sot == 1 and $sck == 1) : ?>
-                                        <a href="r_storebahan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+                                        <?php //elseif ($sot == 1 and $sck == 1) : 
+                                        ?>
+                                        <!--<a href="r_storebahan?No_form=<?= $No_form; ?>" target="_blank"-->
+                                        <!--    class="btn btn-inverse waves-effect waves-light"><i-->
+                                        <!--        class="fa fa-print m-r-5"></i>Cetak</a>-->
                                     <?php endif; ?>
                                 </div>
-
                                 <table id="" class="table table-striped table-bordered m-t-5">
                                     <thead>
                                         <tr>
@@ -132,12 +142,16 @@ include '../models/cek.php';
                                             <tr>
                                                 <td><?= $i++;  ?></td>
                                                 <td><?= $item['namabarang']; ?></td>
-                                                <td><?= $item['harga']; ?></td>
+                                                <td>Rp.<?= format_rupiah($item['harga']); ?></td>
                                                 <td><?= $item['qty']  ?></td>
-                                                <td><?= $item['namaunit']  ?></td>
-                                                <td><?= $item['subtotal']; ?></td>
+                                                <td><?= ucwords($item['namaunit'])  ?></td>
+                                                <td>Rp.<?= format_rupiah($item['subtotal']); ?></td>
                                             </tr>
                                         <?php endforeach; ?>
+                                        <tr>
+                                            <th colspan="5" class="text-center">TOTAL</th>
+                                            <th>Rp.<?= format_rupiah($grand_total['grand_total']) ?></th>
+                                        </tr>
 
                                     </tbody>
                                 </table>

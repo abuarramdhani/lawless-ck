@@ -45,7 +45,7 @@ include '../models/cek.php';
 
                                 <h4 class="header-title m-t-0 m-b-20">Detail Bahan Order</h4>
 
-                                <div class="pull-left">
+                                <div class="pull-left m-b-20">
                                     <table class="">
                                         <tr>
                                             <td style="font-weight: 600; width:100px">No Form</td>
@@ -53,35 +53,35 @@ include '../models/cek.php';
                                         </tr>
                                         <tr>
                                             <td style="font-weight: 600; width:100px">Outlet</td>
-                                            <td><?= $detail['nama']; ?></td>
+                                            <td><?= ucwords($detail['nama']); ?></td>
                                         </tr>
                                         <!-- <tr>
                                             <td style="font-weight: 600; width:100px">Alamat</td>
                                             <td><?= $detail['alamatsupplier']; ?></td>
                                         </tr> -->
-                                        <tr>
-                                            <td style="font-weight: 600; width:100px">Status</td>
-                                            <form method="POST">
-                                                <input type="hidden" name="status">
-                                                <input type="hidden" name="No_form" value="<?= $detail['No_form']; ?>">
-                                                <?php if ($sot == 0 && $sck == 0) : ?>
-                                                    <td><a><button type="submit" value="<?= $sot ?>" name="sot" class="btn btn-danger waves-effect waves-light btn-xs m-b-5">Confirm</button></a>
-                                                    </td>
-                                                <?php elseif ($sot == 1 && $sck == 0) : ?>
-                                                    <td><a> <button type="submit" value="<?= $sot; ?>" name="sot" class="btn btn-info waves-effect waves-light btn-xs m-b-5">Confirmed</button></a>
-                                                    </td>
-                                                <?php elseif ($sot == 2 && $sck == 0) : ?>
-                                                    <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by Manager</button>
-                                                    </td>
-                                                <?php elseif ($sot == 2  && $sck == 1) : ?>
-                                                    <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by CK</button>
-                                                    </td>
-                                                <?php elseif ($sot == 2  && $sck == 2) : ?>
-                                                    <td><button class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</button>
-                                                    </td>
-                                                <?php endif ?>
-                                            </form>
-                                        </tr>
+                                        <!--<tr>-->
+                                        <!--    <td style="font-weight: 600; width:100px">Status</td>-->
+                                        <!--    <form method="POST">-->
+                                        <!--        <input type="hidden" name="status">-->
+                                        <!--        <input type="hidden" name="No_form" value="<?= $detail['No_form']; ?>">-->
+                                        <!--        <?php if ($sot == 0 && $sck == 0) : ?>-->
+                                        <!--            <td><a><button type="submit" value="<?= $sot ?>" name="sot" class="btn btn-danger waves-effect waves-light btn-xs m-b-5">Confirm</button></a>-->
+                                        <!--            </td>-->
+                                        <!--        <?php elseif ($sot == 1 && $sck == 0) : ?>-->
+                                        <!--            <td><a> <button type="submit" value="<?= $sot; ?>" name="sot" class="btn btn-info waves-effect waves-light btn-xs m-b-5">Confirmed</button></a>-->
+                                        <!--            </td>-->
+                                        <!--        <?php elseif ($sot == 2 && $sck == 0) : ?>-->
+                                        <!--            <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by Manager</button>-->
+                                        <!--            </td>-->
+                                        <!--        <?php elseif ($sot == 2  && $sck == 1) : ?>-->
+                                        <!--            <td><button type="submit" value="<?= $sck; ?>" name="sck" class="btn btn-success waves-effect waves-light btn-xs m-b-5">Checked by CK</button>-->
+                                        <!--            </td>-->
+                                        <!--        <?php elseif ($sot == 2  && $sck == 2) : ?>-->
+                                        <!--            <td><button class="btn btn-primary waves-effect waves-light btn-xs m-b-5">Delivery</button>-->
+                                        <!--            </td>-->
+                                        <!--        <?php endif ?>-->
+                                        <!--    </form>-->
+                                        <!--</tr>-->
                                     </table>
                                 </div>
                                 <div class="pull-right">
@@ -101,6 +101,7 @@ include '../models/cek.php';
                                             <th>Nama Barang</th>
                                             <th>Harga</th>
                                             <th>Jumlah</th>
+                                            <th>Unit</th>
                                             <th>Subtotal</th>
                                         </tr>
                                     </thead>
@@ -109,16 +110,21 @@ include '../models/cek.php';
                                         <?php foreach ($item_po as $item) : ?>
                                             <tr>
                                                 <td><?= $i++;  ?></td>
-                                                <td><?= $item['namabahan']; ?></td>
-                                                <td><?= $item['harga']; ?></td>
-                                                <td><?= $item['qty']  ?></td>
-                                                <td><?= $item['subtotal']; ?></td>
+                                                <td><?= $item['namabarang']; ?></td>
+                                                <td>Rp. <?= format_rupiah($item['harga']); ?></td>
+                                                        <td><?= $item['qty']  ?></td>
+                                                        <td><?= $item['namaunit']  ?></td>
+                                                        <td>Rp. <?= format_rupiah($item['subtotal']); ?></td>
                                             </tr>
                                         <?php endforeach; ?>
+                                        <tr>
+                                                    <th colspan="5" class="text-center">TOTAL</th>
+                                                    <th>Rp. <?= format_rupiah($grand_total['grand_total']) ?></th>
+                                                </tr>
 
                                     </tbody>
                                 </table>
-                                <a href="../inventory/barangkeluar.php" class="btn btn-primary"><i class="fa fa-angle-left" style="margin-right: 8px;"></i>Back</a>
+                                <a href="barangkeluar" class="btn btn-primary"><i class="fa fa-angle-left" style="margin-right: 8px;"></i>Back</a>
                             </div>
                         </div><!-- end col -->
                     </div>

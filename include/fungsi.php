@@ -17,17 +17,24 @@ $pan = explode("/", $url);
 
 // //koneksi database
 if ($_SERVER['HTTP_HOST'] != "localhost") {
-    $conn = mysqli_connect('localhost', 'lawlessburgerbar_lbba', '22e9j=V9r#A_', 'lawlessburgerbar_lb');
+    $conn = mysqli_connect('localhost', 'lawlessburgerbar_lbba', '22e9j=V9r#A_', 'lawlessburgerbar_lb1');
     $bh = $pan[2];
     $bh1 = explode(".", $bh);
     $basehost = $bh1[0];
 } else {
-    $conn = mysqli_connect('localhost', 'root', '', 'lawlessburgerbar_lb');
+    $conn = mysqli_connect('localhost', 'root', '', 'lawlessburgerbar_lb1');
     $bh = $pan[3];
     $bh1 = explode(".", $bh);
     $basehost = $bh1[0];
 }
 
+//   $conn = mysqli_connect('localhost', 'lawlessburgerbar_lbba', '22e9j=V9r#A_', 'lawlessburgerbar_lb1');
+//     $bh = $pan[2];
+//     $bh1 = explode(".", $bh);
+//     $basehost = $bh1[0];
+
+
+// echo $basehost;
 
 
 // if (!$conn) {
@@ -36,7 +43,10 @@ if ($_SERVER['HTTP_HOST'] != "localhost") {
 // echo "Koneksi berhasil";
 // mysqli_close($conn);
 
-$company = query("SELECT * FROM companypanel WHERE baseurl = '$basehost' ")[0];
+$company = query("SELECT * FROM companypanel WHERE baseurl = 'lawless-ck' ")[0];
+
+// var_dump($company);
+// var_dump($basehost);
 if (isset($_SESSION['kodeoutlet'])) {
 
     $outlet = $_SESSION['kodeoutlet'];
@@ -51,6 +61,11 @@ if (isset($_SESSION['kodeoutlet'])) {
     // akhir kirim email
 }
 
+date_default_timezone_set('Asia/Jakarta');
+$date = new DateTime();
+$tglindo = $date->format('Y-m-d');
+$tglindo2 = $date->format('ymd');
+
 function query($query)
 {
     global $conn;
@@ -61,6 +76,8 @@ function query($query)
     }
     return $rows;
 }
+
+// die;
 
 function queryy($queryy)
 {

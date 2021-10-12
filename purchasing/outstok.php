@@ -9,8 +9,10 @@ require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 require '../controller/c_barang.php';
-$bagian = "Data Master";
-$juhal = "Barang";
+$bagian = "Purchasing";
+$juhal = "Out Stock";
+
+$outstok = query("SELECT * FROM barang WHERE barang.stok <= barang.minstok AND status != 1 AND hargabeli != ''");
 ?>
 
 
@@ -35,137 +37,7 @@ $juhal = "Barang";
             <div class="content">
                 <div class="container">
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card-box">
-                                <!-- <div class="dropdown pull-right">
-                                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="zmdi zmdi-more-vert"></i>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div> -->
-
-                                <h4 class="header-title m-t-0 m-b-30">Form Input Barang</h4>
-
-                                <div class="row">
-                                    <form id="formbarang">
-                                        <input type="hidden" value="inputbarang" id="inputbarang" name="inputbarang">
-                                        <input type="hidden" value="<?= $kodeoutlet; ?>" id="kodeoutlet"
-                                            name="kodeoutlet">
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Kategori Barang</label>
-                                                <select class="form-control select2" id="kategoribarang"
-                                                    name="kategoribarang">
-                                                    <option>Pilih Kategori</option>
-                                                    <?php foreach ($kategoribarang as $row) : ?>
-                                                    <option value="<?= $row["kodekategoribarang"] ?>">
-                                                        <?= ucwords($row['namakategoribarang'])  ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Sub Kategori Barang</label>
-                                                <select class="form-control select2" id="subkategoribarang"
-                                                    name="subkategoribarang">
-                                                    <option>Pilih Kategori</option>
-                                                    <?php foreach ($subkatbarang as $row) : ?>
-                                                    <option value="<?= $row["kodesubkatbarang"] ?>">
-                                                        <?= ucwords($row['namasubkatbarang'])  ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Nama barang</label>
-                                                <input autofocus type="text" class="form-control" required
-                                                    name="nbarang" id="nbarang" placeholder="Nama barang"></input>
-                                            </div>
-                                        </div><!-- end col -->
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Harga Beli</label>
-                                                <input type="text" class="form-control" required name="hargabeli"
-                                                    id="hargabeli" placeholder="Harga Beli"></input>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Unit Beli</label>
-                                                <select class="form-control select2" name="nunit" id="nunit">
-                                                    <option>Pilih Unit</option>
-                                                    <?php foreach ($unit as $row) : ?>
-                                                    <option value="<?= $row["kodeunit"] ?>">
-                                                        <?= ucwords($row['namaunit'])  ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Stok</label>
-                                                <input type="text" class="form-control" required name="stok" id="stok"
-                                                    placeholder="Jumlah Stok"></input>
-                                            </div>
-
-                                        </div><!-- end col -->
-                                        
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Harga Jual 1</label>
-                                                <input type="text" class="form-control" required name="hargajual1"
-                                                    id="hargajual1" placeholder="Harga Jual 1"></input>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Harga Jual 2</label>
-                                                <input type="text" class="form-control" required name="hargajual2"
-                                                    id="hargajual2" placeholder="Harga Jual 2"></input>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Unit Jual</label>
-                                                <select class="form-control select2" name="nunitjual" id="nunitjual">
-                                                    <option>Pilih Unit</option>
-                                                    <?php foreach ($unit as $row) : ?>
-                                                    <option value="<?= $row["kodeunit"] ?>">
-                                                        <?= ucwords($row['namaunit'])  ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div><!-- end col -->
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Minimal Stok</label>
-                                                <input type="text" class="form-control" required name="minstok"
-                                                    id="minstok" placeholder="Minimal Stok"></input>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Status</label>
-                                                <select name="status" class="form-control">
-                                                    <option value="0">Strore</option>
-                                                    <option value="1">Unstore</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group m-b-0">
-                                                <button type="submit" class="btn btn-success waves-effect waves-light"
-                                                    id="tambah-barang">
-                                                    Input Barang
-                                                </button>
-                                            </div>
-                                        </div><!-- end col -->
-                                    </form>
-                                </div><!-- end row -->
-
-                            </div>
-                        </div><!-- end col -->
-
-                    </div>
+                    
                     <!-- end row -->
 
                     <div class="row">
@@ -184,7 +56,7 @@ $juhal = "Barang";
                                         </ul>
                                     </div> -->
 
-                                <h4 class="header-title m-t-0 m-b-30">Daftar Barang</h4>
+                                <h4 class="header-title m-t-0 m-b-30">Daftar Out Stock</h4>
 
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
@@ -201,13 +73,12 @@ $juhal = "Barang";
                                             <th>Unit Jual</th>
                                             <th>Min Stok</th>
                                             <th>Status</th>
-                                            <th>Action </th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        <?php foreach ($barang as $row) : ?>
+                                        <?php foreach ($outstok as $row) : ?>
                                         <tr>
                                             <td width="2%" ;><?= $i ?></td>
                                             <td>
@@ -259,28 +130,6 @@ $juhal = "Barang";
                                                         echo "Unstore";
                                                     }
                                                     ?></td>
-                                            <td>
-                                                <a class="on-default edit-row badge badge-success tombol-edit"
-                                                    data-kodebarang="<?= $row['kodebarang']; ?>"
-                                                    data-unitbeli="<?= $row['unitbeli']; ?>"
-                                                    data-unitjual="<?= $row['unitjual']; ?>"
-                                                    data-kategoribarang="<?= $kodekategoribarang ?>"
-                                                    data-subkategoribarang="<?= $kodesubkatbarang ?>"
-                                                    data-namabarang="<?= $row['namabarang']; ?>"
-                                                    data-harga="<?= $row['hargabeli']; ?>"
-                                                    data-hargajual1="<?= $row["hargajual1"] ?>"
-                                                    data-hargajual2="<?= $row["hargajual2"] ?>"
-                                                    data-stok="<?= $row['stok']; ?>"
-                                                    data-mstok="<?= $row['minstok']; ?>"
-                                                    data-status="<?= $row['status']; ?>">
-                                                    <i class="fa fa-pencil"></i></a>
-                                                <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-                                                <?php if ($_SESSION['userlevel'] == 0) : ?>
-                                                | <a
-                                                    class="on-default remove-row badge badge-danger tombol-deletebahan"><i
-                                                        class="fa fa-trash-o"></i></a>
-                                                <?php endif ?>
-                                            </td>
 
                                         </tr>
                                         <?php $i++; ?>

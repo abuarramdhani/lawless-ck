@@ -43,7 +43,11 @@ $juhal = "Data Produk";
                                     <table class="">
                                         <tr>
                                             <td style="font-weight: 600; width:100px">No Form</td>
-                                            <td><?= $detail['No_form']; ?></td>
+                                            <td>: <?= $detail['No_form']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: 600; width:100px">Tanggal</td>
+                                            <td>: <?= tgl_indo($detail['date']); ?> </td>
                                         </tr>
                                         <!-- <tr>
                                             <td style="font-weight: 600; width:100px">Status</td>
@@ -71,6 +75,7 @@ $juhal = "Data Produk";
                                             <th>Nama Barang</th>
                                             <th>Harga</th>
                                             <th>Jumlah</th>
+                                            <th>Nama Unit</th>
                                             <th>Subtotal</th>
                                         </tr>
                                     </thead>
@@ -79,12 +84,17 @@ $juhal = "Data Produk";
                                         <?php foreach ($item_produk as $item) : ?>
                                             <tr>
                                                 <td><?= $i++;  ?></td>
-                                                <td><?= $item['namaproduk']; ?></td>
-                                                <td><?= $item['harga']; ?></td>
+                                                <td><?= $item['namabarang']; ?></td>
+                                                <td>Rp.<?= format_rupiah($item['harga']) ?></td>
                                                 <td><?= $item['qty']  ?></td>
-                                                <td><?= $item['subtotal']; ?></td>
+                                                <td><?= $item['namaunit']  ?></td>
+                                                <td>Rp.<?= format_rupiah($item['subtotal']); ?></td>
                                             </tr>
                                         <?php endforeach; ?>
+                                         <tr>
+                                                    <th colspan="5" class="text-center">TOTAL</th>
+                                                    <th>Rp.<?= format_rupiah($grand_total['grand_total']) ?></th>
+                                                </tr>
 
                                     </tbody>
                                 </table>

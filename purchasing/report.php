@@ -144,15 +144,15 @@ ob_start();
             <th>Date</th>
             <td>: <?= $detail['date']; ?></td>
         </tr>
-        <tr>
-            <th>Status</th>
+        <!--<tr>-->
+        <!--    <th>Status</th>-->
 
-            <?php if ($detail['status'] == 2) : ?>
-                <td>: <span class="">Checked by Manager</span></td>
-            <?php elseif ($detail['status'] == 3) : ?>
-                <td>: <span class="">Delivery</span></td>
-            <?php endif; ?>
-        </tr>
+        <!--    <?php if ($detail['status'] == 2) : ?>-->
+        <!--        <td>: <span class="">Checked by Manager</span></td>-->
+        <!--    <?php elseif ($detail['status'] == 3) : ?>-->
+        <!--        <td>: <span class="">Delivery</span></td>-->
+        <!--    <?php endif; ?>-->
+        <!--</tr>-->
     </table>
 
 
@@ -176,7 +176,7 @@ ob_start();
             <?php foreach ($item_po as $item) : ?>
                 <tr>
                     <td><?= $i++;  ?></td>
-                    <td><?= $item['namabahan']; ?></td>
+                    <td><?= $item['namabarang']; ?></td>
                     <td><?= $item['harga']; ?></td>
                     <td><?= $item['qty']  ?></td>
                     <td><?= $item['subtotal']; ?></td>

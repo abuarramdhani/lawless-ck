@@ -39,7 +39,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
             <!-- akhir terima msg -->
             <div class="content">
                 <div class="container" style="margin-top: 5px;">
-                    <div class="col-lg-6">
+                    <div class="col-lg-5 col-md-12">
                         <div class="row">
                             <div class="col-lg-12">
                                 <form>
@@ -54,7 +54,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-lg-12 ">
                                 <div class="card-box table-responsive" style=" margin-top: 10px;">
                                     <!-- <div class="dropdown pull-right">
                                         <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown"
@@ -76,7 +76,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Kode</th>
+                                                <!--<th>Kode</th>-->
                                                 <th>Item</th>
                                                 <th>Unit</th>
                                                 <th>Harga</th>
@@ -93,9 +93,18 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                         <!-- end row -->
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-7 col-md-12">
                         <div class="row">
                             <form class="form-horizontal" role="formpo" id="#formdinamis" method="POST" action="../models/input.php">
+                                <div class="col-lg-2 m-b-10">
+                                  <label>Tanggal PO</label>
+                                  </div>
+                            <div class="col-lg-10 m-b-10">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="tanggal_manual" value="<?= date("m/d/Y"); ?>" id="datepicker-autoclose">
+                                    <span class="input-group-addon bg-primary b-0 text-white"><i class="ti-calendar"></i></span>
+                                </div><!-- input-group -->
+                                </div>
                                 <input type="hidden" name="inputformpo">
                                 <div class="card-box" style="height:350px; overflow-y: auto;">
                                     <div class="col-lg-12">
@@ -107,9 +116,9 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                                             <tr>
                                                                 <th>Nama Barang</th>
                                                                 <th data-priority="1">Harga</th>
+                                                                <th data-priority="1">Unit</th>
 
                                                                 <th data-priority="3">Jumlah</th>
-                                                                <th data-priority="1">Unit</th>
                                                                 <th data-priority="1">Subtotal</th>
                                                                 <th data-priority="1">Aksi</th>
                                                             </tr>
@@ -284,7 +293,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                 var result = JSON.parse(response);
                 var i = 1;
                 result.forEach(res => {
-                    html = '<tr><td>' + i + '</td><td>' + res.kodebarang + '</td><td>' + res.namabarang +
+                    html = '<tr><td>' + i + '</td><td>' + res.namabarang +
                         '</td><td>' + res.namaunit + '</td><td>' + res.hargabeli + '</td>';
                     html += '<td><button id="add" data-namaunit="' + res.namaunit + '" data-unitbeli="' + res.unitbeli + '" data-kodebarang="' + res.kodebarang + '" data-id="' + res.id + '" data-nama="' + res.namabarang +
                         '" data-harga="' + res.hargabeli +
@@ -331,7 +340,8 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
             var check = document.getElementsByClassName(kodebarang)[0];
             if (check != null) {
                 var qty = check.value;
-                var newQty = parseInt(qty) + parseInt(jumlah);
+                // var newQty = parseInt(qty) + parseInt(jumlah);
+                var newQty = parseFloat(qty) + parseFloat(jumlah);
                 check.value = newQty;
                 var price = parseInt(document.getElementsByClassName("hrg-" + kodebarang)[0].value);
                 var newPrice = price * newQty;
@@ -346,14 +356,14 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                     '"></td><td ><input type="number" id="harga" class="form-control harga hrg-' + kodebarang +
                     '"  name="harga[]"  value="' +
                     harga +
-                    '"></td><td><input min="0" id="jumlah" class="jumlah form-control ' + kodebarang +
+                    '"></td><td><input class=" form-control" readonly type="text" value="' +
+                    namaunit +
+                    '"></td><td><input min="0" id="jumlah" step="0.0001" class="jumlah form-control ' + kodebarang +
                     '" type="number" name="jumlah[]" value="' +
                     jumlah +
                     '"></td><input class=" form-control" type="hidden" name="unitbeli[]" value="' +
                     unitbeli +
-                    '"><td><input class=" form-control" readonly type="text" value="' +
-                    namaunit +
-                    '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' +
+                    '"><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' +
                     kodebarang + '" id="subtotal_item" value="' +
                     harga + '" ></td>';
                 html +=
@@ -368,8 +378,10 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
             totalharga();
         });
         $(document).on("input", "#jumlah", function() {
-            var jumlah = parseInt($(this).val());
-            var harga = parseInt($(this).closest("tr").find(".harga").val());
+            // var jumlah = parseInt($(this).val());
+            // var harga = parseInt($(this).closest("tr").find(".harga").val());
+             var jumlah = parseFloat($(this).val());
+            var harga = parseFloat($(this).closest("tr").find(".harga").val());
             var total = jumlah * harga;
             $(this).closest("tr").find("input#subtotal_item").val(total);
 

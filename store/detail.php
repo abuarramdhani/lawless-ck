@@ -137,9 +137,9 @@ $kodeoutlet = $_SESSION['kodeoutlet'];
                                     </table>
                                 </div>
                                 <div class="pull-right">
-                                    <?php if ($sot == 1  && $sck == 0) : ?>
+                                    <?php if ($sot == 1  && $sck == 2) : ?>
                                         
-<a href="surat_jalan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+<a href="surat_jalan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak Surat Jalan</a>
                                     <?php elseif ($sot == 2  && $sck == 2) : ?>
                                         <!--<a href="report?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>-->
                                         <a href="surat_jalan?No_form=<?= $No_form; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>

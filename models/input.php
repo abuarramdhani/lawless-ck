@@ -723,6 +723,7 @@ if (isset($_POST['kasmasuk'])) {
     $total_keseluruhan    = $_POST['total_keseluruhan'];
     $namaoutlet = $_SESSION['outlet'];
 
+    $tanggal_manual = $_POST['tanggal_manual'];
 
 
     $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
@@ -730,23 +731,28 @@ if (isset($_POST['kasmasuk'])) {
 
 
     $total = count($namabarang);
-    $dt_input = date('Y-m-d');
-    $date = date('ymd');
+
+    if ($tanggal_manual == null) {
+        //tanggal auto
+        $dt_input = date('Y-m-d');
+        $date = date('ymd');
+        //$dt_input = '2021-09-15';
+        //$date = '210915';
+    } else {
+        // tanggal manual
+        $tm = explode("/", $tanggal_manual);
+        $dt_input = $tm[2] . '-' . $tm[0] . '-' . $tm[1];
+        $tm_kata = str_split($tm[2]);
+        $date = $tm_kata[2] . $tm_kata[3] . $tm[0] . $tm[1];
+    }
 
     // isi noform
 
-    // $result_noform = mysqli_query($conn, "SELECT id,No_form FROM form_po ORDER BY No_form DESC");
-    // $ambil_noform = mysqli_fetch_row($result_noform);
 
-    $ambil_noform = query("SELECT id,No_form FROM form_po ORDER BY No_form DESC");
+    // $ambil_noform = query("SELECT id,No_form FROM form_po ORDER BY No_form DESC");
+    $ambil_noform = query("SELECT id,No_form,kodeoutlet FROM form_po where kodeoutlet = '$kodeoutlet' and No_form like 'FPO$date%' ORDER BY No_form DESC");
     $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
     $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
-
-
-    // var_dump($ambil_noform);
-    // var_dump($pecah_po);
-    // var_dump($pecah_po_b);
-    // die;
 
 
     if ($pecah_po == "FPO$date") {
@@ -807,12 +813,15 @@ if (isset($_POST['kasmasuk'])) {
 
         mysqli_query($conn, "insert into item_po set
                 No_form    = '$No_form',
+                kodeoutlet      = '$kodeoutlet',
                 kodebahan      = '$kodebahan[$i]',
                 qty = '$jumlah[$i]',
                 harga ='$harga[$i]',
                 unit ='$unitbeli[$i]',
                 subtotal = '$subtotal[$i]'
             ");
+
+        // var_dump($insert);die;
     }
 
 
@@ -821,7 +830,8 @@ if (isset($_POST['kasmasuk'])) {
                 kodeoutlet      = '$kodeoutlet',
                 kodesupplier = '$kodesupplier',
                 date ='$dt_input',
-                status = '0'
+                status_ck = '2',
+                status_ot = '1'
             ");
 
 
@@ -894,8 +904,10 @@ if (isset($_POST['kasmasuk'])) {
     }
 } else if (isset($_POST['inputformstore'])) {
     $namabarang       = $_POST['namabarang'];
+    $kodebarang       = $_POST['kodebarang'];
     $harga         = $_POST['harga'];
     $jumlah     = $_POST['jumlah'];
+    $unitbeli    = $_POST['unitbeli'];
     $subtotal    = $_POST['subtotal'];
     $total_keseluruhan    = $_POST['total_keseluruhan'];
     $namaoutlet = $_SESSION['outlet'];
@@ -942,26 +954,26 @@ if (isset($_POST['kasmasuk'])) {
     // die;
 
     // bahan
-    foreach ($namabarang as $row) {
+    // foreach ($namabarang as $row) {
 
-        $sql = "SELECT * 
-        FROM produk 
-        WHERE namaproduk = '$row'
-        ";
-        $result = mysqli_query($conn, $sql);
+    //     $sql = "SELECT * 
+    //     FROM produk 
+    //     WHERE namaproduk = '$row'
+    //     ";
+    //     $result = mysqli_query($conn, $sql);
 
-        while ($d = mysqli_fetch_array($result)) {
-            $kodeproduk[] = $d['kodeproduk'];
-            // echo $kodebahan;
-        }
-    }
+    //     while ($d = mysqli_fetch_array($result)) {
+    //         $kodeproduk[] = $d['kodeproduk'];
+    //         // echo $kodebahan;
+    //     }
+    // }
 
     //   ambil stok
-    foreach ($kodeproduk as $row) {
+    foreach ($kodebarang as $row) {
 
         $sql = "SELECT stok 
-        FROM produk 
-        WHERE kodeproduk = '$row'
+        FROM barang 
+        WHERE kodebarang = '$row'
     ";
         $result = mysqli_query($conn, $sql);
 
@@ -988,13 +1000,13 @@ if (isset($_POST['kasmasuk'])) {
     // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
 
-        mysqli_query($conn, "UPDATE produk SET 
+        mysqli_query($conn, "UPDATE barang SET 
         stok= '$t_stok[$i]' 
-        WHERE kodeproduk='$kodeproduk[$i]'");
+        WHERE kodebarang='$kodebarang[$i]'");
 
         mysqli_query($conn, "insert into item_storeproduk set
             No_form    = '$No_form',
-            kodeproduk      = '$kodeproduk[$i]',
+            kodeproduk      = '$kodebarang[$i]',
             qty = '$jumlah[$i]',
             harga ='$harga[$i]',
             subtotal = '$subtotal[$i]'
@@ -1021,22 +1033,36 @@ if (isset($_POST['kasmasuk'])) {
     $kodesupplier = 'SUP000';
     $total_keseluruhan    = $_POST['total_keseluruhan'];
     $namaoutlet = $_SESSION['outlet'];
-    $kodeoutlet = $_SESSION['kodeoutlet'];
+    $kodeoutlet = $_POST['outlet'];
 
-    // $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
-    // $outlet['kodeoutlet'];
+
+    $tanggal_manual = $_POST['tanggal_manual'];
+
+    if ($tanggal_manual == null) {
+        //tanggal auto
+        $dt_input = date('Y-m-d');
+        $date = date('ymd');
+        //$dt_input = '2021-09-15';
+        //$date = '210915';
+    } else {
+        // tanggal manual
+        $tm = explode("/", $tanggal_manual);
+        $dt_input = $tm[2] . '-' . $tm[0] . '-' . $tm[1];
+        $tm_kata = str_split($tm[2]);
+        $date = $tm_kata[2] . $tm_kata[3] . $tm[0] . $tm[1];
+    }
 
 
     $total = count($namabarang);
-    $dt_input = date('Y-m-d');
-    $date = date('ymd');
+    // $dt_input = date('Y-m-d');
+    // $date = date('ymd');
 
     // isi noform
 
     // $result_noform = mysqli_query($conn, "SELECT id,No_form FROM form_po ORDER BY No_form DESC");
     // $ambil_noform = mysqli_fetch_row($result_noform);
 
-    $ambil_noform = query("SELECT id,No_form FROM form_po ORDER BY No_form DESC");
+    $ambil_noform = query("SELECT id,No_form,kodeoutlet FROM form_po where kodeoutlet = '$kodeoutlet' and No_form like 'FPO$date%' ORDER BY No_form DESC");
     $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
     $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
 
@@ -1091,12 +1117,13 @@ if (isset($_POST['kasmasuk'])) {
     // // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
 
-        mysqli_query($conn, "UPDATE barang SET 
-        stok= '$t_stok[$i]' 
-        WHERE kodebarang='$kodebahan[$i]'");
+        // mysqli_query($conn, "UPDATE barang SET 
+        // stok= '$t_stok[$i]' 
+        // WHERE kodebarang='$kodebahan[$i]'");
 
         mysqli_query($conn, "insert into item_po set
 No_form    = '$No_form',
+ kodeoutlet      = '$kodeoutlet',
 kodebahan      = '$kodebahan[$i]',
 qty = '$jumlah[$i]',
 harga ='$harga[$i]',
@@ -1110,7 +1137,8 @@ subtotal = '$subtotal[$i]'
     kodeoutlet      = '$kodeoutlet',
     kodesupplier = '$kodesupplier',
     date ='$dt_input',
-    status = '0'
+    status_ck = '2',
+    status_ot = '1'
 ");
 
     $result = mysqli_affected_rows($conn);
@@ -1131,71 +1159,112 @@ subtotal = '$subtotal[$i]'
 
     header("location: ../store/store-bahan");
 } else if (isset($_POST['inputprodukmasuk'])) {
-    $namaproduk       = $_POST['namaproduk'];
+    $namabarang       = $_POST['namabarang'];
+    $kodebarang       = $_POST['kodebarang'];
     $harga         = $_POST['harga'];
     $jumlah     = $_POST['jumlah'];
     $subtotal    = $_POST['subtotal'];
-    // $kodesupplier    = $_POST['supplier'];
+    $unitbeli    = $_POST['unitbeli'];
     $total_keseluruhan    = $_POST['total_keseluruhan'];
+
+    $tanggal_manual = $_POST['tanggal_manual'];
+
     $namaoutlet = $_SESSION['outlet'];
 
     $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
-    // $outlet['kodeoutlet'];
-    // var_dump($kodeoutlet);
 
 
-    $total = count($namaproduk);
-    $dt_input = date('Y-m-d');
-    $date = date('ymd');
+    if ($tanggal_manual == null) {
+        //tanggal auto
+        $dt_input = date('Y-m-d');
+        $date = date('ymd');
+        //$dt_input = '2021-09-15';
+        //$date = '210915';
+    } else {
+        // tanggal manual
+        $tm = explode("/", $tanggal_manual);
+        $dt_input = $tm[2] . '-' . $tm[0] . '-' . $tm[1];
+        $tm_kata = str_split($tm[2]);
+        $date = $tm_kata[2] . $tm_kata[3] . $tm[0] . $tm[1];
+    }
+
+    $total = count($namabarang);
+    // $dt_input = date('Y-m-d');
+    // $date = date('ymd');
+    // $dt_input = '2021-09-01';
+    // $date = '210901';
 
     // isi noform
 
     // $result_noform = mysqli_query($conn, "SELECT id,No_form FROM form_po ORDER BY No_form DESC");
     // $ambil_noform = mysqli_fetch_row($result_noform);
 
-    $ambil_noform = query("SELECT id,No_form FROM form_produkmasuk ORDER BY No_form DESC");
-    $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
-    $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
+    // $ambil_noform = query("SELECT id,No_form FROM form_produkmasuk ORDER BY No_form DESC");
+    // $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
+    // $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
 
+    //$tgl = strtotime("10/01/2021");
+    //$date = date("ymd", $tgl);
+    // echo $tgl = date("ymd", $tgl);
+    $nopo = "FPM" . $date;
+    $formpo = "SELECT * FROM form_produkmasuk WHERE kodeoutlet = '$kodeoutlet' AND No_form LIKE '%$nopo%'  ORDER BY id DESC LIMIT 1";
+    $query = mysqli_query($conn, $formpo);
+    $row = mysqli_fetch_array($query);
 
-    // var_dump($ambil_noform);
-    // var_dump($pecah_po);
-    // var_dump($pecah_po_b);
-    // die;
+    $potong = substr($row['No_form'], 0, 9);
+    $pecah_po_b = substr($row['No_form'], 9);
+    $pecah_po_b += 1;
+    $pecah_po_b = sprintf("%03d", $pecah_po_b);
 
-
-    if ($pecah_po == "FPM$date") {
-        $pecah_po_b += 1;
-        $pecah_po_b = sprintf("%03d", $pecah_po_b);
-        $No_form = 'FPM' . $date . $pecah_po_b;
-    } else {
+    if ($row['No_form'] == "") {
         $No_form = 'FPM' . $date . '001';
+    } else {
+        $No_form = $nopo . $pecah_po_b;
     }
+    // foreach ($formpo as $row) {
+    //     $row['No_form'];
+    //     $potong = substr($row['No_form'], 0, 9);
+    //     $pecah_po_b = substr($row['No_form'], 9);
+    //     $pecah_po_b += 1;
+    //     $pecah_po_b = sprintf("%03d", $pecah_po_b);
+
+
+    // }
+
+
+
+    // if ($pecah_po == "FPM$date") {
+    //     $pecah_po_b += 1;
+    //     $pecah_po_b = sprintf("%03d", $pecah_po_b);
+    //     $No_form = 'FPM' . $date . $pecah_po_b;
+    // } else {
+    //     $No_form = 'FPM' . $date . '001';
+    // }
     //akhir isi noform
     // echo $No_form;
     // die;
 
     // bahan
-    foreach ($namaproduk as $row) {
+    // foreach ($namaproduk as $row) {
 
-        $sql = "SELECT * 
-        FROM produk 
-        WHERE namaproduk = '$row'
-        ";
-        $result = mysqli_query($conn, $sql);
+    //     $sql = "SELECT * 
+    //     FROM produk 
+    //     WHERE namaproduk = '$row'
+    //     ";
+    //     $result = mysqli_query($conn, $sql);
 
-        while ($d = mysqli_fetch_array($result)) {
-            $kodeproduk[] = $d['kodeproduk'];
-            // echo $kodebahan;
-        }
-    }
+    //     while ($d = mysqli_fetch_array($result)) {
+    //         $kodeproduk[] = $d['kodeproduk'];
+    //         // echo $kodebahan;
+    //     }
+    // }
 
     //   ambil stok
-    foreach ($kodebahan as $row) {
+    foreach ($kodebarang as $row) {
 
         $sql = "SELECT stok 
-        FROM produk 
-        WHERE kodeproduk = '$row'
+        FROM barang 
+        WHERE kodebarang = '$row'
     ";
         $result = mysqli_query($conn, $sql);
 
@@ -1216,14 +1285,16 @@ subtotal = '$subtotal[$i]'
     // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
 
-        mysqli_query($conn, "UPDATE produk SET 
+        mysqli_query($conn, "UPDATE barang SET 
     stok= '$t_stok[$i]' 
-    WHERE kodeproduk='$kodeproduk[$i]'");
+    WHERE kodebarang='$kodebarang[$i]'");
+
         mysqli_query($conn, "insert into item_produkmasuk set
         No_form    = '$No_form',
-        kodeproduk      = '$kodeproduk[$i]',
+        kodeproduk      = '$kodebarang[$i]',
         qty = '$jumlah[$i]',
         harga ='$harga[$i]',
+        unit ='$unitbeli[$i]',
         subtotal = '$subtotal[$i]'
     ");
     }
@@ -1256,8 +1327,27 @@ subtotal = '$subtotal[$i]'
     $subtotal = $_POST['subtotal'];
     $kodesupplier = $_POST['kodesupplier'];
 
-    // var_dump($qty);
-    // die;
+    $tgl_tempo =  $_POST['tgl_tempo'];
+    $tanggal_manual = $_POST['tanggal_manual'];
+
+
+    if ($tgl_tempo == null) {
+        if ($tanggal_manual == null) {
+            //TANGGAL AUTO
+            $tgl_tempo = date('Y-m-d');
+        } else {
+            //TANGGAL MANUAL
+            $tm = explode("/", $tanggal_manual);
+            $tgl_tempo = $tm[2] . '-' . $tm[0] . '-' . $tm[1];
+        }
+
+        $jatuhtempo = date('Y-m-d', strtotime('+14 days', strtotime($tgl_tempo)));
+    } else {
+        $day = explode('/', $tgl_tempo);
+        $day1 = $day[1];
+        $dt = array($day[2], $day[0], $day[1]);
+        $jatuhtempo = implode("-", $dt);
+    }
 
 
     //cek apakah harga terjadi perubahan
@@ -1271,21 +1361,37 @@ subtotal = '$subtotal[$i]'
     }
     // akhir cek
 
+
+
+
     // $total = count($namabarang);
-    $dt_input = date('Y-m-d');
-    $date = date('ymd');
+
     // $noin = str_replace("PO", "IN", $nopo);
     $namaoutlet = $_SESSION['outlet'];
 
     $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
 
+    //tanggal manual
+    if ($tanggal_manual == null) {
+        // tanggal auto
+        $dt_input = date('Y-m-d');
+        $date = date('ymd');
+    } else {
+        // tanggal manual
+        $tm = explode("/", $tanggal_manual);
+        $dt_input = $tm[2] . '-' . $tm[0] . '-' . $tm[1];
+        $tm_kata = str_split($tm[2]);
+        $date = $tm_kata[2] . $tm_kata[3] . $tm[0] . $tm[1];
+    }
+
     //ambil noform 
-    $ambil_noform = query("SELECT id,No_form FROM form_in ORDER BY No_form DESC");
+    $ambil_noform = query("SELECT id,No_form,kodeoutlet FROM form_in where kodeoutlet = '$kodeoutlet' and No_form like 'FIN$date%' ORDER BY No_form DESC");
     $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
     $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
 
 
     if ($pecah_po == "FIN$date") {
+
         $pecah_po_b += 1;
         $pecah_po_b = sprintf("%03d", $pecah_po_b);
         $No_form = 'FIN' . $date . $pecah_po_b;
@@ -1316,7 +1422,8 @@ subtotal = '$subtotal[$i]'
     for ($i = 0; $i < count($kodebahan); $i++) {
         mysqli_query($conn, "UPDATE barang SET hargabeli='$harga[$i]', stok= '$t_stok[$i]' WHERE kodebarang='$kodebahan[$i]'");
         mysqli_query($conn, "INSERT INTO item_in SET
-         No_form = '$No_form' , 
+         No_form = '$No_form' ,
+         kodeoutlet = '$kodeoutlet',
          kodebahan = '$kodebahan[$i]', 
          qty = '$qty[$i]', 
          harga = '$harga[$i]', 
@@ -1330,6 +1437,7 @@ subtotal = '$subtotal[$i]'
             kodeoutlet = '$kodeoutlet',
             kodesupplier = '$kodesupplier',
             date ='$dt_input',
+            jatuhtempo ='$jatuhtempo',
             status_ot = '0',
             status_ck = '0'
         ");
@@ -1345,7 +1453,7 @@ subtotal = '$subtotal[$i]'
 
     //kembali ke halaman sebelumnya
     $_SESSION["msg"] = "$result";
-    header("Location: ../inventory/barangmasuk.php");
+    header("Location: ../purchasing/form-in");
 } else if (isset($_POST['tambah-user'])) {
 
 
@@ -1416,12 +1524,36 @@ subtotal = '$subtotal[$i]'
     }
 } elseif (isset($_POST['reset-password'])) {
     $email = $_POST['email'];
+    $outlet = $_POST['kodeoutlet'];
+    //var_dump($outlet);
+
+    // $mailhost1 = "mail.lawless-ck.net";
+    // $username1 = "admin@lawless-ck.net";
+    // $password1 = "ck123!!@@##";
+    // $setfrom1 = "Lawless HO Office";
+    $mailer = query("SELECT * FROM mailer WHERE kodeoutlet = '$outlet'")[0];
+    $mailhost1 = $mailer['mailhost1'];
+    $username1 = $mailer['username1'];
+    $password1 = $mailer['password1'];
+    $setfrom1 = $mailer['setfrom1'];
+
+
     $check = mysqli_query($conn, "SELECT * FROM admin WHERE email='$email'");
+
     if (mysqli_num_rows($check) > 0) {
         $subject = "RESET PASSWORD";
         $key = '#$eCr37';
         $token = md5($email . $key);
+
+        $link = query("SELECT baseurl FROM companypanel WHERE kodeoutlet = '$outlet'")[0]['baseurl'];
+
+        var_dump($link);
         $linkhref = "localhost/lawless-ck/confirm?email=$email&token=$token";
+        if ($_SERVER['HTTP_HOST'] != "localhost") {
+            $linkhref = "https://$link.net/confirm?email=$email&token=$token";
+        } else {
+            $linkhref = "localhost/lawless-ck/confirm?email=$email&token=$token";
+        }
 
         include '../mail/recovery.php';
         include '../models/sendmail.php';
@@ -1438,56 +1570,85 @@ subtotal = '$subtotal[$i]'
     $harga         = $_POST['harga'];
     $jumlah     = $_POST['jumlah'];
     $subtotal    = $_POST['subtotal'];
-    $kodeoutlet = 'OUT002';
+    $kodebarang    = $_POST['kodebarang'];
+    $unit    = $_POST['kodeunit'];
+    // $kodeoutlet = 'OUT002';
+    $namaoutlet = $_SESSION['outlet'];
+    $kodeoutlet = query("SELECT kodeoutlet FROM companypanel WHERE nama = '$namaoutlet'")[0]['kodeoutlet'];
+    $tanggal_manual = $_POST['tanggal_manual'];
+
+    if ($tanggal_manual == null) {
+        //tanggal auto
+        $dt_input = date('Y-m-d');
+        $date = date('ymd');
+        //$dt_input = '2021-09-15';
+        //$date = '210915';
+    } else {
+        // tanggal manual
+        $tm = explode("/", $tanggal_manual);
+        $dt_input = $tm[2] . '-' . $tm[0] . '-' . $tm[1];
+        $tm_kata = str_split($tm[2]);
+        $date = $tm_kata[2] . $tm_kata[3] . $tm[0] . $tm[1];
+    }
 
     $total = count($namabahan);
-    $dt_input = date('Y-m-d');
-    $date = date('ymd');
+    // $dt_input = date('Y-m-d');
+    // $date = date('ymd');
+
 
     // isi noform
+    $nopo = "FSB" . $date;
+    $ambil_noform = "SELECT * FROM form_storebahan WHERE kodeoutlet = '$kodeoutlet' AND No_form LIKE '%$nopo%'  ORDER BY id DESC LIMIT 1";
+    $query = mysqli_query($conn, $ambil_noform);
+    $row = mysqli_fetch_array($query);
 
-    $ambil_noform = query("SELECT id,No_form FROM form_requestbahan ORDER BY No_form DESC");
-    $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
-    $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
+    $potong = substr($row['No_form'], 0, 9);
+    $pecah_po_b = substr($row['No_form'], 9);
+    $pecah_po_b += 1;
+    $pecah_po_b = sprintf("%03d", $pecah_po_b);
 
-
-    // var_dump($ambil_noform);
-    // var_dump($pecah_po);
-    // var_dump($pecah_po_b);
-    // die;
-
-
-    if ($pecah_po == "FSB$date") {
-        $pecah_po_b += 1;
-        $pecah_po_b = sprintf("%03d", $pecah_po_b);
-        $No_form = 'FSB' . $date . $pecah_po_b;
-    } else {
+    if ($row['No_form'] == "") {
         $No_form = 'FSB' . $date . '001';
+    } else {
+        $No_form = $nopo . $pecah_po_b;
     }
+
+    // $ambil_noform = query("SELECT id,No_form FROM form_storebahan ORDER BY No_form DESC");
+    // $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
+    // $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
+
+
+    // if ($pecah_po == "FSB$date") {
+    //     $pecah_po_b += 1;
+    //     $pecah_po_b = sprintf("%03d", $pecah_po_b);
+    //     $No_form = 'FSB' . $date . $pecah_po_b;
+    // } else {
+    //     $No_form = 'FSB' . $date . '001';
+    // }
     //akhir isi noform
 
 
     // bahan
-    foreach ($namabahan as $row) {
+    // foreach ($namabahan as $row) {
 
-        $sql = "SELECT * 
-        FROM bahan 
-        WHERE namabahan = '$row'
-        ";
-        $result = mysqli_query($conn, $sql);
+    //     $sql = "SELECT * 
+    //     FROM bahan 
+    //     WHERE namabahan = '$row'
+    //     ";
+    //     $result = mysqli_query($conn, $sql);
 
-        while ($d = mysqli_fetch_array($result)) {
-            $kodebahan[] = $d['kodebahan'];
-            // echo $kodebahan;
-        }
-    }
+    //     while ($d = mysqli_fetch_array($result)) {
+    //         $kodebahan[] = $d['kodebahan'];
+    //         // echo $kodebahan;
+    //     }
+    // }
 
     //   ambil stok
-    foreach ($kodebahan as $row) {
+    foreach ($kodebarang as $row) {
 
         $sql = "SELECT stok 
-        FROM bahan 
-        WHERE kodebahan = '$row'
+        FROM barang 
+        WHERE kodebarang = '$row'
     ";
         $result = mysqli_query($conn, $sql);
 
@@ -1500,21 +1661,32 @@ subtotal = '$subtotal[$i]'
     for ($i = 0; $i < count($jumlah); $i++) {
         $t_stok[] = $stok[$i] - $jumlah[$i];
     }
-    // akhir stok
 
+    
+    // akhir stok
+    
 
     // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
+        // var_dump($No_form);
+        // var_dump($kodebarang[$i]);
+        // var_dump($t_stok[$i]);
+        // var_dump($jumlah[$i]);
+        // var_dump($harga[$i]);
+        // var_dump($unit[$i]);
+        // var_dump($subtotal[$i]);
+        // die;
 
-        mysqli_query($conn, "UPDATE bahan SET 
+        mysqli_query($conn, "UPDATE barang SET 
         stok= '$t_stok[$i]' 
-        WHERE kodebahan='$kodebahan[$i]'");
+        WHERE kodebarang='$kodebarang[$i]'");
 
         mysqli_query($conn, "insert into item_storebahan set
             No_form    = '$No_form',
-            kodebahan      = '$kodebahan[$i]',
+            kodebahan      = '$kodebarang[$i]',
             qty = '$jumlah[$i]',
             harga ='$harga[$i]',
+            unit ='$unit[$i]',
             subtotal = '$subtotal[$i]'
         ");
     }
@@ -1543,7 +1715,7 @@ subtotal = '$subtotal[$i]'
     $_SESSION["msg"] = "$result";
     // header("Location: form-po.php?msg=" . urlencode('1'));
 
-    header("location: ../store/store-bahan");
+    header("location: ../production/request-bahan");
 } else if (isset($_POST['inputbank'])) {
 
     $cekdata = mysqli_query($conn, "SELECT * FROM namabank ");
@@ -1746,8 +1918,8 @@ subtotal = '$subtotal[$i]'
     $dt_input = date('Y-m-d');
     $date = date('ymd');
 
-    var_dump($total);
-    $ambil_noform = query("SELECT id,No_form FROM form_returbahan ORDER BY No_form DESC");
+    // var_dump($total);
+    $ambil_noform = query("SELECT id,No_form,kodeoutlet FROM form_returbahan WHERE kodeoutlet = '$kodeoutlet' and No_form like 'FRB$date%' ORDER BY No_form DESC");
     $pecah_po = substr($ambil_noform["0"]['No_form'], 0, 9);
     $pecah_po_b = substr($ambil_noform["0"]['No_form'], 9);
 
@@ -1810,6 +1982,7 @@ subtotal = '$subtotal[$i]'
 
         mysqli_query($conn, "insert into item_returbahan set
             No_form    = '$No_form',
+            kodeoutlet      = '$kodeoutlet',
             kodebahan      = '$kodebahan[$i]',
             qty = '$jumlah[$i]',
             harga ='$harga[$i]',
@@ -1859,6 +2032,7 @@ subtotal = '$subtotal[$i]'
     //     'nunitjual'       => $_POST['nunitjual'],
     //     'minstok'       => $_POST['minstok']
     // ];
+    // print_r($_POST);die;
     $kodeoutlet       = $_POST['kodeoutlet'];
     $kategoribarang       = $_POST['kategoribarang'];
     $subkategoribarang       = $_POST['subkategoribarang'];
@@ -1870,7 +2044,8 @@ subtotal = '$subtotal[$i]'
     $hargajual2       = $_POST['hargajual2'];
     $nunitjual       = $_POST['nunitjual'];
     $minstok       = $_POST['minstok'];
-
+    $status       = $_POST['status'];
+    // echo $status;die;
     $cekdata = mysqli_query($conn, "SELECT * FROM barang ");
     //cek ada data?
     if (mysqli_num_rows($cekdata) > 0) {
@@ -1898,11 +2073,13 @@ subtotal = '$subtotal[$i]'
     hargajual1 = '$hargajual1',
     hargajual2 = '$hargajual2',
     unitjual = '$nunitjual',
-    minstok = '$minstok'
+    minstok = '$minstok',
+    status = '$status'
 
  ";
 
     $masuk_data = mysqli_query($conn, $query);
+    // var_dump($query);die;
     if ($masuk_data) {
         echo 3;
     } else {

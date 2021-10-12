@@ -332,7 +332,7 @@ a[x-apple-data-detectors=true] {
                                                     <div class="menu-links">
                                                         <a href="LAWLESS"
                                                             style="padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;display:inline;color:#2b2d49;font-family:\'Lato\', Tahoma, Verdana, Segoe, sans-serif;font-size:14px;text-decoration:none;letter-spacing:3px;">LAWLESS
-                                                            outlet</a>
+                                                            </a>
                                                     </div>
 
                                                 </td>

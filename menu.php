@@ -1,5 +1,16 @@
 <?php
 session_start();
+// echo $sesikodeoutlet = $_SESSION['kodeoutlet'];
+// $sesioutlet = $_SESSION['outlet'];
+// $sesijabatan = $_SESSION['jabatan'];
+
+// echo "          
+//             <script>
+//             alert('$sesikodeoutlet');
+//                 // alert('$sesioutlet');
+//                 // alert('$sesijabatan');
+//             </script>
+//             ";
 
 if (!isset($_SESSION['email'])) {
     header("location:index"); // jika belum login, maka dikembalikan ke index

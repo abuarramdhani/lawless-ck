@@ -60,6 +60,7 @@ require 'include/fungsi.php';
         <div class="text-center">
             <!-- <h4 class="text-uppercase font-bold m-b-0">Sign In</h4> -->
             <img src="assets/images/big/lawless-logo.jpg" width="25%">
+            <?= $company['kodeoutlet']; ?>
         </div>
 
         <div class="m-t-40 card-box">

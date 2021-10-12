@@ -1,8 +1,8 @@
 <?php
 $No_form = $_GET['No_form'];
 $item_po = query("SELECT * FROM item_storebahan as isb
-    JOIN bahan as b
-    ON isb.kodebahan = b.kodebahan 
+    JOIN barang as b ON isb.kodebahan = b.kodebarang 
+    JOIN unit as u ON isb.unit = u.kodeunit
     WHERE isb.No_form = '$No_form'");
 
 $detail = query("SELECT fsb.*,cp.nama
@@ -13,3 +13,4 @@ $detail = query("SELECT fsb.*,cp.nama
 
 $sot = $detail['status_ot'];
 $sck = $detail['status_ck'];
+$grand_total =  query("SELECT sum(subtotal) as grand_total FROM item_storebahan WHERE No_form = '$No_form' ")[0];

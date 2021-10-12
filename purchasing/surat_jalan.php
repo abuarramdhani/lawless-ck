@@ -9,7 +9,8 @@ if (!isset($_SESSION['email'])) {
 }
 include "../vendor/autoload.php";
 require '../include/fungsi.php';
-$nama_dokumen = 'Report'; //Beri nama file PDF hasil.
+
+
 
 $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
 $fontDirs = $defaultConfig['fontDir'];
@@ -27,8 +28,14 @@ $mpdf = new \Mpdf\Mpdf([
         ]
     ],
 ]);
+
 ob_start();
 include '../controller/c_detail-po.php';
+require '../include/fungsi_indotgl.php';
+require '../include/fungsi_rupiah.php';
+
+     $nama_dokumen = 'Purchase Order No. '.$detail['No_form']; //Beri nama file PDF hasil.
+
 
 // var_dump($item_po);
 // die;
@@ -112,8 +119,27 @@ include '../controller/c_detail-po.php';
         .mt-100 {
             margin-top: 100px;
         }
+        .sj{
+            font-size :18px;
+            font-weight :bold;
+        }
+        .ttl{
+            text-align: center; 
+            font-weight :bold;
+        }
     </style>
-    <title>REPORT</title>
+    <style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:12px;
+    overflow:hidden;padding:3px 5px;word-break:normal;}
+    .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    font-weight:normal;overflow:hidden;padding:5px 5px;word-break:normal; font-weight :bold;}
+    .tg .tg-kiri{text-align:left;vertical-align:top}
+    .tg .tg-kanan{text-align:right;vertical-align:top}
+    .tg .tg-tengah{text-align:center;vertical-align:top}
+    </style>
+ 
+    <title><?= $nama_dokumen?></title>
 </head>
 
 <body>
@@ -129,60 +155,63 @@ include '../controller/c_detail-po.php';
 
     <table class="mb-3 mt-100">
         <tr>
-            <th>No Form PO</th>
+            <th>No PO</th>
             <td>: <?= $detail['No_form']; ?></td>
         </tr>
         <tr>
             <th>Supplier</th>
-            <td>: <?= $detail['namasupplier']; ?></td>
+            <td>: <?= ucwords($detail['namasupplier']) ?></td>
         </tr>
         <tr>
             <th>Alamat</th>
             <td>: <?= $detail['alamatsupplier']; ?></td>
         </tr>
         <tr>
-            <th>Date</th>
-            <td>: <?= $detail['date']; ?></td>
+            <th>Tanggal</th>
+            <td>: <?= tgl_indo($detail['date']); ?></td>
         </tr>
+        <!--<tr>-->
+        <!--    <th>Status</th>-->
+        <!--    <?php if ($detail['status'] == 1) : ?>-->
+        <!--        <td>: <span class="badge badge-success">KONFIRMASI</span></td>-->
+        <!--    <?php else : ?>-->
+        <!--        <td>: <span class="badge badge-warning">:Belum di Konfirmasi</span></td>-->
+        <!--    <?php endif; ?>-->
+        <!--</tr>-->
+    </table>
+
+    
+<table class="tg table table-bordered border-none">
+<thead>
+    <tr>
+        <th width="30px">No</th>
+        <th>Nama Barang</th>
+        <th>Harga (Rp.)</th>
+        <th>Jumlah</th>
+        <th>Unit</th>
+        
+        <th width="130px">Subtotal (Rp.)</th>
+    </tr>
+</thead>
+<tbody>
+    <?php $i = 1 ?>
+    <?php foreach ($item_po as $item) : ?>
         <tr>
-            <th>Status</th>
-            <?php if ($detail['status'] == 1) : ?>
-                <td>: <span class="badge badge-success">KONFIRMASI</span></td>
-            <?php else : ?>
-                <td>: <span class="badge badge-warning">:Belum di Konfirmasi</span></td>
-            <?php endif; ?>
+            <td class="tg-kiri"><?= $i++;  ?></td>
+            <td class="tg-kiri"><?= $item['namabarang']; ?></td>
+            <td class="tg-kanan"><?= format_rupiah($item['harga']); ?></td>
+            <td class="tg-tengah"><?= $item['qty']  ?></td>
+            <td class="tg-tengah"><?= $item['namaunit']  ?></td>
+            <td class="tg-kanan"><?= format_rupiah($item['subtotal']); ?></td>
         </tr>
-    </table>
+    <?php endforeach; ?>
+    <tr>
+        <td colspan="5" class="ttl">TOTAL</td>
+        <td class="tg-kanan ttl">Rp. <?= format_rupiah($grand_total['grand_total'])?></td>
+    </tr>
+</tbody>
+</table>
 
-
-
-
-
-    <table class="table table-bordered border-none">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama Barang</th>
-                <th>Harga</th>
-                <th>Jumlah</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <?php $i = 1 ?>
-
-            <?php foreach ($item_po as $item) : ?>
-                <tr>
-                    <td><?= $i++;  ?></td>
-                    <td><?= $item['namabahan']; ?></td>
-                    <td><?= $item['harga']; ?></td>
-                    <td><?= $item['qty']  ?></td>
-                    <td><?= $item['subtotal']; ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -217,17 +246,23 @@ include '../controller/c_detail-po.php';
 //     'even' => array()
 // );
 // $mpdf->SetHeader($header);
-$mpdf->SetHTMLHeader('
+
+    $mpdf->SetHTMLHeader('
 
 <table class="table table-borderless w-100 ">
         <tr>
-            <td class=" w-25" style="vertical-align: top;"><img src="../assets/images/logo.png"></td>
+            <td  rowspan="2" class=" w-25" style="vertical-align: top;"><img src="../assets/images/logo.png"></td>
             <td class="center w-50 mistral">LAWLESS BURGERBAR</td>
-            <td class="center w-25"  style="vertical-align: bottom;">SURAT JALAN</td>
-            
+            <td  rowspan="2" class="center w-25" style="vertical-align: bottom;"></td>
         </tr>
+         <tr>
+            <td class="center w-50 sj">PURCHASE ORDER</td>
+        </tr>
+        
     </table>
 ', 'O');
+
+
 // $mpdf->SetHTMLHeader('<div style="border-bottom: 10px solid #000000;">My document</div>', 'E');
 
 $html = ob_get_contents(); //Proses untuk mengambil hasil dari OB..
@@ -236,6 +271,7 @@ ob_end_clean();
 //ukuran A4
 $mpdf->AddPage("P", "", "", "", "", "15", "15", "42", "15", "", "", "", "", "", "", "", "", "", "", "", "A4");
 //Disini dimulai proses convert UTF-8, kalau ingin ISO-8859-1 cukup dengan mengganti $mpdf->WriteHTML($html);
+
 $mpdf->WriteHTML($html);
 $mpdf->Output($nama_dokumen . ".pdf", 'I');
 exit;

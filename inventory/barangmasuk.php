@@ -8,20 +8,26 @@ require '../include/fungsi.php';
 require '../include/header.php';
 require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
-require '../controller/c_barangmasuk.php';
+// require '../controller/c_kaskecil.php';
+// require '../controller/c_data_in.php';
+
+$tabel = 'form_in';
+$tabel_join = 'supplier';
+$kode = 'supplier';
+include '../models/information.php';
+include '../include/filter_date.php';
 $bagian = "Inventory";
 $juhal = "Barang Masuk";
-$kodeoutlet = $_SESSION['kodeoutlet'];
-$form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = supplier.kodesupplier WHERE form_po.kodeoutlet = '$kodeoutlet' and (form_po.status_ck='2' and form_po.status_ot='1')");
 ?>
 
 
-<body class="fixed-left" onload="sweetfunction()">
+<body class="fixed-left">
 
     <!-- Begin page -->
     <div id="wrapper">
 
         <?php require '../include/topbar.php'; ?>
+
         <?php require '../include/sidebar.php'; ?>
 
         <!-- ============================================================== -->
@@ -29,190 +35,298 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
         <!-- ============================================================== -->
         <div class="content-page">
             <!-- Start content -->
-            <!-- terima msg -->
-            <?php if (isset($_SESSION['msg'])) : ?>
-                <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
-                <?php unset($_SESSION['msg']); ?>
-            <?php endif ?>
-            <!-- akhir terima msg -->
-
             <div class="content">
-                <div class="container" style="margin-top: 5px;">
+                <div class="container">
+
+                    
+
 
                     <div class="row">
-                        <div class="col-lg-6">
-                            <form action="" method="POST">
-                                <select onchange="this.form.submit()" class="form-control select2" name="keyword_bahan_masuk">
-                                    <option>PILIH NO PO ATAU NAMA SUPPLIER</option>
-                                    <?php foreach ($form as $f) : ?>
-                                        <option value="<?= $f['No_form']; ?>"> <?= $f['No_form']; ?> || <?= $f['namasupplier']; ?> </option>
-                                    <?php endforeach ?>
-                                </select>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12 " style="margin-top: 10px;">
-                            <form class="form-horizontal" role="formpo" method="POST" action="../models/input.php">
-                                <input type="hidden" name="inputformin">
-                                <div class="card-box" style="height:450px; overflow-y: auto;">
-                                    <div class="col-lg-12">
-                                        <div class="responsive-table-plugin">
-                                            <div class="table-rep-plugin">
-                                                <div class="table-responsive" data-pattern="priority-columns">
-                                                    <!-- <h4 class="header-title m-t-0 m-b-20">Detail PO</h4> -->
-                                                    <div class="col-6 m-b-25">
-                                                        <?php if (isset($detail)) : ?>
-                                                            <table class="">
-                                                                <tr>
-                                                                    <td style="font-weight: 600; width:100px">No Form PO</td>
-                                                                    <td>: <?= $detail['No_form']; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td style="font-weight: 600; width:100px">Supplier</td>
-                                                                    <td>: <?= $detail['namasupplier']; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td style="font-weight: 600; width:100px">Alamat</td>
-                                                                    <td>: <?= $detail['alamatsupplier']; ?></td>
-                                                                </tr>
-                                                            </table>
-                                                        <?php endif ?>
-                                                    </div>
-                                                    <table id="order" class="table table-striped mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Nama Barang</th>
-                                                                <th data-priority="1">Harga</th>
-                                                                <th data-priority="3">Jumlah</th>
-                                                                <th data-priority="1">Unit</th>
-                                                                <th data-priority="1">Subtotal</th>
-                                                                <th data-priority="1">Aksi</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php if (isset($item_po)) : ?>
-                                                                <?php foreach ($item_po as $item) : ?>
-                                                                    <tr>
-                                                                        <input type="hidden" name="noform" value="<?= $detail['No_form']; ?>">
-                                                                        <input type="hidden" name="kodesupplier" value="<?= $detail['kodesupplier']; ?>">
-                                                                        <input type="hidden" name="kodebahan[]" value="<?= $item["kodebarang"]; ?>">
-                                                                        <input type="hidden" name="unit[]" value="<?= $item["unit"]; ?>">
-                                                                        <th><input readonly type="text" class="form-control" value="<?= $item['namabarang']; ?>"></th>
-                                                                        <td><input type="text" name="harga[]" class="form-control harga" value="<?= $item['harga']; ?>"></td>
-                                                                        <td><input type="number" id="qty" name="qty[]" class="form-control qty" value="<?= $item['qty']; ?>"></td>
-                                                                        <td><input readonly type="text" class="form-control " value="<?= $item['namaunit']; ?>"></td>
-                                                                        <td><input readonly name="subtotal[]" type="text" class="form-control subtotal" value=" <?= $item['subtotal']; ?>"></td>
-                                                                        <td><button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 delete">
-                                                                                <i class="fa fa-remove"></i> </button></td>
-                                                                    </tr>
-                                                                <?php endforeach ?>
-                                                            <?php endif ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="col-lg-7">
+                            <div class="card-box">
+
+                                <div class="dropdown pull-right">
+
+                                    <!--  <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button> -->
                                 </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="card-box" style="height:150px; ">
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label" name="total_keseluruhan">Total</label>
-                                    <div class="col-sm-11">
-                                        <input type="text" readonly name="total_keseluruhan" id="total-harga" class="form-control">
-                                        <!-- <p class="form-control-static" id="total-harga" name="total_keseluruhan"></p> -->
-                                    </div>
+                                <div class="dropdown pull-centre">
+                                    <!--<a class="btn btn-danger  waves-effect waves-light">Check : <?= $check['informasi'] ?>-->
+                                    <!--</a>-->
+                                    <!--<a class="btn  btn-custom waves-effect waves-light">-->
+                                    <!--    Checked by Manager : <?= $c_admin['informasi'] ?></a>-->
+                                    <!--<a class="btn  btn-info waves-effect waves-light">-->
+                                    <!--    Checked by CK : <?= $c_manager['informasi'] ?></a>-->
+                                    <!--<a class="btn  btn-primary waves-effect waves-light">-->
+                                    <!--    Delivery : <?= $delivery['informasi'] ?></a>-->
+                                    <!--<a class="btn  btn-success waves-effect waves-light">-->
+                                    <!--    Delivered : <?= $delivered['informasi'] ?></a>-->
                                 </div>
-                                <div class="form-group  text-center" style="margin-top: 10px;">
-                                    <?php if ($_SESSION['kodeoutlet'] != 'OUT001') : ?>
-                                        <button type="submit" class="btn btn-purple waves-effect waves-light mr-1 m-t-10" id="simpan">
-                                            <span>Simpan</span>
-                                        </button>
-                                    <?php endif ?>
-                                </div>
+
                             </div>
-                        </div>
+                        </div><!-- end col -->
 
-                        </form>
+                        <div class="col-lg-5">
+                            <div class="card-box">
 
+                                <form method="post" action="">
+                                    <input type="hidden" name="filter-date">
+                                    <?php require '../include/tgltahun.php'; ?>
+                                </form>
+
+                            </div>
+                        </div><!-- end col -->
                     </div>
-                </div>
-            </div> <!-- container -->
+                    <!-- end row -->
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+
+                                <h4 class="header-title m-t-0 m-b-30">Data Inventory</h4>
+                                <table id="datatable" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tanggal</th>
+                                            <th>No. Form IN</th>
+                                            <th>No. Form PO</th>
+                                            <th>Supplier</th>
+                                            <th>Jatuh Tempo</th> 
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <?php if (isset($data)) : ?>
+                                            <?php $i = 1 ?>
+                                            <?php foreach ($data as $dp) : ?>
+                                                <?php if ($dp['kodeoutlet'] == $kodeoutlet) : ?>
+                                                    <tr>
+                                                        <td><?= $i++; ?></td>
+                                                        <td><?= tgl_indo($dp['date']); ?></td>
+                                                        <td><?= $dp['No_form']; ?></td>
+                                                        <td><?= $dp['Form_po']; ?></td>
+                                                        <td><?= ucwords($dp['namasupplier']) ?></td>
+                                                        <td><?= tgl_indo($dp['jatuhtempo']); ?></td>
+
+                                                        <!-- <?php if ($dp['status_ot'] == 0 && $dp['status_ck'] == 0) : ?>
+                                                        <td><span class="label label-danger">Confirm</span></td>
+                                                    <?php elseif ($dp['status_ot'] == 1 && $dp['status_ck'] == 0) : ?>
+                                                        <td><span class="label label-info">Confirmed</span></td>
+                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 0) : ?>
+                                                        <td><span class="label label-success">Checked by Manager</span></td>
+                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 1) : ?>
+                                                        <td><span class="label label-success">Checked by CK</span></td>
+                                                    <?php elseif ($dp['status_ot'] == 2 && $dp['status_ck'] == 2) : ?>
+                                                        <td><span class="label label-primary">Delivery</span></td>
+                                                    <?php endif ?> -->
+
+                                                        <td><a href="detail.php?No_form=<?= $dp['No_form']; ?>" class="btn btn-icon waves-effect waves-light btn-xs btn-primary m-b-5">Details</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php endif ?>
+                                            <?php endforeach ?>
+                                        <?php endif ?>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+            <?php require '../include/footer.php'; ?>
+
+        </div>
+
+
+        <!-- ============================================================== -->
+        <!-- End Right content here -->
+        <!-- ============================================================== -->
+
+        <?php require '../include/rightsidebar.php'; ?>
 
 
 
-        </div> <!-- content -->
-
-        <?php require '../include/footer.php'; ?>
-
-    </div>
-
-
-    <!-- ============================================================== -->
-    <!-- End Right content here -->
-    <!-- ============================================================== -->
-
-    <?php require '../include/rightsidebar.php'; ?>
     </div>
     <!-- END wrapper -->
 
     <?php require '../include/scriptfooter.php'; ?>
-    <script>
-        $(document).ready(function() {
-            totalharga();
 
-            $(document).on("input", ".harga", function() {
-                var harga = parseInt($(this).val());
-                var jumlah = parseInt($(this).closest("tr").find(".qty").val());
-                var total = jumlah * harga;
-                $(this).closest("tr").find("input.subtotal").val(total);
-                totalharga();
-            });
-            $(document).on("input", ".qty", function() {
-                var jumlah = parseInt($(this).val());
-                var harga = parseInt($(this).closest("tr").find(".harga").val());
-                var total = jumlah * harga;
-                $(this).closest("tr").find("input.subtotal").val(total);
-                totalharga();
-            });
-            $(document).on("click", ".delete", function() {
-                $(this).closest("tr").remove();
-                totalharga();
-            });
-            $(document).on("click", "#simpan", function() {
-                console.log($(this).serialize());
-            });
-        })
-
-        function totalharga() {
-            var sum = 0;
-            $(".subtotal").each(function() {
-                sum += parseFloat($(this).val());
-            })
-            $("#total-harga").val('Rp. ' + sum);
-        }
-
-        function sweetfunction() {
-
-            const msg = $('#msg').data('msg');
-            if (msg == 1) {
-                swal({
-                    title: "Input Berhasil!",
-                    type: "success",
-                    //text: "I will close in 2 seconds.",
-                    timer: 1100,
-                    showConfirmButton: false
-                })
-            } else if (msg < 1) {
-                swal("Input Gagal!", "", "error")
-            }
-        }
-    </script>
 </body>
 
 </html>
 
 <script>
+    $(document).ready(function() {
+        $('#tombol-kasmasuk').click(function(e) {
+
+            e.preventDefault();
+            var dataform = $('#formkasmasuk')[0];
+            var data = new FormData(dataform);
+
+            var kasmasuk = $('#kasmasuk').val();
+            var kodeakun = $('#kodeakun').val();
+            var tanggal = $('#tanggal').val();
+            var keterangan = $('#keterangan').val();
+            var payto = $('#payto').val();
+            var jumlah = $('#jumlahinput').val();
+
+            if (kodeakun == "000") {
+                swal("Kode Akun Belum di Pilih!", "", "error")
+            } else if (tanggal == " ") {
+                swal("Tanggal Belum di Isi!", "", "error")
+            } else if (keterangan == "") {
+                swal("Keterangan Belum di Isi!", "", "error")
+            } else if (payto == "") {
+                swal("Payto Belum di Isi!", "", "error")
+            } else if (jumlah == "") {
+                swal("Jumlah Belum di Isi!", "", "error")
+            } else {
+                $.ajax({
+                    url: '../models/input.php',
+                    type: 'post',
+                    data: data,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    beforeSend: function() {
+                        $('.spinn').show();
+                    },
+                    success: function(hasil) {
+                        // alert(hasil);
+                        console.log(hasil);
+                        //sukses
+                        if (hasil == 1) {
+                            swal("Input Gagal!", "", "error")
+                        } else if (hasil == 2) {
+                            swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
+                        } else if (hasil == 3) {
+                            swal({
+                                title: "Input Berhasil!",
+                                type: "success",
+                                //text: "I will close in 2 seconds.",
+                                timer: 1000,
+                                showConfirmButton: false
+                            })
+                            location.reload();
+
+                        }
+                    }
+                });
+            }
+        })
+
+        $('#tombol-kaskeluar').click(function(e) {
+
+            e.preventDefault();
+            var dataform = $('#formkaskeluar')[0];
+            var data = new FormData(dataform);
+
+            var kaskeluar = $('#kaskeluar').val();
+            var kodeakunout = $('#kodeakunout').val();
+            var tanggalout = $('#tanggalout').val();
+            var keteranganout = $('#keteranganout').val();
+            var paytoout = $('#paytoout').val();
+            var jumlahout = $('#jumlahoutput').val();
+
+            if (kodeakunout == "000") {
+                swal("Kode Akun Belum di Pilih!", "", "error")
+            } else if (tanggalout == " ") {
+                swal("Tanggal Belum di Isi!", "", "error")
+            } else if (keteranganout == "") {
+                swal("Keterangan Belum di Isi!", "", "error")
+            } else if (paytoout == "") {
+                swal("Payto Belum di Isi!", "", "error")
+            } else if (jumlahout == "") {
+                swal("Jumlah Belum di Isi!", "", "error")
+            } else {
+                $.ajax({
+                    url: '../models/input.php',
+                    type: 'post',
+                    data: data,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    beforeSend: function() {
+                        $('.spinn').show();
+                    },
+                    success: function(hasil) {
+                        // alert(hasil);
+                        console.log(hasil);
+                        //sukses
+                        if (hasil == 1) {
+                            swal("Input Gagal!", "", "error")
+                        } else if (hasil == 2) {
+                            swal("Tanggal tidak sesuai dengan bulan ini!", "", "error")
+                        } else if (hasil == 3) {
+                            swal({
+                                title: "Input Berhasil!",
+                                type: "success",
+                                //text: "I will close in 2 seconds.",
+                                timer: 1000,
+                                showConfirmButton: false
+                            })
+                            location.reload();
+
+                        }
+                    }
+                });
+            }
+        })
+
+        $('.tombol-deletekas').click(function(e) {
+            e.preventDefault();
+            //alert('hapus');
+            //var delete = 'delete';
+            var tabel = 'kas';
+            var iddelete = $(this).closest('tr').find('.delete_id_value').val();
+            swal({
+                title: "Apakah Anda Yakin?",
+                text: "Data Anda Akan Terhapus!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Tidak!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function(isConfirm) {
+                if (isConfirm) {
+
+
+                    $.ajax({
+                        url: '../models/delete.php',
+                        type: 'post',
+                        data: {
+                            'tabel': tabel,
+                            'delete_id': iddelete
+                        },
+                        success: function(hasil) {
+                            // alert(hasil);
+                            console.log(hasil);
+                            //sukses
+                            if (hasil == 2) {
+
+                            } else if (hasil == 3) {
+                                swal("Deleted!",
+                                    "Hapus Data Berhasil.",
+                                    "success");
+                                location.reload();
+
+                            }
+                        }
+                    });
+                } else {
+                    swal("Cancelled", "", "error");
+                }
+            });
+        });
+    })
 </script>

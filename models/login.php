@@ -21,6 +21,7 @@ if (isset($_POST['login'])) {
             $datauser = query("SELECT * FROM admin WHERE email = '$email' ")[0];
             $userlevel = $datauser['userlevel'];
             $useroutlet = $datauser['outlet'];
+            $jabatan = $datauser['jabatan'];
 
             if ($userlevel != 0) {
                 if ($kodeoutlet != $useroutlet) {

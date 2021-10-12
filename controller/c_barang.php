@@ -1,7 +1,10 @@
 <?php
-$kodeoutlet = $_SESSION['kodeoutlet'];
 
-$barang = query("SELECT * FROM barang ORDER BY namabarang ASC");
+$kodeoutlet = $_SESSION['kodeoutlet'];
+$databarang = query("SELECT * FROM barang ORDER BY namabarang ASC");
+$barang = query("SELECT * FROM barang ORDER BY id DESC");
+
+// var_dump($outstok);die;
 $kategoribarang = query("SELECT * FROM kategoribarang ORDER BY id ASC");
 $subkatbarang = query("SELECT * FROM subkatbarang ORDER BY id ASC");
 $unit = query("SELECT * FROM unit ORDER BY namaunit ASC");

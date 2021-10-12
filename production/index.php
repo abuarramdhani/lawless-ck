@@ -35,144 +35,7 @@ $juhal = "Data Produk";
             <div class="content">
                 <div class="container">
 
-                    <div id="input-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h2 class="modal-title">Transaksi Pemasukan Kas</h2>
-                                </div>
-                                <form id="formkasmasuk">
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <input type="hidden" value="kasmasuk" id="kasmasuk" name="kasmasuk">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="kodeakun" class="control-label">Kode Transaksi</label>
-                                                    <select class="form-control select2" name="kodeakun" id="kodeakun">
-                                                        <option value="000">Kode Akun</option>
-                                                        <?php foreach ($kodeakunp as $row) : ?>
-                                                            <option value="<?= $row['kodeakun3'] ?>">
-                                                                <?= ucwords($row["ketkode3"]) ?></option>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="datepicker-autoclose" class="control-label">Tanggal</label>
-                                                    <input type="text" class="form-control" id="datepicker-autoclose" value="<?= date('m/d/Y') ?>" name="tanggal">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="keterangan" class="control-label">Keterangan</label>
-                                                    <input type="text" class="form-control" id="keterangan" placeholder="Keterangan Transaksi" name="keterangan">
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="payto" class="control-label">Pay to / Recieved</label>
-                                                    <input type="text" class="form-control" id="payto" placeholder="Pay to / Recieved" name="payto">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="jumlahinput" class="control-label">Jumlah</label>
-                                                    <input type="text" class="form-control" id="jumlahinput" name="jumlahinput">
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-default waves-effect" id="tombol-kasmasuk">Input</button>
-                                        <!-- <button type="button" class="btn btn-info waves-effect waves-light">Save changes</button> -->
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div><!-- /.modal -->
-
-                    <div id="output-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h2 class="modal-title">Transaksi Pengeluaran Kas</h2>
-                                </div>
-                                <form id="formkaskeluar">
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <input type="hidden" value="kaskeluar" id="kaskeluar" name="kaskeluar">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="kodeakunout" class="control-label">Kode
-                                                        Transaksi</label>
-                                                    <select class="form-control select2" name="kodeakunout" id="kodeakunout">
-                                                        <option value="000">Kode Akun</option>
-                                                        <?php foreach ($kodeakune as $row) : ?>
-                                                            <option value="<?= $row['kodeakun3'] ?>">
-                                                                <?= ucwords($row["ketkode3"]) ?></option>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="datepicker-autoclose1" class="control-label">Tanggal</label>
-                                                    <input type="text" class="form-control" id="datepicker-autoclose1" value="<?= date('m/d/Y') ?>" name="tanggalout">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="keteranganout" class="control-label">Keterangan</label>
-                                                    <input type="text" class="form-control" id="keteranganout" placeholder="Keterangan Transaksi" name="keteranganout">
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="paytoout" class="control-label">Pay to /
-                                                        Recieved</label>
-                                                    <input type="text" class="form-control" id="paytoout" placeholder="Pay to / Recieved" name="paytoout">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="field-2" class="control-label">Jumlah</label>
-                                                    <input type="text" class="form-control" id="jumlahoutput" name="jumlahoutput">
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-default waves-effect" id="tombol-kaskeluar">Input</button>
-                                        <!-- <button type="button" class="btn btn-info waves-effect waves-light">Save changes</button> -->
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div><!-- /.modal -->
+                   
 
 
                     <div class="row">
@@ -183,18 +46,17 @@ $juhal = "Data Produk";
 
                                     <!--  <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button> -->
                                 </div>
-                                <div class="dropdown pull-centre">
-                                    <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#input-close-modal">Pemasukan : Rp. 0
-                                    </button>
-                                    <button class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#output-close-modal">
-                                        Pengeluaran : Rp. 0</button>
+                                <!--<div class="dropdown pull-centre">-->
+                                <!--    <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#input-close-modal">Pemasukan : Rp. 0-->
+                                <!--    </button>-->
+                                <!--    <button class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#output-close-modal">-->
+                                <!--        Pengeluaran : Rp. 0</button>-->
 
-                                    <!-- <button class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#output-close-modal">
-                                        Saldo Kas : Rp. 0</button> -->
-
-                                    <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#output-close-modal">
-                                        Saldo Kas : Rp. 0</button>
-                                </div>
+                                <!--     <button class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#output-close-modal">-->
+                                <!--        Saldo Kas : Rp. 0</button>-->
+                                <!--    <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#output-close-modal">-->
+                                <!--        Saldo Kas : Rp. 0</button>-->
+                                <!--</div>-->
 
                             </div>
                         </div><!-- end col -->
@@ -234,7 +96,7 @@ $juhal = "Data Produk";
 
                                             <tr>
                                                 <td><?= $i++; ?></td>
-                                                <td><?= $dp['date']; ?></td>
+                                                <td><?= tgl_indo($dp['date']); ?></td>
                                                 <td><?= $dp['No_form']; ?></td>
                                                 <!-- <?php if ($dp['status'] == 1) : ?>
                                                     <td><span class="label label-success">Konfirmasi</span></td>

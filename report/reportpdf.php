@@ -30,11 +30,11 @@ $mpdf = new \Mpdf\Mpdf([
 ]);
 
 ob_start();
-include '../controller/c_produk-masuk.php';
+include '../controller/c_detail-po.php';
 require '../include/fungsi_indotgl.php';
 require '../include/fungsi_rupiah.php';
 
-$nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF hasil.
+     $nama_dokumen = 'Purchase Order No. '.$detail['No_form']; //Beri nama file PDF hasil.
 
 
 // var_dump($item_po);
@@ -119,19 +119,17 @@ $nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF h
         .mt-100 {
             margin-top: 100px;
         }
-
-        .sj {
-            font-size: 18px;
-            font-weight: bold;
+        .sj{
+            font-size :18px;
+            font-weight :bold;
         }
-
-        .ttl {
-            text-align: center;
-            font-weight: bold;
+        .ttl{
+            text-align: center; 
+            font-weight :bold;
         }
     </style>
-
-    <title><?= $nama_dokumen ?></title>
+ 
+    <title><?= $nama_dokumen?></title>
 </head>
 
 <body>
@@ -147,11 +145,19 @@ $nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF h
 
     <table class="mb-3 mt-100">
         <tr>
-            <th>No</th>
+            <th>No PO</th>
             <td>: <?= $detail['No_form']; ?></td>
         </tr>
         <tr>
-            <th>Tanggal</th>
+            <th>Supplier</th>
+            <td>: <?= ucwords($detail['namasupplier']) ?></td>
+        </tr>
+        <tr>
+            <th>Alamat</th>
+            <td>: <?= $detail['alamatsupplier']; ?></td>
+        </tr>
+        <tr>
+            <th>Date</th>
             <td>: <?= tgl_indo($detail['date']); ?></td>
         </tr>
         <!--<tr>-->
@@ -175,7 +181,7 @@ $nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF h
                 <th>Harga</th>
                 <th>Jumlah</th>
                 <th>Unit</th>
-
+                
                 <th>Subtotal</th>
             </tr>
         </thead>
@@ -183,7 +189,7 @@ $nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF h
 
             <?php $i = 1 ?>
 
-            <?php foreach ($item_produk as $item) : ?>
+            <?php foreach ($item_po as $item) : ?>
                 <tr>
                     <td><?= $i++;  ?></td>
                     <td><?= $item['namabarang']; ?></td>
@@ -195,7 +201,7 @@ $nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF h
             <?php endforeach; ?>
             <tr>
                 <td colspan="5" class="ttl">TOTAL</td>
-                <td class="ttl">Rp.<?= format_rupiah($grand_total['grand_total']) ?></td>
+                <td class="ttl">Rp.<?= format_rupiah($grand_total['grand_total'])?></td>
             </tr>
         </tbody>
     </table>
@@ -234,7 +240,7 @@ $nama_dokumen = 'Produk Masuk No. ' . $detail['No_form']; //Beri nama file PDF h
 // );
 // $mpdf->SetHeader($header);
 
-$mpdf->SetHTMLHeader('
+    $mpdf->SetHTMLHeader('
 
 <table class="table table-borderless w-100 ">
         <tr>
@@ -243,7 +249,7 @@ $mpdf->SetHTMLHeader('
             <td  rowspan="2" class="center w-25" style="vertical-align: bottom;"></td>
         </tr>
          <tr>
-            <td class="center w-50 sj">PRODUK MASUK</td>
+            <td class="center w-50 sj">PURCHASE ORDER</td>
         </tr>
         
     </table>

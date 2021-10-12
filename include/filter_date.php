@@ -13,7 +13,7 @@ if ($_SESSION['kodeoutlet'] == "OUT001" or $_SESSION['kodeoutlet'] == "OUT000") 
         WHERE date 
         WHERE $tabel.kodeoutlet ='$kodeoutlet' AND date 
         LIKE '$tahun-$bulan%'
-        ORDER BY $tabel.id DESC
+        ORDER BY $tabel.date DESC, $tabel.No_form DESC
         ");
     } else {
         $data = query("SELECT *
@@ -21,7 +21,7 @@ if ($_SESSION['kodeoutlet'] == "OUT001" or $_SESSION['kodeoutlet'] == "OUT000") 
         JOIN $tabel_join
         ON $tabel.kode$kode = $tabel_join.kode$kode
         WHERE $tabel.kodeoutlet ='$kodeoutlet'
-        ORDER BY $tabel.id DESC");
+        ORDER BY $tabel.date DESC, $tabel.No_form DESC");
     }
 } else {
     if (isset($_POST['filter-date'])) {
@@ -33,7 +33,7 @@ if ($_SESSION['kodeoutlet'] == "OUT001" or $_SESSION['kodeoutlet'] == "OUT000") 
         ON $tabel.kode$kode = $tabel_join.kode$kode
         WHERE  $tabel.kodeoutlet ='$kodeoutlet' and date 
         LIKE '$tahun-$bulan%'
-        ORDER BY $tabel.id DESC
+        ORDER BY $tabel.date DESC, $tabel.No_form DESC
         ");
     } else if (!isset($_POST['filter-date'])) {
         if ($tabel_join == 'companypanel') {
@@ -42,14 +42,14 @@ if ($_SESSION['kodeoutlet'] == "OUT001" or $_SESSION['kodeoutlet'] == "OUT000") 
             JOIN $tabel_join
             ON $tabel.kode$kode = $tabel_join.kode$kode
             -- WHERE $tabel.kodeoutlet ='$kodeoutlet'
-            ORDER BY $tabel.id DESC");
+            ORDER BY $tabel.date DESC, $tabel.No_form DESC");
         } else {
             $data = query("SELECT $tabel.*, $tabel_join.namasupplier
             FROM $tabel
             JOIN $tabel_join
             ON $tabel.kode$kode = $tabel_join.kode$kode
             -- WHERE $tabel.kodeoutlet ='$kodeoutlet'
-            ORDER BY $tabel.id DESC");
+            ORDER BY $tabel.date DESC, $tabel.No_form DESC");
         }
     }
 }

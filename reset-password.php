@@ -47,6 +47,7 @@ require 'include/fungsi.php';
 </head>
 
 <body>
+    
 
     <div class="account-pages"></div>
     <div class="clearfix"></div>
@@ -72,6 +73,7 @@ require 'include/fungsi.php';
                     </div>
 
                     <input type="hidden" name="reset-password">
+                     <input type="hidden" name="kodeoutlet" value="<?=$company['kodeoutlet']?>">
                     <div class="form-group text-center m-t-30">
                         <div class="col-xs-12">
                             <button class="btn btn-custom btn-bordred btn-block waves-effect waves-light" type="submit" id="tombol-simpan">Reset Password</button>

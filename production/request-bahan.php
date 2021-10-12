@@ -39,7 +39,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
             <!-- akhir terima msg -->
             <div class="content">
                 <div class="container" style="margin-top: 5px;">
-                    <div class="col-lg-6">
+                    <div class="col-lg-5 col-md-12">
                         <div class="row">
                             <div class="col-lg-12">
                                 <form>
@@ -76,7 +76,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Kode</th>
+                                                <!--<th>Kode</th>-->
                                                 <th>Item</th>
                                                 <th>Harga</th>
                                                 <th>Unit</th>
@@ -93,9 +93,15 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                         <!-- end row -->
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-7 col-md-12">
                         <div class="row">
                             <form class="form-horizontal" role="formpo" method="POST" action="../models/input.php">
+                                <div class="col-lg-12 m-b-10">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="tanggal_manual" value="<?php echo date("m/d/Y"); ?>" id="datepicker-autoclose">
+                                    <span class="input-group-addon bg-primary b-0 text-white"><i class="ti-calendar"></i></span>
+                                </div><!-- input-group -->
+                                </div>
                                 <input type="hidden" name="requestbahan">
                                 <div class="card-box" style="height:350px; overflow-y: auto;">
                                     <div class="col-lg-12">
@@ -107,6 +113,7 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                                             <tr>
                                                                 <th>Nama Produk</th>
                                                                 <th data-priority="1">Harga</th>
+                                                                <th data-priority="1">Unit</th>
                                                                 <th data-priority="3">Jumlah</th>
                                                                 <th data-priority="1">Subtotal</th>
                                                                 <th data-priority="1">Aksi</th>
@@ -253,9 +260,9 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
 
             })
             // sleep(1000);
-            // setTimeout(function() {
-            //     window.location.replace("../purchasing/");
-            // }, 1300);
+            setTimeout(function() {
+                window.location.replace("../inventory/barangkeluar");
+            }, 1300);
 
         } else if (msg < 1) {
             swal("INPUT GAGAL!", "", "error")
@@ -277,8 +284,8 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                 var result = JSON.parse(response);
                 var i = 1;
                 result.forEach(res => {
-                    html = '<tr><td>' + i + '</td><td>' + res.kodebarang + '</td><td>' + res.namabarang + '</td><td>' + res.hargabeli + '</td><td>' + res.namaunit + '</td><td>' + res.stok + '</td>';
-                    html += '<td><button id="add" data-kode="' + res.kodebarang + '" data-stok="' + res.stok + '" data-id="' + res.id + '" data-nama="' + res.namabarang +
+                    html = '<tr><td>' + i + '</td><td>' + res.namabarang + '</td><td>' + res.hargabeli + '</td><td>' + res.namaunit + '</td><td>' + res.stok + '</td>';
+                    html += '<td><button id="add" data-namaunit="' + res.namaunit + '" data-kodeunit="' + res.kodeunit + '" data-kode="' + res.kodebarang + '" data-stok="' + res.stok + '" data-id="' + res.id + '" data-nama="' + res.namabarang +
                         '" data-harga="' + res.hargabeli +
                         '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
                     i++;
@@ -304,16 +311,28 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
             var harga = $(this).data("harga");
             var stok = $(this).data("stok");
             var kodebarang = $(this).data("kode");
+            var kodeunit = $(this).data("kodeunit");
+            var namaunit = $(this).data("namaunit");
             var jumlah = 1;
+
+            var today = new Date();
+		    var jam = today.getHours();
+		    var jam = 12
+		  //  console.log(jam)
+		    
 
             // html = '<tr><td class="item_nama">' + nama + '</td><td class="harga item">' + harga + '</td><td class="item"><input id="jumlah" type="number" name="jumlah[]" value="' + jumlah + '"></td><td class="total item">' + harga + '</td>';
             // html += '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
             // $("#order>tbody").append(html);
             // totalharga();
             var check = document.getElementsByClassName(kodebarang)[0];
-            if (check != null) {
+            
+            if(jam<4 || jam>=16 ){
+                swal("Waktu Pemesanan sampai Jam 4 Sore ", "", "error")
+            }else{
+              if (check != null) {
                 var qty = check.value;
-                var newQty = parseInt(qty) + parseInt(jumlah);
+                var newQty = parseFloat(qty) + parseFloat(jumlah);
                 check.value = newQty;
                 var price = parseInt(document.getElementsByClassName("hrg-" + kodebarang)[0].value);
                 var newPrice = price * newQty;
@@ -325,11 +344,17 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
 
 
                     html =
-                        '<tr><td><input readonly type="text" name="namabahan[]"  class="form-control"  value="' +
+                        '<tr><td><input type="hidden" name="kodebarang[]"  class="form-control"  value="' +
+                        kodebarang +
+                        '"><input readonly type="text" name="namabahan[]"  class="form-control"  value="' +
                         nama +
                         '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' + kodebarang + '"  name="harga[]"  value="' +
                         harga +
-                        '"></td><td><input id="jumlah" min="0" class="form-control ' + kodebarang + '" type="number" name="jumlah[]" value="' +
+                        '"></td><td><input readonly class="form-control " type="hidden" name="kodeunit[]" value="' +
+                        kodeunit +
+                        '"><input readonly class="form-control " type="text"  value="' +
+                        namaunit +
+                        '"></td><td><input id="jumlah" step="0.0001" min="1" class="form-control ' + kodebarang + '" type="number" name="jumlah[]" value="' +
                         jumlah +
                         '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' + kodebarang + '" id="subtotal_item" value="' +
                         harga + '" ></td>';
@@ -339,7 +364,11 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
 
                 }
             }
-            totalharga();
+            totalharga();   
+                
+            }
+            
+           
 
         });
 
@@ -348,8 +377,8 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
             totalharga();
         });
         $(document).on("input", "#jumlah", function() {
-            var jumlah = parseInt($(this).val());
-            var harga = parseInt($(this).closest("tr").find(".harga").val());
+            var jumlah = parseFloat($(this).val());
+            var harga = parseFloat($(this).closest("tr").find(".harga").val());
             var total = jumlah * harga;
             // var coba = $(this).closest("tr").find(".total").text(total);
             // console.log($(this).closest("tr").find(".total").text(total));
