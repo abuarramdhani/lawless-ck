@@ -1327,9 +1327,8 @@ subtotal = '$subtotal[$i]'
     $subtotal = $_POST['subtotal'];
     $kodesupplier = $_POST['kodesupplier'];
 
-    $tgl_tempo =  $_POST['tgl_tempo'];
+    $tgl_tempo = $_POST['tgl_tempo'];
     $tanggal_manual = $_POST['tanggal_manual'];
-
 
     if ($tgl_tempo == null) {
         if ($tanggal_manual == null) {

@@ -58,7 +58,7 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
 <label>Tanggal Barang Datang</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="tanggal_manual"
-                                        value="<?= date("m/d/Y"); ?>" id="datepicker-autoclose1">
+                                        placeholder="<?= date("m/d/Y"); ?>" id="datepicker-autoclose1">
 
                                         <span class="input-group-addon bg-primary b-0 text-white"><i
                                                 class="ti-calendar"></i></span>
@@ -73,7 +73,7 @@ $form = query("SELECT * FROM form_po JOIN supplier ON form_po.kodesupplier = sup
 <label>Tanggal jatuh tempo</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="tgl_tempo"
-                                        value="<?= jatuhtempo(date("Y-m-d"), '14', 'days') ?>" id="datepicker-autoclose">
+                                        placeholder="<?= jatuhtempo(date("Y-m-d"), '14', 'days') ?>"  id="datepicker-autoclose">
 
                                         <span class="input-group-addon bg-primary b-0 text-white"><i
                                                 class="ti-calendar"></i></span>

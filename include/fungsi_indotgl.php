@@ -97,6 +97,6 @@ function getBulan2($bln){
 
 function jatuhtempo($tgl,$jumlah=1,$format='days'){
 	$currentDate = $tgl;
-	return date('m-d-Y', strtotime($jumlah.' '.$format, strtotime($currentDate)));
+	return date('m/d/Y', strtotime($jumlah.' '.$format, strtotime($currentDate)));
 }
 ?>
