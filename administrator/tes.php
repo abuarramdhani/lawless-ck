@@ -8,3 +8,5 @@ $jabatan = query("SELECT * from jabatan ");
     <?= ucwords($j['namajabatan']) ?>
 </option>
 <?php endforeach; ?>
+
+Test
