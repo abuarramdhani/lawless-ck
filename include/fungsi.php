@@ -92,3 +92,5 @@ function queryy($queryy)
 
 $year = date('Y');
 $month = date('m');
+
+$kondisi = query("SELECT status FROM kondisi WHERE id = '1' ")[0];
