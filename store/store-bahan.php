@@ -52,7 +52,7 @@ include '../include/filter_date.php';
                 <div class="container">
 
                     <div class="row">
-                        <div class="col-lg-7">
+                        <div class="col-lg-4">
                             <div class="card-box">
 
                                 <!-- <div class="dropdown pull-right">
@@ -65,7 +65,7 @@ include '../include/filter_date.php';
                             </div>
                         </div><!-- end col -->
 
-                        <div class="col-lg-5">
+                        <div class="col-lg-8">
                             <div class="card-box">
 
                                 <form method="post" action="">

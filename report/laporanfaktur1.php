@@ -19,7 +19,7 @@ $juhal = "Laporan Faktur";
 
 $tabel_filter = 'produk';
 include '../include/filter_range.php';
-$kodeoutlet = $_SESSION['kodeoutlet'];
+$kodeoutlet = $_SESSION['kodeoutlet']; 
 
 ?>
 

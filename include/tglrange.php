@@ -70,4 +70,8 @@
     </div>
 
 <?php endif; ?>
-<button class="btn btn-primary waves-effect waves-light btn-sm m-b-5" name="tampilkan">Tampilkan</button>
+<button class="btn btn-primary waves-effect waves-light" name="tampilkan">Tampil</button> 
+<?php if (isset($_POST['start'])) : ?>
+<a href="report_faktur?start=<?= $_POST['start']; ?>&end=<?= $_POST['end']; ?>" target="_blank" class="btn btn-inverse waves-effect waves-light"><i class="fa fa-print m-r-5"></i>Cetak</a>
+<?php else : ?>
+<?php endif; ?>
