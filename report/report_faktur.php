@@ -136,7 +136,7 @@ $nama_dokumen = 'Report Faktur ' . $_GET['start'] . ' s/d '. $_GET['end']; //Ber
     </style>
     <style type="text/css">
     .tg  {border-collapse:collapse;border-spacing:0;}
-    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:11px;
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:12px;
     overflow:hidden;padding:3px 5px;word-break:normal;}
     .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:12px;
     font-weight:normal;overflow:hidden;padding:5px 5px;word-break:normal; font-weight :bold;}
@@ -193,7 +193,7 @@ $nama_dokumen = 'Report Faktur ' . $_GET['start'] . ' s/d '. $_GET['end']; //Ber
             ?>
             <tr>
                 <td class="tg-kiri"><?= $i++;  ?></td>
-                <td class="tg-kiri"><?= tgl_indo($row['date']); ?></td>
+                <td class="tg-kiri"><?= $row['date']; ?></td>
                 <td class="tg-kiri"><?= $row['No_form']; ?></td>
                 <td class="tg-kiri">
                     <?php
