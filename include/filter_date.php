@@ -1,6 +1,8 @@
 <?php
 $kodeoutlet = $_SESSION['kodeoutlet'];
-$kdoutlet = $_POST['kdoutlet'];
+if(isset($_POST['kdoutlet'])) {
+    $kdoutlet = $_POST['kdoutlet'];
+}
 if ($_SESSION['kodeoutlet'] == "OUT001" or $_SESSION['kodeoutlet'] == "OUT000") {
     if (isset($_POST['filter-date'])) {
         $bulan = $_POST['bulan'];
