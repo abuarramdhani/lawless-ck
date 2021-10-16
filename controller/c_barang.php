@@ -1,8 +1,8 @@
 <?php
 
 $kodeoutlet = $_SESSION['kodeoutlet'];
-$databarang = query("SELECT * FROM barang ORDER BY namabarang ASC");
-$barang = query("SELECT * FROM barang ORDER BY id DESC");
+$databarang = query("SELECT * FROM barang WHERE kodeoutlet='$kodeoutlet' ORDER BY namabarang ASC");
+$barang = query("SELECT * FROM barang WHERE kodeoutlet='$kodeoutlet' ORDER BY id DESC");
 
 // var_dump($outstok);die;
 $kategoribarang = query("SELECT * FROM kategoribarang ORDER BY id ASC");

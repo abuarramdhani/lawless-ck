@@ -16,7 +16,7 @@ if ($_SESSION['userlevel'] != 0) {
         } else if ($_SESSION['jabatan'] === "JAB002") {
             $kodeusermenu = query("SELECT * FROM user_menu WHERE id NOT IN (6,8) ORDER BY id ASC ");
         } else if ($_SESSION['jabatan'] === "JAB003") {
-            $kodeusermenu = query("SELECT * FROM user_menu WHERE id=1 OR id=2 OR id=4 OR id=7 ORDER BY id ASC ");
+            $kodeusermenu = query("SELECT * FROM user_menu WHERE id=1 OR id=2 OR id=3 OR id=4 OR id=7 ORDER BY id ASC ");
         } else if ($_SESSION['jabatan'] === "JAB004") {
             $kodeusermenu = query("SELECT * FROM user_menu WHERE id=2 OR id=3 OR id=7 ORDER BY id ASC ");
         }

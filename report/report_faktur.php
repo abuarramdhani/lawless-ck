@@ -37,8 +37,8 @@ include '../controller/c_detail_in.php';
 require '../include/fungsi_indotgl.php';
 require '../include/fungsi_rupiah.php';
 
-$nama_dokumen = 'Report Faktur ' . $_GET['start'] . ' s/d '. $_GET['end']; //Beri nama file PDF hasil.
-
+$nama_dokumen = 'REPORT FAKTUR ' . $_GET['start'] . ' s/d '. $_GET['end']; //Beri nama file PDF hasil.
+$judul_dokumen = 'REPORT FAKTUR LAWLESS CK<br />' . $_GET['start'] . ' s/d '. $_GET['end'];
 
 // var_dump($item_po);
 // die;
@@ -128,6 +128,9 @@ $nama_dokumen = 'Report Faktur ' . $_GET['start'] . ' s/d '. $_GET['end']; //Ber
         font-size: 18px;
         font-weight: bold;
     }
+    .sj2 {
+        font-size: 16px;
+    }
 
     .ttl {
         text-align: center;
@@ -200,6 +203,7 @@ $nama_dokumen = 'Report Faktur ' . $_GET['start'] . ' s/d '. $_GET['end']; //Ber
                         $detailbarang = query("SELECT ii.*, nb.kodebarang, nb.namabarang FROM item_in ii
                         INNER JOIN barang nb ON ii.kodebahan=nb.kodebarang
                         WHERE ii.No_form = '".$row['No_form']."' 
+                        AND nb.kodeoutlet='".$kodeoutlet."' 
                         ORDER BY ii.id ASC");
                         $no=1;
                         foreach ($detailbarang as $rowbarang) {
@@ -286,7 +290,7 @@ $mpdf->SetHTMLHeader('
             <td  rowspan="2" class="center w-25" style="vertical-align: bottom;"></td>
         </tr>
          <tr>
-            <td class="center w-50 sj">REPORT FAKTUR</td>
+            <td class="center w-50 sj2">'.$judul_dokumen.' <br /></td>
         </tr>
         
     </table>

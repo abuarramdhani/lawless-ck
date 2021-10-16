@@ -17,6 +17,6 @@ WHERE No_form = '$No_form'")[0];
 $sot = $detail['status_ot'];
 $sck = $detail['status_ck'];
 
-$grand_total =  query("SELECT sum(subtotal) as grand_total FROM item_po WHERE No_form = '$No_form' ")[0];
+$grand_total =  query("SELECT sum(subtotal) as grand_total FROM item_po WHERE No_form = '$No_form'")[0];
 // var_dump($grand_total);
 // die;

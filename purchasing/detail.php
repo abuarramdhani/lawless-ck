@@ -12,12 +12,12 @@ require '../include/fungsi_indotgl.php';
 // require '../controller/c_data-po.php';
 $bagian = "Purchasing";
 $juhal = "Data PO";
-
+$kodeoutlet = $_SESSION['kodeoutlet'];
 include '../controller/c_detail-po.php';
 $tabel = 'form_po';
 include '../models/cek.php';
 $jab = $_SESSION['jabatan'];
-$kodeoutlet = $_SESSION['kodeoutlet'];
+
 
 ?>
 

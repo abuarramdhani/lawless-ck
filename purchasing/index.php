@@ -55,7 +55,7 @@ $juhal = "Data PO";
                         </form>
                     </div> -->
                     <div class="row">
-                        <div class="col-lg-7">
+                        <div class="col-lg-6">
                             <div class="card-box">
                                 <div class="dropdown pull-right">
                                     <!--  <button class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalproyek">Input Proyek</button> -->
@@ -78,9 +78,9 @@ $juhal = "Data PO";
                             </div>
                         </div><!-- end col -->
 
-                        <div class="col-lg-5">
+                        <div class="col-lg-6">
                             <div class="card-box">
-
+                            
                                 <form method="post" action="">
                                     <input type="hidden" name="filter-date">
 
@@ -88,7 +88,7 @@ $juhal = "Data PO";
 
                                 </form>
 
-                            </div>
+</div>
                         </div><!-- end col -->
                     </div>
                     <!-- end row -->
@@ -96,7 +96,7 @@ $juhal = "Data PO";
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
-<?php //var_dump($data) ?> 
+                                <?php //var_dump($data) ?> 
                                 <h4 class="header-title m-t-0 m-b-30">Data PO</h4>
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>

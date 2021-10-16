@@ -10,7 +10,12 @@ require '../include/fungsi_rupiah.php';
 require '../include/fungsi_indotgl.php';
 require '../controller/c_reportbarang-masuk.php';
 $bagian = "Report";
-$juhal = "Laporan Faktur";
+
+if (isset($_POST['start'])) {
+    $juhal = "Laporan Faktur dari ". $_POST['start']." sampai ". $_POST['end'];
+} else {
+    $juhal = "Laporan Faktur";
+}
 
 // $tabel = 'form_storebahan';
 // $tabel_join = 'companypanel';
@@ -211,7 +216,8 @@ $kodeoutlet = $_SESSION['kodeoutlet'];
                                                 <?php
                                                     $detailbarang = query("SELECT ii.*, nb.kodebarang, nb.namabarang FROM item_in ii
                                                     INNER JOIN barang nb ON ii.kodebahan=nb.kodebarang
-                                                    WHERE ii.No_form = '".$row['No_form']."' 
+                                                    WHERE ii.No_form = '".$row['No_form']."'
+                                                    AND nb.kodeoutlet='".$kodeoutlet."' 
                                                     ORDER BY ii.id ASC");
                                                     $no=1;
                                                     foreach ($detailbarang as $rowbarang) {
