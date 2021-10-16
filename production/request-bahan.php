@@ -33,8 +33,8 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
             <!-- Start content -->
             <!-- terima msg -->
             <?php if (isset($_SESSION['msg'])) : ?>
-                <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
-                <?php unset($_SESSION['msg']); ?>
+            <div id="msg" data-msg="<?= $_SESSION["msg"] ?>"></div>
+            <?php unset($_SESSION['msg']); ?>
             <?php endif ?>
             <!-- akhir terima msg -->
             <div class="content">
@@ -45,9 +45,11 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                 <form>
                                     <div class="input-group">
                                         <span class="input-group-btn">
-                                            <button type="submit" class="btn waves-effect waves-light btn-primary"><i class="fa fa-search"></i></button>
+                                            <button type="submit" class="btn waves-effect waves-light btn-primary"><i
+                                                    class="fa fa-search"></i></button>
                                         </span>
-                                        <input type="text" id="search" name="keyword_form-po" class="form-control" placeholder="Search" oninput="loadData();">
+                                        <input type="text" id="search" name="keyword_form-po" class="form-control"
+                                            placeholder="Search" oninput="loadData();">
                                     </div>
                                 </form>
                             </div>
@@ -96,16 +98,18 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                     <div class="col-lg-7 col-md-12">
                         <div class="row">
                             <form class="form-horizontal" role="formpo" method="POST" action="../models/input.php">
-                            <?php if ($kondisi['status'] != 1) : ?>
-                                <input type="hidden" name="tanggal_manual" value="<?= date("m/d/Y"); ?>"> 
-                            <?php else : ?>
+                                <?php if ($kondisi['status'] != 1) : ?>
+                                <input type="hidden" name="tanggal_manual" value="<?= date("m/d/Y"); ?>">
+                                <?php else : ?>
                                 <div class="col-lg-12 m-b-10">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="tanggal_manual" value="<?php echo date("m/d/Y"); ?>" id="datepicker-autoclose">
-                                        <span class="input-group-addon bg-primary b-0 text-white"><i class="ti-calendar"></i></span>
+                                        <input type="text" class="form-control" name="tanggal_manual"
+                                            value="<?php echo date("m/d/Y"); ?>" id="datepicker-autoclose">
+                                        <span class="input-group-addon bg-primary b-0 text-white"><i
+                                                class="ti-calendar"></i></span>
                                     </div><!-- input-group -->
                                 </div>
-                            <?php endif; ?>
+                                <?php endif; ?>
                                 <input type="hidden" name="requestbahan">
                                 <div class="card-box" style="height:350px; overflow-y: auto;">
                                     <div class="col-lg-12">
@@ -155,7 +159,8 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" name="total_keseluruhan">Total</label>
                                         <div class="col-sm-10">
-                                            <input type="text" readonly name="total_keseluruhan" id="total-harga" class="form-control" value="Rp. 0">
+                                            <input type="text" readonly name="total_keseluruhan" id="total-harga"
+                                                class="form-control" value="Rp. 0">
                                             <!-- <p class="form-control-static" id="total-harga" name="total_keseluruhan"></p> -->
                                         </div>
                                     </div>
@@ -180,9 +185,10 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                                             <span>Batal</span>
                                         </button> -->
                                         <?php if ($_SESSION['kodeoutlet'] != 'OUT001') : ?>
-                                            <button type="submit" class="btn btn-purple waves-effect waves-light mr-1" id="">
-                                                <span>Simpan</span>
-                                            </button>
+                                        <button type="submit" class="btn btn-purple waves-effect waves-light mr-1"
+                                            id="">
+                                            <span>Simpan</span>
+                                        </button>
                                         <?php endif ?>
                                     </div>
                                     <!-- <div class="form-group">
@@ -249,92 +255,95 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
 
 
 <script>
-    // $("#total-harga").val('Rp. ' + sum)
-    function sweetfunction() {
+// $("#total-harga").val('Rp. ' + sum)
+function sweetfunction() {
 
-        const msg = $('#msg').data('msg');
+    const msg = $('#msg').data('msg');
 
-        if (msg == 1) {
-            swal({
-                title: "Input Berhasil!",
-                type: "success",
-                //text: "I will close in 2 seconds.",
-                timer: 1500,
-                showConfirmButton: false
+    if (msg == 1) {
+        swal({
+            title: "Input Berhasil!",
+            type: "success",
+            //text: "I will close in 2 seconds.",
+            timer: 1500,
+            showConfirmButton: false
 
-            })
-            // sleep(1000);
-            setTimeout(function() {
-                window.location.replace("../inventory/barangkeluar");
-            }, 1300);
+        })
+        // sleep(1000);
+        setTimeout(function() {
+            window.location.replace("../inventory/barangkeluar");
+        }, 1300);
 
-        } else if (msg < 1) {
-            swal("INPUT GAGAL!", "", "error")
-        }
-
+    } else if (msg < 1) {
+        swal("INPUT GAGAL!", "", "error")
     }
 
-    function loadData() {
-        $("#barang>tbody").empty();
-        var search = $("#search").val();
-        if (search != '') {
-            $.ajax({
-                url: '../controller/c_requestbahan.php',
-                data: {
-                    'keyword_form-po': search
-                },
-                type: 'POST'
-            }).done(function(response) {
-                var result = JSON.parse(response);
-                var i = 1;
-                result.forEach(res => {
-                    html = '<tr><td>' + i + '</td><td>' + res.namabarang + '</td><td>' + res.hargabeli + '</td><td>' + res.namaunit + '</td><td>' + res.stok + '</td>';
-                    html += '<td><button id="add" data-namaunit="' + res.namaunit + '" data-kodeunit="' + res.kodeunit + '" data-kode="' + res.kodebarang + '" data-stok="' + res.stok + '" data-id="' + res.id + '" data-nama="' + res.namabarang +
-                        '" data-harga="' + res.hargabeli +
-                        '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
-                    i++;
-                    $("#barang>tbody").append(html);
-                });
+}
+
+function loadData() {
+    $("#barang>tbody").empty();
+    var search = $("#search").val();
+    if (search != '') {
+        $.ajax({
+            url: '../controller/c_requestbahan.php',
+            data: {
+                'keyword_form-po': search
+            },
+            type: 'POST'
+        }).done(function(response) {
+            var result = JSON.parse(response);
+            var i = 1;
+            result.forEach(res => {
+                html = '<tr><td>' + i + '</td><td>' + res.namabarang + '</td><td>' + res.hargabeli +
+                    '</td><td>' + res.namaunit + '</td><td>' + res.stok + '</td>';
+                html += '<td><button id="add" data-namaunit="' + res.namaunit + '" data-kodeunit="' +
+                    res.kodeunit + '" data-kode="' + res.kodebarang + '" data-stok="' + res.stok +
+                    '" data-id="' + res.id + '" data-nama="' + res.namabarang +
+                    '" data-harga="' + res.hargabeli +
+                    '" class="btn btn-icon waves-effect waves-light btn-success m-b-5"><i class="fa fa-plus"></i></button></td></tr>';
+                i++;
+                $("#barang>tbody").append(html);
             });
-        }
-
-    }
-
-    function totalharga() {
-        var sum = 0;
-        $(".total").each(function() {
-            sum += parseFloat($(this).val());
         });
-        $("#total-harga").val('Rp. ' + sum);
     }
-    $(document).ready(function() {
 
-        $(document).on("click", "#add", function() {
-            var id = $(this).data("id");
-            var nama = $(this).data("nama");
-            var harga = $(this).data("harga");
-            var stok = $(this).data("stok");
-            var kodebarang = $(this).data("kode");
-            var kodeunit = $(this).data("kodeunit");
-            var namaunit = $(this).data("namaunit");
-            var jumlah = 1;
+}
 
-            var today = new Date();
-		    var jam = today.getHours();
-		    var jam = 12
-		  //  console.log(jam)
-		    
+function totalharga() {
+    var sum = 0;
+    $(".total").each(function() {
+        sum += parseFloat($(this).val());
+    });
+    $("#total-harga").val('Rp. ' + sum);
+}
+$(document).ready(function() {
 
-            // html = '<tr><td class="item_nama">' + nama + '</td><td class="harga item">' + harga + '</td><td class="item"><input id="jumlah" type="number" name="jumlah[]" value="' + jumlah + '"></td><td class="total item">' + harga + '</td>';
-            // html += '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
-            // $("#order>tbody").append(html);
-            // totalharga();
-            var check = document.getElementsByClassName(kodebarang)[0];
-            
-            if(jam<4 || jam>=16 ){
-                swal("Waktu Pemesanan sampai Jam 4 Sore ", "", "error")
-            }else{
-              if (check != null) {
+    $(document).on("click", "#add", function() {
+        var id = $(this).data("id");
+        var nama = $(this).data("nama");
+        var harga = $(this).data("harga");
+        var stok = $(this).data("stok");
+        var kodebarang = $(this).data("kode");
+        var kodeunit = $(this).data("kodeunit");
+        var namaunit = $(this).data("namaunit");
+        var jumlah = 1;
+
+        var today = new Date();
+        var jam = today.getHours();
+        var jam = 12
+        //  console.log(jam)
+
+
+        // html = '<tr><td class="item_nama">' + nama + '</td><td class="harga item">' + harga + '</td><td class="item"><input id="jumlah" type="number" name="jumlah[]" value="' + jumlah + '"></td><td class="total item">' + harga + '</td>';
+        // html += '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
+        // $("#order>tbody").append(html);
+        // totalharga();
+        var check = document.getElementsByClassName(kodebarang)[0];
+
+        if (jam < 4 || jam >= 16) {
+            swal("Waktu Pemesanan sampai Jam 4 Sore ", "", "error")
+        } else {
+            if (check != null) {
                 var qty = check.value;
                 var newQty = parseFloat(qty) + parseFloat(jumlah);
                 check.value = newQty;
@@ -352,15 +361,18 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
                         kodebarang +
                         '"><input readonly type="text" name="namabahan[]"  class="form-control"  value="' +
                         nama +
-                        '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' + kodebarang + '"  name="harga[]"  value="' +
+                        '"></td><td ><input type="text"  readonly  class="form-control harga hrg-' +
+                        kodebarang + '"  name="harga[]"  value="' +
                         harga +
                         '"></td><td><input readonly class="form-control " type="hidden" name="kodeunit[]" value="' +
                         kodeunit +
                         '"><input readonly class="form-control " type="text"  value="' +
                         namaunit +
-                        '"></td><td><input id="jumlah" step="0.0001" min="1" class="form-control ' + kodebarang + '" type="number" name="jumlah[]" value="' +
+                        '"></td><td><input id="jumlah" step="0.0001" min="0" class="form-control ' +
+                        kodebarang + '" type="number" name="jumlah[]" value="' +
                         jumlah +
-                        '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' + kodebarang + '" id="subtotal_item" value="' +
+                        '"></td><td class=""><input type="text" readonly name="subtotal[]" class="form-control total sub-' +
+                        kodebarang + '" id="subtotal_item" value="' +
                         harga + '" ></td>';
                     html +=
                         '<td><button id="remove" class="btn btn-icon waves-effect waves-light btn-danger m-b-5"><i class="fa fa-remove"></i> </button></td></tr>';
@@ -368,33 +380,40 @@ $kodesupplierr = query("SELECT * FROM supplier WHERE kodeoutlet = '$kodeoutlet' 
 
                 }
             }
-            totalharga();   
-                
-            }
-            
-           
-
-        });
-
-        $(document).on("click", "#remove", function() {
-            $(this).closest("tr").remove();
             totalharga();
-        });
-        $(document).on("input", "#jumlah", function() {
-            var jumlah = parseFloat($(this).val());
-            var harga = parseFloat($(this).closest("tr").find(".harga").val());
-            var total = jumlah * harga;
-            // var coba = $(this).closest("tr").find(".total").text(total);
-            // console.log($(this).closest("tr").find(".total").text(total));
-            // $(this).closest("tr").find("input#subtotal_item").val(total);
-            $(this).closest("tr").find("input#subtotal_item").val(total);
-            // $(this).closest("tr").find(".total_val").val(total);
 
-            totalharga();
-        });
+        }
 
 
 
+    });
 
-    })
+    $(document).on("click", "#remove", function() {
+        $(this).closest("tr").remove();
+        totalharga();
+    });
+    $(document).on("input", "#jumlah", function() {
+        var jumlah = parseFloat($(this).val());
+        var harga = parseFloat($(this).closest("tr").find(".harga").val());
+        var total = jumlah * harga;
+        // var coba = $(this).closest("tr").find(".total").text(total);
+        // console.log($(this).closest("tr").find(".total").text(total));
+        // $(this).closest("tr").find("input#subtotal_item").val(total);
+        $(this).closest("tr").find("input#subtotal_item").val(total);
+        // $(this).closest("tr").find(".total_val").val(total);
+
+        totalharga();
+    });
+    $(document).on("input", "#harga", function() {
+        var harga = parseInt($(this).val());
+        var jumlah = parseInt($(this).closest("tr").find(".jumlah").val());
+        var total = jumlah * harga;
+        $(this).closest("tr").find("input#subtotal_item").val(total);
+
+        totalharga();
+    });
+
+
+
+})
 </script>
