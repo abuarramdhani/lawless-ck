@@ -129,7 +129,7 @@ $judul_dokumen = 'REPORT FAKTUR LAWLESS CK<br />' . $_GET['start'] . ' s/d '. $_
         font-weight: bold;
     }
     .sj2 {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .ttl {
@@ -161,9 +161,6 @@ $judul_dokumen = 'REPORT FAKTUR LAWLESS CK<br />' . $_GET['start'] . ' s/d '. $_
 
         </tr>
     </table> -->
-
-
-
 
 
     <table class="tg table table-bordered border-none">
@@ -287,11 +284,14 @@ $mpdf->SetHTMLHeader('
         <tr>
             <td  rowspan="2" class=" w-25" style="vertical-align: top;"><img src="../assets/images/logo.png"></td>
             <td class="center w-50 mistral">LAWLESS BURGERBAR</td>
-            <td  rowspan="2" class="center w-25" style="vertical-align: bottom;"></td>
+            <td  rowspan="2" class="center w-25" style="vertical-align: bottom;"><p>TOTAL <br/> Rp. '.format_rupiah($totalfaktur).'</p></td>
         </tr>
          <tr>
-            <td class="center w-50 sj2">'.$judul_dokumen.' <br /></td>
+            <td class="center w-50 sj2">'.$judul_dokumen.' <br />
+            
+            </td>
         </tr>
+        <tr><td></td></tr>
         
     </table>
 ', 'O');

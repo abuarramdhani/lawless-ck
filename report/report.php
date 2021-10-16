@@ -33,8 +33,9 @@ ob_start();
 include '../controller/c_detail_in.php';
 require '../include/fungsi_indotgl.php';
 require '../include/fungsi_rupiah.php';
+$kodeoutlet = $_SESSION['kodeoutlet']; 
 
-$nama_dokumen = 'Inventory No. ' . $detail['No_form']; //Beri nama file PDF hasil.
+$nama_dokumen = 'Receiving No. ' . $detail['No_form']; //Beri nama file PDF hasil.
 
 
 // var_dump($item_po);
@@ -218,7 +219,7 @@ $nama_dokumen = 'Inventory No. ' . $detail['No_form']; //Beri nama file PDF hasi
             <?php endforeach; ?>
             <tr>
                 <td colspan="5" class="ttl">TOTAL</td>
-                <td class="tg-kananttl">Rp. <?= format_rupiah($grand_total['grand_total']) ?></td>
+                <td class="tg-kanan ttl">Rp. <?= format_rupiah($grand_total['grand_total']) ?></td>
             </tr>
         </tbody>
     </table>
@@ -272,7 +273,7 @@ $mpdf->SetHTMLHeader('
             <td  rowspan="2" class="center w-25" style="vertical-align: bottom;"></td>
         </tr>
          <tr>
-            <td class="center w-50 sj">INVENTORY</td>
+            <td class="center w-50 sj">RECEIVING</td>
         </tr>
         
     </table>

@@ -1,9 +1,10 @@
 <?php
+$kodeoutlet = $_SESSION['kodeoutlet']; 
 $No_form = $_GET['No_form'];
 $item_po = query("SELECT * FROM item_in 
-    JOIN barang ON item_in.kodebahan = barang.kodebarang
+JOIN barang ON item_in.kodebahan = barang.kodebarang
 JOIN unit ON item_in.unit = unit.kodeunit
-    WHERE No_form = '$No_form'");
+WHERE item_in.No_form = '$No_form' AND barang.kodeoutlet = '$kodeoutlet'");
 
 $detail = query("SELECT *
     FROM form_in
