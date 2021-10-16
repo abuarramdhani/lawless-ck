@@ -51,18 +51,7 @@
         </div>
     </div>
 <?php else : ?>
-    <?php $ko = query("SELECT * FROM companypanel WHERE kodeoutlet != 'OUT001' ORDER BY id ASC "); ?>
-    <div class="dropdown pull-centre">
-        <div class="col-md-4">
-            <select class="form-control select2" id="kdoutlet" name="kdoutlet">
-                <option value="00">Pilih Outlet</option>
-                <?php foreach ($ko as $row) : ?>
-                    <option value="<?= $row["kodeoutlet"] ?>">
-                        <?= ucwords($row["nama"]) ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-    </div>
+
     <div class="dropdown pull-centre">
         <input type="hidden" value="<?= $_SESSION['kodeoutlet'] ?>" id="kodeoutlet" name="kodeoutlet">
         <div class="col-md-3">
