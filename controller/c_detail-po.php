@@ -3,7 +3,7 @@ $No_form = $_GET['No_form'];
 $item_po = query("SELECT * FROM item_po
 JOIN barang ON item_po.kodebahan = barang.kodebarang
 JOIN unit ON item_po.unit = unit.kodeunit
-WHERE No_form = '$No_form'");
+WHERE item_po.No_form = '$No_form' AND item_po.kodeoutlet='OUT002'");
 
 $detail = query("SELECT *
 FROM form_po

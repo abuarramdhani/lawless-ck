@@ -17,10 +17,16 @@ $detail = query("SELECT *
 // $sck = $detail['status_ck'];
 
 // $No_form = $_GET['No_form'];
-$item_storebahan = query("SELECT * FROM item_po
-JOIN barang ON item_po.kodebahan = barang.kodebarang
-JOIN unit ON item_po.unit = unit.kodeunit
-WHERE item_po.kodeoutlet = '$kodeoutlet' and No_form = '$No_form'");
+// $item_storebahan = query("SELECT * FROM item_po
+// JOIN barang ON item_po.kodebahan = barang.kodebarang
+// JOIN unit ON item_po.unit = unit.kodeunit
+// WHERE barang.kodeoutlet = '$kodeoutlet' and item_po.No_form = '$No_form'");
+
+$item_storebahan = query("SELECT ip.*, b.namabarang, u.namaunit FROM item_po ip
+JOIN barang b ON ip.kodebahan = b.kodebarang
+JOIN unit u ON ip.unit = u.kodeunit
+WHERE b.kodeoutlet = '$kodeoutlet' and ip.No_form = '$No_form' ");
+
 
 // $detail = query("SELECT *
 // FROM form_po
