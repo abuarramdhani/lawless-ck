@@ -1661,9 +1661,9 @@ subtotal = '$subtotal[$i]'
         $t_stok[] = $stok[$i] - $jumlah[$i];
     }
 
-    
+
     // akhir stok
-    
+
 
     // input ke tabel item po
     for ($i = 0; $i < $total; $i++) {
@@ -2040,7 +2040,7 @@ subtotal = '$subtotal[$i]'
     $cekdata = mysqli_query($conn, "SELECT * FROM barang ");
     //cek ada data?
     if (mysqli_num_rows($cekdata) > 0) {
-        $kodeproduk = query("SELECT * FROM barang ORDER BY id DESC LIMIT 1")[0];
+        $kodeproduk = query("SELECT * FROM barang WHERE kodeoutlet = '$kodeoutlet' ORDER BY id DESC LIMIT 1")[0];
         $kodes = substr($kodeproduk['kodebarang'], 3);
         $noUrut = (int) $kodes;
         $noUrut++;
