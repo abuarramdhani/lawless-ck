@@ -1,9 +1,9 @@
 <?php
 $No_form = $_GET['No_form'];
-$item_po = query("SELECT * FROM item_po
-JOIN barang ON item_po.kodebahan = barang.kodebarang
-JOIN unit ON item_po.unit = unit.kodeunit
-WHERE item_po.No_form = '$No_form' AND item_po.kodeoutlet='OUT002'");
+$item_po = query("SELECT ip.*, b.namabarang, u.namaunit FROM item_po ip
+JOIN barang b ON ip.kodebahan = b.kodebarang
+JOIN unit u ON ip.unit = u.kodeunit
+WHERE ip.No_form = '$No_form' AND b.kodeoutlet='OUT002'");
 
 $detail = query("SELECT *
 FROM form_po
