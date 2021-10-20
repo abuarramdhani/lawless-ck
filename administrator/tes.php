@@ -87,22 +87,3 @@ require '../include/fungsi.php';
 
 // //echo date("Y-m-d");
 // echo date("m/d/Y");
-
-$BB =  query("SELECT * FROM barang WHERE id > '1451' ");
-
-foreach ($BB as $row) {
-    $kb = $row['kodebarang'];
-    $row['kodebarang'] . " - " . $row['namabarang'];
-    // echo "<br>";
-
-    $cekkb = mysqli_query($conn, "SELECT * FROM item_in WHERE kodebahan ='$kb' AND id > '660' ");
-
-    if (mysqli_num_rows($cekkb) > 0) {
-        $II =  query("SELECT * FROM item_in WHERE id > '660' ");
-
-        foreach ($II as $row1) {
-            echo $row['kodebarang'] . " - " . $row['namabarang'] . " | " . $row1['kodebahan'] . " - " . $row1['qty'];
-            echo "<br>";
-        }
-    }
-}

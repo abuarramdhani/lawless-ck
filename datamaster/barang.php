@@ -113,7 +113,7 @@ $juhal = "Barang";
                                             </div>
 
                                         </div><!-- end col -->
-                                        
+
 
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -186,7 +186,7 @@ $juhal = "Barang";
 
                                 <h4 class="header-title m-t-0 m-b-30">Daftar Barang</h4>
 
-                                <table id="datatable" class="table table-striped table-bordered">
+                                <table id="datatable-buttons" class="table table-striped table-bordered"">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -209,82 +209,79 @@ $juhal = "Barang";
                                         <?php $i = 1; ?>
                                         <?php foreach ($barang as $row) : ?>
                                         <tr>
-                                            <td width="2%" ;><?= $i ?></td>
-                                            <td>
-                                                <?php
-                                                    $kodekategoribarang = $row["kategoribarang"];
-                                                    $ka = "SELECT namakategoribarang FROM kategoribarang WHERE kodekategoribarang ='$kodekategoribarang'"; //perintah untuk menjumlahkan
-                                                    $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
-                                                    $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
-                                                    echo $tampilkode = $tampil['namakategoribarang'];
-                                                    ?>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                    $kodesubkatbarang = $row["subkatbarang"];
-                                                    $ka = "SELECT namasubkatbarang FROM subkatbarang WHERE kodesubkatbarang ='$kodesubkatbarang'"; //perintah untuk menjumlahkan
-                                                    $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
-                                                    $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
-                                                    echo $tampilkode = $tampil['namasubkatbarang'];
-                                                    ?>
-                                            </td>
-                                            <td><?= $row["namabarang"] ?></td>
-                                            <td><?= $row["stok"] ?></td>
-                                            <td><?= $row["hargabeli"] ?></td>
-                                            <td>
-                                                <?php
-                                                    $kodeunit = $row["unitbeli"];
-                                                    $ka = "SELECT namaunit FROM unit WHERE kodeunit ='$kodeunit'"; //perintah untuk menjumlahkan
-                                                    $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
-                                                    $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
-                                                    echo $tampilkode = $tampil['namaunit'];
-                                                    ?>
-                                            </td>
-                                            <td><?= $row["hargajual1"] ?></td>
-                                            <td><?= $row["hargajual2"] ?></td>
-                                            <td>
-                                                <?php
-                                                    $kodeunit = $row["unitjual"];
-                                                    $ka = "SELECT namaunit FROM unit WHERE kodeunit ='$kodeunit'"; //perintah untuk menjumlahkan
-                                                    $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
-                                                    $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
-                                                    echo $tampilkode = $tampil['namaunit'];
-                                                    ?>
-                                            </td>
-                                            <td><?= $row["minstok"] ?></td>
-                                            <td><?php
-                                                    if ($row["status"] != 1) {
-                                                        echo "Store";
-                                                    } else {
-                                                        echo "Unstore";
-                                                    }
-                                                    ?></td>
-                                            <td>
-                                                <a class="on-default edit-row badge badge-success tombol-edit"
-                                                    data-kodebarang="<?= $row['kodebarang']; ?>"
-                                                    data-unitbeli="<?= $row['unitbeli']; ?>"
-                                                    data-unitjual="<?= $row['unitjual']; ?>"
-                                                    data-kategoribarang="<?= $kodekategoribarang ?>"
-                                                    data-subkategoribarang="<?= $kodesubkatbarang ?>"
-                                                    data-namabarang="<?= $row['namabarang']; ?>"
-                                                    data-harga="<?= $row['hargabeli']; ?>"
-                                                    data-hargajual1="<?= $row["hargajual1"] ?>"
-                                                    data-hargajual2="<?= $row["hargajual2"] ?>"
-                                                    data-stok="<?= $row['stok']; ?>"
-                                                    data-mstok="<?= $row['minstok']; ?>"
-                                                    data-status="<?= $row['status']; ?>">
-                                                    <i class="fa fa-pencil"></i></a>
-                                                <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
-                                                <?php if ($_SESSION['userlevel'] == 0) : ?>
-                                                | <a
-                                                    class="on-default remove-row badge badge-danger tombol-deletebahan"><i
-                                                        class="fa fa-trash-o"></i></a>
-                                                <?php endif ?>
-                                            </td>
+                                            <td width=" 2%" ;><?= $i ?></td>
+                                    <td>
+                                        <?php
+                                            $kodekategoribarang = $row["kategoribarang"];
+                                            $ka = "SELECT namakategoribarang FROM kategoribarang WHERE kodekategoribarang ='$kodekategoribarang'"; //perintah untuk menjumlahkan
+                                            $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
+                                            $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
+                                            echo $tampilkode = $tampil['namakategoribarang'];
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                            $kodesubkatbarang = $row["subkatbarang"];
+                                            $ka = "SELECT namasubkatbarang FROM subkatbarang WHERE kodesubkatbarang ='$kodesubkatbarang'"; //perintah untuk menjumlahkan
+                                            $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
+                                            $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
+                                            echo $tampilkode = $tampil['namasubkatbarang'];
+                                        ?>
+                                    </td>
+                                    <td><?= $row["namabarang"] ?></td>
+                                    <td><?= $row["stok"] ?></td>
+                                    <td><?= $row["hargabeli"] ?></td>
+                                    <td>
+                                        <?php
+                                            $kodeunit = $row["unitbeli"];
+                                            $ka = "SELECT namaunit FROM unit WHERE kodeunit ='$kodeunit'"; //perintah untuk menjumlahkan
+                                            $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
+                                            $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
+                                            echo $tampilkode = $tampil['namaunit'];
+                                        ?>
+                                    </td>
+                                    <td><?= $row["hargajual1"] ?></td>
+                                    <td><?= $row["hargajual2"] ?></td>
+                                    <td>
+                                        <?php
+                                            $kodeunit = $row["unitjual"];
+                                            $ka = "SELECT namaunit FROM unit WHERE kodeunit ='$kodeunit'"; //perintah untuk menjumlahkan
+                                            $hasilka = mysqli_query($conn, $ka); //melakukan query dengan varibel $jumlahkan
+                                            $tampil = mysqli_fetch_array($hasilka); //menyimpan hasil query ke variabel $t
+                                            echo $tampilkode = $tampil['namaunit'];
+                                        ?>
+                                    </td>
+                                    <td><?= $row["minstok"] ?></td>
+                                    <td><?php
+                                            if ($row["status"] != 1) {
+                                                echo "Store";
+                                            } else {
+                                                echo "Unstore";
+                                            }
+                                        ?></td>
+                                    <td>
+                                        <a class="on-default edit-row badge badge-success tombol-edit"
+                                            data-kodebarang="<?= $row['kodebarang']; ?>"
+                                            data-unitbeli="<?= $row['unitbeli']; ?>"
+                                            data-unitjual="<?= $row['unitjual']; ?>"
+                                            data-kategoribarang="<?= $kodekategoribarang ?>"
+                                            data-subkategoribarang="<?= $kodesubkatbarang ?>"
+                                            data-namabarang="<?= $row['namabarang']; ?>"
+                                            data-harga="<?= $row['hargabeli']; ?>"
+                                            data-hargajual1="<?= $row["hargajual1"] ?>"
+                                            data-hargajual2="<?= $row["hargajual2"] ?>" data-stok="<?= $row['stok']; ?>"
+                                            data-mstok="<?= $row['minstok']; ?>" data-status="<?= $row['status']; ?>">
+                                            <i class="fa fa-pencil"></i></a>
+                                        <input type="hidden" class="delete_id_value" value="<?= $row["id"] ?>">
+                                        <?php if ($_SESSION['userlevel'] == 0) : ?>
+                                        | <a class="on-default remove-row badge badge-danger tombol-deletebahan"><i
+                                                class="fa fa-trash-o"></i></a>
+                                        <?php endif ?>
+                                    </td>
 
-                                        </tr>
-                                        <?php $i++; ?>
-                                        <?php endforeach; ?>
+                                    </tr>
+                                    <?php $i++; ?>
+                                    <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
